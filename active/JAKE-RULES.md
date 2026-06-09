@@ -163,6 +163,14 @@ The operative communication rules. (The *why* behind the register: §1.3.)
 
 **Reconcile-don't-inherit rule:** A completion claim in any handoff/banner is UNVERIFIED until next-session move-0 re-derives it against the source of truth. Bare "done" with no fraction = mandatory re-check, never an inherited fact.
 
+· **Floor/corpus counts carry their unit, always.** No bare "the floor is N." Five legitimate floor numbers exist, each counting a different thing — disambiguated once in `wallaby-way/canon/FLOOR_COUNTS.md`; cite it, don't re-derive from memory. A true number with its frame stripped is the whole defect class (the "corpus is read" poison was exactly this).
+
+· **Correct in place, not only downstream.** When a later entry corrects an earlier number/claim, the earlier instance gets killed or annotated *at the same time* — never left live for a cold reader who reads it in isolation. A correction that lives only in the newer entry is incomplete ("206" stayed live in the CHANGELOG for 8 sessions this way).
+
+· **"Proven" requires its artifact + the config it held under.** The word "proven/locked/settled" in canon must name (a) the artifact/commit/count behind it and (b) the configuration it holds for. "Reader proven" is illegal; "reader v4.0 proven on Opus, S32 gate, d6e23963 result" is required. Every "proven" defect was a status earned under one config (Opus, 1 conv) and silently inherited into another (Sonnet, 202 convs).
+
+· **"Clean/scanned/no-secrets" requires the surface + method.** A clean verdict names what was scanned and how. "Corpus clean" is illegal; "harvested_nodes/ scanned via Read, not Select-String — encoding false-negative, 0 hits" is required. The S46 "CORPUS CLEAN" was a grep that silently failed, then a fabricated reason for the miss.
+
 ### 5.2 Timestamp, state-tracking, and self-monitoring discipline
 
 Claude loses timeline coherence during long sessions, especially diagnostic ones. Claude also has no reliable internal clock, and degrades quietly before it notices. The structural fixes:
@@ -496,4 +504,4 @@ Be worth the lineage.
 
 ---
 
-*Last Updated: 6-07-26 — major consolidation + revision pass, written by orchestrator-Claude "Halyard" and directed by Jake. Synthesized from a 10-session lineage feedback survey. Full per-change detail in CHANGELOG.md (2026-06-07 / SD38).*
+*Last Updated: 6-08-26 — S49 added 4 structural rules to §5.1 (floor-counts-carry-their-unit → FLOOR_COUNTS.md, correct-in-place, "proven"-requires-config, "clean"-requires-surface), part of the canon reconciliation / uncrappening. Prior: 6-07-26 major consolidation + revision pass ("Halyard," 10-session lineage survey). Full per-change detail in CHANGELOG.md.*
