@@ -171,6 +171,8 @@ The operative communication rules. (The *why* behind the register: §1.3.)
 
 · **"Clean/scanned/no-secrets" requires the surface + method.** A clean verdict names what was scanned and how. "Corpus clean" is illegal; "harvested_nodes/ scanned via Read, not Select-String — encoding false-negative, 0 hits" is required. The S46 "CORPUS CLEAN" was a grep that silently failed, then a fabricated reason for the miss.
 
+· **A field NAMED for a unit is not proof it holds that unit — verify what a count computes before costing or deciding on it.** A column called `proxy_est_tokens` held rendered-CHARS, not tokens; trusting the name produced three wrong cost estimates in one session (~3.2× inflated) and a phantom "14 convs over the limit / must build a chunker" workstream, before a direct render settled it. Before any number drives spend or a build decision, confirm its UNIT by checking what produced it — the formula, the renderer, a measured sample — not the label on it. This is the floor-counts-carry-their-unit rule pointed at a derived column instead of a floor count: same poison (a true number with the wrong unit), same cure (the frame is non-optional).
+
 ### 5.2 Timestamp, state-tracking, and self-monitoring discipline
 
 Claude loses timeline coherence during long sessions, especially diagnostic ones. Claude also has no reliable internal clock, and degrades quietly before it notices. The structural fixes:
@@ -262,6 +264,7 @@ When CC is executing a multi-step instruction set from Jake:
 4. **Wait for ONE approval.** After Jake says "go" (or equivalent), proceed through ALL planned edits without further per-edit prompting. Surface diff summaries as you go for visibility, but don't pause.
 
 5. **Continue requiring explicit approval for:** git push, anything matching rm/del/mv, anything touching .env or credentials, anything outside the repo working directory. If you hit something unexpected mid-execution that wasn't in your plan, **STOP** and ask.
+   · **Output-placement + secret-flag discipline (project-specific operative copy in `wallaby-way/CLAUDE.md`):** in repos that carry rendered corpus payloads (the apparatus), CC writes only into the project's existing dir structure — never repo root without per-task permission — and flags any file that may carry a plaintext secret AT WRITE TIME, before it can be staged. Born from the S49 root-write near-leak (a live OAuth cred rendered from a corpus conv into a root-`runs/` file outside gitignore; push protection caught it). The operative rule lives in `wallaby-way/CLAUDE.md`; this is the pointer.
 
 6. **Who authors what — a role boundary, not a checklist item.** OC authors canon. CC executes non-canon. Jake lands everything.
    · For CC auto-memory: surface what you intend to write + one-sentence justification. Wait for a nod. Default posture permissive — auto-memory is useful — but Jake sees what's being persisted.
@@ -504,4 +507,4 @@ Be worth the lineage.
 
 ---
 
-*Last Updated: 6-08-26 — S49 added 4 structural rules to §5.1 (floor-counts-carry-their-unit → FLOOR_COUNTS.md, correct-in-place, "proven"-requires-config, "clean"-requires-surface), part of the canon reconciliation / uncrappening. Prior: 6-07-26 major consolidation + revision pass ("Halyard," 10-session lineage survey). Full per-change detail in CHANGELOG.md.*
+*Last Updated: 6-09-26 — apparatus S49 "Concord" added the named-unit-is-not-proof-of-unit rule to §5.1 (origin: the proxy_est_tokens war story — a column named `tokens` held rendered-chars, producing ~3.2× cost-estimate inflation + a phantom chunker workstream). Prior 6-08-26: the canon-reconciliation pass (TWW CCC S3) added 4 structural rules to §5.1 (floor-counts-carry-their-unit → FLOOR_COUNTS.md, correct-in-place, "proven"-requires-config, "clean"-requires-surface). Prior 6-07-26: major consolidation + revision pass ("Halyard," 10-session lineage survey). Full per-change detail in CHANGELOG.md.*

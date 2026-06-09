@@ -61,9 +61,15 @@ Full code blocks for CC; no `&&` chaining; numbered steps ending in **Verify**. 
 
 ---
 
-## Output discipline (load-bearing — the rule that keeps the tree honest)
+## Output discipline (load-bearing — the rule that keeps the tree honest, born from a near-leak)
 
 **Source data is read-only to tooling. Every script writes its output to a named output location (`nodes/`, `runs/`) — never into the dir it lives in or reads from.** The filetree is the evidence of the work. Honor it when you add anything: a script that writes next to its source is a regression.
+
+**Why these clauses are hard (the S49 root-write near-leak):** In S49, CC wrote the groundtruth census output to **ROOT** `runs/` instead of `wallaby-way/runs/`. Root `runs/` was outside the gitignore's coverage, so the files were git-visible; a `git add .` staged them, and one render contained a **live Google OAuth credential** rendered verbatim from a corpus conv. GitHub push protection blocked the push — the only reason it was a cleanup and not a leak. Two failures stacked: CC ignored output placement, and the ignore rule didn't cover the stray path. The clauses below close the first; the gitignore now covers `wallaby-way/runs/` as the sole sanctioned run-output home.
+
+1. **CC does not write to the repo ROOT without explicit, per-instance permission.** All work is performed and recorded under `wallaby-way/`. Root is off-limits by default; writing there requires Jake to say so for that specific task, that specific session.
+2. **CC writes into the existing `wallaby-way/` directory structure.** Output goes to the appropriate standing drawer for its kind (`nodes/`, `runs/`, `scripts/`, `catalogs/` — match the artifact to the drawer). If no existing dir fits, create a new **SUBDIRECTORY** beneath the right parent (e.g. `wallaby-way/runs/<new-subdir>/`) — never a new top-level dir under `wallaby-way/`, and never anything at root.
+3. **CC flags any file it produces that may contain a plaintext secret** — credentials, tokens, keys, OAuth values, connection strings — **at the time it writes the file**, in its turn output, explicitly, so OC and Jake can review and scrub before the file is staged, committed, or read into a node. Non-optional: a rendered corpus payload can carry a secret the conv author pasted, and CC is the first place that surfaces onto disk. **The floor is immutable and WILL contain secrets; the read pipeline is where they get caught.**
 
 ---
 
@@ -129,4 +135,4 @@ Disk is ground truth over any doc. If docs and disk disagree: trust disk, flag t
 
 ---
 
-*Repo orientation. Update when working norms change. Last updated: 6-8-26, S49 (authored — first cut, post-uncrappening).*
+*Repo orientation. Update when working norms change. Last updated: 6-9-26, apparatus S49 "Concord" (added the hard CC output-discipline clauses + secret-flag rule, born from the S49 root-write near-leak). Prior: 6-8-26, first cut (TWW CCC S3, post-uncrappening).*
