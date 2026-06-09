@@ -1,0 +1,65 @@
+# SCOPE READER OUTPUT
+# conv be889066-5fb5-4134-a4e5-5b2fbfa9612d | baseline-2026-05-25-ae015455 | 8 messages
+
+## CONV — be889066-5fb5-4134-a4e5-5b2fbfa9612d
+**Created:** 2026-02-03T13:47:37.404646Z | **Messages:** 8
+
+### NODE 1 — AHK v2.0 script: open Chrome workspace tabs for jake@lanceo account
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "be889066-5fb5-4134-a4e5-5b2fbfa9612d",
+  anchor_msg  : "019c23c2-3db6-719e-8b15-c785e07631c3",
+  reach       : { up: 0, down: 1 }
+}
+```
+**Keywords:** AutoHotkey AHK v2.0, open Chrome profile, jake@lanceosrecruitingnetwork.com, Gmail Calendar Chat Drive tabs, workspace launcher, multiple tabs single command
+**Named-continuity:** AutoHotkey, Chrome, jake@lanceosrecruitingnetwork.com, Gmail, Google Calendar, Google Chat, Google Drive, OpenChromeWorkspace.ahk, lanceosrecruitingnetwork
+**Summary:** Jake requests an AHK v2.0 script to open Chrome using the jake@lanceosrecruitingnetwork.com profile and load four tabs in order: Gmail, Google Calendar (week view), a specific Google Chat space, and Google Drive. The assistant produces OpenChromeWorkspace.ahk using a URL array and --profile-directory flag, with a note to verify the profile folder name via chrome://version.
+
+### NODE 2 — Profile path confirmed as "Profile 1"; Chrome path hardcoded from screenshot
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "be889066-5fb5-4134-a4e5-5b2fbfa9612d",
+  anchor_msg  : "019c23c3-4d3d-75cb-9c86-6a07eaeace18",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** Chrome profile path, Profile 1, C:\Users\jakeb\AppData\Local\Google\Chrome\User Data, chrome.exe path, Program Files Google Chrome Application, hardcoded path, AHK update
+**Named-continuity:** AutoHotkey, Chrome, OpenChromeWorkspace.ahk, jakeb, Profile 1
+**Summary:** A screenshot showed Jake's Chrome profile path as C:\Users\jakeb\AppData\Local\Google\Chrome\User Data\Profile 1, confirming "Profile 1" is correct. The assistant updates the script to hardcode the full Chrome executable path (C:\Program Files\Google\Chrome\Application\chrome.exe) for reliability and redelivers the file.
+
+### NODE 3 — Added --new-window flag to always open a fresh Chrome window
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "be889066-5fb5-4134-a4e5-5b2fbfa9612d",
+  anchor_msg  : "019c2411-c370-724c-943c-d12862b9b363",
+  reach       : { up: 0, down: 1 }
+}
+```
+**Keywords:** --new-window Chrome flag, force new window, existing Chrome window, AHK always new window, Chrome profile already open
+**Named-continuity:** AutoHotkey, Chrome, OpenChromeWorkspace.ahk, Profile 1
+**Summary:** Jake requests the script always open a new Chrome window even if one is already open for that profile. The assistant adds the --new-window flag to the Chrome args, updating the final version of OpenChromeWorkspace.ahk. This is a design constraint applied to the artifact.
+**Why:** --new-window added because Jake wants a clean workspace launch each time, regardless of existing Chrome state for that profile.
+**Predicate:** OpenChromeWorkspace.ahk includes --new-window flag; if flag is later removed or made conditional, this decision was revisited.
+
+### NODE 4 — Second AHK script: open lanceosrecruitingnetwork.com/MeetJake
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "be889066-5fb5-4134-a4e5-5b2fbfa9612d",
+  anchor_msg  : "019c2b47-bdb3-717d-9938-eeaacac01cd9",
+  reach       : { up: 0, down: 1 }
+}
+```
+**Keywords:** AHK open URL, MeetJake page, lanceosrecruitingnetwork.com/MeetJake, OpenMeetJake.ahk, Chrome launcher, single URL script
+**Named-continuity:** AutoHotkey, Chrome, lanceosrecruitingnetwork, MeetJake, OpenMeetJake.ahk, Profile 1
+**Summary:** Jake requests a separate AHK script to open www.lanceosrecruitingnetwork.com/MeetJake. The assistant produces OpenMeetJake.ahk using the same Chrome path and Profile 1, with --new-window, opening just that one URL.
+
+--- DONE: 4 nodes (3 MOTION, 1 FENCE, 0 TEXTURE), 0 drops ---

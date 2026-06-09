@@ -1,0 +1,329 @@
+# SCOPE READER OUTPUT
+# conv 9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5 | baseline-2026-05-25-ae015455 | 28 messages
+
+## CONV — 9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5
+**Created:** 2026-05-07T20:21:49.703978Z | **Messages:** 28
+
+### NODE 1 — Filament storage problem: 20-roll Rubbermaid tub full, vertical access wanted
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e041a-9055-7249-8193-664018e51296",
+  reach       : { up: 0, down: 2 }
+}
+```
+**Keywords:** filament storage, Rubbermaid tub, 20 rolls, airtight containers, desiccant, soda fridge merchandiser, vertical storage, office closet, double closet
+**Named-continuity:** Jake, filament storage, office closet, merchandiser fridge
+**Summary:** Jake opens the conversation describing his current filament storage: one 20-roll Rubbermaid tub (full) plus five rolls in individual airtight containers with desiccant. He wants more capacity, prefers vertical storage with easier access, has a double office closet available, and floated the idea of a non-working glass-front soda fridge (merchandiser) but cannot locate one. He asks for other ideas.
+
+### NODE 2 — Storage options brainstorm: merchandiser search term, wine fridge, cabinet conversion, PVC rack, tiered humidity approach
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e041a-9055-7249-8193-664125652f8b",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** beverage merchandiser cooler, wine fridge filament storage, IKEA PAX dry cabinet, PVC tube rack, tiered storage, PLA humidity tolerance, PETG-CF TPU dry storage, silica beads, hygrometer
+**Named-continuity:** merchandiser, wine fridge, IKEA PAX, PETG-CF, TPU, PLA, silica beads
+**Summary:** Claude offers five storage directions: correct search term is "beverage merchandiser cooler" for Marketplace/Craigslist; wine or beverage fridges as smaller active-dehumidifying option; DIY cabinet (PAX or armoire) with weatherstripping and silica; wall-mounted PVC tube rack (no humidity control); and a tiered approach keeping only moisture-sensitive materials (PETG-CF, TPU) sealed while PLA stays on open shelving.
+
+### NODE 3 — No central AC; wine fridge capacity question; unused wine fridge discovered
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e041f-66d4-747d-b9e3-1cd7b14b87a8",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** no central air, window unit, portable AC, wine fridge capacity, 20-bottle fridge spool count, filament humidity, office no AC
+**Named-continuity:** Jake, wine fridge, office, portable AC, central air
+**Summary:** Jake reveals the house lost central air two summers ago and is running window/portable units; his office currently has no AC at all. He notes no hits on merchandisers so far but will keep looking. He has an unused wine fridge sitting around but questions whether wine fridges are actually bigger than another tote, and asks how many spools a 20-bottle unit would hold.
+
+### NODE 4 — Wine fridge humidity correction; spool capacity math; recommendation to use existing fridge unplugged with desiccant
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e041f-66d4-747d-b9e3-1cd80013c506",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** wine fridge humidity correction, 50-70% RH cork, wine fridge not dehumidifier, silica beads desiccant, 20-bottle fridge 20-25 spools, 40-50 bottle fridge capacity, orange indicating silica, hygrometer, PETG-CF TPU sensitive storage
+**Named-continuity:** wine fridge, silica beads, PETG-CF, TPU, PLA, hygrometer
+**Summary:** Claude corrects the prior claim that wine fridges "actively dehumidify" — they maintain 50-70% RH for corks, not filament-safe levels; the cold coil pulls some moisture but does not reach <15% RH targets. A 20-bottle unit holds roughly 20-25 spools. Recommendation: use the existing unused wine fridge unplugged, load two pounds of bulk orange-indicating silica beads on a tray inside, add a hygrometer, and dedicate it to PETG-CF and TPU while keeping PLA in the tote.
+**Why:** Wine fridges do not actively dehumidify to filament-safe levels; the prior assistant message overstated this. Unplugged + desiccant is sufficient and free-to-test.
+**Predicate:** Recommendation stands unless the fridge seal proves inadequate or the office gets above ~100°F sustained, which would stress TPU long-term.
+
+### NODE 5 — Decision: use wine fridge as secondary + possibly add second Rubbermaid on a rack
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0422-2f02-7687-9a98-483862df4125",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** second Rubbermaid tote, rack storage, access problem, packed full tub, wine fridge secondary, filament storage decision
+**Named-continuity:** wine fridge, Rubbermaid, rack
+**Summary:** Jake reframes the actual problem: it is not capacity per se but that the current bin is packed and in an awkward location. He converges on using the unused wine fridge as a secondary dry store and potentially adding a second tote on a rack so both bins are visible and accessible. This is the first real storage decision point in the conversation.
+**Why:** The core problem is access and visibility, not raw capacity; two visible totes on a shelf solves it cheaply without a new project.
+**Predicate:** Decided unless Jake finds a merchandiser cooler or otherwise changes direction.
+
+### NODE 6 — Wire shelving recommendation; clear-sided totes; hybrid stack layout
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0422-2f02-7687-9a98-4839f2e19149",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** wire shelving, NSF chrome shelving, clear-sided totes, Rubbermaid Cleverstore, IRIS WeatherPro, tote depth closet shelf, 30-quart tote, wine fridge floor stack, under $150 storage solution
+**Named-continuity:** wire shelving, Rubbermaid Cleverstore, IRIS WeatherPro, wine fridge, closet
+**Summary:** Claude recommends clear-sided totes (Cleverstore or IRIS WeatherPro) on NSF-style wire shelving, noting clear sides matter more than clear lids when bins are on a shelf. Warns about tote depth vs. closet shelf depth (standard shelves 12-16", many totes 18-20"). Proposes a hybrid layout: wine fridge on floor for sensitive materials, totes on shelves above for PLA, hygrometers throughout.
+
+### NODE 7 — Decision: try wine fridge unplugged with rechargeable desiccant units
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0423-eff0-743c-ba13-abd44f60693b",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** unplugged wine fridge, rechargeable desiccant, sealed cabinet, electricity, filament dry storage, two extra desiccant units
+**Named-continuity:** wine fridge, rechargeable desiccant units, Jake
+**Summary:** Jake decides to try the wine fridge unplugged — notes he has two extra rechargeable desiccant units already. Logic: if it doesn't dehumidify on its own, it's not worth the electricity; used as a sealed cabinet it functions like a large dry box with the existing desiccant.
+**Why:** Jake already owns the desiccant units; unplugged trial costs nothing and tests viability before committing electricity costs.
+**Predicate:** Check hygrometer after a week; if humidity creeps up, plug in the fridge or recharge desiccant more frequently.
+
+### NODE 8 — House cooling setup: window unit, two portables, kids' area units, master zone; office has no AC
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0427-020f-7014-a246-abf567bf7184",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** 2400 square foot ranch, central air broken, window unit condenser, portable AC, crawl space soffit exhaust, sliding glass door office, no windows office, AC office plan
+**Named-continuity:** Jake, house, office, window unit, portable AC, crawl space, soffit, sliding glass door
+**Summary:** Jake describes the house cooling situation in detail: 2400 sq ft ranch, central air has been out two years, they use a large quiet window unit plus a portable for the main zone and individual units for kids' bedrooms; master bedroom has its own mini central air zone. The office has no windows and a sliding glass door, making AC installation non-trivial. Jake has a plan to route portable AC exhaust through the ceiling, across the crawl space, and out the soffit but hasn't acted on it yet.
+
+### NODE 9 — Portable AC exhaust routing advice: duct length/bends, insulation, single vs dual hose, through-wall alternative
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0427-020f-7014-a246-abf659808f32",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** portable AC exhaust duct, backpressure, duct length bends, insulated flex duct, R-8 duct wrap, soffit backdraft damper, single hose portable, dual hose portable, through-wall sleeve unit, 12000 BTU office cooling
+**Named-continuity:** office, portable AC, crawl space, soffit, dual hose AC, through-wall sleeve
+**Summary:** Claude advises on the crawl-space exhaust routing plan: length and bends are the key killers; recommends upsizing to 8" insulated duct for the long run, using long-radius elbows, and adding a backdraft damper at the soffit. Flags the single-hose negative pressure problem (pulls conditioned air in from house). Suggests a through-wall sleeve unit as a cleaner alternative. Asks about BTU and hose count on the portable.
+
+### NODE 10 — Constraint: no wall cuts (central air outage seen as temporary); 12k BTU single-hose portable
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0429-c7b4-7043-b9da-0bad9802df0d",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** no wall cuts, temporary no central air, 12000 BTU portable, single hose, ceiling hole vs wall hole, office AC constraint
+**Named-continuity:** office, portable AC, central air, wall cut constraint
+**Summary:** Jake rules out cutting exterior wall holes because the central air outage is considered temporary — big difference between a wall hole and a ceiling/closet hole. The portable is 12k BTU, ~5 years old, summer-only use. He notes that in a house where the rest is air conditioned, the single-hose negative-pressure problem is less severe since infiltrating air would be conditioned, not outdoor air.
+**Why:** Wall modifications are off the table while central air is expected to be restored; less invasive routing through closet ceiling is acceptable.
+**Predicate:** Constraint lifts if central air is not restored and Jake decides the situation is permanent.
+
+### NODE 11 — Sliding door AC panel kit recommendation; single-to-dual-hose conversion note
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0429-c7b4-7043-b9da-0baea65add76",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** sliding door AC panel kit, portable AC sliding door, Joeaire, Trim-A-Slide, AC Safe panel, dual hose conversion, no modifications, EPDM foam gasket, $40-80
+**Named-continuity:** sliding glass door, portable AC, Joeaire, Trim-A-Slide, AC Safe
+**Summary:** Claude recommends sliding door AC panel kits (Joeaire, Trim-A-Slide, AC Safe) as the no-modification option — fits in door track, removable in 30 seconds, $40-80. Notes trade-off of losing slider access while installed. Also flags that some portables support aftermarket dual-hose conversion and suggests checking. Keeps crawl-space route as a fallback.
+
+### NODE 12 — Pivot: idea to 3D print a custom sliding door panel with AC port
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e042c-6450-76dd-9bec-fa19e2613432",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** 3D print sliding door panel, custom AC panel, door frame jamb replacement, printed door insert, 3D print idea, PETG custom build
+**Named-continuity:** Jake, 3D printer, sliding glass door, office, portable AC
+**Summary:** Jake pivots from buying a commercial panel kit to designing a custom 3D-printed insert that attaches to the door frame and effectively becomes a new jamb — with a built-in AC exhaust port. This is the major design decision fork in the conversation; everything after is about designing and refining this printed part.
+**Why:** Jake can 3D print custom geometry; a printed panel can fit the exact door measurements, include a bayonet port, and avoid buying a generic kit.
+**Predicate:** Project is active; depends on Jake taking door measurements and printing the design.
+
+### NODE 13 — Initial 3D print design: segmented hollow panel, PETG-CF, port with bayonet, bug mesh, foam seal face
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e042c-6450-76dd-9bec-fa1a65e8b6fc",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** 3D printed AC panel, P1S build volume 256mm, dovetail segments, PETG-CF, 5-6 inch port, bayonet mount, bug mesh, foam weatherstrip, TPU gasket, OpenSCAD parametric, door track dimensions
+**Named-continuity:** P1S, PETG-CF, TPU, OpenSCAD, sliding glass door, portable AC
+**Summary:** Claude proposes the initial design: vertical extrusion printed in ~250mm segments with dovetail joins, AC hose port at 30-40" height with bayonet lock and removable cap, foam or TPU gasket seal on slider-facing side, bug mesh on exterior, top/bottom pieces that fit door tracks. Lists required measurements: track width/depth top and bottom, total opening height, slider panel thickness, hose OD. Offers to write parametric OpenSCAD.
+
+### NODE 14 — Design refinement: wall thickness (3/4 shell), air gap insulation, white PETG material choice, printed bug screen
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0431-b26d-7294-a9d6-82abc13707f5",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** 3 shell inside 4 shell outside, air gap insulation, white PETG, off-white PETG, hose clamp printed, flat sides, bayonet port, printed bug screen, no mesh insert, simplify design, PETG white Polymaker Overture
+**Named-continuity:** Jake, PETG, P1S, white PETG, printed bug screen
+**Summary:** Jake refines the design scope: 3-shell inner / 4-shell outer walls with maximum air gap, PETG (needs to buy white/off-white since he only has black in bulk), printed-in bug screen (not a separate mesh), can print a hose clamp to keep hose tight, hook lock on slider is broken so no locking mechanism needed beyond a wood track block. Claude responds with insulation cavity advice (stuff with fiberglass/rockwool or print baffles), white PETG brand recommendations (Polymaker PolyLite matte, Overture), and 2mm+ grid holes for clean bridgeless bug screen.
+
+### NODE 15 — Foam seal clarification: panel is static gap fill, not closing against a seal
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e043d-cb6c-752d-bd31-cbe7a1b4db8c",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** foam seal clarification, static gap, slider wood block, panel not door jamb, no compression seal needed, weatherstrip optional
+**Named-continuity:** sliding glass door, wood block track, foam weatherstrip
+**Summary:** Jake catches that the foam seal discussion was carried over from an earlier framing (panel as new jamb) that no longer applies. The slider is held open by a wood block and the panel fills the static gap — no compression seal needed. Claude clarifies the two static interfaces (panel-to-slider-edge and panel-to-jamb) and confirms foam tape is optional cheap insurance, not structurally necessary.
+
+### NODE 16 — Design addition: U-channel receptor on vertical edges; decision to print bug screen rather than insert mesh
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e043e-da8f-728b-b808-7c08e3db59cd",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** U-channel receptor, L-lip printed edge, interference fit PETG, printed bug screen, keep design simple, no separate mesh assembly, 2mm holes, vertical channel orientation
+**Named-continuity:** Jake, PETG, printed bug screen, sliding glass door panel
+**Summary:** Jake decides to print U-channel or L-lip receptors into the vertical edges of the panel (slider edge and jamb side) to eliminate the straight-line air gap path without adding separate parts. Also confirms he wants the bug screen printed directly into the port face — no separate mesh, no two-piece clamp ring — explicitly to keep the design simple and not over-complicate it like some recent other prints.
+**Why:** Simplicity is a named constraint; Jake references over-complicating recent prints as something to avoid.
+**Predicate:** Design intent is set; execution depends on measurements.
+
+### NODE 17 — Bayonet mount detail: port design with groove + locking rotation; diffuser/flange for outward expansion
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0440-df0a-768b-8a18-6e337040177f",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** bayonet port, groove locking mechanism, hose clamp printed, exhaust port panel design, flange negative pressure, diffuser expansion, modular port panel
+**Named-continuity:** Jake, 3D printed AC panel, portable AC hose, bayonet mount
+**Summary:** Jake confirms the port will use a groove/bayonet lock mechanism — the exhaust pipe cylinder slides in and rotates to lock. He also proposes flanging the port so it is larger passing through the panel than at the AC-side mating point, initially describing it as creating negative pressure to pull air out.
+
+### NODE 18 — Venturi/negative pressure correction; bayonet 3-lug detail; check valve suggestion
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0440-df0a-768b-8a18-6e341a2edee6",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** venturi correction, backpressure, bayonet 3-lug 120-degree, detent lock, TPU O-ring, check valve flap, hinged backdraft flap, exhaust negative pressure wrong
+**Named-continuity:** bayonet mount, TPU, portable AC, check valve
+**Summary:** Claude corrects the negative-pressure framing: a restriction/flange downstream of the fan increases backpressure, it does not create suction. Asks for clarification on what Jake meant. Provides 3-lug bayonet geometry: lugs at 120°, 4-5mm height, 8-10mm width, shallow detent at locked position, hand-grip tab. Suggests a hinged check valve flap inside the port as an actually useful addition (prevents hot outside air drifting back in when AC cycles off).
+
+### NODE 19 — Clarification: port is a diffuser (small inlet expanding to large outlet), not a venturi
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0443-49a7-7634-ad93-1548780d365d",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** diffuser not venturi, port flange, larger outside smaller inside, AC hose port expansion, diffuser geometry, cone angle
+**Named-continuity:** 3D printed AC panel, portable AC, diffuser port
+**Summary:** Jake clarifies his intent: the port is larger on the exterior side than at the AC hose mating point — a diffuser, not a venturi. The flange is about future-proofing and reducing outlet velocity, not creating suction.
+
+### NODE 20 — Diffuser geometry: cone angle under 7-degree half-angle, 40-50mm axial length, panel protrusion option
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0443-49a7-7634-ad93-1549a91684cf",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** diffuser cone angle, 7 degree half-angle, 14 degree total cone, flow separation, 5-inch inlet to 7-inch, 40-50mm axial length, panel protrusion exterior, noise reduction exhaust velocity
+**Named-continuity:** 3D printed AC panel, diffuser port, bayonet mount
+**Summary:** Claude confirms the diffuser framing is correct and mildly beneficial (reduced exhaust velocity, noise, slightly reduced backpressure). Specifies geometry: keep cone half-angle under 7° to avoid flow separation; 5" to 7" expansion needs 40-50mm of axial length. If panel is thinner than that, the port can protrude past the panel exterior face to give the cone room. Bayonet lugs sit on the inlet (small) end.
+
+### NODE 21 — Future-proofing: size panel hole for largest plausible hose; swappable port adapters; flange overlap requirement
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0445-89f0-7562-a694-828d0d55b330",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** future-proof port, modular bayonet, swappable port adapters, largest plausible hose size, 5-inch 5.9-inch 6-inch 8-inch hose, panel hole 7-inch, port flange overlap 15-20mm, winter cap, step-down adapter
+**Named-continuity:** 3D printed AC panel, bayonet mount, portable AC
+**Summary:** Jake confirms the modular boundary intent: the panel is the expensive print; the port is the cheap swappable consumable. Claude recommends sizing the panel hole for the largest plausible hose (~7" panel opening to accommodate future step-down adapters), notes the bayonet flange needs 15-20mm overlap past the hole edge for sealing, and discusses winter cap (Jake shoots it down — panel is summer-only, comes out in fall).
+
+### NODE 22 — Correction: no winter cap needed; panel is summer-only, stored off-season
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5",
+  anchor_msg  : "019e0446-9a7b-72a3-b720-82ef9ab55b4f",
+  reach       : { up: 1, down: 1 }
+}
+```
+**Keywords:** no winter cap, summer only panel, panel removed fall, seasonal use, over-engineering correction
+**Named-continuity:** Jake, 3D printed AC panel
+**Summary:** Jake explicitly rejects the winter cap suggestion — the panel is only installed for summer and removed in fall, so there is no off-season hole to seal. Claude acknowledges the error and drops the idea. Establishes the seasonal use pattern as a firm constraint on the design scope.
+**Why:** Panel is a seasonal install, not permanent; adding a winter cap would be unnecessary complexity for a part that gets stored when not in use.
+**Predicate:** Seasonal-only use pattern holds unless Jake's office cooling situation changes permanently.
+
+--- DONE: 22 nodes (16 MOTION, 6 FENCE, 0 TEXTURE), 0 drops ---

@@ -1,0 +1,350 @@
+CONVERSATION: 9b932a60-5390-46ee-bc2c-9480b90f893d
+SNAPSHOT_ID: baseline-2026-05-25-ae015455
+CREATED: 2026-03-01T18:19:31.040476Z
+MESSAGES: 18
+
+===MSG===
+uuid: 019caaa0-81e0-7783-b678-33d2cd7bd17f
+parent: null
+role: human
+---
+Is there a better/faster way to communicate and work with you than using a web interface?  I'm getting a dedicated developer computer today and figured I'd see if we could optimize our relationship ;)
+===END===
+
+===MSG===
+uuid: 019caaa0-81e0-7b86-9f75-c8d62f0d26ab
+parent: 019caaa0-81e0-7783-b678-33d2cd7bd17f
+role: assistant
+---
+[THINKING]
+Jake is asking about better ways to work with me beyond the web interface. Given he's getting a dedicated dev computer, this is a great opportunity to tell him about Claude Code and other options that might speed up our workflow, especially for the RecruitMail development work.
+Great timing with the new dev machine, Jake! There are definitely some options worth considering:
+
+**Claude Code** is probably the biggest upgrade for what we do together. It's a command-line tool that lets you work with me directly from your terminal. Instead of copy-pasting code blocks back and forth, I can read and edit your project files directly, run commands, and manage your codebase in a much more hands-on way. Given how much time we spend on RecruitMail file updates and deployments, this could be a massive workflow improvement. You'd install it via npm:
+
+```
+npm install -g @anthropic-ai/claude-code
+```
+
+Then just run `claude` in your project directory and I can see your files, make edits, run tests, etc. — no more copy-paste marathons.
+
+**The Desktop App** (claude.ai desktop app) is a lighter upgrade — basically the same as the web interface but runs as a native app. Slightly snappier, easier to keep open alongside your editor.
+
+**API Access** is another option if you ever wanted to build tooling around our interactions, but that's more relevant for programmatic use than conversation.
+
+For your setup, my honest recommendation would be:
+
+1. **Claude Code** for all the hands-on RecruitMail development — editing files, deploying, debugging
+2. **Web/Desktop app** for planning sessions, architecture discussions, and context file management
+
+The one thing to keep in mind is that Claude Code uses API credits (separate from your Pro/Teams subscription), so there's a usage cost. But for the volume of code we move, the time savings would likely be well worth it.
+
+Want me to look up the latest details on Claude Code setup and pricing so you can hit the ground running when the new machine arrives?
+===END===
+
+===MSG===
+uuid: 019caaa1-9192-7c46-8c07-03841f4ea2e1
+parent: 019caaa0-81e0-7b86-9f75-c8d62f0d26ab
+role: human
+---
+Yeah, what's the pricing like.  I'm already paying $100/mo to use you with pro.
+===END===
+
+===MSG===
+uuid: 019caaa1-9192-7a56-bb9b-84f5ba249d9b
+parent: 019caaa1-9192-7c46-8c07-03841f4ea2e1
+role: assistant
+---
+[THINKING]
+Jake wants to know about Claude Code pricing. Let me search for the latest info since this could have changed.
+[TOOL_USE: web_search]
+{
+  "query": "Claude Code pricing 2026"
+}
+[TOOL_RESULT: web_search]
+See Also: Model Comparison|Installation ... Plans · Detailed Plan Breakdown · Claude Free - Limited Testing · Claude Pro ($17/month annually, $20/month monthly) - Development + Research + Integrations · Claude Max $100 ($100/month) ...
+
+See Also: Model Comparison|Installation Guide|Getting Started|Is Claude Code Free|CC Usage Add-on · Claude AI Price Comparison: Pro vs Max Plans · Detailed Plan Breakdown · Claude Free - Limited Testing · Claude Pro ($17/month annually, $20/month monthly) - Development + Research + Integrations · Claude Max $100 ($100/month) - Professional Development with Efficient Opus Access · Claude Max $200 ($200/month) - Full Professional Development · API Pricing - Pay-Per-Use · Current API Rates (January 2026) Batch API Pricing (50% Discount) Prompt Caching (Up to 90% Savings) Tool-Specific API Pricing · Usage Monitoring and Optimization · Context Management · Track Your Usage · Cost Optimization Tips · Live Users (0) Loading stats...
+
+Complete Claude AI price breakdown including Pro (from $17/month annually) vs Max (from $100/month) subscription plans, API costs, and usage limits. Choose the right Claude pricing plan for your development workflow and budget. ... Run multiple autonomous coding agents simultaneously with Verdent's isolated Git worktrees. Each agent tackles different components while maintaining full context awareness, eliminating manual debugging bottlenecks and accelerating feature delivery. Discover Verdent AI (Free Trial) ... The free plan provides limited Sonnet access for basic usage only, with very low usage limits that are quickly exhausted. It includes multi-platform access (web, iOS, Android, desktop), web search capability, and desktop extensions. However, the free plan does not support Claude Code access. You need at least a Pro subscription or API credits to use Claude Code.
+
+Opus 4.6 brings 1M context window (beta), agent teams for multi-agent collaboration, adaptive thinking, and effort controls. It includes higher output limits for all tasks, early access to advanced Claude features, and priority access during high traffic times. For Claude Code, this plan handles professional development with large projects and complex tasks, extended coding sessions without hitting limits, and full access to Opus 4.6 for state-of-the-art software engineering. ... *Claude Sonnet 4.6's 1M token context window is currently available via API only. This feature is likely coming to Claude Max subscriptions in the future. Sonnet 4.6 Pricing: Claude Sonnet 4.6 maintains the same competitive pricing as Claude Sonnet 4 ($3.00 input / $15.00 output per 1M tokens) with no price increase, despite significant performance improvements and enhanced coding capabilities.
+
+Batch Processing: For bulk code analysis or non-urgent refactoring, use the Batch API for 50% savings on all models. Prompt Caching: CLAUDE.md and system prompts are automatically cached. After the first request, cached content costs only 10% of the original price. Context Management: Use /compact to manage context costs and the /model command to switch models based on task complexity. ... For Max subscribers: With Opus 4.5's increased limits (Max users have roughly same token allocation as previously had with Sonnet), use Opus freely for: Complex software engineering tasks requiring state-of-the-art capabilities · Extended agentic workflows and multi-file reasoning ... Most developers find their optimal Claude Code plan within the first month of usage. Start with Pro for learning and light development, upgrade to Max $100 for professional work with occasional Opus needs, or choose Max $200 for full unrestricted access.
+Claude Max 20x: $200/month - 20x Pro capacity (100x Free), zero-latency priority, full Claude Code · Team Plan: Standard seat $25/month ($20/month annually), Premium seat $150/month ($100/month annually) - minimum 5 users · Enterprise Plan: ...
+
+Claude AI is Anthropic’s flagship conversational AI assistant built on “Constitutional AI” principles - designed to be helpful, harmless, and honest. The latest model, Claude Opus 4.6 (released February 5, 2026), builds on the Claude 4.5 series with a 1 million token context window, agent teams, and adaptive thinking - all at the same $5/$25 API price as its predecessor. ... Advanced Reasoning: ARC AGI 2 score of 68.8% (nearly double Opus 4.5), 84% on BrowseComp web research · 1M Token Context Window: Opus 4.6 supports up to 1 million tokens in beta (standard 200K), with 76% long-context retrieval vs 18.5% for Opus 4.5 · 128K Output Tokens: Double the previous 64K limit for longer, more comprehensive responses · Agent Teams: Multiple Claude agents work in parallel on shared goals in Claude Code (research preview) Adaptive Thinking: Claude dynamically decides when and how much to reason based on task complexity ·
+
+Anthropic now offers four active Claude models. The newest, Claude Opus 4.6 (February 5, 2026), sits at the top as the most intelligent option, while the Claude 4.5 series (Haiku, Sonnet, Opus) covers budget through premium tiers. All share the same $5/$25 pricing for Opus-class models. ... Opus 4.6 is a genuine step up from Opus 4.5 for hard problems. The 1M token context window (beta) handled an entire 750K-word codebase in a single session without the retrieval degradation we saw in earlier models - Anthropic reports 76% long-context retrieval vs just 18.5% for Opus 4.5. Agent teams in Claude Code let multiple agents work on different parts of a refactoring project simultaneously, which cut our large codebase review time roughly in half. At the same $5/$25 price as Opus 4.5, there’s no reason not to upgrade. Sonnet 4.5 remains the optimal choice for 80-90% of everyday use cases.
+
+Fast mode is a research preview feature that delivers up to 2.5x faster output token generation using the same Opus 4.6 model - no change to intelligence or capabilities, just faster inference. It’s priced at 6x standard rates: Fast mode requires a beta header (fast-mode-2026-02-01) and is available for API users and Claude Code subscribers (Pro/Max/Team/Enterprise). It’s not available with Batch API processing. For latency-sensitive agentic workflows or development sessions where speed matters more than cost, fast mode eliminates the wait on Opus-quality reasoning. Process non-urgent workloads within 24 hours and receive 50% off all models: ... We used Batch API for processing 200 customer support transcripts overnight. Standard Sonnet 4.5 pricing would cost approximately $45; Batch API completed the same work for $22.50 with 12-hour turnaround - acceptable for non-urgent analysis.
+
+Claude Opus 4.6 is Anthropic’s newest flagship model, released February 5, 2026. It features a 1 million token context window (beta), 128K max output tokens, adaptive thinking, agent teams for parallel coding workflows, and compaction for infinite conversations. It costs the same as Opus 4.5 ($5/$25 per million tokens) with major capability improvements - including nearly double the ARC AGI 2 reasoning score and 4x better long-context retrieval. Fast mode (research preview) delivers up to 2.5x faster output token generation for Opus 4.6 at premium pricing ($30/$150 per MTok for ≤200K tokens). It runs the same model with faster inference - no change to intelligence. Available for API users and Claude Code subscribers with a beta header. No. Opus 4.6 launched at the same $5/$25 per million token price as Opus 4.5, giving developers significant capability upgrades at no additional cost.
+Enterprise offers more robust security and a bigger context window. Although there are no officially published rates, users report that the price per seat is $60, with a minimum of 70 users. Enterprise is available as an annual contract only.
+
+Native integrations with data sources like GitHub, allowing engineering teams to brainstorm alongside your codebase, iterate on new features, onboard engineers, and debug issues. Although Anthropic doesn’t disclose the price for its Enterprise plan, according to some users, it is set at $60 per seat for a minimum of 70 users and a 12-month contract. This means that the Enterprise plan's minimal price is around $50,000. The best way to find out how much the Enterprise plan costs is to contact its sales team. So, let’s see what we know about Claude pricing now: It has a freemium with solid capabilities, although it’s pretty easy to hit the limits, especially when you don’t know where the cap is set. Its Pro plan also has usage limitations but gives you around 5x more usage than the Free plan. Apart from higher usage rates, the one key difference between the Pro and Team plans is the collaboration feature available on Team, which lets your team work together on projects.
+
+Claude is Anthropic’s AI assistant built to help individuals and teams explore the power of generative AI through a conversational model similar to ChatGPT. ... Free: Free forever plan. Pro: $20/mo. Team: $30/mo if billed monthly and $25 if billed annually, comes with a minimum of 5 members. Enterprise: Custom price. Note: Prices shown do not include applicable taxes. Let’s get a closer look at what each plan offers. Claude offers a free forever plan for individuals who want to test the AI waters without any strings attached. It’s a good option for beginners with simpler use cases and needs, as this tier has the most limited usage of all plans. Namely, there’s a cap on how much you can use Claude on the free plan, as it naturally favors paying users. With it, you get about 20 searches per day. ... Access to Claude on the web, iOS, and Android.
+
+Enterprise offers more robust security and a bigger context window. Although there are no officially published rates, users report that the price per seat is $60, with a minimum of 70 users. Enterprise is available as an annual contract only. While Claude is certainly a powerful AI model, it has its limitations. Namely, its capabilities might not be as impressive as ChatGPT’s simply because Claude is a newer platform with less data training than OpenAI models. Moreover, it cannot generate images, which might be an issue for teams that want their AI engine to be as versatile as possible. Finally, most organizations prefer further customizing and tailoring their AI model to make it a perfect fit for their needs, and Claude doesn’t provide enough flexibility to allow that. If these drawbacks make you reconsider whether Claude is a good choice for you and whether it’s worth the cost, Juma (formerly Team-GPT) might be the solution.
+
+More usage than Free - about 5x as much. However, some limits still apply, meaning you can send around 45 messages every 5 hours, depending on their length and Claude’s current capacity. Access to Projects that lets you organize documents and chats for easier navigation and keep all knowledge and data relevant to a project in one place. Ability to use more advanced models, like Claude 3.5 Sonnet and Claude 3 Opus. Early access to new features. If you’d like your entire team to use Claude and collaborate on AI projects, you’ll need to subscribe to its Team plan. It will cost you $30 per month if billed monthly and $25 if billed annually. ➡️ Keep in mind that the minimum number of users is 5. ... More usage than Pro. Central billing and administration. Collaboration features. 200k context window, meaning more room to process long documents, discuss complex topics, and maintain multi-step conversations.
+The bash tool adds 245 input tokens to your API calls. ... See tool use pricing for complete pricing details. Code execution is free when used with web search or web fetch. When web_search_20260209 or web_fetch_20260209 is included in your API ...
+
+Admin API overviewData residencyWorkspacesUsage and Cost APIClaude Code Analytics APIZero Data Retention ... This page provides detailed pricing information for Anthropic's models and features. All prices are in USD. For the most current pricing information, please visit claude.com/pricing. The following table shows pricing for all Claude models across different usage tiers: MTok = Million tokens. The "Base Input Tokens" column shows standard input pricing, "Cache Writes" and "Cache Hits" are specific to prompt caching, and "Output Tokens" shows output pricing. Prompt caching offers both 5-minute (default) and 1-hour cache durations to optimize costs for different use cases. The table above reflects the following pricing multipliers for prompt caching: 5-minute cache write tokens are 1.25 times the base input tokens price · 1-hour cache write tokens are 2 times the base input tokens price ·
+
+For current per-model prices, refer to the model pricing section. For more information about tool use implementation and best practices, see the tool use documentation. The bash tool adds 245 input tokens to your API calls. ... See tool use pricing for complete pricing details. Code execution is free when used with web search or web fetch. When web_search_20260209 or web_fetch_20260209 is included in your API request, there are no additional charges for code execution tool calls beyond the standard input and output token costs. When used without these tools, code execution is billed by execution time, tracked separately from token usage: ... If files are included in the request, execution time is billed even if the tool is not invoked, due to files being preloaded onto the container ... "usage": { "input_tokens": 105, "output_tokens": 239, "server_tool_use": { "code_execution_requests": 1 } } The text editor tool uses the same pricing structure as other tools used with Claude.
+Claude Pro ($20/mo): This plan costs $20 if billed monthly, or about $17 if you pay for a full year at once. It gives you 5 times more usage than the free version and priority access when the servers are busy.
+
+Claude Haiku 4.5 (Fastest): This is the cheapest model for quick tasks. It costs only $1 for input and $5 for output. Prompt Caching: You can save up to 90% on costs by caching long instructions that you use frequently. For example, reading from a cache for Sonnet 4.5 costs only $0.30 per MTok. Batch Processing: If your task is not urgent, you can send it in a “Batch” to save 50% on the normal token price. Anthropic has a hidden pricing rule in 2026 that can double your costs if you are not careful: The 200,000 Token Rule: If your input message is 200,000 tokens or less, you pay the normal $3 rate. The Price Double: Once your input goes over 200,000 tokens, the cost for the entire message jumps to $6 for input and $22.50 for output. Managing Long Documents: If you need to analyze very long books or codebases, this rule makes every request twice as expensive.
+
+Both platforms have similar prices, but their value depends on what you need to do: For Coding: Claude 4.5 is generally considered better at writing code and following long instructions. For General Tools: ChatGPT often includes more extra features like better image creation and a more advanced mobile app. Elite Pricing: Both companies now offer $200 monthly plans for “Elite” users who need maximum priority and usage. ... No. The $20 subscription is only for the Claude.ai website and app. API usage is billed separately per token. ... Limits for Free and Pro users reset every 5 to 8 hours. Max users have a weekly limit that resets every 7 days. ... There is no “add-on” for more messages. You must wait for the reset or upgrade to a higher tier like Max. Choosing the best Claude AI plan in 2026 comes down to how much you use the AI every day.
+
+Claude Pro ($20/mo): This plan costs $20 if billed monthly, or about $17 if you pay for a full year at once. It gives you 5 times more usage than the free version and priority access when the servers are busy. New features for 2026 include the ability to connect Claude to your Google Workspace, such as Docs and Gmail. Claude Max ($100 – $200/mo): This is for power users who need much higher limits. The $100 plan offers 5 times more messages than Pro, while the $200 plan offers 20 times more. These plans also include “Extended Thinking” for very complex logic and a “Memory” feature to remember your long-term projects. Claude Team & Enterprise: The Team plan starts at $25 per user monthly (billed annually) for standard seats(). Premium seats cost $150 per month and include full access to the Claude Code developer tool. Claude AI Education Pricing: Schools can get special university-wide plans for all students and teachers.
+
+Discover Claude AI Pricing in 2026. Compare Free, Pro, and Max plans ($0-$200). Learn to avoid the 200K token trap and see how GlobalGPT offers the best ROI for Claude 4.5.
+The standard subscription options include multiple tiers: the Pro plan, priced at $20 per month (or $17 if you choose annual billing), and the Max plans at $100 for 5× usage or $200 for 20×. For teams, premium seats cost $150 per user monthly, ...
+
+By Yonatan Steiner Jan 03, 2026 · Navigating the pricing structure for Claude Code, Anthropic's AI-driven code generation tool, can be daunting. Whether you're an individual developer or managing a team of engineers, understanding · costs is essential for budgeting and maximizing the utility of this powerful tool. To get a handle on Claude Code's pricing, it's critical to start with the basics. The standard subscription options include multiple tiers: the Pro plan, priced at $20 per month (or $17 if you choose annual billing), and the Max plans at $100 for 5× usage or $200 for 20×. For teams, premium seats cost $150 per user monthly, with a minimum of five seats required. For users preferring more flexible usage, the API token-based pricing plays a crucial role. Prices vary depending on the Claude model chosen, from the cost-effective Claude Haiku at $1 per million input tokens and $5 for output, to the powerful Opus 4.5, which charges $5 and $25, respectively.
+
+To get a handle on Claude Code's pricing, it's critical to start with the basics. The standard subscription options include multiple tiers: the Pro plan, priced at $20 per month (or $17 if you choose annual billing), and the Max plans at $100 for 5× usage or $200 for 20×. For teams, premium seats cost $150 per user monthly, with a minimum of five seats required. For users preferring more flexible usage, the API token-based pricing plays a crucial role. Prices vary depending on the Claude model chosen, from the cost-effective Claude Haiku at $1 per million input tokens and $5 for output, to the powerful Opus 4.5, which charges $5 and $25, respectively. This structure allows users to match their selection to their budget and computational needs. Subscription plans integrate Claude Code directly, offering a fixed cost tailored to individual needs. The Pro and Max plans provide predictable monthly expenses that include a certain level of usage, while the Team plans are tailored to larger g
+
+Claude Code gets expensive in only one way: when you don’t treat usage like a first-class engineering metric. Pick the plan that matches how you actually work, then assume tokens will do the rest of the talking - especially when you scale across a team or start running longer, agentic coding sessions. Chain-of-thought is not explainability: Our Takeaways Previous ·
+
+Watch my AI Engineering talk: How Claude Code Works Next
+Does the Claude Max plan include Claude Code? Yes, in 2026, both the $100 and $200 Max tiers include full access to Claude Code, the terminal-based agent designed for autonomous programming and repository management. Can I use Claude 4.5 for free?
+
+Prompt Caching Discounts: To reduce latency and costs, Anthropic offers a 90% discount on cached tokens. This is a game-changer for agentic workflows where a massive system prompt or a large codebase is repeatedly sent to the model; you only pay the full price for the initial “write” and a fraction for subsequent “read” operations. Tiered Context Pricing: While the standard context window handles up to 200K tokens, accessing the 400K+ ultra-long context through the API involves a premium tier. This is specifically designed for legal firms and research institutions that need to ingest entire libraries of documentation in a single prompt. In 2026, the value of a Claude subscription isn’t just in the model’s intelligence, but in how it integrates into automated workflows. Anthropic has moved beyond the “chat window” to provide tools that allow Claude to act as an autonomous employee.
+
+The GlobalGPT Solution: For those who need premium access without the premium price tag, GlobalGPT provides a streamlined alternative. By offering Claude 4.5, GPT-5.2, and 100+ other models starting at approximately $5.75, it eliminates the need for individual Max subscriptions while maintaining high-speed access and no regional restrictions. Does the Claude Max plan include Claude Code? Yes, in 2026, both the $100 and $200 Max tiers include full access to Claude Code, the terminal-based agent designed for autonomous programming and repository management. Can I use Claude 4.5 for free? Anthropic offers a limited Free tier that includes access to Claude 4.5, but it comes with strict message caps and no access to “Extended Thinking” or advanced computer use tools. What is the difference between Claude Team and Enterprise? The Team plan focuses on shared knowledge and basic admin tools for small groups, while the Enterprise plan offers advanced security like SCIM, audit logs, and a much l
+
+As of 2026, Anthropic has structured its offerings to cater to everyone from casual experimenters to high-stakes enterprise developers. The core difference between tiers lies in the usage frequency (message caps), access to frontier models like Claude 4.5, and advanced features like Claude Code and extended thinking tokens. For a broader look at the costs of the newest models, reviewing the Claude Opus 4.6 full pricing guide is recommended. Claude Free: Best for text summaries and simple Artifacts. It now includes basic web search but has the lowest priority during peak hours. Claude Pro ($17-$20/mo): The industry standard for individual power users. It offers 5x the usage of the Free tier and early access to experimental features. Claude Max ($100-$200/mo): A high-capacity tier designed for developers and researchers who need virtually unrestricted access to Claude 4.5 and the “Imagine with Claude” software prototyping tool.
+
+It is specifically optimized for those using Claude Code (the terminal-based agent), allowing the agent to run background tasks like refactoring an entire repository or running local test suites without interruption. Max Ultimate ($200/mo): This tier provides 20x the usage of Pro, effectively removing the concept of “limits” for individual users. It grants “Maximum Priority” access, ensuring that even during global model updates or high-traffic events, your latency remains near-zero. Imagine with Claude: This exclusive research preview allows Max users to generate fully functional, interactive software on the fly. In recent demos, users have seen Claude build custom database UIs and interactive dashboards in real-time, functioning as a “one-click” prototyping environment that bypasses manual coding entirely. Choosing a plan often comes down to the model’s “brainpower” versus its cost efficiency. In 2026, the battle for dominance is between Claude 4.5 andthe newly released GPT-5.2, with
+Compare Claude Code pricing—Pro ($20), Max ($100-200), Teams ($150). Learn how to avoid burning tokens and get maximum value from your subscription.
+
+Claude Code gives you direct access to Claude's full model lineup. For most founders, pick based on workflow preference, not price. See our detailed Cursor pricing breakdown for more. Claude Code has a 5-hour rolling window for token usage. Hit the limit and you'll see "Try again in X hours." Avoid surprises: Enable extra usage with a monthly cap (Settings > Billing). If you're regularly hitting limits, consider Max 5x. Doug has been helping developers build across mobile, DevOps, and AI for the last 20+ years. An O'Reilly author, international speaker, and a prolific blogger, he relishes in simplifying the complex. Want to discuss AI coding workflows or share your experiences? Find me on X or connect on LinkedIn. How-tos · A clear mental model for turning ideas into working software with AI. Four stages — Idea, Epic, Requirements, Build — no guesswork, no restarts. Feb 20, 2026 ·
+
+Compare Claude Code pricing—Pro ($20), Max ($100-200), Teams ($150). Learn how to avoid burning tokens and get maximum value from your subscription. ... AI coding assistants like Claude Code, ChatGPT, Cursor, and Windsurf are changing how founders ship software. These tools accelerate development for experienced engineers and enable non-technical SaaS founders to build working prototypes without hiring a dev team. But how much does it all cost? How much will a team spend on tools like Claude Code, and how can they prevent bill shock at the end of the month from overages? Read on to understand how to use Claude Code efficiently and avoid burning tokens. Visiting Claude.ai lets you chat with Claude's LLM (by default, the Sonnet 4.5 model). But free Claude access does NOT include Claude Code. Access to Claude Code requires a monthly subscription. Note that Anthropic offers yearly discounts on annual subscriptions - Claude Code Pro is $17/mo (15% savings) when purchased annually.
+
+Both have a $20/month basic plan. Cursor includes an IDE and routes queries to different LLMs automatically. Claude Code gives you direct access to Claude's full model lineup. For most founders, pick based on workflow preference, not price. See our detailed Cursor pricing breakdown for more. Claude Code has a 5-hour rolling window for token usage. Hit the limit and you'll see "Try again in X hours." Avoid surprises: Enable extra usage with a monthly cap (Settings > Billing). If you're regularly hitting limits, consider Max 5x. Doug has been helping developers build across mobile, DevOps, and AI for the last 20+ years. An O'Reilly author, international speaker, and a prolific blogger, he relishes in simplifying the complex. Want to discuss AI coding workflows or share your experiences? Find me on X or connect on LinkedIn. ... A clear mental model for turning ideas into working software with AI.
+
+Each Claude Code subscription includes session limits—a maximum number of prompts you can send within a rolling 5-hour window. Claude Code Pro subscribers can expect a maximum 45 messages per 5-hour window. However, coding prompts consume more tokens than simple chat queries, so you'll realistically get 10-40 prompts per window. Here's the worst feeling: You're in flow state, shipping a critical feature, and Claude Code says "You've reached your usage limit. Try again in 3 hours." Your momentum is gone. Your code progress halts for hours. Why this matters: If you're racing to a demo, investor meeting, or launch deadline, losing 2-3 hours could mean missing your target. You can turn on extra usage in your settings to keep Claude Code going. Set a monthly maximum you're comfortable with. Anthropic's documentation reports the average cost is $6/day, with 90% of developers under $12/day.
+The Pro plan, at $17 per month with annual billing (or $20 monthly), limits users to just 10 to 40 prompts every five hours — a constraint that serious developers exhaust within minutes of intensive work.
+
+Goose, Block’s open-source AI coding agent, is emerging as a free alternative to Anthropic’s Claude Code, as developers weigh offline control, rate limits, and the rising cost of AI coding tools.
+
+Anthropic, the San Francisco artificial intelligence company founded by former OpenAI executives, offers Claude Code as part of its subscription tiers. The free plan provides no access whatsoever. The Pro plan, at $17 per month with annual billing (or $20 monthly), limits users to just 10 to 40 prompts every five hours — a constraint that serious developers exhaust within minutes of intensive work. The Max plans, at $100 and $200 per month, offer more headroom: 50 to 200 prompts and 200 to 800 prompts respectively, plus access to Anthropic's most powerful model, Claude 4.5 Opus. But even these premium tiers come with restrictions that have inflamed the developer community. In late July, Anthropic announced new weekly rate limits. Under the system, Pro users receive 40 to 80 hours of Sonnet 4 usage per week. Max users at the $200 tier get 240 to 480 hours of Sonnet 4, plus 24 to 40 hours of Opus 4.
+
+They represent token-based limits that vary wildly depending on codebase size, conversation length, and the complexity of the code being processed. Independent analysis suggests the actual per-session limits translate to roughly 44,000 tokens for Pro users and 220,000 tokens for the $200 Max plan. "It's confusing and vague," one developer wrote in a widely shared analysis. "When they say '24-40 hours of Opus 4,' that doesn't really tell you anything useful about what you're actually getting." The backlash on Reddit and developer forums has been fierce. Some users report hitting their daily limits within 30 minutes of intensive coding. Others have canceled their subscriptions entirely, calling the new restrictions "a joke" and "unusable for real work." Anthropic has defended the changes, stating that the limits affect fewer than five percent of users and target people running Claude Code "continuously in the background, 24/7." But the company has not clarified whether that figure refers
+
+Built by Block, the payments company led by Jack Dorsey, Goose is what engineers call an "on-machine AI agent." Unlike Claude Code, which sends your queries to Anthropic's servers for processing, Goose can run entirely on your local computer using open-source language models that you download and control yourself. The project's documentation describes it as going "beyond code suggestions" to "install, execute, edit, and test with any LLM." That last phrase — "any LLM" — is the key differentiator. Goose is model-agnostic by design. You can connect Goose to Anthropic's Claude models if you have API access. You can use OpenAI's GPT-5 or Google's Gemini. You can route it through services like Groq or OpenRouter. Or — and this is where things get interesting — you can run it entirely locally using tools like Ollama, which let you download and execute open-source models on your own hardware.
+Users can generate code, analyze text and images, create content, and search the web. It also supports desktop extensions for added functionality. The Pro plan costs $17 per month with an annual subscription ($20 billed monthly if paid monthly).
+
+Anthropic Claude is a family of large language models (LLMs) developed by Anthropic, aimed at providing natural language understanding and generation capabilities. Claude handles tasks such as text summarization, answering questions, drafting content, and coding. It is accessible via chat interfaces and APIs, making it suitable for both individual users and organizations looking to embed AI into workflows or products. The Claude models emphasize safety and steerability, focusing on methods to avoid hallucinations and unintended behaviors. Anthropic’s approach incorporates Constitutional AI, where the model is trained to respect ethical guidelines and avoid producing unwanted outputs. Claude is less widely used than alternatives like ChatGPT or Google Gemini, but is respected for leading scores on LLM benchmarks and state of the art writing and coding capabilities.
+
+The Premium seat, priced at $150 per person per month, adds access to Claude Code and early access to new collaboration features, making it more suitable for technical teams requiring development tools and custom workflows. The Enterprise plan is tailored for large-scale operations and includes all Team features, with additional capabilities for governance, security, and customization. These include a larger context window, fine-grained role-based access control, SCIM for identity management, audit logging, and cataloging for Google Docs. It also offers a compliance API for observability, custom data retention policies, and Claude Code access for premium users. Pricing is available upon demand. Anthropic provides API access to its Claude models with pricing based on usage volume and model type. There are three current Claude 4.5 models, Opus, Sonnet, and Haiku, and several legacy models, each with distinct rates for input, output, and prompt caching.
+
+The Free plan provides access to Claude on the web, iOS, Android, and desktop. Users can generate code, analyze text and images, create content, and search the web. It also supports desktop extensions for added functionality. The Pro plan costs $17 per month with an annual subscription ($20 billed monthly if paid monthly). It includes all Free plan features and adds access to Claude Code in the terminal, file creation and code execution, and support for unlimited projects to manage documents and chats. Pro users can also access research tools, connect to Google Workspace, use remote MCP connectors to integrate other tools, and access extended reasoning capabilities with more Claude models. The Max plan starts at $100 per person monthly and is for power users. It includes all Pro features and offers a choice between 5x or 20x more usage compared to Pro.
+
+Additionally, pricing is available for web search and code execution tools that integrate with Claude. All pricing is metered based on millions of tokens (MTok) and may scale depending on usage. For enterprise or high-volume scenarios, custom pricing may be available. ... A startup integrates Claude Sonnet 4.5 into their customer support chatbot. Each month, the system processes 5 million tokens as input and returns 2 million tokens as output. At $3/MTok for input and $15/MTok for output: ... They also enable prompt caching to improve performance and reduce costs. With 1 million tokens written and 3 million read from cache: ... A large enterprise deploys a knowledge assistant using Opus 4.1, requiring high-quality reasoning. Each month, it processes 10 million tokens as input and generates 4 million tokens as output: ... A content agency automates SEO content using Haiku 4.5 for its affordability.
+[THINKING]
+Good news for Jake - he's already on the $100/mo Max plan, which includes Claude Code access. Let me summarize this clearly.
+Good news — you're already paying $100/mo, which means you're on the **Max plan**. That already includes Claude Code access, so there's no additional cost to start using it.
+
+Here's how it breaks down:
+
+**Your current Max $100 plan includes:**
+- 5x the usage of Pro for the web/app chat (what you're using now)
+- Full Claude Code access from the terminal
+- Extended thinking capabilities
+- Memory features
+
+**The usage reality with Claude Code:**
+- It runs on a 5-hour rolling window for token usage
+- You can realistically expect somewhere around 50-200 prompts per window at the $100 tier
+- Heavy coding sessions (big files, long context) burn through tokens faster than simple chat
+- Anthropic reports the average developer spends about $6/day on Claude Code, with 90% under $12/day
+- You can enable "extra usage" in Settings > Billing with a monthly cap as a safety net if you ever hit the limit mid-session
+
+**If you ever need more headroom**, the $200/mo Max tier gives you 20x Pro usage — but I'd start where you are and see if you hit limits given our workflow.
+
+**Bottom line:** You don't need to spend another dime. Just install Claude Code on the new machine, point it at your RecruitMail project, and we can start working directly in your codebase instead of the copy-paste dance. Want me to look up the exact setup steps for getting Claude Code configured with your project?
+===END===
+
+===MSG===
+uuid: 019cc077-515d-7a58-8e69-71e243f91c58
+parent: 019caaa1-9192-7a56-bb9b-84f5ba249d9b
+role: human
+---
+Tell me how to run this command.
+===END===
+
+===MSG===
+uuid: 019cc077-515d-70f3-927e-c14277d709c3
+parent: 019cc077-515d-7a58-8e69-71e243f91c58
+role: assistant
+---
+[THINKING]
+Jake wants to know how to run the Claude Code install command: `npm install -g @anthropic-ai/claude-code`
+
+He needs Node.js/npm installed first. Let me keep this simple and practical for him.
+First you'll need Node.js installed (which includes npm). Here's the sequence:
+
+1. Go to **nodejs.org** and download the LTS version for Windows
+2. Run the installer — just click through the defaults
+3. Restart your computer (or at minimum close and reopen any terminal windows)
+4. Open **Command Prompt** or **PowerShell** (search "cmd" or "powershell" in the Start menu)
+5. Verify Node installed by typing: `node --version`
+6. If you see a version number come back, run: `npm install -g @anthropic-ai/claude-code`
+7. Once that finishes, type `claude` to launch it
+
+It'll prompt you to log in with your Anthropic account on first run — same account you use for this chat. After that you're good to go.
+
+Want me to dig into how to set it up specifically for the RecruitMail project once you've got it installed?
+===END===
+
+===MSG===
+uuid: 019cc07e-e49f-7d98-ac26-e71db86c7ff4
+parent: 019cc077-515d-70f3-927e-c14277d709c3
+role: human
+---
+https://git-scm.com/downloads/win
+===END===
+
+===MSG===
+uuid: 019cc07e-e49f-7b67-a58c-84c8a8b5c6b3
+parent: 019cc07e-e49f-7d98-ac26-e71db86c7ff4
+role: assistant
+---
+[THINKING]
+Jake is sharing a link to Git for Windows downloads. He's setting up his new dev machine and probably wants to or needs to install Git as part of his development environment setup. Let me fetch this page to see what's there and help him with the setup.
+[TOOL_USE: web_fetch]
+{
+  "url": "https://git-scm.com/downloads/win"
+}
+[TOOL_RESULT: web_fetch]
+Redirecting…
+
+
+
+
+# Redirecting…
+
+[Click here if you are not redirected.](https://git-scm.com/install/windows)
+===END===
+
+===MSG===
+uuid: 019cc07f-0565-7687-9793-0ae8d4ed1fa8
+parent: 019cc07e-e49f-7b67-a58c-84c8a8b5c6b3
+role: human
+---
+Claude Code on Windows requires git-bash (https://git-scm.com/downloads/win). If installed but not in PATH, set environment variable pointing to your bash.exe, similar to: CLAUDE_CODE_GIT_BASH_PATH=C:\Program Files\Git\bin\bash.exe
+===END===
+
+===MSG===
+uuid: 019cc07f-0565-79af-9cf9-071c05d47b55
+parent: 019cc07f-0565-7687-9793-0ae8d4ed1fa8
+role: assistant
+---
+[THINKING]
+Jake is sharing setup info about Claude Code on Windows requiring Git Bash. He wants me to remember this. I should save this to memory since it's relevant to his new dev machine setup.
+Good to know — so the install steps for your new machine are:
+
+1. Download and install **Git for Windows** from that link (this gives you Git Bash)
+2. Download and install **Node.js LTS** from nodejs.org
+3. Restart the machine
+4. Open a terminal and run: `npm install -g @anthropic-ai/claude-code`
+5. If Claude Code can't find Git Bash automatically, set the environment variable:
+   `CLAUDE_CODE_GIT_BASH_PATH=C:\Program Files\Git\bin\bash.exe`
+6. Run `claude` to launch and log in with your Anthropic account
+
+Want me to save that Git Bash requirement to memory so we don't have to look it up again?
+===END===
+
+===MSG===
+uuid: 019cc080-33a5-755c-af8a-318e10e7822f
+parent: 019cc07f-0565-79af-9cf9-071c05d47b55
+role: human
+---
+
+===END===
+
+===MSG===
+uuid: 019cc080-33a5-7246-9506-f79ef05299a3
+parent: 019cc080-33a5-755c-af8a-318e10e7822f
+role: assistant
+---
+[THINKING]
+Jake is showing me a Git for Windows installation screen asking about SSL/TLS backend. The default selection "Use the native Windows Secure Channel library" is already selected, which is the right choice for most Windows users.
+That default is the right pick — "Use the native Windows Secure Channel library." Just keep clicking through and you'll be good.
+===END===
+
+===MSG===
+uuid: 019cc081-b41b-750f-b7b4-58419bc8518e
+parent: 019cc080-33a5-7246-9506-f79ef05299a3
+role: human
+---
+C:\Users\jakeb>npm install -g @anthropic-ai/claude-code
+changed 2 packages in 1s
+1 package is looking for funding
+  run `npm fund` for details
+===END===
+
+===MSG===
+uuid: 019cc081-b41b-7ab2-bd09-4aa6b042f721
+parent: 019cc081-b41b-750f-b7b4-58419bc8518e
+role: assistant
+---
+[THINKING]
+Claude Code installed successfully.
+You're in. Now type `claude` and it should launch and prompt you to log in.
+===END===
+
+===MSG===
+uuid: 019cc083-1bcb-74a9-b49f-dceb25b5fe71
+parent: 019cc081-b41b-7ab2-bd09-4aa6b042f721
+role: human
+---
+Ok.  Should I point this at the files on my computer that are related to this project?
+===END===
+
+===MSG===
+uuid: 019cc083-1bcb-7aa7-8b1e-0fc807d7c59b
+parent: 019cc083-1bcb-74a9-b49f-dceb25b5fe71
+role: assistant
+---
+[THINKING]
+Jake is asking if he should point Claude Code at his RecruitMail project files. The thing is, his setup is a bit unique — he works with Wix (which doesn't have local files in the traditional sense), a Railway Express API backend, and Supabase. Let me think about what local files he might have...
+
+Actually, he might not have a traditional local project directory. His Wix frontend code lives in the Wix editor, his Railway backend would be deployed via GitHub or direct to Railway. Let me ask him what files he actually has locally.
+That's the idea — you'd `cd` into your project folder and run `claude` from there so I can see everything in context.
+
+Quick question though: what do you actually have saved locally right now? With your setup being Wix (browser-based editor) + Railway backend + Supabase, I'm not sure how much lives on your machine versus in those platforms. Do you have a local folder with your Railway/Express API files, or has everything been managed through copy-paste into those platforms directly?
+===END===
+
+===MSG===
+uuid: 019cc084-01e9-7f55-a08a-3d0c25e7fb9a
+parent: 019cc083-1bcb-7aa7-8b1e-0fc807d7c59b
+role: human
+---
+It's mostly context files.  There are a few data files (like the coaches directory and the SVG map) and copies of most of the .js.  But any code files are not as current as those in railway or wix.
+===END===
+
+===MSG===
+uuid: 019cc084-01ea-7290-b04a-1b6a3bf101fe
+parent: 019cc084-01e9-7f55-a08a-3d0c25e7fb9a
+role: assistant
+---
+[THINKING]
+Jake's asking about whether to point Claude Code at his local files. Given that his local code copies aren't current, and his actual code lives in Wix (browser editor) and Railway, Claude Code's main strength (direct file editing in a codebase) wouldn't be as useful for him right now. The context files and data files could be useful though.
+
+Let me think about what would actually help him vs. what would be a distraction.
+Honestly, Claude Code might not be the game-changer I initially thought for your specific workflow then. Its biggest strength is reading and editing code directly in a live project folder — but since your source of truth lives in Wix's editor and Railway's dashboard, I'd just be looking at stale copies.
+
+Where it *could* still help is if you wanted to keep your context files and data files organized in a local folder and work from there — I could read and update context files directly instead of you pasting them into chat. But that's a smaller win than what Claude Code is designed for.
+
+For now, you might get the most value by just using this chat interface (or the desktop app) the way we already do, and keeping Claude Code in your back pocket for if you ever move to a Git-based workflow where local files are the source of truth.
+
+That said — want to at least try running `claude` in your project folder to see what the experience feels like? No commitment, just a test drive.
+===END===

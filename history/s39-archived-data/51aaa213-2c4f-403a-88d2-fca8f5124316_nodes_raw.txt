@@ -1,0 +1,67 @@
+# SCOPE READER OUTPUT
+# conv 51aaa213-2c4f-403a-88d2-fca8f5124316 | baseline-2026-05-25-ae015455 | 8 messages
+
+## CONV — 51aaa213-2c4f-403a-88d2-fca8f5124316
+**Created:** 2026-04-15T19:49:51.865771Z | **Messages:** 8
+
+### NODE 1 — PETG transparency: thicker vs thinner lines
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "51aaa213-2c4f-403a-88d2-fca8f5124316",
+  anchor_msg  : "019d92b1-63fd-7f9c-9c21-c1eccab4c4ce",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** PETG transparency, line width, thicker lines, extrusion width, refractive interfaces, vase mode, clear PETG print settings
+**Named-continuity:** PETG
+**Summary:** Jake asks whether thicker or thinner lines improve PETG transparency. Claude explains that thicker lines reduce the number of inter-line seam boundaries, each of which scatters light, so fewer boundaries means greater clarity. Practical tips given: slow speed, higher temp, fewer perimeters at wider width, vase mode as the gold standard.
+
+### NODE 2 — Picture frame back design: thin shell + sparse infill for light transmission
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "51aaa213-2c4f-403a-88d2-fca8f5124316",
+  anchor_msg  : "019d92b3-ee6a-7054-a479-8fad4eb30bd9",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** picture frame back, PETG translucent, thin bottom shell, sparse infill, no top shell, light transmission, 3mm deep, 0.5mm shell, infill pattern, grid infill, lightbox backing
+**Named-continuity:** PETG, picture frame
+**Summary:** Jake describes a picture frame back he is printing in PETG: 3mm total depth, 0.5mm bottom shell, sparse infill, no top shell, to allow light through. Claude affirms the plan, recommends grid or lines infill pattern (over gyroid/cubic) for cleaner shadow behavior and structural predictability, suggests 10-15% infill, and notes the option of a single top layer to clean up the back face without blocking light.
+
+### NODE 3 — Layer stack confirmation: 2 bottom + 9 infill + 1 top at 0.25mm = 3mm
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "51aaa213-2c4f-403a-88d2-fca8f5124316",
+  anchor_msg  : "019d92b5-86ea-7998-aa29-7211b52ffce9",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** layer count, 12 layers, 0.25mm layer height, 3mm total, 2 bottom layers, 9 infill layers, 1 top layer, slicer settings
+**Named-continuity:** PETG, picture frame
+**Summary:** Jake proposes 2 bottom shell layers + 9 infill layers + 1 top layer, all at 0.25mm, totaling 12 layers = 3mm exactly. Claude confirms the math and the configuration.
+**Why:** Specific layer stack validated: 2+9+1 at 0.25mm hits 3mm exactly with one top layer added to clean up the back face.
+**Predicate:** Layer height remains 0.25mm and total depth remains 3mm; if either changes, this stack needs recalculation.
+
+### NODE 4 — Bottom layer pattern decision: Monotonic for even light diffusion
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "51aaa213-2c4f-403a-88d2-fca8f5124316",
+  anchor_msg  : "019d92b6-d707-73b5-815b-3e2e99b71c90",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** bottom layer pattern, monotonic, concentric, Archimedean, infill pattern, light diffusion, uniform fill, translucent bottom, slicer bottom pattern
+**Named-continuity:** PETG, picture frame
+**Summary:** Jake asks whether to use Monotonic or a shaped pattern for the bottom layer. Claude recommends Monotonic because it fills uniformly in one direction with no overlap artifacts, producing even light diffusion; shaped patterns (concentric, Archimedean, etc.) would create visible patterned shadows visible through the translucent backing.
+**Why:** Monotonic chosen over shaped patterns because shaped fills create visible artifacts in transmitted light, which would show through behind the picture.
+**Predicate:** Goal remains even, artifact-free light diffusion through bottom layer; if a patterned effect is desired instead, this choice would be revisited.
+
+--- DONE: 4 nodes (2 MOTION, 2 FENCE, 0 TEXTURE), 0 drops ---

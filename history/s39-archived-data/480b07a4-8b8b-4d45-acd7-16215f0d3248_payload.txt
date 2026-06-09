@@ -1,0 +1,221 @@
+CONVERSATION: 480b07a4-8b8b-4d45-acd7-16215f0d3248
+SNAPSHOT_ID: baseline-2026-05-25-ae015455
+CREATED: 2026-02-04T14:30:02.598382Z
+MESSAGES: 16
+
+===MSG===
+uuid: 019c290f-7077-73cc-b626-9186755bc3c2
+parent: null
+role: human
+---
+I need a way to change my Zoom room name to something other than "Personal Meeting Room".  It appears that there's no available option in the settings (both web and in the app).  Is there a "hacky" way around this name?  Can I set it in the apps settings files somewhere?
+===END===
+
+===MSG===
+uuid: 019c290f-7077-73cc-b626-9187a9484e0b
+parent: 019c290f-7077-73cc-b626-9186755bc3c2
+role: assistant
+---
+ This is a common frustration! Unfortunately, Zoom doesn't allow you to change the name "Personal Meeting Room" through any official settings, and there's no hidden configuration file that controls this either.
+
+Here's what's actually going on and your options:
+
+**Why you can't change it:** The "Personal Meeting Room" label is hardcoded by Zoom and tied to your Personal Meeting ID (PMI). It's not stored in local config files—it's set server-side by Zoom.
+
+**Workarounds that actually work:**
+
+1. **Use a scheduled meeting instead** — Create a recurring meeting with no fixed time and give it whatever name you want. You can reuse this link indefinitely just like your PMI, but with your preferred name. This is the most common solution.
+
+2. **Set a meeting topic when starting** — When you start an instant meeting (not using your PMI), you can set a custom topic that participants will see.
+
+3. **Use waiting room with custom branding** (paid plans) — If you have a Pro account or higher, you can customize the waiting room with your own title/logo, which changes what participants see when joining.
+
+4. **Zoom Webinars or Zoom Events** — These allow more customization, but are separate products.
+
+**What won't work:**
+- Editing local Zoom config/plist/registry files — the room name isn't stored locally
+- Browser extensions or hacks — the name is enforced server-side
+- API workarounds — the PMI room name isn't editable via API either
+
+The recurring meeting approach is really your best bet. Would you like help setting that up?
+===END===
+
+===MSG===
+uuid: 019c2910-7583-7317-891d-23b46ffac185
+parent: 019c290f-7077-73cc-b626-9187a9484e0b
+role: human
+---
+So I schedule these by creating a Google Calendar invitation and then putting my personal meeting room link in the "Location" and "Description" fields.  You're saying that when I start these meetings, I can change the the topic right away to something else?
+===END===
+
+===MSG===
+uuid: 019c2910-7583-7317-891d-23b59dac6223
+parent: 019c2910-7583-7317-891d-23b46ffac185
+role: assistant
+---
+ Not quite — let me clarify.
+
+When you use your Personal Meeting Room link (your PMI), the meeting will still be called "Personal Meeting Room" regardless of what you put in the calendar invite. The calendar invite is just a delivery mechanism for the link; Zoom doesn't read the calendar event title.
+
+What I'm suggesting is a slightly different workflow:
+
+**Instead of using your PMI link, create a reusable recurring meeting:**
+
+1. Go to Zoom web portal → Meetings → Schedule a Meeting
+2. Give it the name you actually want (e.g., "Chat with Sarah" or "Project Sync")
+3. Set it as a **Recurring meeting** with **No Fixed Time**
+4. Save it
+
+This gives you a permanent meeting link (different from your PMI) that you can reuse forever, and it will display your custom name to participants. You'd then put *this* link in your calendar invites instead of your PMI.
+
+**The trade-off:** You'd need to create one of these for each distinct meeting name you want. Some people create a handful of these ("1:1 Meetings", "Team Syncs", "Client Calls") and rotate through them.
+
+If you really want to keep using your PMI for convenience, then unfortunately "Personal Meeting Room" is what participants will see — there's no way around that, hacky or otherwise.
+
+Does the recurring meeting approach work for your use case, or are you trying to solve for something more specific?
+===END===
+
+===MSG===
+uuid: 019c2910-d842-760b-ba6b-7f5d66353c9b
+parent: 019c2910-7583-7317-891d-23b59dac6223
+role: human
+---
+What's #2 above though?
+===END===
+
+===MSG===
+uuid: 019c2910-d842-760b-ba6b-7f5e80c21a7e
+parent: 019c2910-d842-760b-ba6b-7f5d66353c9b
+role: assistant
+---
+ Ah, you're right to call that out — I was unclear.
+
+When I said "Give it the name you actually want," I just meant filling in the **Topic** field when scheduling the meeting in Zoom's web portal. That's the field that controls what participants see as the meeting name.
+
+So step 2 isn't a separate feature — it's just the part where you type your desired meeting name into the "Topic" text box on the meeting scheduling form.
+
+Nothing fancy, I just worded it confusingly. Sorry about that!
+===END===
+
+===MSG===
+uuid: 019c2912-05fe-759d-b0a7-cf52e87346de
+parent: 019c2910-d842-760b-ba6b-7f5e80c21a7e
+role: human
+---
+How do I set the topic in the zoom app when in a meeting?
+===END===
+
+===MSG===
+uuid: 019c2912-05fe-759d-b0a7-cf53b8674696
+parent: 019c2912-05fe-759d-b0a7-cf52e87346de
+role: assistant
+---
+ You can do this during a meeting:
+
+1. Click on the **info icon** (the small "i" in a circle, or sometimes a shield icon) in the top-left corner of the Zoom window
+2. You'll see the meeting details pop up, including the topic
+3. Click on the topic text — it should be editable if you're the host
+4. Type your new name and save/confirm
+
+That said, I want to be upfront: I'm not 100% certain this works for PMI meetings specifically, or whether the change persists for participants who've already joined. It's been a while since I've tested this exact flow, and Zoom updates their interface frequently.
+
+Give it a try and see if it lets you edit it. If not, the recurring meeting workaround I mentioned earlier is still your most reliable option.
+===END===
+
+===MSG===
+uuid: 019c2912-9e4e-72a8-b0e3-83681f52060f
+parent: 019c2912-05fe-759d-b0a7-cf53b8674696
+role: human
+---
+Yeah, the topic isn't editable.
+===END===
+
+===MSG===
+uuid: 019c2912-9e4e-72a8-b0e3-8369bc0ed6aa
+parent: 019c2912-9e4e-72a8-b0e3-83681f52060f
+role: assistant
+---
+ That tracks — I suspected the PMI might be locked down differently. Thanks for confirming.
+
+So yeah, you're stuck with "Personal Meeting Room" if you want to keep using your PMI link. The only real workaround is the recurring meeting approach: create a "No Fixed Time" recurring meeting with your preferred topic, and use that link in your calendar invites instead.
+
+It's an extra step upfront, but once it's set up, the workflow is basically identical to what you're doing now — just a different link to copy into your calendar invites.
+===END===
+
+===MSG===
+uuid: 019c2913-9655-718e-a085-5bd7f1c6e56d
+parent: 019c2912-9e4e-72a8-b0e3-8369bc0ed6aa
+role: human
+---
+I'm using a URL redirect anyway, so that's not a huge pain in the ass.  If I just want it to say "Jake Botticello - Lance O's Recruiting Network" I can just create a recurring meeting with no time, use that as the topic, and then use that link in the URL redirector?
+===END===
+
+===MSG===
+uuid: 019c2913-9655-718e-a085-5bd8b429574c
+parent: 019c2913-9655-718e-a085-5bd7f1c6e56d
+role: assistant
+---
+ Exactly, that's the move. Create the recurring meeting with "Jake Botticello - Lance O's Recruiting Network" as the topic, set it to no fixed time, grab that link, and point your URL redirect at it. Done.
+
+Participants will see your custom name, and your redirect URL stays clean and memorable. You won't notice any difference in your day-to-day workflow.
+===END===
+
+===MSG===
+uuid: 019c2914-8650-772b-8c46-ceb64b811d13
+parent: 019c2913-9655-718e-a085-5bd8b429574c
+role: human
+---
+Walk me through setting up this meeting.  It looks like times and recurring information is required.
+===END===
+
+===MSG===
+uuid: 019c2914-8650-772b-8c46-ceb77e20e6d3
+parent: 019c2914-8650-772b-8c46-ceb64b811d13
+role: assistant
+---
+ Sure, here's how to do it:
+
+1. Go to https://zoom.us and sign in
+2. Click **Meetings** in the left sidebar
+3. Click **Schedule a Meeting**
+4. Fill in the fields:
+   - **Topic:** Jake Botticello - Lance O's Recruiting Network
+   - **Date/Time:** Just pick any date and time — it won't matter
+   - **Duration:** Whatever, doesn't matter
+   - Check the box for **Recurring meeting**
+   - **Recurrence:** Select **No Fixed Time**
+
+Once you select "No Fixed Time," the date/time fields become irrelevant. The meeting link will work anytime you want to use it, indefinitely.
+
+5. Set any other options you want (waiting room, passcode, etc.)
+6. Click **Save**
+
+You'll get a meeting link you can use forever with your custom topic. Swap that into your URL redirector and you're set.
+===END===
+
+===MSG===
+uuid: 019c2915-1603-7171-b3c7-0cdea6bb582a
+parent: 019c2914-8650-772b-8c46-ceb77e20e6d3
+role: human
+---
+
+===END===
+
+===MSG===
+uuid: 019c2915-1603-7171-b3c7-0cdf9b99aaa8
+parent: 019c2915-1603-7171-b3c7-0cdea6bb582a
+role: assistant
+---
+ That looks like a Google Calendar event, not the Zoom web portal.
+
+You need to schedule the meeting directly through Zoom:
+
+1. Go to **https://zoom.us** in your browser
+2. Sign in to your account
+3. Click **Meetings** on the left sidebar
+4. Click **Schedule a Meeting** (blue button, usually top right)
+
+That's where you'll find the "Recurring meeting" checkbox and the "No Fixed Time" option. The Zoom scheduler is separate from Google Calendar — Google Calendar doesn't have the "No Fixed Time" recurrence option that Zoom offers.
+
+Once you create the meeting in Zoom, you'll get the link to use in your redirector.
+===END===

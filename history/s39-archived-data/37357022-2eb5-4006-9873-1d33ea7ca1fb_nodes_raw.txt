@@ -1,0 +1,63 @@
+# SCOPE READER OUTPUT
+# conv 37357022-2eb5-4006-9873-1d33ea7ca1fb | baseline-2026-05-25-ae015455 | 10 messages
+
+## CONV — 37357022-2eb5-4006-9873-1d33ea7ca1fb
+**Created:** 2026-05-13T17:33:31.151720Z | **Messages:** 10
+
+### NODE 1 — SVG vectorization of black silhouette from phoenix image (Alt_2_v1.png)
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "37357022-2eb5-4006-9873-1d33ea7ca1fb",
+  anchor_msg  : "019e2266-9f21-7d2e-b761-0963bb94aab3",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** SVG conversion, black silhouette, phoenix image, potrace, vectorize, raster to vector, bitmap trace, black pixel isolation, luminance threshold, IoU verification, phoenix.svg, 99.25% IoU
+**Named-continuity:** potrace, cairosvg, Alt_2_v1.png, phoenix.svg, PIL, numpy
+**Summary:** Jake requested conversion of the black portion of a phoenix image (Alt_2_v1.png) to SVG. Claude installed potrace, isolated black pixels via luminance threshold (<80) on RGBA image, traced with potrace (turdsize 4, alphamax 1.0, opttolerance 0.2), verified quality via cairosvg rasterization achieving 99.25% IoU, cleaned the SVG (stripped DOCTYPE/metadata, normalized pt units), and delivered phoenix.svg (~7KB, single compound path, fill #000000).
+
+### NODE 2 — SVG vectorization of phoenix with flames (second image)
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "37357022-2eb5-4006-9873-1d33ea7ca1fb",
+  anchor_msg  : "019e226c-20cf-7881-8e94-9356ef7e7c08",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** SVG flames, phoenix flames, second image vectorize, phoenix_flames.svg, 99.18% IoU, 10.5KB, same potrace settings
+**Named-continuity:** potrace, cairosvg, 1778693968421_image.png, phoenix_flames.svg, PIL, numpy
+**Summary:** Jake asked for the same vectorization process on a second phoenix image that includes flames. Claude ran identical pipeline: luminance threshold isolation (541,889 black pixels vs 364,048 in the first), potrace trace, cairosvg IoU verification (99.18%), SVG cleanup, delivered phoenix_flames.svg (~10.5KB). Larger file size attributed to additional curve complexity from flames.
+
+### NODE 3 — Flame extraction and composite: transplanting flames from image 2 onto image 1's bird
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "37357022-2eb5-4006-9873-1d33ea7ca1fb",
+  anchor_msg  : "019e226d-3908-753f-8239-08158a41d8bf",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** composite SVG, extract flames, transplant flames, image subtraction, phase correlation, bird alignment, pixel registration, flame isolation, dy=13 dx=-5 offset, y=780 cutoff, binary dilation, potrace merge, phoenix_with_flames.svg
+**Named-continuity:** potrace, cairosvg, scipy, PIL, numpy, Alt_2_v1.png, 1778693968421_image.png, phoenix_with_flames.svg, flames_clean.pbm, composite_preview.png
+**Summary:** Jake asked to extract the flames from image 2 and install them into image 1 at the same relative position. Claude used phase correlation (scipy.fft) to detect a 13px vertical / 5px horizontal translation offset between the two birds, aligned image 2's mask to image 1's bird coordinate space, applied a y=780 horizontal cutoff to separate bird body from flames, dilated image 1's bird mask (8 iterations) to absorb tail overlap, isolated 146,302 clean flame pixels, traced with potrace, and merged the flames path into phoenix.svg's existing `<g>` block. Final SVG phoenix_with_flames.svg (~10KB) contains two `<path>` elements (bird + flames) both fill #000000. Claude noted the tail shapes differ slightly between the two originals, leaving a marginally wider gap at the lower-left flame cluster.
+
+### NODE 4 — Raster export of composite phoenix SVG to PNG
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "37357022-2eb5-4006-9873-1d33ea7ca1fb",
+  anchor_msg  : "019e32db-4ca6-7a8d-9414-e392406d986c",
+  reach       : { up: 1, down: 1 }
+}
+```
+**Keywords:** raster PNG, SVG to PNG, transparent background, 2048px, cairosvg render, phoenix_with_flames.png, 155KB
+**Named-continuity:** cairosvg, phoenix_with_flames.svg, phoenix_with_flames.png
+**Summary:** Jake requested a raster version of the composite. Claude rendered phoenix_with_flames.svg to a 2048x2048 transparent PNG (~155KB) using cairosvg, noting that transparent background is more useful for logo/branding work than a white background. Jake expressed satisfaction; Claude offered follow-up variants (color, navy version).
+
+--- DONE: 4 nodes (4 MOTION, 0 FENCE, 0 TEXTURE), 0 drops ---

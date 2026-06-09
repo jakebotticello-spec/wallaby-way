@@ -1,0 +1,193 @@
+﻿# SCOPE READER OUTPUT
+# conv 4afba4db-1b89-442f-b3af-db38eca9fa56 | baseline-2026-05-25-ae015455 | 26 messages
+
+## CONV — 4afba4db-1b89-442f-b3af-db38eca9fa56
+**Created:** 2026-04-21T01:22:37Z | **Messages:** 26
+
+---
+
+### NODE 1 — Initial phoenix print setup: orientation, AMS, settings
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dada1-d724-78a7-801d-9a3ce669eeff",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** phoenix STL print setup, P1S AMS2 Pro 3 colors, orientation upright vs back, tree supports organic, prime tower flush volumes, matte PLA low-poly, 0.2mm layer height, 10-15% gyroid infill
+**Named-continuity:** P1S, AMS2 Pro, Bambu Studio, phoenix STL, matte PLA
+**Summary:** Comprehensive initial guidance on printing a 250x204x158mm low-poly phoenix with the P1S + AMS2 Pro using 3 colors. Covers three orientation options (upright, on-back, auto-orient), support strategy (tree organic), multi-color prime tower necessity, flush volume tuning per color pair, estimated 35-50 hour print time, and filament recommendations (matte PLA). Identifies the wings-as-overhangs problem as the central challenge of the print.
+
+---
+
+### NODE 2 — Fork: flat-on-back orientation rejected due to curved wings
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dada6-c5fd-760c-b3f2-c74d1373c367",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** flat on back orientation rejected, wings curved not flat, split model wings separate, MeshMixer Blender cut, glue wings body, side-lay orientation, auto-orient Bambu Studio
+**Named-continuity:** P1S, Bambu Studio, MeshMixer, Blender, phoenix STL
+**Summary:** The "lay flat on back" orientation is rejected because the wings curve upward from the body, meaning only the back ridge contacts the plate — creating massive floating overhangs and no real improvement over upright. Alternatives proposed: face-down 180 flip, 20-30 degree back tilt, or splitting into body + separate wings and gluing. Splitting framed as the strongest option for print quality and time.
+**Why:** Flat-on-back rejected because wing geometry is curved, not flat — spine contact only, wings float as unanchored overhangs worse than upright.
+**Predicate:** Still true as long as the phoenix STL has curved swept-back wings; would change only if a flattened variant were used.
+
+---
+
+### NODE 3 — Fork: bisect-and-glue rejected, seam concern established
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dada8-2407-7a91-ba47-c946586623bd",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** bisect glue rejected, seam hero piece, low-poly seam misalignment, single print vs split, upright tree organic supports, wing underside support scars, display piece seam hidden
+**Named-continuity:** Bambu Studio, phoenix STL, tree organic supports
+**Summary:** Jake rejects bisecting due to seam aesthetics; advised this is the right call for a display piece. Low-poly faceted geometry makes seams more visible than on organic models because flat planes catch light. Decision made to print single-piece upright with tree organic supports. Specific support settings given: XY distance 0.35mm, top Z 0.2mm, interface layers 2, rectilinear interlaced pattern, support-from-model enabled.
+**Why:** Single-piece upright chosen over split because seam visibility on flat low-poly facets is worse than on organic models, and support scars on wing undersides are hidden in typical display viewing angles.
+**Predicate:** Holds as long as Jake prefers no visible seam over shorter print time; revisit if he ever prints a version to be handled rather than displayed.
+
+---
+
+### NODE 4 — Print time problem: 40 hours driving optimization search
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dada9-0382-7ade-841f-8b149a6365b5",
+  reach       : { up: 2, down: 4 }
+}
+```
+**Keywords:** reduce print time 40 hours, scale down 80%, layer height 0.28mm, drop to 2 colors, post-print acrylic paint, speed profile ludicrous sport, infill 8% gyroid 2 walls, time levers stacking
+**Named-continuity:** P1S, AMS2 Pro, Bambu Studio, phoenix STL, matte PLA
+**Summary:** 40-hour estimate prompts systematic time-reduction analysis. Four levers identified in order of impact: scale to 80% (halves time), 0.28mm layers (saves 25%), drop to single color plus post-paint gold accents (eliminates all swap time), speed profile plus lower infill. Stacked result estimated at 8 hours. Single-color-plus-acrylic framed as the optimal path if metallic gold appearance is acceptable from paint rather than filament.
+
+---
+
+### NODE 5 — Fuzzy skin decision at 0.28mm layer height
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dadaa-3cfb-7465-9ac2-52cb4df37efd",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** fuzzy skin 0.28mm layer height, fuzzy skin coarse pebbly, fine feathery 0.16mm, selective fuzzy skin wings tail only, paint fuzzy skin Bambu Studio, low-poly facets vs organic texture
+**Named-continuity:** Bambu Studio, P1S, phoenix STL
+**Summary:** Analysis of whether fuzzy skin makes sense at 0.28mm layer height. At 0.28mm the fuzz is coarser and more granular, recommended against for full-model application since it fights the clean-facet aesthetic of the low-poly design. Selective application on wings and tail only (via Bambu's fuzzy skin painter) presented as a viable middle path. Recommendation leans toward skipping entirely and letting the low-poly geometry speak for itself. Layer height of 0.20mm or 0.16mm required if committing to fuzzy skin as a hero feature.
+
+---
+
+### NODE 6 — Actual model dimensions confirmed: 200mm tall, 245mm wide
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dadaa-db2c-7f8e-a348-11e973865d81",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** phoenix dimensions 200mm 245mm, P1S plate 256mm tight clearance, brim no room 5mm, prime tower placement, scale to 90%, plate margin
+**Named-continuity:** P1S, Bambu Studio, phoenix STL
+**Summary:** Jake confirms current model scale is 200mm tall and 245mm wide, not the originally assumed 250mm. At 245mm wide on a 256mm plate there is only 5mm clearance per side — not enough for a brim, and prime tower placement is constrained. Recommended scaling to 90% (220mm wide, 180mm tall) to buy brim room and reduce print time another 25%. Revised time estimate at 90% scale, 0.28mm layers, single color, speed profile: 6-8 hours.
+**Why:** 245mm width leaves only 5mm plate clearance, making brim and prime tower placement risky; scaling to 90% buys safety margin and meaningful time savings.
+**Predicate:** Relevant if Jake adjusts scale further; 245mm is the confirmed baseline size.
+
+---
+
+### NODE 7 — Beak-down orientation rejected
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dadab-304c-717a-81bd-9facfd16dcb3",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** print on beak rejected, beak-down orientation bad, small contact patch tip balance, face-down plate texture scar, hero surface destroyed, side-lay tilt alternative
+**Named-continuity:** P1S, Bambu Studio, phoenix STL
+**Summary:** Beak-down orientation explicitly rejected: contact patch is ~15-20mm sq (pencil eraser), entire tall model balanced on a point, hero face surfaces get plate texture imprinted and support scars on show-side wing tops instead of hidden undersides. Side-lay with 15-degree forward tilt identified as the best alternative if avoiding upright, but upright with tree organic supports still the recommended path.
+**Why:** Beak-down fails on adhesion (tiny contact), risks toppling, and moves support scars from hidden undersides to visible wing tops — net worse on every dimension.
+**Predicate:** Permanent rejection for this geometry; would only revisit if model were resculpted with a flat base on the beak area.
+
+---
+
+### NODE 8 — Slicer screenshot: 19h24m, 270 filament changes, 104g purge waste
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dadb1-89ed-77a6-8ed0-ba5b454f32e4",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** slice result 19h24m, 270 filament changes, 104g purge waste, orange gold 64g purged 70% waste, flush volume tuning, delete filament 2 post-paint, Bambu Studio slice preview
+**Named-continuity:** Bambu Studio, AMS2 Pro, phoenix STL, P1S
+**Summary:** First real slice result shared: 19h24m, 270 filament changes, 104.77g total purge out of 329.78g (32% waste). Orange/gold filament is the primary waste driver — 64.27g purged on only 9g of actual model material. Recommendation to eliminate the gold filament entirely and post-paint beak/feet with acrylic, projecting reduction to ~14-15 hours and ~150 fewer filament changes.
+
+---
+
+### NODE 9 — Slice correction: 3 nearly-identical reds still 270 swaps, no visual benefit
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dadbe-bcc5-7a66-b664-ca7d7db2368f",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** filament color changed but swaps unchanged 270, reassign all faces filament 1, single color baseline, filament selector vs model color assignment, monochrome preview AMS tax no visual benefit
+**Named-continuity:** Bambu Studio, AMS2 Pro, phoenix STL
+**Summary:** Jake changed filament 2 color from orange to red in the slicer but didn't reassign model faces, resulting in 270 filament changes between three near-identical reds with no visual improvement and only 1 hour saved. Instructed to reassign all painted faces to filament 1 and remove filaments 2 and 3 entirely to reach true single-color baseline (~12-13 hours, zero AMS swaps).
+
+---
+
+### NODE 10 — Optimized slice result: 13h11m, 47 filament changes, 15g purge
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dadc3-f50d-7f2a-a46f-418dfd92488b",
+  reach       : { up: 2, down: 4 }
+}
+```
+**Keywords:** optimized slice 13h11m, 47 filament changes, 14.98g purge, $5.98 cost, two-tone red deliberate, single color drop to filament 1, first layer brim check, prime tower corner placement, seam aligned back
+**Named-continuity:** Bambu Studio, AMS2 Pro, phoenix STL, P1S
+**Summary:** Optimized slice achieved: 13h11m (down from 19h24m), 47 filament changes (down from 270), 14.98g purge (down from 104.77g), $5.98 cost. Two-tone red setup confirmed as intentional for depth. Pre-print checklist given: first layer preview for small feet and brim need, prime tower corner placement, AMS slot assignment (non-adjacent slots for similar filaments), seam position set to aligned on back face.
+
+---
+
+### NODE 11 — Fuzzy skin settings at 0.28mm: specific values and paint-on coverage
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  anchor_msg  : "019dadc6-1614-72d2-b21d-9923e26bbe6b",
+  reach       : { up: 2, down: 0 }
+}
+```
+**Keywords:** fuzzy skin settings 0.28mm, fuzzy skin thickness 0.4mm, fuzzy skin point distance 1.0mm, outer wall only, outer wall speed 150mm/s, outer wall acceleration 3000-5000, fuzzy skin first layer off, paint-on wings tail, skip face beak feet, time impact 14.5-15.5 hours
+**Named-continuity:** Bambu Studio, P1S, phoenix STL
+**Summary:** Specific fuzzy skin settings for 0.28mm layer height: thickness 0.4mm (up from default 0.3 to compensate for coarser layers), point distance 1.0mm (up from 0.75), outer wall only, first layer off. Outer wall speed reduced to ~150mm/s and acceleration to 3000-5000 mm/s2 to prevent ringing during frequent direction changes. Paint-on coverage guidance: wings both sides, tail feathers, avoid face/beak/head/feet. Expected time increase from 13h11m to 14h30m-15h30m. Sanity check via slice preview zoom on fuzzy wing surface recommended before committing.
+
+---
+
+--- DONE: 11 nodes (8 MOTION, 3 FENCE, 0 TEXTURE), 0 drops ---

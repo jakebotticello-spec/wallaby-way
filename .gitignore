@@ -1,0 +1,43 @@
+# ============================================================
+# .gitignore — wallaby-way repo (post-reorg, CCC S2 / Chamfer)
+# Repo root: C:\claude-reference (local) -> remote: jakebotticello-spec/wallaby-way
+# Belt-and-suspenders: whole-subtree ignores. Sensitivity maps to LOCATION.
+# These trees are NEVER un-ignored to solve a friction problem. The tree is the contract.
+# No negation (!) rules by design.
+# ============================================================
+ 
+# --- CRITICAL: raw data archive — holds the unscrubbed S11 credential. NEVER push. ---
+apparatus-archive/
+ 
+# --- ENV SECRETS (anywhere in tree) ---
+.env
+*.env
+anthropic_billing.env
+ 
+# --- Live floor credentials + project secrets ---
+wallaby-way/secrets/
+ 
+# --- Cold-store / harvested nodes / quarantine — bulk conversation content (re-ignored; never un-ignore) ---
+wallaby-way/nodes/
+ 
+# --- Run artifacts — worklists, batch outputs, regenerable from floor ---
+wallaby-way/runs/
+ 
+# --- Graveyard — dead by definition. Includes d9-review-debug live-credential files. Never committed. ---
+graveyard/
+ 
+# --- Cypher-related context files + working reference-docs, not for this repo ---
+Chat Context Files/
+ 
+# --- Local-only source data + research reads (never push) ---
+deltas/
+substrate-reads/
+skills-catalog/
+ 
+# --- Python ---
+__pycache__/
+*.pyc
+ 
+# --- OS junk ---
+.DS_Store
+Thumbs.db

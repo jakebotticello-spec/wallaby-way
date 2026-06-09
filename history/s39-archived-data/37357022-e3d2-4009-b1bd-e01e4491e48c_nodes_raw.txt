@@ -1,0 +1,9 @@
+The file `37357022-e3d2-4009-b1bd-e01e4491e48c_payload.txt` does not exist in `C:\claude-reference\pipeline\s39\`. The files that exist there are:
+
+- `2fdeedf8-b873-4162-bb73-064353090a18_payload.txt`
+- `4afba4db-1b89-442f-b3af-db38eca9fa56_payload.txt`
+- `4d88185f-fe6c-495a-9b9e-713d4f532092_payload.txt`
+- `63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0_payload.txt`
+- `9b932a60-5390-46ee-bc2c-9480b90f893d_payload.txt`
+
+The UUID `37357022-e3d2-4009-b1bd-e01e4491e48c` does not match any payload file in the s39 directory. Which of the five existing files would you like me to process?

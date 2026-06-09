@@ -1,0 +1,12 @@
+{
+  "conv_uuid": "daa8d496-ffb2-49fb-8619-7f49e3f7a5ca",
+  "snapshot_id": "baseline-2026-05-25-ae015455",
+  "parents": {
+    "019dd03b-e6a7-70f6-8b81-ee9f19f2a12d": "null",
+    "019dd03b-e6a7-70f6-8b81-eea0948c2a3e": "019dd03b-e6a7-70f6-8b81-ee9f19f2a12d",
+    "019dd075-08ec-72b1-a4de-d7b46f9c1308": "019dd03b-e6a7-70f6-8b81-eea0948c2a3e",
+    "019dd075-08ec-72b1-a4de-d7b5e3280468": "019dd075-08ec-72b1-a4de-d7b46f9c1308",
+    "019dd077-5b2f-703c-97f8-f18b2fb4d4d7": "019dd075-08ec-72b1-a4de-d7b5e3280468",
+    "019dd077-5b2f-703c-97f8-f18c9f140f06": "019dd077-5b2f-703c-97f8-f18b2fb4d4d7"
+  }
+}

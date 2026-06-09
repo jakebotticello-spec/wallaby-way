@@ -1,0 +1,127 @@
+# SCOPE READER OUTPUT
+# conv 9b932a60-5390-46ee-bc2c-9480b90f893d | baseline-2026-05-25-ae015455 | 18 messages
+
+## CONV — 9b932a60-5390-46ee-bc2c-9480b90f893d
+**Created:** 2026-03-01T18:19:31.040476Z | **Messages:** 18
+
+---
+
+### NODE 1 — Jake asks about better workflows than the web interface
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9b932a60-5390-46ee-bc2c-9480b90f893d",
+  anchor_msg  : "019caaa0-81e0-7783-b678-33d2cd7bd17f",
+  reach       : { up: 0, down: 1 }
+}
+```
+**Keywords:** Claude Code alternative, better way to work with Claude, developer workflow, web interface vs terminal, new dev computer, optimize workflow
+**Named-continuity:** Claude Code, RecruitMail, Anthropic, npm
+**Summary:** Jake asks if there is a better or faster way to work with Claude than the web interface, prompted by getting a dedicated developer computer. Claude recommends Claude Code (CLI tool), the desktop app, and API access, with Claude Code highlighted as the biggest upgrade for their RecruitMail file-editing workflow — direct file read/edit/run vs. copy-paste.
+
+---
+
+### NODE 2 — Claude Code pricing research and Max plan confirmation
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9b932a60-5390-46ee-bc2c-9480b90f893d",
+  anchor_msg  : "019caaa1-9192-7a56-bb9b-84f5ba249d9b",
+  reach       : { up: 2, down: 0 }
+}
+```
+**Keywords:** Claude Code pricing, Max plan, $100/month, Pro plan, API credits vs subscription, usage limits, 5-hour rolling window, extra usage billing cap, token limits, prompts per window
+**Named-continuity:** Claude Code, Anthropic, Claude Max, Claude Pro, RecruitMail
+**Summary:** Jake is already on the $100/mo Max plan, which includes full Claude Code access at no additional cost. Claude does a web search and confirms: Max $100 = 5x Pro usage + Claude Code included; usage runs on a 5-hour rolling window; average developer spends ~$6/day; extra usage can be enabled with a monthly billing cap as a safety net. No additional subscription needed.
+**Why:** Confirmed Jake already has the right plan tier for Claude Code — no additional spend required.
+**Predicate:** Jake is on Max $100 plan; verify plan tier still includes Claude Code if plan structure changes.
+
+---
+
+### NODE 3 — Claude Code Windows installation steps
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9b932a60-5390-46ee-bc2c-9480b90f893d",
+  anchor_msg  : "019cc077-515d-70f3-927e-c14277d709c3",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** install Claude Code, npm install, Node.js install, Windows setup, Command Prompt, PowerShell, node --version, claude command
+**Named-continuity:** Claude Code, Node.js, npm, Windows
+**Summary:** Claude provides step-by-step install instructions for Claude Code on a new Windows machine: install Node.js LTS, restart, verify with node --version, run npm install -g @anthropic-ai/claude-code, then launch with claude. First run prompts Anthropic account login.
+
+---
+
+### NODE 4 — Windows Git Bash requirement for Claude Code
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9b932a60-5390-46ee-bc2c-9480b90f893d",
+  anchor_msg  : "019cc07f-0565-7687-9793-0ae8d4ed1fa8",
+  reach       : { up: 1, down: 1 }
+}
+```
+**Keywords:** Claude Code Windows, Git Bash required, git-scm, bash.exe, CLAUDE_CODE_GIT_BASH_PATH, environment variable, PATH, Windows setup
+**Named-continuity:** Claude Code, Git for Windows, Git Bash, Windows
+**Summary:** Jake shares and Claude acknowledges the requirement that Claude Code on Windows needs Git Bash (from git-scm.com/downloads/win). If Git is installed but bash.exe is not in PATH, the environment variable CLAUDE_CODE_GIT_BASH_PATH must be set pointing to C:\Program Files\Git\bin\bash.exe. Claude consolidates the full revised install sequence incorporating this requirement.
+**Why:** Claude Code on Windows will not function without Git Bash; missing this step silently breaks the tool.
+**Predicate:** Claude Code still requires Git Bash on Windows; check if future releases add native Windows shell support.
+
+---
+
+### NODE 5 — Git for Windows SSL/TLS installer step
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9b932a60-5390-46ee-bc2c-9480b90f893d",
+  anchor_msg  : "019cc080-33a5-7246-9506-f79ef05299a3",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** Git for Windows installer, SSL TLS backend, native Windows Secure Channel, installer defaults, Windows certificate store
+**Named-continuity:** Git for Windows, Windows
+**Summary:** During Git for Windows installation, Jake encounters the SSL/TLS backend selection screen. Claude confirms the default "Use the native Windows Secure Channel library" is the correct choice and advises continuing with defaults.
+
+---
+
+### NODE 6 — Claude Code successfully installed
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9b932a60-5390-46ee-bc2c-9480b90f893d",
+  anchor_msg  : "019cc081-b41b-750f-b7b4-58419bc8518e",
+  reach       : { up: 0, down: 1 }
+}
+```
+**Keywords:** npm install claude code success, changed 2 packages, install complete, claude command ready
+**Named-continuity:** Claude Code, npm, Windows
+**Summary:** Jake runs npm install -g @anthropic-ai/claude-code and gets confirmation: "changed 2 packages in 1s." Claude confirms success and instructs Jake to type claude to launch and log in.
+
+---
+
+### NODE 7 — Decision: Claude Code limited value for Jake's Wix+Railway workflow
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "9b932a60-5390-46ee-bc2c-9480b90f893d",
+  anchor_msg  : "019cc084-01ea-7290-b04a-1b6a3bf101fe",
+  reach       : { up: 3, down: 0 }
+}
+```
+**Keywords:** Claude Code value, Wix editor, Railway backend, stale local files, source of truth, no local codebase, context files, Git-based workflow, Claude Code limitations
+**Named-continuity:** Claude Code, RecruitMail, Wix, Railway, Supabase
+**Summary:** Jake reveals his local files are mostly context files and stale code copies — the actual source of truth lives in Wix's browser editor and Railway's dashboard. Claude reconsiders its earlier enthusiasm and concludes Claude Code's main value (direct file editing in a live project folder) is limited here because there is no authoritative local codebase. Claude suggests continuing with the chat interface for now and revisiting Claude Code if Jake ever moves to a Git-based workflow. Offers a test drive without commitment.
+**Why:** Claude Code is designed for Git-backed local codebases; Jake's project architecture splits source of truth across Wix and Railway with no local authoritative copy.
+**Predicate:** Still true that local files are stale; if Jake migrates RecruitMail to a Git-backed local workflow, Claude Code becomes the right tool.
+
+---
+
+--- DONE: 7 nodes (5 MOTION, 2 FENCE, 0 TEXTURE), 0 drops ---

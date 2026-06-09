@@ -1,0 +1,626 @@
+Now I have enough of the conversation to produce the node catalog. Let me compile the output.
+
+# SCOPE READER OUTPUT
+# conv 01eb6e56-9546-4c91-ab60-0d7ac8ff0a97 | baseline-2026-05-25-ae015455 | 349 messages
+
+## CONV — 01eb6e56-9546-4c91-ab60-0d7ac8ff0a97
+**Created:** 2026-05-06T11:21:02.909425Z | **Messages:** 349
+
+---
+
+### NODE 1 — Daily task list and scheduling system concept introduced
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfd05-1bc0-7601-96d4-36d856b65730",
+  reach       : { up: 0, down: 2 }
+}
+```
+**Keywords:** daily schedule management, task list, morning routine, bills sign, Pyris content rewrite, NFC business card, CCF website, PC case design, daily planner, ADHD schedule
+**Named-continuity:** Pyris, CCF, Griffin, Boone, NFC business card, Bills sign
+**Summary:** Jake opens the conversation by asking the assistant to hold a task list for the day and design a system to help manage his daily schedule. The six tasks listed are: (1) design the daily schedule management system itself, (2) finish/ship the Bills sign, (3) Pyris content rewrite on website and one-pager, (4) NFC business card prep, (5) CCF website edits, (6) PC case design. This message establishes the agenda for the entire 349-message session.
+**Why:** The day's full task stack and the meta-goal of building a scheduling system are established here. Every downstream prioritization and re-plan in the conversation traces back to this list.
+**Predicate:** This task list was the morning-of list for 2026-05-06; tasks may be completed, deferred, or modified by end of conversation.
+
+---
+
+### NODE 2 — ADHD, GAD context and daily schedule design requirements
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfd0a-9e4a-723b-9766-961689571727",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** ADHD adult diagnosis, anxiety disorder GAD, Adderall, time blindness, hyperfocus, structured day, morning drive intake, daily schedule design, new consultancy, meds, ADHD brain rewiring
+**Named-continuity:** Griffin, Pyris Consulting, ADHD, GAD, Adderall, Boone
+**Summary:** Jake discloses he has adult ADHD (newly medicated ~1 month) and well-managed GAD, explains that ADHD meds are rewiring his brain causing temporary worsening of time-blindness, that the transition from a structured job to running his own consultancy has left him structurally lost daily, and that he wants to use the morning drive home from school drop-off (~25 min) to do a daily intake with Claude. He asks for a system with alarms/notifications that enforces structure including body-cycle items (pills, meals, nap). This sets the design requirements for the entire Cypher project.
+**Why:** Core constraint established: the scheduling system must account for ADHD time-blindness and hyperfocus, medication cycles, and the chaos of running a consultancy. This framing governs all system design decisions in the conversation.
+**Predicate:** ADHD medication is new as of this session (~1 month); brain-rewiring phase is ongoing — check whether Jake's relationship with structure has stabilized since.
+
+---
+
+### NODE 3 — Body scaffolding: full daily schedule anchors captured
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfd18-01c9-76b4-946e-1443c2683115",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** daily schedule anchors, wake up 6am, Adderall 9am meds, nap window 11:45-1pm, afternoon Adderall 3pm, evening meds 9pm, Griffin pickup schedule, Wednesday podcast, Tuesday Thursday coach RJ meeting, Saturday 8am meeting, Amber Ary dance schedule, bedtime 10:30
+**Named-continuity:** Griffin, Amber, Ary, Joe Marino, Jerry Ostroski, Coach, RJ, Boone, Adderall, Lyrica, Seroquel
+**Summary:** Jake provides his complete daily and weekly schedule: 6 AM wake, school drop and drive, home 7:45, 9 AM meds (anxiety, heartburn, half-Lyrica) + breakfast, nap 11:45–1 PM window, Griffin pickup varies by day (Mon 7 PM, Tue/Wed 5:30, Thu covered by Amber, Fri 4:30), Wednesday 8 PM podcast with Joe Marino and Jerry Ostroski, Tue/Thu 6–7 PM meetings with Coach and RJ, Saturday 8 AM meeting, bedtime 10:30 PM, 9 PM evening meds (full Lyrica, vitamin, CoQ10, allergy, Seroquel). Afternoon Adderall target 3 PM with 4:30 hard latest.
+**Why:** This is the complete ground-truth body scaffolding that all alarm and schedule design derives from. Subsequent design of Cypher relies on this data.
+**Predicate:** Dance schedule (Amber/Ary), Griffin pickup times, and recurring meetings are subject to seasonal change; confirm current values before rebuilding schedule.
+
+---
+
+### NODE 4 — Business context: Pyris Consulting, CCF, PSC, Archon, Sharper Group
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfd1f-f875-7104-b236-f07db099959a",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** Pyris Consulting, CCF Coach Cole Football, PSC Plant Services Company Sewell NJ, Archon NGO homelessness prevention, Sharper Group Stephanie Harper, fractional COO, 90-day sprint, $75000 contract, $80000 retainer, LRN recruiting network, pre-revenue, client roster, Jef Buehler
+**Named-continuity:** Pyris Consulting, Jef Buehler, CCF, Coach Cole, PSC, Archon, Sharper Group, Stephanie Harper, Adam Hill, LRN
+**Summary:** Jake provides detailed business context: burned out from 85 hrs/week Oct–Mar split between LRN and grant director job. Left grant job Jan, LRN imploded March. Started Pyris Consulting April. Active: CCF ($75K + 5% revenue, 2 weeks into 90-day sprint, 30% equity), PSC ($3K loss-leader to start, potential $30K), Archon ($80K/year retainer for nonprofit NGO cluster, likely in ~1 month), Sharper Group (Stephanie Harper, fractional COO negotiation ~10 hrs/week). Jef Buehler is Pyris co-founder/partner.
+**Keywords:** Pyris Consulting, CCF, PSC, Archon, Sharper Group, fractional COO, Jef Buehler, Adam Hill
+
+---
+
+### NODE 5 — Nap window tightened, meal planning locked, dinner timing set
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfd2c-e2f5-743f-84ee-cceb97407d39",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** nap window 11:45 12:30 1pm force-by, Adderall 3pm regular, dinner 6:30 7pm, meal planning Saturday, Amber shopping Sunday, Cyris calendar agent, daily intake design, project context files
+**Named-continuity:** Amber, Cyris, Pyris, Griffin, CCF
+**Summary:** Jake tightens the nap window to 11:45–12:30 ideal / 1 PM force-by; confirms Adderall stays at 3 PM daily even on Fridays (brain rewiring priority, not just work focus); confirms dinner 6:30–7 PM Tue–Sun, Monday flex; introduces Cyris (his existing Claude-based intake agent for Pyris with calendar access) as potential component of the scheduling system; mentions wanting a "Daily Operating Context" document; and requests context file uploads. Key constraint: eat/sleep cycle is the load-bearing foundation.
+**Why:** Nap window and Adderall timing are locked as hard daily constraints. These define the inviolable body-rhythm rails for Cypher design.
+**Predicate:** Nap window is a standing rule; re-check whether medication timing has shifted.
+
+---
+
+### NODE 6 — Architecture decision: two-layer system, Cyris + phone alarms, 7:45 morning block
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfd34-6a52-7f09-9860-8a7f8b5d4685",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** Cyris architecture, three-layer system, Claude intake, Cyris calendar executor, phone alarms, notification copy, alarm messages ADHD brain, 7:45 morning block, decompression, Klaus robot deployment, meal planning Saturday
+**Named-continuity:** Cyris, Amber, CCF, Pyris
+**Summary:** Architecture sketch is laid down: (1) Claude = morning intake brain/triage, (2) Cyris-with-both-calendars = executor writing events to calendar with proper notification copy, (3) phone + dedicated alarm app = the physical interrupt. The notification copy problem is identified as critical — vague alarms don't work, action scripts do. Morning block 7:45–9 AM is confirmed as decompression time with Klaus deployment as anchor task. Jake declares he is not afraid of building a serious tech stack for this and notes it could be a product someday.
+**Why:** Three-layer architecture with Cyris as calendar executor is the chosen approach over other options. This is the design commitment that shapes subsequent Cypher development.
+**Predicate:** Cyris-with-both-calendars extension is the intended integration; check whether Cyris has been extended to personal calendar as of any later session.
+
+---
+
+### NODE 7 — Morning block refined: meditation, movement, sauna, shower anchors
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfd40-e203-7b54-9a67-8e3ca11bdbe6",
+  reach       : { up: 1, down: 4 }
+}
+```
+**Keywords:** morning routine 7:45 9am, meditation 15 minutes daily, sauna, workout equipment, squat rack treadmill, morning block design, ADHD morning routine, non-negotiable anchor, meditation lapsed 3 years
+**Named-continuity:** Griffin, Amber, Boone, Klaus
+**Summary:** Jake discloses he has a dedicated meditation space, a sauna, and workout equipment (Griffin's) and wants to revive daily meditation (was a 10-year practitioner, lapsed 3 years). The morning block evolves to: 7:45 Klaus out, 7:50–8:05 meditation (non-negotiable anchor), 8:05–8:45 movement or sauna opt-in, 8:45–9:00 shower, 9:00 breakfast + meds. Claude flags the "hell yeah let's optimize" ADHD trap and recommends meditation as the only mandatory daily anchor, movement/sauna as opt-in. Jake agrees to start with Klaus + meditation + breakfast + shower as hard anchors.
+
+---
+
+### NODE 8 — Context files reviewed: Pyris stale on revenue, CCF sprint status, 3DP parking lot
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfd55-1a51-760f-8395-e9cd14dc455f",
+  reach       : { up: 2, down: 3 }
+}
+```
+**Keywords:** context files review, Pyris context stale revenue, CCF 90-day sprint 10 hours remaining, 3D printing parking lot, Stephanie Harper Gary Harper Sharper Group, Jef Buehler weekly, Adam Hill Archon NGO, Bills sign v6.5 reprinting, Wednesday podcast, Bills sign shipping to Joe Marino
+**Named-continuity:** Pyris, CCF, Archon, Adam Hill, Sharper Group, Stephanie Harper, Jef Buehler, Joe Marino, Bills sign
+**Summary:** After reading all six context files, Claude surfaces key catches: Bills sign is at v6.5 (context was stale, 2 panels reprinting, ~4 hrs to finish), Pyris context is pre-revenue but reality is active contracts so panic-mode framing is wrong, CCF sprint has ~10 hours left before pace can relax, 3D projects should be a parking lot not daily intake, Wednesday podcast is tonight (Joe Marino), Adam Hill call is before 10 AM. Stephanie Harper is confirmed as decision-maker at Sharper Group (Gary may be husband/real owner). Jef Buehler is weekly contact, wants regular call.
+
+---
+
+### NODE 9 — NYC Small Business Expo tomorrow: logistics, NFC card needed, Pyris rewrite moved to train
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfd7e-7058-74ff-86d0-e6ce62201d68",
+  reach       : { up: 2, down: 4 }
+}
+```
+**Keywords:** Small Business Expo NYC, Jim Donio white-label Pyris, Javits Center, Hamilton NJ Transit train, Griffin Clearview school, expo prep NFC card, tomorrow schedule, train work time, Steve Acito Pyris rewrite, Bluewire Media review
+**Named-continuity:** Jim Donio, Pyris Consulting, Javits Center, Hamilton NJ Transit, Clearview (Griffin's school), Steve Acito, Bluewire Media
+**Summary:** Jake reveals he has a next-day NYC Small Business Expo appearance at Javits Center with Jim Donio (rich former "big deal in Hammonton NJ," white-labeling Pyris) and a third white-label contractor. Expo is minimal-prep format: three guys in a booth finding diamond clients. NFC business card is elevated to hard deadline for today (must be in hand tonight). Pyris content rewrite is moved to train time (Steve's doc on outbound leg, draft on return). Tomorrow's full logistics worked out: Griff drop 7:15, drive to Hamilton, train, expo to 1:30–1:40, train back, pick up Griffin at Clearview 4:30.
+**Why:** NYC expo is the hard deadline driving all today's priorities. NFC card jumps above Pyris rewrite and Bills sign assembly.
+**Predicate:** Expo was 2026-05-07; verify whether Jim Donio white-label relationship progressed after event.
+
+---
+
+### NODE 10 — Train and expo timing worked out: NJ Transit math, 4:30 Clearview constraint
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfd88-0f42-761e-bd20-acd195ec6da0",
+  reach       : { up: 3, down: 6 }
+}
+```
+**Keywords:** NJ Transit Hamilton Penn Station, 1h17m train, expo timing, 4:30 Clearview pickup hard wall, 1:40 leave Javits, 2:04 train, drive Hamilton Clearview 54 minutes, train math, travel budget
+**Named-continuity:** Griffin, Clearview school, Hamilton, Javits Center, NJ Transit
+**Summary:** Extended logistics math session: NJ Transit Hamilton ↔ Penn Station averages 1h17m–1h27m, trains every 30 min. Working backward from 4:30 Clearview pickup and 54-min Hamilton-to-Clearview drive: must leave Javits by 1:40, catch ~2:04 train, arrives Hamilton 3:21, leaves 3:25, arrives Clearview ~4:20. Javits Center is 0.7 mi from Penn Station, ~15 min walk or 1 stop on 7 train to Hudson Yards. Total travel day = ~6 hours. Jake confirms 1:40 departure from Javits, aims for 7:05 Griffin drop to catch ~8:08 train.
+
+---
+
+### NODE 11 — Adam Hill call postponed to Friday 9 AM
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfd98-7db3-7beb-865a-e7e8c8aa972e",
+  reach       : { up: 0, down: 2 }
+}
+```
+**Keywords:** Adam Hill call postponed Friday 9am, Archon NGO, Klaus water tank
+**Named-continuity:** Adam Hill, Archon, Klaus
+**Summary:** Adam Hill call originally scheduled for ~10 AM is postponed to Friday 9 AM. Klaus's water tank needed refilling (Jake went to handle it and got distracted — took longer than the 10 minutes expected). System design note logged: when Jake says a duration, treat it as 1.5–2x.
+
+---
+
+### NODE 12 — NFC card design session: two-card concept (PYRIS + CYRIS), disc geometry
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfdb5-7c52-77ce-8203-5d0ce10ec7d5",
+  reach       : { up: 3, down: 5 }
+}
+```
+**Keywords:** NFC business card two card design, PYRIS card black PLA silk logo, CYRIS card PETG-CF gray translucent red logo, 40mm disc, 50mm OD, 6mm lens geometry, NFC chip embed, Bambu Studio, two-card system, Jake vCard Cyris intake
+**Named-continuity:** Cyris, Pyris, NFC Tools app, PETG-CF, Bambu Studio
+**Summary:** Design session for two NFC disc cards: Card A (PYRIS) = matte black PLA disc + red/orange silk PLA logo, tap → .vcf with Jake's contact info; Card B (CYRIS) = PETG-CF gray disc + translucent red PETG logo, tap → Cyris intake URL. Disc geometry iterates extensively: starts 40mm OD, bumped to 50mm when 38mm logo won't fit 40mm disc (only 1mm rim). NFC chip is 25mm diameter × ~0.5mm actual (ordered as coin but assumed 3mm for pocket geometry). Card A/B visual differentiation is the key design constraint for expo use.
+
+---
+
+### NODE 13 — SVG generation attempt: PYRIS and CYRIS in Poppins-Bold (Raleway unavailable)
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfded-96ea-7508-ad31-21493b011d07",
+  reach       : { up: 2, down: 4 }
+}
+```
+**Keywords:** SVG generation PYRIS CYRIS Raleway Bold Poppins font, text to paths, fonttools, Bambu Studio SVG import, 3D printing logo, network restriction blocked host
+**Named-continuity:** Pyris, Cyris, Bambu Studio
+**Summary:** Claude attempts to generate SVG path files for "PYRIS" and "CYRIS" in Raleway Bold for use as 3D-printable logos. Network access to github.com raw files is blocked (allowlist restriction). Falls back to Poppins-Bold (locally installed geometric humanist bold sans-serif, closest available match). Files generated as 30mm-wide path-converted SVGs and delivered. Disclosure: Raleway unavailable, Poppins substituted; Jake can swap in Inkscape in 30 seconds if needed.
+
+---
+
+### NODE 14 — Disc geometry iteration: lens→flat-top-with-rolled-edges final design
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfe07-1030-72b2-ba73-370a60fceab0",
+  reach       : { up: 2, down: 15 }
+}
+```
+**Keywords:** disc geometry NFC card, compressed sphere lens 6mm, logo moat problem, UFO biconvex, flat disc rolled edges, 50mm OD, slicer stepping PETG curve, Bambu Studio BS geometry, chip pocket placement, NFC read through plastic, 7mm disc option, 100mm source sphere
+**Named-continuity:** Bambu Studio, PETG-CF, Pyris
+**Summary:** Extended geometry iteration session. Lens/compressed-sphere geometry causes a "logo moat" where disc rim is taller than logo due to curvature. UFO biconvex explored (slice from 100mm sphere — Jake accidentally used 100mm height sphere making an egg shape). Settled on final design: flat-top disc with rolled edges (slice equator-slab from large sphere to get rolled edges without crown). Chip pocket: centered vertically (z=2.5 from back on 6mm disc), 25.2mm OD × 1.2mm deep (actual NFC coins are ~1mm not 3mm). Logo extrusion 0.5mm, concentric top fill pattern, holographic PEI plate for shiny back face, 100% infill, 4–5 wall counts.
+
+---
+
+### NODE 15 — Card A print settings: layer height, ironing, infill, print time
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfe1f-0812-743c-905a-8d9c58e5c470",
+  reach       : { up: 3, down: 4 }
+}
+```
+**Keywords:** Bambu Studio print settings, 0.16mm layer height, 0.3mm line width, selective ironing phoenix PYRIS SVG, concentric top fill, 100% infill, 4-5 walls, holographic PEI plate, 37 minutes print time, 14g filament, card A first print
+**Named-continuity:** Bambu Studio, Pyris, Phoenix logo, AMS2 Pro
+**Summary:** Card A print settings locked: 0.16mm layer height, 0.3mm line width, selective ironing on SVG logo layers only (not global), concentric top fill pattern for vinyl-record aesthetic, 100% infill for premium hand-weight, 4–5 wall count for edge feel. Holographic PEI plate chosen for back face. Print time: 37 minutes, 14g material, $0.37 in filament. Card A first print started.
+
+---
+
+### NODE 16 — PETG-CF in AMS2 Pro: risks assessed, rerolled spool warning
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfea0-b127-71de-9a1c-50f444b1010b",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** PETG-CF AMS2 Pro, carbon fiber filament wear PTFE tube, hardened steel nozzle, moisture dry box, rerolled spool tangle risk, CF abrasive 100g
+**Named-continuity:** AMS2 Pro, PETG-CF, Bambu printer
+**Summary:** Jake asks if PETG-CF is safe in the AMS after rerolling ~100g from a too-large spool. Risk assessment: PTFE tube wear and gear wear are real but cumulative and negligible at 100g; hardened steel nozzle required (confirmed already swapped for PC case build); AMS2 Pro has heated dry box + desiccant so moisture concern is eliminated. Main risk is crossed-wrap tangle from hand-rerolled spool — watch first 5–10 minutes of feed.
+
+---
+
+### NODE 17 — Revised today's task stack: NFC card hard deadline, Bills sign slips, Pyris rewrite to train
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfd7e-7059-7c06-a488-38cc3e434d7c",
+  reach       : { up: 2, down: 3 }
+}
+```
+**Keywords:** today task stack revised, NFC card hard deadline, Bills sign assembly slips, Pyris rewrite train tomorrow, podcast 8pm tonight, Adam Hill Friday, CCF lock-in Friday weekend, PC case parking lot, Wednesday podcast
+**Named-continuity:** Adam Hill, Joe Marino, Pyris, CCF, Jim Donio, NFC card
+**Summary:** Today's revised priority stack after expo discovery and Bluewire review: (1) Adam Hill call 10 AM, (2) NFC disc x2 design + print start, (3) Nap 11:45, (4) Adderall 3 PM, (5) Bills sign assembly when prints land mid-nap, (6) Podcast 8 PM. Pyris rewrite moved to train tomorrow (read Steve's doc outbound, ideate and outline return). CCF moved to Friday. PC case in parking lot. Bills sign assembly is soft-deadline with Joe not knowing specifics yet.
+
+---
+
+### NODE 18 — vCard generated for Card A, #cyris anchor added to Pyris site
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfeac-dc00-730d-b6c5-4507eb83934a",
+  reach       : { up: 2, down: 3 }
+}
+```
+**Keywords:** vCard VCF generation, jake.vcf pyrisconsulting.com, NFC Tools app, Card A programming, Card B Cyris intake URL, 609-805-8080, 877-PYRIS-CO, linkedin jake-botticello, Founder Lead Architect Pyris Consulting
+**Named-continuity:** Pyris Consulting, Cyris, Jake Botticello
+**Summary:** vCard 3.0 file generated for Card A with Jake's contact info: Jake Botticello, Founder & Lead Architect, Pyris Consulting LLC, cell 609-805-8080, work 877-797-4726, email jake@pyrisconsulting.com, pyrisconsulting.com, LinkedIn. File output to /mnt/user-data/outputs/jake.vcf. Deploy plan: host at pyrisconsulting.com/jake.vcf, program NFC chip with NFC Tools. Card B target URL identified as pyrisconsulting.com#cyris (anchor added to site). Both pucks later confirmed as written and working on Jake's phone.
+
+---
+
+### NODE 19 — NFC coin chips arrive but fail on Amber's Pixel; sticker order placed
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfee7-caba-7be9-a2d9-0741e0f90815",
+  reach       : { up: 2, down: 8 }
+}
+```
+**Keywords:** NFC coin chip read failure Pixel, antenna size 13mm vs 25mm sticker, Amazon NTAG215 sticker order, same day delivery, NFC read range through PLA plastic, card B v2 design sticker, embedded vs surface mount
+**Named-continuity:** Amber, NFC Tools, NTAG215, Amazon, Pyris
+**Summary:** Card A coin chip works on Jake's phone but fails to read on Amber's Pixel and daughter's phone. Root cause: coin NFC chips have ~13–18mm antenna coil vs 25mm stickers; Pixel's NFC receiver is less sensitive than Jake's phone. Amazon same-day NTAG215 sticker order placed ($8.99, 50 pcs, delivery 5–10 PM). Sticker design: embed 1mm from bottom face of disc (1mm plastic between chip and back = reliable read on all phones). Card v2 redesign to use shallower sticker pocket planned.
+
+---
+
+### NODE 20 — Bills sign reprint due to incorrect stripe orientation; assembly slips to Friday/weekend
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfe90-f711-717d-90b7-6d5202aa80a9",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** Bills sign stripe reprint incorrect orientation, 2.5 hours reprint, Bills sign assembly Friday, NFC coins arrived, schedule update 2:30pm, track meet 3:30pm, pivot card A print first
+**Named-continuity:** Bills sign, Joe Marino, Griffin, Pyris
+**Summary:** Jake wakes from nap at 2:30 PM. Two new complications: (1) NFC coins just arrived (good news), (2) Bills sign stripe panels had incorrect orientation in the files and need reprinting (2.5 hr + 3.75 hr, total ~6 hrs more printing). Can't ship Bills sign tomorrow regardless. Decision: prioritize Card A over Bills sign. Cards jump to first print slot. Bills sign assembly moves to Friday or weekend.
+
+---
+
+### NODE 21 — Card A print settings revision: 25mm NFC coin, shallow pocket, holographic back
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfe94-657c-7a64-8e81-a6417048a6de",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** NFC coin chip 25mm 1mm tall, pocket 25.2mm OD 1.2mm deep, centered pocket z=2.5, wall below 2.5mm, holographic PEI back face, logo above, print before track meet
+**Named-continuity:** Bambu Studio, Pyris
+**Summary:** With actual coin chip dimensions measured (25mm × 1mm), pocket geometry revised: 25.2mm OD × 1.2mm deep, centered at z=2.5 from back face. 2.5mm plastic below chip, 2.5mm above (minus 0.5mm logo = 2.0mm net). This is much simpler than the 3mm design. Holographic PEI plate confirmed for back face. Print order: Card A before track meet, wife on puck-drop duty for filament change, Card B prints after.
+
+---
+
+### NODE 22 — NFC card surface quality issues: wet black PLA, silk ironing artifacts
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfeec-0a06-7fd8-b2dd-9c978de5af0f",
+  reach       : { up: 2, down: 6 }
+}
+```
+**Keywords:** silk PLA wet filament, black PLA rough surface pinholes, ironing artifacts sewing machine, top fill speed, purge volume color swap, filament dryer 45C PLA, holographic transfer failed, recalibration, pressure advance silk
+**Named-continuity:** Bambu Studio, AMS2 Pro, PLA, silk PLA
+**Summary:** Card B print attempt shows rough black surface (gravelly, pinholes, concentric pattern buried under noise) and ironing artifacts on the top. Root causes identified: wet black PLA (pinhole/void from moisture popping), under-purge between silk→black swaps, holographic plate transfer failed (insufficient first-layer press/clean plate). Jake places new black PLA roll in dryer at 45°C, accepts current Card A print result ("silk looks perfect"), postpones reprint to after stickers arrive. No holographic transfer on back face — causes investigated.
+
+---
+
+### NODE 23 — Expo bag packing, Cards A and B completed and programmed
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8fb0a97",
+  anchor_msg  : "019dfec9-4f1b-7b24-83b1-05edf093de07",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** Card A Card B completed, NFC programmed, vcf hosted, cyris anchor live, expo bag packing, laptop mouse pixel buds meds charger, expo kit ready
+**Named-continuity:** Pyris, Cyris, Amber
+**Summary:** Both NFC pucks are printed, chip-embedded, programmed, and tested at 3:35 PM. vCard hosted at site, #cyris anchor live. Jake marks Cyris card to avoid confusion. Expo bag checklist: laptop, mouse, Pixel buds, breakfast bars, meds, both pucks, charger, cable, polo in Pyris-red laid out. Tomorrow: Griff drop 7:15, drive Hamilton, train to NYC, expo, train back, Clearview 4:30, Ary's play 6 PM.
+
+---
+
+### NODE 24 — Podcast canceled, food skip acknowledged as system failure
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dff1c-8635-70e3-afc7-ad0101373bcd",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** podcast canceled tonight, food at track meet, recurring 9pm alarm set, no lunch failure, system design lesson body cycle scaffolding
+**Named-continuity:** Griffin, Amber
+**Summary:** Jake is at Griffin's track meet, reports no podcast tonight (canceled), ate food at the meet, and confirms 9 PM recurring alarm is set. Claude acknowledges the food failure as a system design insight: alarms need to outrank live conversation, especially for body-cycle anchors. Logged as first confirmed pattern failure mode for Cypher design.
+
+---
+
+### NODE 25 — Jeff subcontractor contract and Lance lawsuit refile added to stack
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfe49-9e1e-77f2-a39c-c915e3b4221b",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** Jeff subcontractor contract, draft label remove signature block, end of day today, Lance LRN lawsuit refile Friday, lawsuit rejected no explanation
+**Named-continuity:** Jeff (Jef Buehler), LRN, Lance
+**Summary:** Two tasks added before nap: (1) Jeff's subcontractor contract — strip draft label, add digital signature block, send today, 15 min max; (2) refile lawsuit against Lance (LRN) by Friday EOD — filed ~2.5 weeks ago, rejected without explanation, needs investigation and refile. Both logged to updated task stack.
+
+---
+
+### NODE 26 — Cypher system retrospective: today's chaos teaches system requirements
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dff63-6319-7b16-87a1-83b96a4162e0",
+  reach       : { up: 2, down: 3 }
+}
+```
+**Keywords:** Cypher system design retrospective, live re-planning, body cycle load bearing, hyperfocus traps notification, external dependency visibility, morning intake not enough, pattern failure modes
+**Named-continuity:** Cypher, Pyris, CCF
+**Summary:** After the full day running through the chat, Claude reflects back five lessons the day taught about system requirements: (1) plans collapse fast, system must handle live re-planning; (2) body cycle (meds/eat/sleep) is the load-bearing wall; (3) hyperfocus traps overrode every "remember to" — notifications must be louder than work; (4) live conversation with Claude became the workspace (not one-and-done morning intake); (5) external delivery dependencies need visibility. Jake agrees and starts refining the architecture: wants it to feel like this chat, preferring a web/browser-based system rather than integrating with Cyris.
+**Why:** This is the foundational requirements document for Cypher derived from observing one real day. All subsequent architecture decisions cite these five failure modes.
+**Predicate:** These are empirically derived requirements from one day; pattern frequency is unknown across Jake's full history.
+
+---
+
+### NODE 27 — Cypher architecture finalized: web app, voice via ElevenLabs/Charles, Supabase, Claude API
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dff72-53d5-76f5-acac-4d9c4112992f",
+  reach       : { up: 3, down: 8 }
+}
+```
+**Keywords:** Cypher architecture, web app PWA, ElevenLabs TTS, Charles voice, Claude API direct, Supabase database, React Tailwind, Google Calendar API, voice notifications Pavlov tone, escalating notifications, memory model permanent working pattern, Vercel Railway hosting
+**Named-continuity:** Cypher, ElevenLabs, Supabase, Google Calendar, Vercel, Railway
+**Summary:** Full architecture locked: (1) Brain = Claude API direct with custom system prompt; (2) Voice = ElevenLabs TTS with "Charles" voice (British male, paid tier $5/mo needed); (3) Data = Supabase (same stack as CCF); (4) View = React + Tailwind PWA, pinned browser at home + mobile; (5) Calendar = custom UI over Google Calendar API; (6) Notifications = Pavlov-tone chime preceding every voice alert + escalating: soft chime → voice → firmer voice → repeat; mobile = tone + on-screen text only (Twilio deferred). Memory model: permanent (meds, commitments, people, projects), working (current week/day), pattern (observed behavior trends), conversational (chat history). Build estimated 15 hrs in hyperfocus mode, this weekend.
+**Why:** This is the committed architecture for Cypher v1. Stack mirrors CCF build pattern. Voice layer is the differentiating feature.
+**Predicate:** Build was scoped for "this weekend" (weekend of 2026-05-09); check whether Cypher build was started or completed.
+
+---
+
+### NODE 28 — Cypher named, voice picked (Charles ElevenLabs), repo/domain decisions
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dff7f-d986-7eef-a816-bc0c5968ef6b",
+  reach       : { up: 4, down: 6 }
+}
+```
+**Keywords:** Cypher name, personal scheduler ADHD, ElevenLabs Charles voice, JARVIS Tony Stark, Pyris Cyris Cypher naming family, personal GitHub repo, c:/cypher local, porkbun domain $10, Saturday build session, MVP feature order
+**Named-continuity:** Cypher, ElevenLabs, Charles, Pyris, Cyris, GitHub
+**Summary:** Personal AI scheduler is named "Cypher" (phonetic Py-family: Pyris, Cyris, Cypher). Voice selected as "Charles" on ElevenLabs (British male, warm but younger than Attenborough, requires $5/mo Starter tier). Jake hears Charles read a line from the conversation and confirms "it's you." Repo: personal GitHub under same account as Pyris, local path c:\cypher. Domain: separate from pyrisconsulting.com, ~$10/yr at Porkbun. First build session: Saturday at latest. Jake explicitly invokes Tony Stark/JARVIS as the mental model — a *presence*, not a tool.
+**Why:** The name, voice, and repo location are locked decisions that establish the project's identity.
+**Predicate:** "Charles" voice requires ElevenLabs Starter ($5/mo) — check whether Jake subscribed before the build session.
+
+---
+
+### NODE 29 — Cypher MVP feature build order and body scaffolding requirements locked
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dff9f-3176-78b1-9cd2-81bb8a84f7bd",
+  reach       : { up: 2, down: 2 }
+}
+```
+**Keywords:** Cypher MVP build order, body scaffolding meditation breakfast lunch dinner AM meds PM meds evening meds bedtime nap, build sequence, GitHub personal repo, c:\cypher, porkbun domain, Saturday build, Claude API driving
+**Named-continuity:** Cypher, Supabase, Google Calendar, ElevenLabs
+**Summary:** Decisions confirmed: voice = Charles, repo = personal GitHub / c:\cypher local, domain = separate Porkbun domain ~$10. Build Saturday at latest. Claude is "driving the bus." Body scaffolding requirements locked: mandatory hooks on meditation, breakfast, lunch, dinner, 2x AM meds, afternoon meds, evening meds, bedtime, nap time. MVP feature build order proposed: auth+DB+shell → body scaffolding alarms → morning intake chat → calendar read → sticky plan panel → voice TTS → calendar write → memory/pattern recognition.
+**Why:** These are the locked implementation requirements for Cypher v1 build.
+**Predicate:** Build session was scoped for weekend of 2026-05-09; check whether Cypher repository was created and initial build begun.
+
+---
+
+### NODE 30 — Friday schedule: Adam Hill call, Laura dinner, Cinder Bar, Pyris draft polish
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfed0-6dfb-76f0-95c8-4723d1591ebb",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** Friday schedule, Laura dinner bestie, Cinder Bar 6pm, Adam Hill 9am Friday, Griffin pickup 4:30, Pyris draft polish afternoon, CCF weekend
+**Named-continuity:** Adam Hill, Laura, Griffin, Pyris, CCF
+**Summary:** Friday's shape established: Adam Hill call 9 AM, day = recovery from NYC + Pyris rewrite polish, Griffin pickup 4:30, dinner with Laura (bestie) at Cinder Bar 6 PM. CCF lock-in officially moves to weekend. PC case remains in parking lot.
+
+---
+
+### NODE 31 — "Pyris doesn't build things that don't work" — brand line surfaced
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dff62-ec3d-73b2-af4f-3a0ada517055",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** Pyris brand voice, doesn't build things that don't work, practical systems no smoke, quality position, content rewrite seed
+**Named-continuity:** Pyris, Steve Acito
+**Summary:** Jake rejects the idea of handing out NFC cards that require awkward phone-handling, saying "Pyris doesn't build things that don't work." Claude flags this as a brand-position line that belongs on the website — practical systems, no smoke, ships when it works. The line is noted as a seed for the Pyris content rewrite (Steve Acito's feedback was pushing toward this positioning anyway).
+
+---
+
+### NODE 32 — Bluewire/Steve Acito Pyris rewrite review: key moves and scope
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfd7e-7059-7c06-a488-38cc3e434d7c",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** Steve Acito Bluewire Media Pyris review, white on one-pager not black, first person rewrite, phoenix fire metaphor extended, Pressure Check Audit free offer, tier names Spark Start Flame Builder Phoenix Rising, content rewrite scope, train work block
+**Named-continuity:** Steve Acito, Bluewire Media, Pyris, Jef Buehler
+**Summary:** Claude reads Steve Acito's (Bluewire Media) reaction document for the Pyris site/one-pager. Key moves: flip one-pager from black to white background (print readability), rewrite from 3rd person to 1st person throughout, "Pressure Check Audit" as the free intro offer name, phoenix/fire metaphor extensions (some strong, some too cute). Scope decision: don't do the full rewrite today. Push to Friday morning for draft polish with train time (outbound leg: read + ideate; return leg: outline + first-pass draft).
+
+---
+
+### NODE 33 — NFC stickers ordered after Amazon delivery failure on original coins
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfe31-03b7-7bb9-abb7-63f157019493",
+  reach       : { up: 3, down: 3 }
+}
+```
+**Keywords:** Amazon NFC sticker NTAG215 25mm same day delivery, $8.99 50 pcs, Prime today 5-10pm, coin chip failure workaround, 25mm antenna sticker read range through plastic
+**Named-continuity:** Amazon, NTAG215
+**Summary:** After Amazon's overnight delivery of original NFC coins was pushed to "tomorrow by 6 PM" (missed deadline), Jake identifies Amazon same-day NTAG215 stickers (25mm diameter, <1mm thick, $8.99/50 pcs, Prime delivery 5–10 PM today). Claude confirms specs: NTAG215 (504 bytes, fits full vCard), 25mm diameter fits pocket, <1mm thick = well under 3mm pocket, big-antenna sticker has better read-through-plastic performance than coin-sized chips. Ordered.
+
+---
+
+### NODE 34 — Neodymium magnet cutting: don't, toxic brittle, buy correct size
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfe33-8f56-7ebd-bb0c-99d768bf8699",
+  reach       : { up: 0, down: 3 }
+}
+```
+**Keywords:** neodymium magnet cutting, bar magnet, block magnet, brittle sintered powder, toxic dust, coating oxidation, heat kills magnetism, K&J Magnetics
+**Named-continuity:** (none specific)
+**Summary:** Jake asks if neodymium magnets can be cut to size. Answer: no — they shatter (brittle sintered powder), the nickel coating is critical for oxidation protection, cutting heat degrades field strength permanently, and the dust is toxic. Names for bar magnets: block magnet, rectangular magnet, slab magnet, strip magnet. Buy in correct size from K&J Magnetics, SuperMagnetMan, or Amazon. Claude flags NFC/magnet proximity concern (NFC chips near magnets can cause issues).
+
+---
+
+### NODE 35 — Recap of Phoenix model S2 session referenced as target tone for Cypher
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dffa3-54c6-78aa-a64c-a60004f7cd2f",
+  reach       : { up: 1, down: 3 }
+}
+```
+**Keywords:** Phoenix model S2 paint session, Claude banter tone target, master context file, snarkier interaction style, Cypher persona tone, hyperfocus ADHD shopping interruptions, tone preference
+**Named-continuity:** Cypher, Phoenix model, Bambu printer
+**Summary:** Jake references a prior chat session called "Phoenix model S2 overview" (9a48582c-f426-4955-aba8-6e8ed494d50c) and moves it to the project as the target tone example for Cypher. Search result confirms key characteristics: Jake corrects Claude on multiple technical errors (Claude tends to recommend expensive options, conflates profiles, misreads settings), Claude acknowledges pattern; banter/byplay is snarkier and more casual than this session. Jake says "THAT is the Claude I'd like to be reflected in this build." Tone preference: direct, correctable, maintains continuity, catches implications, says when uncertain rather than fabricating.
+
+---
+
+### NODE 36 — Recurring NFC card design evolution: disc geometry iteration pattern
+**Salience:** TEXTURE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfe0a-77ed-7742-b02d-5d1afff0908b",
+  reach       : { up: 5, down: 10 }
+}
+```
+**Keywords:** disc geometry iteration, compressed sphere lens, UFO biconvex, flat disc rolled edges, 3D design feedback loop, design revision cycle Bambu Studio
+**Named-continuity:** Bambu Studio, Pyris, PETG-CF
+**Summary:** Throughout the NFC card design session (roughly msg 019dfdbe through 019dfe1c), Jake and Claude iterate through 6+ distinct disc geometry proposals in rapid succession: (1) 40mm 4mm compressed sphere, (2) 6mm lens, (3) 7mm lens, (4) flat disc chamfered edge, (5) very-tall-source-sphere near-flat, (6) UFO biconvex (accidentally 100mm sphere = egg), (7) large-source-sphere equator-slab = flat-top with rolled edges (final). This rapid geometry iteration over ~20 messages is characteristic of Jake's design process.
+**Count-in-conv:** ~7 geometry proposals in ~25 messages **Signals:** Jake iterates through many quick alternatives before landing on a design. Sessions involving 3D modeling or design decisions should expect extended back-and-forth before convergence.
+
+---
+
+### NODE 37 — Recurring body-cycle reminder failures throughout the day
+**Salience:** TEXTURE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "01eb6e56-9546-4c91-ab60-0d7ac8ff0a97",
+  anchor_msg  : "019dfeed-3ba2-7477-bcfc-618b14898547",
+  reach       : { up: 5, down: 3 }
+}
+```
+**Keywords:** Adderall reminder repeated, lunch skipped entirely, food forgotten, hyperfocus overrides body, system failure mode, nap late
+**Named-continuity:** Adderall, Cypher
+**Summary:** Across the session, Claude reminds Jake about Adderall at 3 PM at least three times before he confirms taking it (Claude thought it was reminding him when Jake had already taken it but said "addy" — miscommunication). Lunch is entirely skipped until Jake eats at the track meet at ~5 PM. Nap is late. These are recurring examples of the exact hyperfocus→body-cycle failure mode that motivates Cypher's design.
+**Count-in-conv:** 3 Adderall reminders, 0 successful lunch prompts, 1 late nap **Signals:** Body-cycle anchors are the highest-priority interrupts needed in Cypher; conversation context is insufficient to enforce them.
+
+---
+
+--- DONE: 37 nodes (25 MOTION, 8 FENCE, 2 TEXTURE), 0 drops ---

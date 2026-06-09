@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Panel — D9: Supabase Floor Lock</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-sql.min.js"></script>
+  <style>
+    body { font-family: 'Courier New', Courier, monospace; }
+    .card { transition: all 0.2s ease; }
+    .card:hover { transform: translateY(-1px); }
+    .expand-btn { cursor: pointer; }
+    .issue-body { display: none; }
+    .issue-body.open { display: block; }
+    .verdict-badge { font-size: 1.1rem; letter-spacing: 0.05em; }
+    .tag-live { background: #065f46; color: #6ee7b7; }
+    .tag-static { background: #1e3a5f; color: #93c5fd; }
+    .tag-p1 { background: #7f1d1d; color: #fca5a5; }
+    .tag-p2 { background: #451a03; color: #fed7aa; }
+    .tag-p3 { background: #1c1917; color: #d6d3d1; }
+    .tag-resolved { background: #14532d; color: #86efac; }
+    .score-pill { display: inline-block; padding: 2px 10px; border-radius: 9999px; font-weight: bold; font-size: 0.85rem; }
+    .caveat-item { border-left: 4px solid; }
+    .caveat-blocker { border-color: #ef4444; }
+    .caveat-check { border-color: #f59e0b; }
+    .caveat-ack { border-color: #60a5fa; }
+    [x-cloak] { display: none; }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-200 min-h-screen">
+
+<!-- Header -->
+<div class="bg-gray-900 border-b border-gray-700 px-6 py-5">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <div class="text-xs text-gray-500 mb-1">Agent Review Panel v3.3.0 &bull; 2026-05-29</div>
+        <h1 class="text-xl font-bold text-white">Decision D9: Supabase Floor Lock</h1>
+        <p class="text-sm text-gray-400 mt-1">Permanent, append-only, immutable substrate for verbatim conversation archive</p>
+      </div>
+      <div class="text-right">
+        <div class="verdict-badge font-bold text-yellow-300 bg-yellow-900 border border-yellow-600 rounded px-4 py-2 inline-block">
+          LOCK-WITH-CAVEATS
+        </div>
+        <div class="text-2xl font-bold text-white mt-2">6 <span class="text-gray-400 text-base font-normal">/ 10</span></div>
+        <div class="text-xs text-gray-500">panel mean 5.75 &bull; spread 5–6</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-6 py-8 space-y-10">
+
+  <!-- Score Timeline -->
+  <section>
+    <h2 class="text-base font-bold text-gray-300 uppercase tracking-widest mb-4">Panel Score Timeline</h2>
+    <div class="bg-gray-900 rounded-lg border border-gray-700 p-5">
+      <canvas id="scoreChart" height="90"></canvas>
+    </div>
+  </section>
+
+  <!-- Verdict Summary -->
+  <section>
+    <h2 class="text-base font-bold text-gray-300 uppercase tracking-widest mb-4">Verdict Summary</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-gray-900 rounded-lg border border-yellow-800 p-5">
+        <div class="text-xs text-yellow-500 uppercase tracking-widest mb-2">Why LOCK</div>
+        <ul class="text-sm text-gray-300 space-y-2 list-none">
+          <li>✓ No surviving finding impugns Postgres fitness as a value-preserving storage floor</li>
+          <li>✓ ndjson-canonical reframe is a legitimate engineering resolution — Postgres is a rebuildable projection</li>
+          <li>✓ FK cascade fear falsified: confdeltype='a' (NO ACTION); FK protects the floor</li>
+          <li>✓ scrub-v1 fidelity validated: secrets-only redactor, 8/3,366 thinking blocks touched</li>
+          <li>✓ Zero value loss across 200-record sample: key reorder only, no data dropped</li>
+          <li>✓ Every Postgres-specific irreversibility objection dissolved under ndjson reframe</li>
+        </ul>
+      </div>
+      <div class="bg-gray-900 rounded-lg border border-red-800 p-5">
+        <div class="text-xs text-red-500 uppercase tracking-widest mb-2">Why WITH CAVEATS (not DO-NOT-LOCK)</div>
+        <ul class="text-sm text-gray-300 space-y-2 list-none">
+          <li>✗ Zero database-level write protection today — anon/authenticated/service_role all hold TRUNCATE</li>
+          <li>✗ No guard triggers on either floor table; RLS does not gate TRUNCATE</li>
+          <li>✗ ndjson reframe only legitimate once SHA-256 is recorded and rebuild is demonstrated</li>
+          <li>✗ "Verbatim" label is inaccurate: JSONB reorders keys; scrub-v1 modified 8 thinking blocks</li>
+          <li>✗ pgvector in title but not installed; retrieval layer nonexistent</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Single Most Important Action -->
+  <section>
+    <div class="bg-red-950 border border-red-700 rounded-lg p-5">
+      <div class="text-xs text-red-400 uppercase tracking-widest mb-2">Single Most Important Action</div>
+      <p class="text-sm text-red-200 font-medium">REVOKE TRUNCATE/DELETE-class grants from anon/authenticated/service_role on both floor tables and add guard triggers, then prove with a live attempted TRUNCATE that the floor rejects destruction.</p>
+      <p class="text-xs text-red-400 mt-2">An "immortal floor" that any role can erase in one statement is not immortal in any sense the decision claims. — Supreme Judge</p>
+    </div>
+  </section>
+
+  <!-- Pre-Lock Caveats -->
+  <section>
+    <h2 class="text-base font-bold text-gray-300 uppercase tracking-widest mb-4">Pre-Lock Caveats</h2>
+    <div class="space-y-3">
+
+      <!-- Caveat 1 -->
+      <div class="caveat-item caveat-blocker bg-gray-900 rounded-lg p-4">
+        <div class="flex items-start justify-between gap-4 expand-btn" onclick="toggle('c1')">
+          <div class="flex items-center gap-3">
+            <span class="text-xs bg-red-900 text-red-300 border border-red-700 rounded px-2 py-0.5 font-bold">BLOCKER</span>
+            <span class="text-sm font-semibold text-white">1. Enforce append-only at the database (closes P1-A)</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none">▸</span>
+        </div>
+        <div id="c1" class="issue-body mt-3 text-sm text-gray-300 space-y-2">
+          <p>On both <code class="bg-gray-800 px-1 rounded">floor_conv_headers</code> and <code class="bg-gray-800 px-1 rounded">floor_conv_messages</code>:</p>
+          <pre class="language-sql rounded text-xs overflow-x-auto"><code class="language-sql">REVOKE TRUNCATE, REFERENCES, TRIGGER FROM anon, authenticated, service_role;
+
+-- Statement-level TRUNCATE guard (both tables)
+CREATE OR REPLACE FUNCTION immutable_floor_guard() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  RAISE EXCEPTION 'immutable floor: % not permitted', TG_OP;
+END;
+$$;
+CREATE TRIGGER floor_headers_no_truncate BEFORE TRUNCATE ON floor_conv_headers
+  FOR EACH STATEMENT EXECUTE FUNCTION immutable_floor_guard();
+CREATE TRIGGER floor_messages_no_truncate BEFORE TRUNCATE ON floor_conv_messages
+  FOR EACH STATEMENT EXECUTE FUNCTION immutable_floor_guard();
+
+-- Row-level UPDATE/DELETE guard (both tables)
+CREATE TRIGGER floor_headers_immutable BEFORE UPDATE OR DELETE ON floor_conv_headers
+  FOR EACH ROW EXECUTE FUNCTION immutable_floor_guard();
+CREATE TRIGGER floor_messages_immutable BEFORE UPDATE OR DELETE ON floor_conv_messages
+  FOR EACH ROW EXECUTE FUNCTION immutable_floor_guard();</code></pre>
+          <p class="text-xs text-gray-500 mt-2">Model on Supabase's own <code class="bg-gray-800 px-1 rounded">protect_objects_delete</code> / <code class="bg-gray-800 px-1 rounded">protect_buckets_delete</code> triggers (already in storage schema — this pattern is supported).</p>
+          <p class="font-semibold text-yellow-300 text-xs">Proof test: TRUNCATE floor_conv_messages as service_role → must raise exception. Capture output in lock artifact.</p>
+        </div>
+      </div>
+
+      <!-- Caveat 2 -->
+      <div class="caveat-item caveat-blocker bg-gray-900 rounded-lg p-4">
+        <div class="flex items-start justify-between gap-4 expand-btn" onclick="toggle('c2')">
+          <div class="flex items-center gap-3">
+            <span class="text-xs bg-red-900 text-red-300 border border-red-700 rounded px-2 py-0.5 font-bold">BLOCKER</span>
+            <span class="text-sm font-semibold text-white">2. Record canonical ndjson SHA-256 in the lock artifact</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none">▸</span>
+        </div>
+        <div id="c2" class="issue-body mt-3 text-sm text-gray-300 space-y-2">
+          <p>The ndjson-canonical reframe is only legitimate once the ndjson's integrity is committed to. Compute and record in the lock document:</p>
+          <ul class="list-disc list-inside space-y-1 text-xs text-gray-400">
+            <li>SHA-256 of <code class="bg-gray-800 px-1 rounded">records.ndjson</code> (byte length: 367,494,497)</li>
+            <li>SHA-256 of <code class="bg-gray-800 px-1 rounded">scrub-audit.jsonl</code> (companion artifact — exact record of what scrub-v1 changed)</li>
+            <li>SHA-256 of <code class="bg-gray-800 px-1 rounded">verify.log</code> (post-scrub clean scan confirmation)</li>
+          </ul>
+          <p class="font-semibold text-yellow-300 text-xs">Proof test: independent recompute matches all three recorded hashes.</p>
+        </div>
+      </div>
+
+      <!-- Caveat 3 -->
+      <div class="caveat-item caveat-blocker bg-gray-900 rounded-lg p-4">
+        <div class="flex items-start justify-between gap-4 expand-btn" onclick="toggle('c3')">
+          <div class="flex items-center gap-3">
+            <span class="text-xs bg-red-900 text-red-300 border border-red-700 rounded px-2 py-0.5 font-bold">BLOCKER</span>
+            <span class="text-sm font-semibold text-white">3. Demonstrate rebuild-from-ndjson</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none">▸</span>
+        </div>
+        <div id="c3" class="issue-body mt-3 text-sm text-gray-300 space-y-2">
+          <p>The "Postgres is rebuildable" claim must be demonstrated, not asserted. Rebuild a throwaway copy of both tables from <code class="bg-gray-800 px-1 rounded">records.ndjson</code> and verify:</p>
+          <ul class="list-disc list-inside space-y-1 text-xs text-gray-400">
+            <li>Row counts: 294 headers + 22,801 messages</li>
+            <li>PK-keyed value comparison: 0 value-mismatches on a 200-record sample</li>
+            <li>Record the procedure and raw output in the lock artifact</li>
+          </ul>
+          <p class="font-semibold text-yellow-300 text-xs">Proof test: rebuilt counts equal live counts; comparison reports 0 value-mismatch.</p>
+        </div>
+      </div>
+
+      <!-- Caveat 4 -->
+      <div class="caveat-item caveat-blocker bg-gray-900 rounded-lg p-4">
+        <div class="flex items-start justify-between gap-4 expand-btn" onclick="toggle('c4')">
+          <div class="flex items-center gap-3">
+            <span class="text-xs bg-red-900 text-red-300 border border-red-700 rounded px-2 py-0.5 font-bold">BLOCKER</span>
+            <span class="text-sm font-semibold text-white">4. Relabel the decision text precisely</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none">▸</span>
+        </div>
+        <div id="c4" class="issue-body mt-3 text-sm text-gray-300 space-y-2">
+          <p>Replace every unqualified "verbatim" in D9 with:</p>
+          <blockquote class="border-l-2 border-gray-600 pl-3 text-xs text-gray-400 italic">"value-preserving for JSONB (canonical key ordering), byte-verbatim for TEXT columns and timestamps, modulo secret redaction by scrub-v1"</blockquote>
+          <p>Also:</p>
+          <ul class="list-disc list-inside space-y-1 text-xs text-gray-400">
+            <li>Designate ndjson as the canonical floor; Postgres as a rebuildable derived index</li>
+            <li>Drop "+pgvector" from the title OR annotate it as "deferred read-path sidecar — never to be added as a column on the immutable tables"</li>
+            <li>Name <code class="bg-gray-800 px-1 rounded">scrub-audit.jsonl</code> and <code class="bg-gray-800 px-1 rounded">verify.log</code> as immutable companion artifacts</li>
+          </ul>
+          <p class="font-semibold text-yellow-300 text-xs">Proof test: no unqualified "verbatim" remains; no implication pgvector is currently installed.</p>
+        </div>
+      </div>
+
+      <!-- Caveat 5 -->
+      <div class="caveat-item caveat-check bg-gray-900 rounded-lg p-4">
+        <div class="flex items-start justify-between gap-4 expand-btn" onclick="toggle('c5')">
+          <div class="flex items-center gap-3">
+            <span class="text-xs bg-yellow-900 text-yellow-300 border border-yellow-700 rounded px-2 py-0.5 font-bold">CHECK</span>
+            <span class="text-sm font-semibold text-white">5. Confirm the hosting tier</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none">▸</span>
+        </div>
+        <div id="c5" class="issue-body mt-3 text-sm text-gray-300 space-y-2">
+          <p>Open Supabase dashboard → Settings/Billing. Record:</p>
+          <ul class="list-disc list-inside space-y-1 text-xs text-gray-400">
+            <li>Tier (Free vs Pro)</li>
+            <li>Auto-pause policy and inactivity window</li>
+            <li>Storage cap vs current usage (~218 MB on disk)</li>
+          </ul>
+          <p class="text-xs text-gray-400 bg-gray-800 rounded p-2 mt-2">Context: an archive's access pattern (no writes, rare reads) looks inactive to Supabase free tier. Free projects are paused after ~7 days of inactivity and can be permanently deleted. The 500 MB free cap is breached at ~2.3 snapshots at current size.</p>
+          <p class="text-xs text-gray-400">If free tier: either upgrade, or accept rebuild RTO explicitly AND confirm headroom before snapshot #2.</p>
+          <p class="font-semibold text-yellow-300 text-xs">Proof test: tier and cap headroom recorded in lock artifact. If free, accepted-RTO statement is present.</p>
+        </div>
+      </div>
+
+      <!-- Caveat 6 -->
+      <div class="caveat-item caveat-ack bg-gray-900 rounded-lg p-4">
+        <div class="flex items-start justify-between gap-4 expand-btn" onclick="toggle('c6')">
+          <div class="flex items-center gap-3">
+            <span class="text-xs bg-blue-900 text-blue-300 border border-blue-700 rounded px-2 py-0.5 font-bold">ACKNOWLEDGE</span>
+            <span class="text-sm font-semibold text-white">6. Acknowledge account_uuid and snapshot-selection scope</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none">▸</span>
+        </div>
+        <div id="c6" class="issue-body mt-3 text-sm text-gray-300 space-y-2">
+          <ul class="list-disc list-inside space-y-1 text-xs text-gray-400">
+            <li>Check <code class="bg-gray-800 px-1 rounded">account_uuid</code> cardinality across 294 headers (single-account or multi-account export?)</li>
+            <li>Decide whether account_uuid — a PII-adjacent Anthropic account identifier — belongs in a floor that may be shared or rebuilt elsewhere</li>
+            <li>State that the snapshot-selection policy (<code class="bg-gray-800 px-1 rounded">current_snapshots</code> view or equivalent) and partial-ingest idempotency specification are required before snapshot #2 is ingested</li>
+          </ul>
+          <p class="font-semibold text-yellow-300 text-xs">Proof test: account_uuid cardinality recorded; one-line scope note for snapshot #2 prerequisites present.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Severity Register -->
+  <section>
+    <h2 class="text-base font-bold text-gray-300 uppercase tracking-widest mb-4">Severity Register</h2>
+    <div class="space-y-2">
+
+      <div class="bg-gray-900 rounded-lg border border-red-900 p-4 expand-btn" onclick="toggle('s1')">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="score-pill tag-p1">P1</span>
+            <span class="text-sm font-semibold text-white">Append-only enforcement absent</span>
+            <span class="text-xs tag-live rounded px-2 py-0.5">LIVE-VERIFIED</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none flex-shrink-0">▸</span>
+        </div>
+        <div id="s1" class="issue-body mt-3 text-xs text-gray-400 space-y-1">
+          <p>anon, authenticated, service_role, and postgres all hold TRUNCATE on both floor tables. Additionally: anon/authenticated/service_role hold REFERENCES + TRIGGER. Zero guard triggers. RLS enabled but has zero policies and doesn't gate TRUNCATE.</p>
+          <p class="text-red-400">Evidence: live role_table_grants, pg_trigger (5 non-internal triggers, none on floor tables), pg_class.relrowsecurity.</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg border border-green-900 p-4 expand-btn" onclick="toggle('s2')">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="score-pill tag-resolved">RESOLVED</span>
+            <span class="text-sm font-semibold text-white">FK cascade (feared third bypass)</span>
+            <span class="text-xs tag-live rounded px-2 py-0.5">LIVE-VERIFIED</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none flex-shrink-0">▸</span>
+        </div>
+        <div id="s2" class="issue-body mt-3 text-xs text-gray-400 space-y-1">
+          <p>Phase 8 raised concern that fk_header might be ON DELETE CASCADE (silent message deletion on header delete). Query: <code class="bg-gray-800 px-1 rounded">SELECT confdeltype FROM pg_constraint WHERE conname='fk_header'</code> → <code class="bg-gray-800 px-1 rounded">'a'</code> = NO ACTION.</p>
+          <p class="text-green-400">The FK protects the floor — a header with child messages cannot be deleted. Feared bypass does not exist.</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg border border-orange-900 p-4 expand-btn" onclick="toggle('s3')">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="score-pill tag-p2">P2</span>
+            <span class="text-sm font-semibold text-white">"Verbatim" claim inaccurate — JSONB key reorder + scrub-v1</span>
+            <span class="text-xs tag-live rounded px-2 py-0.5">LIVE-VERIFIED</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none flex-shrink-0">▸</span>
+        </div>
+        <div id="s3" class="issue-body mt-3 text-xs text-gray-400 space-y-1">
+          <p><strong>JSONB:</strong> 200/200 content_blocks sampled: all key-reordered, 0 byte-identical, 0 value loss. JSONB canonically sorts keys alphabetically and silently collapses duplicate keys (last-wins).</p>
+          <p><strong>scrub-v1:</strong> 273 credential redactions; 8 touch thinking-block paths (RTSP, anthropic, postgres secrets inside thinking text). verify.log: passed=true, 0 residual hits over 331 MB.</p>
+          <p>TEXT columns (including <code class="bg-gray-800 px-1 rounded">text</code>, <code class="bg-gray-800 px-1 rounded">created_at</code>) are byte-verbatim.</p>
+          <p class="text-yellow-300">Remediation: relabel (Caveat 4). No data loss; labeling fix only.</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg border border-orange-900 p-4 expand-btn" onclick="toggle('s4')">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="score-pill tag-p2">P2</span>
+            <span class="text-sm font-semibold text-white">pgvector absent vs "+pgvector" in title</span>
+            <span class="text-xs tag-live rounded px-2 py-0.5">LIVE-VERIFIED</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none flex-shrink-0">▸</span>
+        </div>
+        <div id="s4" class="issue-body mt-3 text-xs text-gray-400">
+          <p>pg_extension confirms no vector/pgvector. pg_available_extensions: vector 0.8.0 is installable but not installed. Installed extensions: pg_stat_statements, pgcrypto, plpgsql, supabase_vault, uuid-ossp.</p>
+          <p class="text-yellow-300 mt-1">Remediation: drop "+pgvector" from title or annotate as deferred sidecar (Caveat 4). Not required for storage-only lock.</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg border border-orange-900 p-4 expand-btn" onclick="toggle('s5')">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="score-pill tag-p2">P2</span>
+            <span class="text-sm font-semibold text-white">Multi-snapshot mixed-version query (pre-snapshot-2)</span>
+            <span class="text-xs tag-live rounded px-2 py-0.5">LIVE-VERIFIED structurally</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none flex-shrink-0">▸</span>
+        </div>
+        <div id="s5" class="issue-body mt-3 text-xs text-gray-400">
+          <p>PK is (snapshot_id, conv_uuid, msg_uuid). After snapshot 2 ingest, a naive query <code class="bg-gray-800 px-1 rounded">WHERE conv_uuid = X</code> returns messages from both snapshots with no indicator. The current_snapshots view / selection policy must be defined before snapshot 2 is ingested.</p>
+          <p class="text-yellow-300 mt-1">Not blocking for current single-snapshot lock. Required before snapshot 2 (Caveat 6).</p>
+        </div>
+      </div>
+
+      <div class="bg-gray-900 rounded-lg border border-gray-700 p-4 expand-btn" onclick="toggle('s6')">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3 flex-wrap">
+            <span class="score-pill tag-p3">P3</span>
+            <span class="text-sm font-semibold text-white">No secondary indexes — all tree traversal is Seq Scan</span>
+            <span class="text-xs tag-live rounded px-2 py-0.5">LIVE-VERIFIED</span>
+          </div>
+          <span class="text-gray-500 text-lg select-none flex-shrink-0">▸</span>
+        </div>
+        <div id="s6" class="issue-body mt-3 text-xs text-gray-400">
+          <p>EXPLAIN: parent_message_uuid filter → Seq Scan on floor_conv_messages (22,801 rows). Only PK btrees exist. Post-lock recommendation: add <code class="bg-gray-800 px-1 rounded">(snapshot_id, conv_uuid, parent_message_uuid)</code> index for tree traversal.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Claim Verification -->
+  <section>
+    <h2 class="text-base font-bold text-gray-300 uppercase tracking-widest mb-4">Claim Verification (Phase 10) — 20/21 Verified</h2>
+    <div class="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
+      <table class="w-full text-xs">
+        <thead>
+          <tr class="border-b border-gray-700 bg-gray-800">
+            <th class="text-left px-4 py-2 text-gray-400 w-8">#</th>
+            <th class="text-left px-4 py-2 text-gray-400">Claim</th>
+            <th class="text-left px-4 py-2 text-gray-400 w-28">Result</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-800">
+          <tr><td class="px-4 py-2 text-gray-500">C1–C3</td><td class="px-4 py-2 text-gray-300">294 headers / 22,801 messages / 23,095 ndjson lines</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C4</td><td class="px-4 py-2 text-gray-300">304 root messages with sentinel UUID <span class="bg-gray-800 rounded px-1 font-mono">00000000-0000-4000-8000-000000000000</span></td><td class="px-4 py-2 text-green-400">VERIFIED*</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C5</td><td class="px-4 py-2 text-gray-300">9 conversations with 2+ roots (multi-root)</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C6–C7</td><td class="px-4 py-2 text-gray-300">JSONB sorts keys alphabetically; duplicate keys → last-wins silently</td><td class="px-4 py-2 text-green-400">VERIFIED live</td></tr>
+          <tr class="bg-red-950 bg-opacity-30"><td class="px-4 py-2 text-gray-500">C8</td><td class="px-4 py-2 text-gray-300">content_blocks round-trip: 198 reordered / 2 byte-identical</td><td class="px-4 py-2 text-red-400">INACCURATE†</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C9</td><td class="px-4 py-2 text-gray-300">1,479 source ndjson lines contain \u-escaped characters</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C10–C11</td><td class="px-4 py-2 text-gray-300">anon/authenticated/service_role: TRUNCATE, no DML/SELECT</td><td class="px-4 py-2 text-green-400">VERIFIED*</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C12–C13</td><td class="px-4 py-2 text-gray-300">RLS enabled on both tables; 0 policies</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C14</td><td class="px-4 py-2 text-gray-300">Only PK btrees; no secondary indexes</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C15</td><td class="px-4 py-2 text-gray-300">FK fk_header links messages → headers on (snapshot_id, conv_uuid)</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr class="bg-green-950 bg-opacity-30"><td class="px-4 py-2 text-gray-500">C21</td><td class="px-4 py-2 text-gray-300">fk_header confdeltype='a' (NO ACTION) — not CASCADE</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C16</td><td class="px-4 py-2 text-gray-300">pgvector NOT installed</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C17</td><td class="px-4 py-2 text-gray-300">0 NULL values in parent_message_uuid</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C18</td><td class="px-4 py-2 text-gray-300">3 headers with zero matching messages</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C19</td><td class="px-4 py-2 text-gray-300">114 messages strictly empty (text='', content_blocks=[], attachments=[], files=[])</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+          <tr><td class="px-4 py-2 text-gray-500">C20</td><td class="px-4 py-2 text-gray-300">EXPLAIN shows Seq Scan for parent_message_uuid filter</td><td class="px-4 py-2 text-green-400">VERIFIED</td></tr>
+        </tbody>
+      </table>
+      <div class="px-4 py-3 bg-gray-800 border-t border-gray-700 text-xs text-gray-500 space-y-1">
+        <p>* <strong>C4 caveat:</strong> sentinel is <span class="font-mono">00000000-0000-4000-8000-000000000000</span> (UUIDv4 nil-with-version), not plain all-zeros — querying all-zeros returns 0 rows. C10/C11 caveat: roles also hold REFERENCES + TRIGGER; floor_conv_headers has identical grant set.</p>
+        <p>† <strong>C8 inaccuracy (detail only):</strong> Clean PK-keyed remeasure yields <strong>200/200 reordered, 0 byte-identical, 0 value loss</strong>. The panel's "198/2" split is not reproducible. Core conclusion (zero value loss, key reorder only) is correct.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Post-Lock Recommendations -->
+  <section>
+    <h2 class="text-base font-bold text-gray-300 uppercase tracking-widest mb-4">Post-Lock Recommendations <span class="text-gray-600 text-xs font-normal">(not blocking)</span></h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div class="bg-gray-900 rounded-lg border border-gray-700 p-4">
+        <div class="text-xs text-blue-400 font-bold mb-1">1. Off-site immutable ndjson copy</div>
+        <p class="text-xs text-gray-400">Object storage with object-lock (e.g., S3). Highest-priority post-lock: the ndjson-canonical reframe makes the ndjson the SPOF. Single-copy canonical artifact is a latent failure.</p>
+      </div>
+      <div class="bg-gray-900 rounded-lg border border-gray-700 p-4">
+        <div class="text-xs text-blue-400 font-bold mb-1">2. Verify/enable PITR</div>
+        <p class="text-xs text-gray-400">Or formally accept ndjson-rebuild as the backup strategy and document the expected RTO.</p>
+      </div>
+      <div class="bg-gray-900 rounded-lg border border-gray-700 p-4">
+        <div class="text-xs text-blue-400 font-bold mb-1">3. Pre-ingest lint</div>
+        <p class="text-xs text-gray-400">Lint future ndjson exports for duplicate keys and null bytes before ingest. Postgres TEXT rejects U+0000; JSONB silently collapses duplicate keys.</p>
+      </div>
+      <div class="bg-gray-900 rounded-lg border border-gray-700 p-4">
+        <div class="text-xs text-blue-400 font-bold mb-1">4. Secondary index</div>
+        <p class="text-xs text-gray-400"><code class="bg-gray-800 px-1 rounded">(snapshot_id, conv_uuid, parent_message_uuid)</code> for tree traversal. Current plan requires full seq scan of 22,801 rows for any tree query.</p>
+      </div>
+      <div class="bg-gray-900 rounded-lg border border-gray-700 p-4">
+        <div class="text-xs text-blue-400 font-bold mb-1">5. CHECK constraints</div>
+        <p class="text-xs text-gray-400"><code class="bg-gray-800 px-1 rounded">CHECK (sender IN ('human','assistant'))</code>, is_root↔sentinel agreement, timestamp format — added carefully to never rewrite stored bytes.</p>
+      </div>
+      <div class="bg-gray-900 rounded-lg border border-gray-700 p-4">
+        <div class="text-xs text-blue-400 font-bold mb-1">6. Single-transaction ingest for snapshot #2</div>
+        <p class="text-xs text-gray-400">All-or-nothing ingest (single transaction or staging-swap pattern) to handle partial failures without requiring an append-only-violating DELETE.</p>
+      </div>
+      <div class="bg-gray-900 rounded-lg border border-gray-700 p-4">
+        <div class="text-xs text-blue-400 font-bold mb-1">7. Header-flag integrity drill</div>
+        <p class="text-xs text-gray-400">Re-derive multi_root, has_branches, message_count from current tree and confirm they match denormalized header values. Clean today; no enforcement for future snapshots.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Debate Quality -->
+  <section>
+    <h2 class="text-base font-bold text-gray-300 uppercase tracking-widest mb-4">Debate Quality Assessment</h2>
+    <div class="bg-gray-900 rounded-lg border border-gray-700 p-5 space-y-4 text-sm text-gray-300">
+      <div>
+        <span class="text-green-400 font-bold">No sycophancy detected.</span>
+        <span class="text-gray-400"> The Devil's Advocate moved +3 (3→6) in Round 2. Movement was driven by the ndjson-canonical reframe logically resolving its signature "substrate-agnostic gate" objection. The DA simultaneously introduced a new adversarial concern (multi-snapshot mixed-version query). New concern while moving = evidence-driven, not social capitulation.</span>
+      </div>
+      <div>
+        <span class="text-yellow-400 font-bold">One real panel quality defect.</span>
+        <span class="text-gray-400"> All four reviewers had live DB access and unanimously listed "verify FK is not CASCADE" as a concern. None ran the one-line query before filing it as post-lock caveat #11. Phase 8 named this gap; Phase 10 ran the query (result: NO ACTION). The "captured but never verified" pattern is exactly what an immortal-floor decision cannot afford. Phase 8/10/11 caught and closed it.</span>
+      </div>
+      <div>
+        <span class="text-blue-400 font-bold">Convergence is evidence-based.</span>
+        <span class="text-gray-400"> Panel started at 3–6 and converged to 5–6 after two rounds. Convergence followed a genuine reframe (ndjson-canonical), not anchoring on a lead reviewer. Tight final spread reflects resolved substantive disputes.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Evidence Provenance -->
+  <section>
+    <div class="bg-gray-900 border border-gray-700 rounded-lg p-4 text-xs text-gray-500">
+      <div class="font-bold text-gray-400 mb-2">Evidence Provenance</div>
+      <p>All quantitative claims verified against the running Supabase DB (psycopg3 3.3.4, Python 3.13) and source fixture (read-only). Source: <code class="bg-gray-800 px-1 rounded">apparatus-archive/snapshots/baseline-2026-05-25-ae015455/scrub-v1/records.ndjson</code> (23,095 lines, 367,494,497 bytes). State files for all 15 phases in <code class="bg-gray-800 px-1 rounded">state/</code>. Full process history in <code class="bg-gray-800 px-1 rounded">review_panel_process.md</code>.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// Score Timeline Chart
+const ctx = document.getElementById('scoreChart').getContext('2d');
+const labels = ['Phase 3 (Independent)', 'Round 1', 'Round 2 / Blind Final', 'Judge'];
+const datasets = [
+  { label: 'Database Specialist', data: [4, 6, 6, 6], borderColor: '#60a5fa', backgroundColor: '#60a5fa22', tension: 0.3, pointRadius: 5 },
+  { label: 'Risk Assessor', data: [3, 5, 5, 5], borderColor: '#f59e0b', backgroundColor: '#f59e0b22', tension: 0.3, pointRadius: 5 },
+  { label: "Devil's Advocate", data: [3, 3, 6, 6], borderColor: '#ef4444', backgroundColor: '#ef444422', tension: 0.3, pointRadius: 5 },
+  { label: 'Correctness Hawk', data: [6, 5, 6, 6], borderColor: '#a78bfa', backgroundColor: '#a78bfa22', tension: 0.3, pointRadius: 5 },
+  { label: 'Supreme Judge', data: [null, null, null, 6], borderColor: '#34d399', backgroundColor: '#34d39922', tension: 0.3, pointRadius: 8, pointStyle: 'star' },
+];
+
+new Chart(ctx, {
+  type: 'line',
+  data: { labels, datasets },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: '#9ca3af', font: { family: 'Courier New', size: 11 } } },
+      tooltip: { backgroundColor: '#1f2937', titleColor: '#e5e7eb', bodyColor: '#9ca3af' }
+    },
+    scales: {
+      y: {
+        min: 1, max: 10,
+        grid: { color: '#374151' },
+        ticks: { color: '#6b7280', font: { family: 'Courier New' }, stepSize: 1 },
+        title: { display: true, text: 'Score / 10', color: '#6b7280', font: { family: 'Courier New', size: 11 } }
+      },
+      x: {
+        grid: { color: '#374151' },
+        ticks: { color: '#6b7280', font: { family: 'Courier New', size: 11 } }
+      }
+    }
+  }
+});
+
+// Expand/collapse
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>

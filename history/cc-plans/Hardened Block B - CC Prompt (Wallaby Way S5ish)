@@ -1,0 +1,50 @@
+SUBSTITUTE <LANE> THROUGHOUT WITH:  may_d2   (one token from the list under this block)
+
+CC KICKOFF — apparatus LANE EXCAVATION (clean re-run, hardened) · LANE = <LANE>
+
+You own ONE lane. Excavate EVERY conversation in your lane's uuid-list — no sampling, no density-skipping, no shortcuts. A compile pass merges all lanes later.
+
+★ ZERO PRIOR-RUN TRUST (read first — this is WHY the lane is being re-run):
+Every prior-run artifact is INVALID. Treat all prior excavation output as if it does not exist.
+· Do NOT read, open, carry forward, renumber, cite, "upgrade," or trust ANY prior seed_/manifest_/ledger_ file, prior partial, prior conversation summary, or prior zero-yield / "confirmed-CORPUS" / "trusted-screening" assessment.
+· Every entry's verbatim MUST be a span you COPIED from conversations.json THIS pass, at the message you cite. Did not open the conv and copy the span this run = not an entry.
+· BANNED dispositions (each = re-read the conv fresh or it doesn't count): "[PRIOR]", "transcription-via-summary", "carried forward from prior partial", "confirmed-CORPUS (no spot-check)", "trusted-zero-yield from prior screening", "read before compaction — zero yield confirmed".
+· A conv counts as READ only if you opened its extracted text THIS pass and either produced entries or confirmed zero-yield against its actual text THIS pass.
+
+BOOT: git fetch, confirm clone clean + at HEAD, then read (does NOT touch the gitignored apparatus-archive):
+· C:\claude-reference\active\JAKE-RULES.md
+· C:\claude-reference\active\apparatus\Cypher-Memory-Loop_System_v1.md — the WHY. You are the EXCAVATOR, not the architect. Brain-soup is settled; do NOT re-propose partition / track column / re-architecture.
+· C:\claude-reference\active\apparatus\ANCHOR_apparatus.md
+· the most recent Chat_Session_Handoff in that folder
+· C:\claude-reference\active\apparatus\CORPUS.md — ENTRY-SHAPE TEMPLATE ONLY. Its entries are NOT a source, NOT a confirmation, NOT a reason to skip a conv. A decision already in CORPUS v1 still gets its conv read fresh.
+Your lane: C:\claude-reference\apparatus-archive\seeds\lanes\lane_<LANE>.txt — excavate ALL its uuids.
+Source: C:\claude-reference\apparatus-archive\conversations.json (GITIGNORED, ~348MB, holds the S11 cred — stream off the PATH, bytes never enter chat).
+
+EXTRACT per conv (dual-path — text lives in two places; assuming one caused the jan01 0KB ghost):
+· For each message in chat_messages: EXCLUDE content blocks where type=='thinking'.
+· Assistant text = join content[] blocks where type=='text'; if none, FALL BACK to that message's top-level .text. Human text = top-level .text (fall back to content[] text if empty).
+· Confirm field shape against one real record BEFORE relying on a path — do not assert from memory (§5.1).
+· Intermediates → lane-specific %LOCALAPPDATA%\Temp\extract_<LANE>\. Bytes never enter chat.
+
+SIZE-ANOMALY GATE (per conv, right after extract): if extracted bytes are 0 / tiny vs that conv's msg_count in nav_index.md, do NOT conclude "empty." Dump the raw record key-shape + resolved path to text/sender/timestamp, report EXTRACTION-FAILED-VERIFY. 0KB on a multi-message conv = bug until the bytes prove otherwise.
+
+COMPACTION RULE: if you approach the context limit, do NOT compact-and-continue from summary and do NOT carry entries from pre-compaction memory. Stop taking new convs, finish entries for convs you already copied verbatim this pass, and report the exact still-unread uuids as a coverage gap. A lane that won't fit one window is a SPLIT signal — report and stop, never fake completion.
+
+FENCE (hard — OVERRIDES any softer "tag it" guidance in CORPUS.md):
+· NEVER reconstruct a quote. Verbatim = a COPIED span from the message text this pass. Can't copy a span at the point the decision was made → write NO entry. "[SOURCE: reconstructed…]" not allowed; reconstructed = STRIKE.
+· ORIGIN ≠ REVIEW. A decision appearing as already-established/reviewed knowledge (context-load, summary read, recap) was NOT made there — no entry against a review conv; it belongs to the conv that decided it (not in your lane / unreadable → log it, no entry).
+· Salient = decisions + reasoning, pushback that turned the wheel, corrections bought with real time/money, architecture. Chaff = banter, bare acks, superseded false starts unless the false start IS the lesson. WHEN IN DOUBT, KEEP. Operational builds often yield zero — reading one and finding nothing IS the job.
+
+SCRUB (two layers, every conv): (a) regex — sk- keys, postgres://… / any connection string, JWT/token shapes, rtsp:// creds; (b) judgment — contextual secrets (password in prose, owner-key talk, regex-dodging RTSP, home-address/PII). Redact VALUES → "[<descriptor> — redacted]". NAMES fine; VALUES never — not to seed, terminal, or manifest (reference by location + type only).
+
+ENTRY SHAPE (match CORPUS v1): within-lane id (<LANE>-001…) · date · source-chat name + conv-uuid · msg uuid/index · decision-label · verbatim · scanning-only track label · flags. NO global numbers — compile sorts all lanes by created_at. conv-uuid + msg pointer = the address.
+
+WRITE (clean re-run → START FRESH): overwrite, do NOT append to, any existing seed_/manifest_/ledger_<LANE>.md, then append entries as you go. Three files in C:\claude-reference\apparatus-archive\seeds\partials\: seed_<LANE>.md (continuous body) · manifest_<LANE>.md (catches, location+type only) · ledger_<LANE>.md (judgment calls). DO NOT wipe your temp dir.
+
+NO FENCE-CRITICAL DELEGATION: don't hand any conv's excavation to a subagent. If one is used at all, it gets this prompt's FENCE + SCRUB + ZERO-PRIOR-TRUST + SIZE/COMPACTION rules verbatim, output spot-checked against raw bytes before anything enters the seed.
+
+REPORT at gate (coverage honesty — never N/N or 100% if anything yielded nothing or went unread):
+· convs-in-lane · convs-READ-this-pass · any zero-yield / EXTRACTION-FAILED-VERIFY / unread uuids listed explicitly (each is an unscrubbed gap, NOT a read)
+· entries produced · scrub catches (location+type only) · judgment notes · partial-seed path + size
+STOP. No ingest, no global numbering.
+GUARDRAILS: DISK only; archive off the PATH; creds never in chat/reports; full files not diffs; PowerShell; one command per line, no &&; trust disk over memory; flag discrepancies. Don't suck.

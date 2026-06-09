@@ -1,0 +1,9 @@
+The file `6f1e4eaa-7a52-4ec1-aaec-a8b63b6e9eb8_payload.txt` does not exist in `C:\claude-reference\pipeline\s39\`. The directory contains payload files for these five UUIDs:
+
+- `2fdeedf8-b873-4162-bb73-064353090a18`
+- `4afba4db-1b89-442f-b3af-db38eca9fa56`
+- `4d88185f-fe6c-495a-9b9e-713d4f532092`
+- `63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0`
+- `9b932a60-5390-46ee-bc2c-9480b90f893d`
+
+There is no payload file for UUID `6f1e4eaa-7a52-4ec1-aaec-a8b63b6e9eb8`. Additionally, `_nodes_raw.txt` output files exist for `4afba4db`, `9e3bcd69`, and `be889066`, but `9e3bcd69` and `be889066` have no corresponding `_payload.txt` files in this directory, which suggests those conversations were processed in a prior run or from a different source.

@@ -1,0 +1,867 @@
+REORG_CHANGE_LEDGER — Wallaby Way Step 1
+Date: 2026-06-08
+Format: OLD_PATH -> NEW_PATH
+---
+active/apparatus/ANCHOR_apparatus.md -> wallaby-way/canon/ANCHOR_apparatus.md
+active/apparatus/Batch_Read_Spec_v1.1_2026-06-06.md -> wallaby-way/canon/Batch_Read_Spec_v1.1_2026-06-06.md
+active/apparatus/Boot_ScopeReader_v4.1_2026-06-06.md -> wallaby-way/canon/Boot_ScopeReader_v4.1_2026-06-06.md
+active/apparatus/CORPUS.md -> wallaby-way/canon/CORPUS.md
+active/apparatus/Cypher-Memory-Loop_System_v1.md -> wallaby-way/canon/Cypher-Memory-Loop_System_v1.md
+active/apparatus/Freeze_Pipeline_Spec_v4.md -> wallaby-way/canon/Freeze_Pipeline_Spec_v4.md
+active/apparatus/S2_Corpus_Locks_2026-05-25.md -> wallaby-way/canon/S2_Corpus_Locks_2026-05-25.md
+active/apparatus/S40_RefDoc_ChangeSets_2026-06-06.md -> wallaby-way/canon/S40_RefDoc_ChangeSets_2026-06-06.md
+active/apparatus/SCDD_S1-S6_MergeBack_to_Apparatus_2026-05-28.md -> wallaby-way/canon/SCDD_S1-S6_MergeBack_to_Apparatus_2026-05-28.md
+active/apparatus/Seed_Shape_Test_Spec_v1_2026-05-28.md -> wallaby-way/canon/Seed_Shape_Test_Spec_v1_2026-05-28.md
+active/apparatus/Shape_Slice_Over_Ceiling_Rule_v1_2026-06-02.md -> wallaby-way/canon/Shape_Slice_Over_Ceiling_Rule_v1_2026-06-02.md
+active/apparatus/Substrate_FaceOff_v2.md -> wallaby-way/canon/Substrate_FaceOff_v2.md
+active/apparatus/The_Progenitor_v5_2026-06-02.md -> wallaby-way/canon/The_Progenitor_v5_2026-06-02.md
+active/apparatus/The_Wallaby_Whales_2026-06-03.md -> wallaby-way/canon/The_Wallaby_Whales_2026-06-03.md
+active/apparatus/Boot_ScopeReader_v4.0_2026-06-03.md -> history/superseded-specs/Boot_ScopeReader_v4.0_2026-06-03.md
+active/apparatus/Batch_Read_Spec_v1_2026-06-06.md -> history/superseded-specs/Batch_Read_Spec_v1_2026-06-06.md
+active/apparatus/Seeding_Council_Boot_Kit_v1.1_2026-06-01.md -> history/superseded-specs/Seeding_Council_Boot_Kit_v1.1_2026-06-01.md
+active/apparatus/seeding_working_examples.md -> history/superseded-specs/seeding_working_examples_v1.1era.md
+active/apparatus/Chat_Session_Handoff_2026-06-01_apparatus_S26_to_S27.md -> history/handoffs/Chat_Session_Handoff_2026-06-01_apparatus_S26_to_S27.md
+active/apparatus/Chat_Session_Handoff_2026-06-01_apparatus_S27_to_S28.md -> history/handoffs/Chat_Session_Handoff_2026-06-01_apparatus_S27_to_S28.md
+active/apparatus/Chat_Session_Handoff_2026-06-02_apparatus_S28_to_S29.md -> history/handoffs/Chat_Session_Handoff_2026-06-02_apparatus_S28_to_S29.md
+active/apparatus/Chat_Session_Handoff_2026-06-02_apparatus_S29_to_S30.md -> history/handoffs/Chat_Session_Handoff_2026-06-02_apparatus_S29_to_S30.md
+active/apparatus/Chat_Session_Handoff_2026-06-02_apparatus_S30_to_S31.md -> history/handoffs/Chat_Session_Handoff_2026-06-02_apparatus_S30_to_S31.md
+active/apparatus/Chat_Session_Handoff_2026-06-02_apparatus_S31_to_S32.md -> history/handoffs/Chat_Session_Handoff_2026-06-02_apparatus_S31_to_S32.md
+active/apparatus/Chat_Session_Handoff_2026-06-03_apparatus_S32_to_S33.md -> history/handoffs/Chat_Session_Handoff_2026-06-03_apparatus_S32_to_S33.md
+active/apparatus/Chat_Session_Handoff_2026-06-03_apparatus_S33_to_S34.md -> history/handoffs/Chat_Session_Handoff_2026-06-03_apparatus_S33_to_S34.md
+active/apparatus/Chat_Session_Handoff_2026-06-04_apparatus_S34_to_S35.md -> history/handoffs/Chat_Session_Handoff_2026-06-04_apparatus_S34_to_S35.md
+active/apparatus/Chat_Session_Handoff_2026-06-04_apparatus_S35_to_S36.md -> history/handoffs/Chat_Session_Handoff_2026-06-04_apparatus_S35_to_S36.md
+active/apparatus/Chat_Session_Handoff_2026-06-05_apparatus_S36_to_S37.md -> history/handoffs/Chat_Session_Handoff_2026-06-05_apparatus_S36_to_S37.md
+active/apparatus/Chat_Session_Handoff_2026-06-05_apparatus_S37_to_S38.md -> history/handoffs/Chat_Session_Handoff_2026-06-05_apparatus_S37_to_S38.md
+active/apparatus/Chat_Session_Handoff_2026-06-05_apparatus_S38_to_S39.md -> history/handoffs/Chat_Session_Handoff_2026-06-05_apparatus_S38_to_S39.md
+active/apparatus/Chat_Session_Handoff_2026-06-05_apparatus_S39_to_S40.md -> history/handoffs/Chat_Session_Handoff_2026-06-05_apparatus_S39_to_S40.md
+active/apparatus/Chat_Session_Handoff_2026-06-06_apparatus_S40_to_S41.md -> history/handoffs/Chat_Session_Handoff_2026-06-06_apparatus_S40_to_S41.md
+active/apparatus/Chat_Session_Handoff_2026-06-06_apparatus_S41_to_S42.md -> history/handoffs/Chat_Session_Handoff_2026-06-06_apparatus_S41_to_S42.md
+active/apparatus/Chat_Session_Handoff_2026-06-07_apparatus_S42_to_S43.md -> history/handoffs/Chat_Session_Handoff_2026-06-07_apparatus_S42_to_S43.md
+active/apparatus/Chat_Session_Handoff_2026-06-07_apparatus_S43_to_S44.md -> history/handoffs/Chat_Session_Handoff_2026-06-07_apparatus_S43_to_S44.md
+active/apparatus/Chat_Session_Handoff_2026-06-07_apparatus_S44_to_S45.md -> history/handoffs/Chat_Session_Handoff_2026-06-07_apparatus_S44_to_S45.md
+active/apparatus/Chat_Session_Handoff_2026-06-07_apparatus_S45_to_S46.md -> history/handoffs/Chat_Session_Handoff_2026-06-07_apparatus_S45_to_S46.md
+active/apparatus/Chat_Session_Handoff_2026-06-08_apparatus_S46_to_S47.md -> history/handoffs/Chat_Session_Handoff_2026-06-08_apparatus_S46_to_S47.md
+active/apparatus/Chat_Session_Handoff_2026-06-08_apparatus_S47_to_S48.md -> history/handoffs/Chat_Session_Handoff_2026-06-08_apparatus_S47_to_S48.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-25_apparatus_S2_to_S3.md -> history/handoffs/Chat_Session_Handoff_2026-05-25_apparatus_S2_to_S3.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-25_apparatus_S3_to_S4.md -> history/handoffs/Chat_Session_Handoff_2026-05-25_apparatus_S3_to_S4.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-25_apparatus_S4_to_S5.md -> history/handoffs/Chat_Session_Handoff_2026-05-25_apparatus_S4_to_S5.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-26_apparatus_S5_to_S6.md -> history/handoffs/Chat_Session_Handoff_2026-05-26_apparatus_S5_to_S6.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-26_apparatus_S6_to_S7.md -> history/handoffs/Chat_Session_Handoff_2026-05-26_apparatus_S6_to_S7.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-26_apparatus_S7_to_S8.md -> history/handoffs/Chat_Session_Handoff_2026-05-26_apparatus_S7_to_S8.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-26_apparatus_S8_to_S9.md -> history/handoffs/Chat_Session_Handoff_2026-05-26_apparatus_S8_to_S9.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-27_apparatus_S10_to_S11.md -> history/handoffs/Chat_Session_Handoff_2026-05-27_apparatus_S10_to_S11.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-27_apparatus_S11_to_S12.md -> history/handoffs/Chat_Session_Handoff_2026-05-27_apparatus_S11_to_S12.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-27_apparatus_S12_to_S13.md -> history/handoffs/Chat_Session_Handoff_2026-05-27_apparatus_S12_to_S13.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-27_apparatus_S9_to_S10.md -> history/handoffs/Chat_Session_Handoff_2026-05-27_apparatus_S9_to_S10.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-28_apparatus_S13_to_S14.md -> history/handoffs/Chat_Session_Handoff_2026-05-28_apparatus_S13_to_S14.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-28_apparatus_S14_to_S15.md -> history/handoffs/Chat_Session_Handoff_2026-05-28_apparatus_S14_to_S15.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-28_apparatus_S15_to_S16.md -> history/handoffs/Chat_Session_Handoff_2026-05-28_apparatus_S15_to_S16.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-29_apparatus_S16_to_S17.md -> history/handoffs/Chat_Session_Handoff_2026-05-29_apparatus_S16_to_S17.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-29_apparatus_S17_to_S18.md -> history/handoffs/Chat_Session_Handoff_2026-05-29_apparatus_S17_to_S18.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-30_apparatus_S18_to_S19.md -> history/handoffs/Chat_Session_Handoff_2026-05-30_apparatus_S18_to_S19.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-30_apparatus_S19_to_S20.md -> history/handoffs/Chat_Session_Handoff_2026-05-30_apparatus_S19_to_S20.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-31_apparatus_S20_to_S21.md -> history/handoffs/Chat_Session_Handoff_2026-05-31_apparatus_S20_to_S21.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-31_apparatus_S21_to_S22.md -> history/handoffs/Chat_Session_Handoff_2026-05-31_apparatus_S21_to_S22.md
+active/archive_notignored/Chat_Session_Handoff_2026-05-31_apparatus_S22_to_S23.md -> history/handoffs/Chat_Session_Handoff_2026-05-31_apparatus_S22_to_S23.md
+active/archive_notignored/Chat_Session_Handoff_2026-06-01_apparatus_S23_to_S24.md -> history/handoffs/Chat_Session_Handoff_2026-06-01_apparatus_S23_to_S24.md
+active/archive_notignored/Chat_Session_Handoff_2026-06-01_apparatus_S24_to_S25.md -> history/handoffs/Chat_Session_Handoff_2026-06-01_apparatus_S24_to_S25.md
+active/archive_notignored/Chat_Session_Handoff_2026-06-01_apparatus_S25_to_S26.md -> history/handoffs/Chat_Session_Handoff_2026-06-01_apparatus_S25_to_S26.md
+active/archive_notignored/E1_Admission_Standard_S27.md -> history/superseded-specs/E1_Admission_Standard_S27.md
+active/archive_notignored/Freeze_Pipeline_Spec_v1.md -> history/superseded-specs/Freeze_Pipeline_Spec_v1.md
+active/archive_notignored/Freeze_Pipeline_Spec_v2.md -> history/superseded-specs/Freeze_Pipeline_Spec_v2.md
+active/archive_notignored/Freeze_Pipeline_Spec_v3.md -> history/superseded-specs/Freeze_Pipeline_Spec_v3.md
+active/archive_notignored/S2_Corpus_Locks_2026-05-25.md -> history/superseded-specs/S2_Corpus_Locks_2026-05-25_archived-twin.md
+active/archive_notignored/Seeding_Council_Boot_Kit_v0.1_2026-06-01.md -> history/superseded-specs/Seeding_Council_Boot_Kit_v0.1_2026-06-01.md
+active/archive_notignored/Seeding_Council_Boot_Kit_v0.2_2026-06-01.md -> history/superseded-specs/Seeding_Council_Boot_Kit_v0.2_2026-06-01.md
+active/archive_notignored/Seeding_Council_Boot_Kit_v1.0_2026-06-01.md -> history/superseded-specs/Seeding_Council_Boot_Kit_v1.0_2026-06-01.md
+active/archive_notignored/Substrate_FaceOff_v1.md -> history/superseded-specs/Substrate_FaceOff_v1.md
+active/archive_notignored/The_Progenitor_v1_2026-06-01.md -> history/superseded-specs/The_Progenitor_v1_2026-06-01.md
+active/archive_notignored/The_Progenitor_v2_2026-06-01.md -> history/superseded-specs/The_Progenitor_v2_2026-06-01.md
+active/archive_notignored/The_Progenitor_v3_2026-06-01.md -> history/superseded-specs/The_Progenitor_v3_2026-06-01.md
+active/archive_notignored/The_Progenitor_v4_2026-06-01.md -> history/superseded-specs/The_Progenitor_v4_2026-06-01.md
+pipeline/apparatus_batch_read.py -> wallaby-way/scripts/apparatus_batch_read.py
+pipeline/apparatus_freeze_pipeline.py -> wallaby-way/scripts/apparatus_freeze_pipeline.py
+pipeline/pipeline_guards.py -> wallaby-way/scripts/pipeline_guards.py
+pipeline/scrub_output.py -> wallaby-way/scripts/scrub_output.py
+pipeline/extract_whale.py -> wallaby-way/scripts/extract_whale.py
+pipeline/chunk_whale.py -> wallaby-way/scripts/chunk_whale.py
+pipeline/extract_whale_cfc7a70a.py -> wallaby-way/scripts/extract_whale_cfc7a70a.py
+pipeline/apparatus_strip_v1.py -> wallaby-way/scripts/apparatus_strip_v1.py
+pipeline/seed_shape_load.py -> wallaby-way/scripts/seed_shape_load.py
+pipeline/apparatus_overlay_v2_drill.py -> wallaby-way/scripts/apparatus_overlay_v2_drill.py
+pipeline/test_guards_S38.py -> wallaby-way/scripts/test_guards_S38.py
+pipeline/test_scrub_output.py -> wallaby-way/scripts/test_scrub_output.py
+pipeline/s39/build_worklist.py -> wallaby-way/scripts/build_worklist.py
+pipeline/s39/floor_extract.py -> wallaby-way/scripts/floor_extract.py
+pipeline/s39/persist_guard.py -> wallaby-way/scripts/persist_guard.py
+pipeline/s39/grade_recut_S42.py -> wallaby-way/scripts/grade_recut_S42.py
+pipeline/s39/_uuid_hunt.py -> wallaby-way/scripts/_uuid_hunt.py
+pipeline/apparatus_shape_loop.py -> graveyard/scripts/apparatus_shape_loop.py
+pipeline/apparatus_api_testcall.py -> graveyard/scripts/apparatus_api_testcall.py
+pipeline/s39/_grade_probe_precision.py -> graveyard/scripts/_grade_probe_precision.py
+pipeline/s39/_grade_probe_s40.py -> graveyard/scripts/_grade_probe_s40.py
+pipeline/_check_anchors.py -> graveyard/scripts/_check_anchors.py
+pipeline/_check_d6e23963.py -> graveyard/scripts/_check_d6e23963.py
+pipeline/_corpus_bucket.py -> graveyard/scripts/_corpus_bucket.py
+pipeline/_extract_slice.py -> graveyard/scripts/_extract_slice.py
+pipeline/_extract_slice_1k.py -> graveyard/scripts/_extract_slice_1k.py
+pipeline/_extract_slice_S29.py -> graveyard/scripts/_extract_slice_S29.py
+pipeline/_find_text_worst_case.py -> graveyard/scripts/_find_text_worst_case.py
+pipeline/_gate1_pick.py -> graveyard/scripts/_gate1_pick.py
+pipeline/_measure_strip_slice09.py -> graveyard/scripts/_measure_strip_slice09.py
+pipeline/_probe1_extract.py -> graveyard/scripts/_probe1_extract.py
+pipeline/_probe2_setup.py -> graveyard/scripts/_probe2_setup.py
+pipeline/_probe2_validate.py -> graveyard/scripts/_probe2_validate.py
+pipeline/_recon_gate1.py -> graveyard/scripts/_recon_gate1.py
+pipeline/_slice_manifest.py -> graveyard/scripts/_slice_manifest.py
+pipeline/_slice_manifest_1k.py -> graveyard/scripts/_slice_manifest_1k.py
+pipeline/_slice_manifest_S29_shape.py -> graveyard/scripts/_slice_manifest_S29_shape.py
+pipeline/_strip_measure.py -> graveyard/scripts/_strip_measure.py
+pipeline/_validate_variance.py -> graveyard/scripts/_validate_variance.py
+pipeline/_validate_variance_tuned.py -> graveyard/scripts/_validate_variance_tuned.py
+pipeline/_verify_strip.py -> graveyard/scripts/_verify_strip.py
+pipeline/_whale_profile.py -> graveyard/scripts/_whale_profile.py
+pipeline/extract_one_conv.py -> graveyard/scripts/extract_one_conv.py
+harvested_nodes/MANIFEST.md -> wallaby-way/nodes/manifests/MANIFEST.md
+harvested_nodes/MERGE_MANIFEST_S47.md -> wallaby-way/nodes/manifests/MERGE_MANIFEST_S47.md
+harvested_nodes/result_492e164b.md -> wallaby-way/nodes/catalogs/result_492e164b.md
+harvested_nodes/result_55217328.md -> wallaby-way/nodes/catalogs/result_55217328.md
+harvested_nodes/result_83506215.md -> wallaby-way/nodes/catalogs/result_83506215.md
+harvested_nodes/result_cfc7a70a.md -> wallaby-way/nodes/catalogs/result_cfc7a70a.md
+harvested_nodes/result_d6e23963.md -> wallaby-way/nodes/catalogs/result_d6e23963.md
+harvested_nodes/result_d9d05961_chunk_00.md -> wallaby-way/nodes/catalogs/result_d9d05961_chunk_00.md
+harvested_nodes/result_d9d05961_chunk_01.md -> wallaby-way/nodes/catalogs/result_d9d05961_chunk_01.md
+harvested_nodes/confirm_48b4110a_chunk_01.md -> wallaby-way/nodes/catalogs/confirm_48b4110a_chunk_01.md
+harvested_nodes/confirm_48b4110a_chunk_02.md -> wallaby-way/nodes/catalogs/confirm_48b4110a_chunk_02.md
+harvested_nodes/confirm_48b4110a_chunk_03.md -> wallaby-way/nodes/catalogs/confirm_48b4110a_chunk_03.md
+harvested_nodes/confirm_48b4110a_chunk_04.md -> wallaby-way/nodes/catalogs/confirm_48b4110a_chunk_04.md
+harvested_nodes/confirm_48b4110a_chunk_05.md -> wallaby-way/nodes/catalogs/confirm_48b4110a_chunk_05.md
+harvested_nodes/confirm_48b4110a_chunk_06.md -> wallaby-way/nodes/catalogs/confirm_48b4110a_chunk_06.md
+harvested_nodes/confirm_48b4110a_chunk_07.md -> wallaby-way/nodes/catalogs/confirm_48b4110a_chunk_07.md
+harvested_nodes/confirm_48b4110a_whole.md -> wallaby-way/nodes/catalogs/confirm_48b4110a_whole.md
+harvested_nodes/confirm_ea900330_chunk_01.md -> wallaby-way/nodes/catalogs/confirm_ea900330_chunk_01.md
+harvested_nodes/confirm_ea900330_chunk_02.md -> wallaby-way/nodes/catalogs/confirm_ea900330_chunk_02.md
+harvested_nodes/confirm_ea900330_chunk_03.md -> wallaby-way/nodes/catalogs/confirm_ea900330_chunk_03.md
+harvested_nodes/confirm_ea900330_chunk_04.md -> wallaby-way/nodes/catalogs/confirm_ea900330_chunk_04.md
+harvested_nodes/confirm_ea900330_chunk_05.md -> wallaby-way/nodes/catalogs/confirm_ea900330_chunk_05.md
+harvested_nodes/confirm_ea900330_whole.md -> wallaby-way/nodes/catalogs/confirm_ea900330_whole.md
+harvested_nodes/01327fa3-cc30-4c32-a2c2-9484d80269cd.md -> wallaby-way/nodes/harvested/01327fa3-cc30-4c32-a2c2-9484d80269cd.md
+harvested_nodes/0167e58a-a93d-4857-9c84-f3967460db0a.md -> wallaby-way/nodes/harvested/0167e58a-a93d-4857-9c84-f3967460db0a.md
+harvested_nodes/0191a925-75de-4795-a871-2d2551a327d9.md -> wallaby-way/nodes/harvested/0191a925-75de-4795-a871-2d2551a327d9.md
+harvested_nodes/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97.md -> wallaby-way/nodes/harvested/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97.md
+harvested_nodes/034c0d87-dbd1-4542-8c6f-7fb6737acea4.md -> wallaby-way/nodes/harvested/034c0d87-dbd1-4542-8c6f-7fb6737acea4.md
+harvested_nodes/042afde3-5c7e-4e52-a945-b9ba3eb98fa0.md -> wallaby-way/nodes/harvested/042afde3-5c7e-4e52-a945-b9ba3eb98fa0.md
+harvested_nodes/04e018c4-e690-41cc-8833-a35640104545.md -> wallaby-way/nodes/harvested/04e018c4-e690-41cc-8833-a35640104545.md
+harvested_nodes/08e29fc5-cb3a-41cd-b149-d0ba6ec6bb49.md -> wallaby-way/nodes/harvested/08e29fc5-cb3a-41cd-b149-d0ba6ec6bb49.md
+harvested_nodes/09db32a8-e311-4948-9355-3369bc45bdef.md -> wallaby-way/nodes/harvested/09db32a8-e311-4948-9355-3369bc45bdef.md
+harvested_nodes/0a703020-88c9-4d4c-9e9a-90f1d670b6bb.md -> wallaby-way/nodes/harvested/0a703020-88c9-4d4c-9e9a-90f1d670b6bb.md
+harvested_nodes/0ae83b8a-6e68-4a7c-9aff-5380a54ed6cf.md -> wallaby-way/nodes/harvested/0ae83b8a-6e68-4a7c-9aff-5380a54ed6cf.md
+harvested_nodes/114b5447-d97f-4418-92d6-3c51e8b0d073.md -> wallaby-way/nodes/harvested/114b5447-d97f-4418-92d6-3c51e8b0d073.md
+harvested_nodes/15b3bfee-79bf-4c0d-993d-9aabbef13878.md -> wallaby-way/nodes/harvested/15b3bfee-79bf-4c0d-993d-9aabbef13878.md
+harvested_nodes/189489f2-c84e-4915-9c0f-bc8930cdd81a.md -> wallaby-way/nodes/harvested/189489f2-c84e-4915-9c0f-bc8930cdd81a.md
+harvested_nodes/19ccd883-9efc-468b-a422-384379fe903f.md -> wallaby-way/nodes/harvested/19ccd883-9efc-468b-a422-384379fe903f.md
+harvested_nodes/1fcd6ba7-2f7f-44ac-936a-cb09c75dee14.md -> wallaby-way/nodes/harvested/1fcd6ba7-2f7f-44ac-936a-cb09c75dee14.md
+harvested_nodes/201646e5-f885-4f90-b398-f22491aa5422.md -> wallaby-way/nodes/harvested/201646e5-f885-4f90-b398-f22491aa5422.md
+harvested_nodes/20e2e718-8352-49c6-b22f-77602da9db77.md -> wallaby-way/nodes/harvested/20e2e718-8352-49c6-b22f-77602da9db77.md
+harvested_nodes/212e42fd-a09e-490d-b4bd-2489749a2bc5.md -> wallaby-way/nodes/harvested/212e42fd-a09e-490d-b4bd-2489749a2bc5.md
+harvested_nodes/21969b05-7bbb-4854-a7ab-53f41718dac8.md -> wallaby-way/nodes/harvested/21969b05-7bbb-4854-a7ab-53f41718dac8.md
+harvested_nodes/26a22a47-0e89-4843-9311-973bafe8c043.md -> wallaby-way/nodes/harvested/26a22a47-0e89-4843-9311-973bafe8c043.md
+harvested_nodes/28b26b87-7703-4264-b4fe-506a00396676.md -> wallaby-way/nodes/harvested/28b26b87-7703-4264-b4fe-506a00396676.md
+harvested_nodes/290f6d20-f4ae-4f78-b93e-f15a6f1f1419.md -> wallaby-way/nodes/harvested/290f6d20-f4ae-4f78-b93e-f15a6f1f1419.md
+harvested_nodes/2985b16d-99aa-4fe2-956e-829fc953e4db.md -> wallaby-way/nodes/harvested/2985b16d-99aa-4fe2-956e-829fc953e4db.md
+harvested_nodes/2ad5ef91-4234-456f-bfe3-5d6d4841c962.md -> wallaby-way/nodes/harvested/2ad5ef91-4234-456f-bfe3-5d6d4841c962.md
+harvested_nodes/2de045ac-6d9f-442a-b53e-b4e18f40cd86.md -> wallaby-way/nodes/harvested/2de045ac-6d9f-442a-b53e-b4e18f40cd86.md
+harvested_nodes/2fdeedf8-b873-4162-bb73-064353090a18.md -> wallaby-way/nodes/harvested/2fdeedf8-b873-4162-bb73-064353090a18.md
+harvested_nodes/2fea4234-0d49-4db3-8023-53109f3cc145.md -> wallaby-way/nodes/harvested/2fea4234-0d49-4db3-8023-53109f3cc145.md
+harvested_nodes/319d18e6-aa52-4538-9d9e-3dfa43453fed.md -> wallaby-way/nodes/harvested/319d18e6-aa52-4538-9d9e-3dfa43453fed.md
+harvested_nodes/320b5d1c-5a95-4749-b455-3926ef3dbb8a.md -> wallaby-way/nodes/harvested/320b5d1c-5a95-4749-b455-3926ef3dbb8a.md
+harvested_nodes/3661c680-16df-4722-b42e-a24a2b606625.md -> wallaby-way/nodes/harvested/3661c680-16df-4722-b42e-a24a2b606625.md
+harvested_nodes/3673b925-c606-41f1-919d-59565d6b9974.md -> wallaby-way/nodes/harvested/3673b925-c606-41f1-919d-59565d6b9974.md
+harvested_nodes/36a43f52-f237-4158-99ec-ee10334595de.md -> wallaby-way/nodes/harvested/36a43f52-f237-4158-99ec-ee10334595de.md
+harvested_nodes/37357022-2eb5-4006-9873-1d33ea7ca1fb.md -> wallaby-way/nodes/harvested/37357022-2eb5-4006-9873-1d33ea7ca1fb.md
+harvested_nodes/3805826d-1fe3-4503-ab44-ccee8287a6a9.md -> wallaby-way/nodes/harvested/3805826d-1fe3-4503-ab44-ccee8287a6a9.md
+harvested_nodes/383d9745-c5c2-4e93-bbc1-01a14d0b4bf1.md -> wallaby-way/nodes/harvested/383d9745-c5c2-4e93-bbc1-01a14d0b4bf1.md
+harvested_nodes/38e06fc1-b177-48b0-bd6e-c3005444cce8.md -> wallaby-way/nodes/harvested/38e06fc1-b177-48b0-bd6e-c3005444cce8.md
+harvested_nodes/39494f81-087b-44cf-ac83-aaa768914517.md -> wallaby-way/nodes/harvested/39494f81-087b-44cf-ac83-aaa768914517.md
+harvested_nodes/39589260-1542-4cd7-b605-455b3cb3eafb.md -> wallaby-way/nodes/harvested/39589260-1542-4cd7-b605-455b3cb3eafb.md
+harvested_nodes/39d07512-af4a-4e11-8f98-c18d2b1b65db.md -> wallaby-way/nodes/harvested/39d07512-af4a-4e11-8f98-c18d2b1b65db.md
+harvested_nodes/3e9a15f1-9c8c-4b12-a398-dd994a7b0710.md -> wallaby-way/nodes/harvested/3e9a15f1-9c8c-4b12-a398-dd994a7b0710.md
+harvested_nodes/400e9bef-4ffe-4330-9a5b-7888d48508e0.md -> wallaby-way/nodes/harvested/400e9bef-4ffe-4330-9a5b-7888d48508e0.md
+harvested_nodes/42a9f0d4-2eba-4971-8688-3c55576202f9.md -> wallaby-way/nodes/harvested/42a9f0d4-2eba-4971-8688-3c55576202f9.md
+harvested_nodes/4372d1b7-5b7b-4caf-9281-b6d39a854701.md -> wallaby-way/nodes/harvested/4372d1b7-5b7b-4caf-9281-b6d39a854701.md
+harvested_nodes/43df44a2-9ec2-4cf6-a45f-ab13f27c57ac.md -> wallaby-way/nodes/harvested/43df44a2-9ec2-4cf6-a45f-ab13f27c57ac.md
+harvested_nodes/43f1f036-267c-481b-ab85-3695c43c70eb.md -> wallaby-way/nodes/harvested/43f1f036-267c-481b-ab85-3695c43c70eb.md
+harvested_nodes/46db2c75-c1ef-4285-bed0-750ddb3191cc.md -> wallaby-way/nodes/harvested/46db2c75-c1ef-4285-bed0-750ddb3191cc.md
+harvested_nodes/480b07a4-8b8b-4d45-acd7-16215f0d3248.md -> wallaby-way/nodes/harvested/480b07a4-8b8b-4d45-acd7-16215f0d3248.md
+harvested_nodes/4a18bd06-60fc-48fc-895d-59b5e4768ac9.md -> wallaby-way/nodes/harvested/4a18bd06-60fc-48fc-895d-59b5e4768ac9.md
+harvested_nodes/4afba4db-1b89-442f-b3af-db38eca9fa56.md -> wallaby-way/nodes/harvested/4afba4db-1b89-442f-b3af-db38eca9fa56.md
+harvested_nodes/4b6e6aa1-1d45-4221-a945-618f63637c5a.md -> wallaby-way/nodes/harvested/4b6e6aa1-1d45-4221-a945-618f63637c5a.md
+harvested_nodes/4c725f2a-e2ff-46e7-9b16-c5e27c986e30.md -> wallaby-way/nodes/harvested/4c725f2a-e2ff-46e7-9b16-c5e27c986e30.md
+harvested_nodes/4d88185f-fe6c-495a-9b9e-713d4f532092.md -> wallaby-way/nodes/harvested/4d88185f-fe6c-495a-9b9e-713d4f532092.md
+harvested_nodes/4ebcbde1-e162-45e1-8fa6-01501ce4468d.md -> wallaby-way/nodes/harvested/4ebcbde1-e162-45e1-8fa6-01501ce4468d.md
+harvested_nodes/5008dc4f-e51f-4086-9c32-3eafbbfb23b0.md -> wallaby-way/nodes/harvested/5008dc4f-e51f-4086-9c32-3eafbbfb23b0.md
+harvested_nodes/50b3d308-6e9c-4f09-bd99-f5fa49fd81c1.md -> wallaby-way/nodes/harvested/50b3d308-6e9c-4f09-bd99-f5fa49fd81c1.md
+harvested_nodes/516c5e92-268e-4094-be74-3244bcb5fe2d.md -> wallaby-way/nodes/harvested/516c5e92-268e-4094-be74-3244bcb5fe2d.md
+harvested_nodes/51aaa213-2c4f-403a-88d2-fca8f5124316.md -> wallaby-way/nodes/harvested/51aaa213-2c4f-403a-88d2-fca8f5124316.md
+harvested_nodes/51c699e5-e597-4838-8f17-3b235893fbed.md -> wallaby-way/nodes/harvested/51c699e5-e597-4838-8f17-3b235893fbed.md
+harvested_nodes/5224d5ec-4ebb-4986-878a-43e447efe53a.md -> wallaby-way/nodes/harvested/5224d5ec-4ebb-4986-878a-43e447efe53a.md
+harvested_nodes/54221b0e-5214-4ebe-b555-0706e09c45de.md -> wallaby-way/nodes/harvested/54221b0e-5214-4ebe-b555-0706e09c45de.md
+harvested_nodes/54618ebd-f1d0-400f-9529-67110c9272c4.md -> wallaby-way/nodes/harvested/54618ebd-f1d0-400f-9529-67110c9272c4.md
+harvested_nodes/54749a3b-8f78-49ba-be80-b2ecab5905df.md -> wallaby-way/nodes/harvested/54749a3b-8f78-49ba-be80-b2ecab5905df.md
+harvested_nodes/567956f0-b205-48c8-b6a0-59aa38bfd2c0.md -> wallaby-way/nodes/harvested/567956f0-b205-48c8-b6a0-59aa38bfd2c0.md
+harvested_nodes/56927959-b03a-4874-85cc-616832794045.md -> wallaby-way/nodes/harvested/56927959-b03a-4874-85cc-616832794045.md
+harvested_nodes/56d9e542-de41-4e64-b836-fd4c737d6bf7.md -> wallaby-way/nodes/harvested/56d9e542-de41-4e64-b836-fd4c737d6bf7.md
+harvested_nodes/574def92-9f1d-43a6-af8b-246c774a2af2.md -> wallaby-way/nodes/harvested/574def92-9f1d-43a6-af8b-246c774a2af2.md
+harvested_nodes/59a6af8b-b38c-4153-b2e1-5c4fbdfbd62e.md -> wallaby-way/nodes/harvested/59a6af8b-b38c-4153-b2e1-5c4fbdfbd62e.md
+harvested_nodes/5a5efd53-c0e0-43f9-9876-f5bc6c4f10bd.md -> wallaby-way/nodes/harvested/5a5efd53-c0e0-43f9-9876-f5bc6c4f10bd.md
+harvested_nodes/5d0eba7c-49d9-41f3-a098-7cadebe9310f.md -> wallaby-way/nodes/harvested/5d0eba7c-49d9-41f3-a098-7cadebe9310f.md
+harvested_nodes/5d56198d-689e-468e-b1c2-c211d3c466f9.md -> wallaby-way/nodes/harvested/5d56198d-689e-468e-b1c2-c211d3c466f9.md
+harvested_nodes/60fc083b-eade-4c3a-ad0b-c63f7945006f.md -> wallaby-way/nodes/harvested/60fc083b-eade-4c3a-ad0b-c63f7945006f.md
+harvested_nodes/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0.md -> wallaby-way/nodes/harvested/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0.md
+harvested_nodes/642d8365-1e61-439b-a68c-63f7077925d4.md -> wallaby-way/nodes/harvested/642d8365-1e61-439b-a68c-63f7077925d4.md
+harvested_nodes/65c14aa5-652c-4ecd-afd7-ef2f16932dda.md -> wallaby-way/nodes/harvested/65c14aa5-652c-4ecd-afd7-ef2f16932dda.md
+harvested_nodes/65e79b9b-00da-42d2-8b81-2b7fd271e48d.md -> wallaby-way/nodes/harvested/65e79b9b-00da-42d2-8b81-2b7fd271e48d.md
+harvested_nodes/68c3fe4c-541f-4be5-a2d9-d536abec6a7d.md -> wallaby-way/nodes/harvested/68c3fe4c-541f-4be5-a2d9-d536abec6a7d.md
+harvested_nodes/6953b3b7-141e-4bc6-acf1-e22cb1fc1f6d.md -> wallaby-way/nodes/harvested/6953b3b7-141e-4bc6-acf1-e22cb1fc1f6d.md
+harvested_nodes/6a096d18-963e-49ce-8336-a49d08b043b9.md -> wallaby-way/nodes/harvested/6a096d18-963e-49ce-8336-a49d08b043b9.md
+harvested_nodes/6b15957f-9c3e-456b-9770-74da7463581e.md -> wallaby-way/nodes/harvested/6b15957f-9c3e-456b-9770-74da7463581e.md
+harvested_nodes/6b44447e-99ba-46df-be32-3df22245cdce.md -> wallaby-way/nodes/harvested/6b44447e-99ba-46df-be32-3df22245cdce.md
+harvested_nodes/6cf4541a-9baa-4150-a2a8-019db2ec60ee.md -> wallaby-way/nodes/harvested/6cf4541a-9baa-4150-a2a8-019db2ec60ee.md
+harvested_nodes/6dfb7310-4258-4493-b261-b61e2a112167.md -> wallaby-way/nodes/harvested/6dfb7310-4258-4493-b261-b61e2a112167.md
+harvested_nodes/6ea3ee66-e09e-4760-893c-0eda3a7b9954.md -> wallaby-way/nodes/harvested/6ea3ee66-e09e-4760-893c-0eda3a7b9954.md
+harvested_nodes/6f1e4eaa-5f62-40af-af88-ada80076467d.md -> wallaby-way/nodes/harvested/6f1e4eaa-5f62-40af-af88-ada80076467d.md
+harvested_nodes/6f8f9fd3-9861-4123-b811-352b6ad48fca.md -> wallaby-way/nodes/harvested/6f8f9fd3-9861-4123-b811-352b6ad48fca.md
+harvested_nodes/6fe468e6-6c3f-4ae0-85aa-a54adda7e6cd.md -> wallaby-way/nodes/harvested/6fe468e6-6c3f-4ae0-85aa-a54adda7e6cd.md
+harvested_nodes/70fd881f-2edd-46d8-81b4-ad330ba0bcda.md -> wallaby-way/nodes/harvested/70fd881f-2edd-46d8-81b4-ad330ba0bcda.md
+harvested_nodes/7220dbaf-ea87-4a5e-a70f-9477cf4f0741.md -> wallaby-way/nodes/harvested/7220dbaf-ea87-4a5e-a70f-9477cf4f0741.md
+harvested_nodes/745a1f3d-05a1-456c-ba60-63c040836283.md -> wallaby-way/nodes/harvested/745a1f3d-05a1-456c-ba60-63c040836283.md
+harvested_nodes/749cca01-c52f-44b8-b699-ae208fa7cb31.md -> wallaby-way/nodes/harvested/749cca01-c52f-44b8-b699-ae208fa7cb31.md
+harvested_nodes/74a736f5-c070-45d9-8ca9-63db0a3303d6.md -> wallaby-way/nodes/harvested/74a736f5-c070-45d9-8ca9-63db0a3303d6.md
+harvested_nodes/7828095e-3e65-4587-a28b-c1ff953df8a2.md -> wallaby-way/nodes/harvested/7828095e-3e65-4587-a28b-c1ff953df8a2.md
+harvested_nodes/78cf5192-2b3a-4705-8c0d-dff54c84bb04.md -> wallaby-way/nodes/harvested/78cf5192-2b3a-4705-8c0d-dff54c84bb04.md
+harvested_nodes/79369d93-9570-4f59-a5e4-8f33aca3024d.md -> wallaby-way/nodes/harvested/79369d93-9570-4f59-a5e4-8f33aca3024d.md
+harvested_nodes/79417130-d4cd-4f21-a0bb-101bcbfa5084.md -> wallaby-way/nodes/harvested/79417130-d4cd-4f21-a0bb-101bcbfa5084.md
+harvested_nodes/7a335a78-0c25-49c7-bc58-ee6741b713f5.md -> wallaby-way/nodes/harvested/7a335a78-0c25-49c7-bc58-ee6741b713f5.md
+harvested_nodes/7bd5d950-78d9-474e-ad07-666e1bd3881e.md -> wallaby-way/nodes/harvested/7bd5d950-78d9-474e-ad07-666e1bd3881e.md
+harvested_nodes/7cc78989-abc1-4b7b-937c-3d867e70c872.md -> wallaby-way/nodes/harvested/7cc78989-abc1-4b7b-937c-3d867e70c872.md
+harvested_nodes/7d022773-3276-4b9c-b8b2-828f68013be0.md -> wallaby-way/nodes/harvested/7d022773-3276-4b9c-b8b2-828f68013be0.md
+harvested_nodes/7e6a83b9-c368-438b-aa65-479976bd869c.md -> wallaby-way/nodes/harvested/7e6a83b9-c368-438b-aa65-479976bd869c.md
+harvested_nodes/80befe2a-6ba7-4398-83db-7026f716a022.md -> wallaby-way/nodes/harvested/80befe2a-6ba7-4398-83db-7026f716a022.md
+harvested_nodes/816890df-bc23-4a72-b9ef-a49d308eeaad.md -> wallaby-way/nodes/harvested/816890df-bc23-4a72-b9ef-a49d308eeaad.md
+harvested_nodes/84c65b83-deac-4f2f-809f-1fa6df8c4a4e.md -> wallaby-way/nodes/harvested/84c65b83-deac-4f2f-809f-1fa6df8c4a4e.md
+harvested_nodes/8586fbad-241f-4bbf-9e38-2e01d6b19e93.md -> wallaby-way/nodes/harvested/8586fbad-241f-4bbf-9e38-2e01d6b19e93.md
+harvested_nodes/86aa947a-3f7c-4ee0-a6c5-0c2ffce5d961.md -> wallaby-way/nodes/harvested/86aa947a-3f7c-4ee0-a6c5-0c2ffce5d961.md
+harvested_nodes/86d92aa0-ca0f-4b8f-a2db-4e45762b62d8.md -> wallaby-way/nodes/harvested/86d92aa0-ca0f-4b8f-a2db-4e45762b62d8.md
+harvested_nodes/8b1938bd-b4c6-4dc4-8ce7-6bdb7e627b72.md -> wallaby-way/nodes/harvested/8b1938bd-b4c6-4dc4-8ce7-6bdb7e627b72.md
+harvested_nodes/8c5b3275-4749-4054-a196-d6bb50213ed3.md -> wallaby-way/nodes/harvested/8c5b3275-4749-4054-a196-d6bb50213ed3.md
+harvested_nodes/8ca57af4-933d-43f1-bd96-b31e223d7932.md -> wallaby-way/nodes/harvested/8ca57af4-933d-43f1-bd96-b31e223d7932.md
+harvested_nodes/8d7e1401-a979-4ec9-90f6-75f9bc5aa14f.md -> wallaby-way/nodes/harvested/8d7e1401-a979-4ec9-90f6-75f9bc5aa14f.md
+harvested_nodes/8eb8ef22-aaac-4f05-bb81-6dcf4891fead.md -> wallaby-way/nodes/harvested/8eb8ef22-aaac-4f05-bb81-6dcf4891fead.md
+harvested_nodes/90833c4c-9951-4e6d-8236-9fb13819eba3.md -> wallaby-way/nodes/harvested/90833c4c-9951-4e6d-8236-9fb13819eba3.md
+harvested_nodes/948c5363-ead3-499b-b719-36cbec81ce48.md -> wallaby-way/nodes/harvested/948c5363-ead3-499b-b719-36cbec81ce48.md
+harvested_nodes/955cce09-2ad0-4ac5-8b85-aeec2f7f9687.md -> wallaby-way/nodes/harvested/955cce09-2ad0-4ac5-8b85-aeec2f7f9687.md
+harvested_nodes/963b9a5f-4ddc-470c-9cee-89b2340601c7.md -> wallaby-way/nodes/harvested/963b9a5f-4ddc-470c-9cee-89b2340601c7.md
+harvested_nodes/96dac56f-e69e-49ff-b14e-3ed4c842226d.md -> wallaby-way/nodes/harvested/96dac56f-e69e-49ff-b14e-3ed4c842226d.md
+harvested_nodes/9905f7f6-1ac5-4cd7-8c9a-9b7187178775.md -> wallaby-way/nodes/harvested/9905f7f6-1ac5-4cd7-8c9a-9b7187178775.md
+harvested_nodes/9a313396-d2a1-4c00-bcfe-6305f93d22b1.md -> wallaby-way/nodes/harvested/9a313396-d2a1-4c00-bcfe-6305f93d22b1.md
+harvested_nodes/9a48582c-f426-4955-aba8-6e8ed494d50c.md -> wallaby-way/nodes/harvested/9a48582c-f426-4955-aba8-6e8ed494d50c.md
+harvested_nodes/9b7e0c1a-7ee5-4c79-9d29-ae67581a6dcf.md -> wallaby-way/nodes/harvested/9b7e0c1a-7ee5-4c79-9d29-ae67581a6dcf.md
+harvested_nodes/9b932a60-5390-46ee-bc2c-9480b90f893d.md -> wallaby-way/nodes/harvested/9b932a60-5390-46ee-bc2c-9480b90f893d.md
+harvested_nodes/9bf5733a-d801-42e8-81a8-c4909cd6211b.md -> wallaby-way/nodes/harvested/9bf5733a-d801-42e8-81a8-c4909cd6211b.md
+harvested_nodes/9dc5ac95-8ab5-43d4-b8aa-d8f5fa273b63.md -> wallaby-way/nodes/harvested/9dc5ac95-8ab5-43d4-b8aa-d8f5fa273b63.md
+harvested_nodes/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5.md -> wallaby-way/nodes/harvested/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5.md
+harvested_nodes/9f75fa12-5a55-4c27-b7e5-0fe8ff7dfd46.md -> wallaby-way/nodes/harvested/9f75fa12-5a55-4c27-b7e5-0fe8ff7dfd46.md
+harvested_nodes/a0c19cf1-00ff-4430-864b-accaa4dd1094.md -> wallaby-way/nodes/harvested/a0c19cf1-00ff-4430-864b-accaa4dd1094.md
+harvested_nodes/a1330e8f-2a47-4dc9-b8d4-71a0d5211284.md -> wallaby-way/nodes/harvested/a1330e8f-2a47-4dc9-b8d4-71a0d5211284.md
+harvested_nodes/a1a302af-1a31-4961-a7ba-f0c3565d8afb.md -> wallaby-way/nodes/harvested/a1a302af-1a31-4961-a7ba-f0c3565d8afb.md
+harvested_nodes/a244ca75-41ea-420d-a863-ec4283ae3b24.md -> wallaby-way/nodes/harvested/a244ca75-41ea-420d-a863-ec4283ae3b24.md
+harvested_nodes/a3b06110-7ce5-4845-a5be-d26a2e3cca1f.md -> wallaby-way/nodes/harvested/a3b06110-7ce5-4845-a5be-d26a2e3cca1f.md
+harvested_nodes/a4233320-27b2-4bf6-94ef-22ec73466153.md -> wallaby-way/nodes/harvested/a4233320-27b2-4bf6-94ef-22ec73466153.md
+harvested_nodes/a5662006-50f8-4972-ba5f-e9ff5b701f23.md -> wallaby-way/nodes/harvested/a5662006-50f8-4972-ba5f-e9ff5b701f23.md
+harvested_nodes/a8679dd9-44dc-448a-b88d-7674aafb5aa9.md -> wallaby-way/nodes/harvested/a8679dd9-44dc-448a-b88d-7674aafb5aa9.md
+harvested_nodes/aba60de7-c523-4429-95af-d993f6b7992f.md -> wallaby-way/nodes/harvested/aba60de7-c523-4429-95af-d993f6b7992f.md
+harvested_nodes/abe2c722-60b1-4281-9fff-369b08bd0efb.md -> wallaby-way/nodes/harvested/abe2c722-60b1-4281-9fff-369b08bd0efb.md
+harvested_nodes/abe64eb8-2617-4e9a-88ca-212103c4866e.md -> wallaby-way/nodes/harvested/abe64eb8-2617-4e9a-88ca-212103c4866e.md
+harvested_nodes/acd2b950-2cd8-4124-9926-531186c4b5e7.md -> wallaby-way/nodes/harvested/acd2b950-2cd8-4124-9926-531186c4b5e7.md
+harvested_nodes/af1609c4-8e0c-4fd3-91df-09d58c844673.md -> wallaby-way/nodes/harvested/af1609c4-8e0c-4fd3-91df-09d58c844673.md
+harvested_nodes/aff6bacc-ba84-4784-87b3-84b28bbc83d0.md -> wallaby-way/nodes/harvested/aff6bacc-ba84-4784-87b3-84b28bbc83d0.md
+harvested_nodes/b029b9e7-050f-41f6-bec7-ac7caf6b77e7.md -> wallaby-way/nodes/harvested/b029b9e7-050f-41f6-bec7-ac7caf6b77e7.md
+harvested_nodes/b51296dd-fb57-4b4d-a058-5d2cb0948070.md -> wallaby-way/nodes/harvested/b51296dd-fb57-4b4d-a058-5d2cb0948070.md
+harvested_nodes/b5cefa7c-30d6-489c-9d36-e403cb1bca82.md -> wallaby-way/nodes/harvested/b5cefa7c-30d6-489c-9d36-e403cb1bca82.md
+harvested_nodes/b90c9a8c-d61e-4d19-893c-66f536424b2d.md -> wallaby-way/nodes/harvested/b90c9a8c-d61e-4d19-893c-66f536424b2d.md
+harvested_nodes/b9639f2b-eea5-430f-a91d-508c2f2a19a1.md -> wallaby-way/nodes/harvested/b9639f2b-eea5-430f-a91d-508c2f2a19a1.md
+harvested_nodes/bb11442b-215d-4fb1-bee3-23bd67477322.md -> wallaby-way/nodes/harvested/bb11442b-215d-4fb1-bee3-23bd67477322.md
+harvested_nodes/bc49c5eb-ea4d-461f-a1df-f69c471d61d4.md -> wallaby-way/nodes/harvested/bc49c5eb-ea4d-461f-a1df-f69c471d61d4.md
+harvested_nodes/bd59de6e-c2ee-498e-905b-b3c38c195c11.md -> wallaby-way/nodes/harvested/bd59de6e-c2ee-498e-905b-b3c38c195c11.md
+harvested_nodes/be124952-7a02-461f-81e9-2e113b1daf32.md -> wallaby-way/nodes/harvested/be124952-7a02-461f-81e9-2e113b1daf32.md
+harvested_nodes/be889066-5fb5-4134-a4e5-5b2fbfa9612d.md -> wallaby-way/nodes/harvested/be889066-5fb5-4134-a4e5-5b2fbfa9612d.md
+harvested_nodes/bec24d10-76ec-4d45-a411-2b0e15dcc567.md -> wallaby-way/nodes/harvested/bec24d10-76ec-4d45-a411-2b0e15dcc567.md
+harvested_nodes/c0c420ff-2dd7-4e5f-bf5b-7ad8e502379a.md -> wallaby-way/nodes/harvested/c0c420ff-2dd7-4e5f-bf5b-7ad8e502379a.md
+harvested_nodes/c1ab4ddb-8be3-4667-864d-14ba5b65e608.md -> wallaby-way/nodes/harvested/c1ab4ddb-8be3-4667-864d-14ba5b65e608.md
+harvested_nodes/c3823a3c-3610-4acf-9071-e641f3d2a7d1.md -> wallaby-way/nodes/harvested/c3823a3c-3610-4acf-9071-e641f3d2a7d1.md
+harvested_nodes/c47c2aaa-a381-4016-835d-a84188ca2265.md -> wallaby-way/nodes/harvested/c47c2aaa-a381-4016-835d-a84188ca2265.md
+harvested_nodes/c56189c6-0b9e-4f7b-ac69-7caa9e5fa4bb.md -> wallaby-way/nodes/harvested/c56189c6-0b9e-4f7b-ac69-7caa9e5fa4bb.md
+harvested_nodes/c8415bff-4c4e-4048-99fa-345d8c841626.md -> wallaby-way/nodes/harvested/c8415bff-4c4e-4048-99fa-345d8c841626.md
+harvested_nodes/c8520a38-6b8f-49cc-a85c-9dbe6b106c53.md -> wallaby-way/nodes/harvested/c8520a38-6b8f-49cc-a85c-9dbe6b106c53.md
+harvested_nodes/c9aa7f7c-a9da-496d-b836-178ca5053d41.md -> wallaby-way/nodes/harvested/c9aa7f7c-a9da-496d-b836-178ca5053d41.md
+harvested_nodes/cda6d5d1-ca13-492b-8740-620a85f5d278.md -> wallaby-way/nodes/harvested/cda6d5d1-ca13-492b-8740-620a85f5d278.md
+harvested_nodes/cdd48eaa-3d09-4fcc-8351-7399c2920cc6.md -> wallaby-way/nodes/harvested/cdd48eaa-3d09-4fcc-8351-7399c2920cc6.md
+harvested_nodes/cecb663d-a622-4d69-a5c8-b851a7b11a5a.md -> wallaby-way/nodes/harvested/cecb663d-a622-4d69-a5c8-b851a7b11a5a.md
+harvested_nodes/d00951fc-0bf8-4cd9-9ec3-2dc9ba77b621.md -> wallaby-way/nodes/harvested/d00951fc-0bf8-4cd9-9ec3-2dc9ba77b621.md
+harvested_nodes/d0471d43-f334-4237-9c32-46ebd22c61c3.md -> wallaby-way/nodes/harvested/d0471d43-f334-4237-9c32-46ebd22c61c3.md
+harvested_nodes/d42be555-d86b-41af-9201-f7f4d2d9d911.md -> wallaby-way/nodes/harvested/d42be555-d86b-41af-9201-f7f4d2d9d911.md
+harvested_nodes/d7287656-5556-4168-af4b-590112279d10.md -> wallaby-way/nodes/harvested/d7287656-5556-4168-af4b-590112279d10.md
+harvested_nodes/d77db66e-b55a-41ed-9165-883e91052731.md -> wallaby-way/nodes/harvested/d77db66e-b55a-41ed-9165-883e91052731.md
+harvested_nodes/da8dac95-53ca-49a7-974b-b50d8235478d.md -> wallaby-way/nodes/harvested/da8dac95-53ca-49a7-974b-b50d8235478d.md
+harvested_nodes/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca.md -> wallaby-way/nodes/harvested/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca.md
+harvested_nodes/db6b7073-306a-4396-8659-77ee05c95b6f.md -> wallaby-way/nodes/harvested/db6b7073-306a-4396-8659-77ee05c95b6f.md
+harvested_nodes/dbb2dacd-0a6f-4406-9446-a8ab88a5e440.md -> wallaby-way/nodes/harvested/dbb2dacd-0a6f-4406-9446-a8ab88a5e440.md
+harvested_nodes/dbe5475f-5a5a-4da0-8eb6-b2f1488d08c1.md -> wallaby-way/nodes/harvested/dbe5475f-5a5a-4da0-8eb6-b2f1488d08c1.md
+harvested_nodes/e09ccd9b-7735-4542-a9cd-cb2b7ff0f1f3.md -> wallaby-way/nodes/harvested/e09ccd9b-7735-4542-a9cd-cb2b7ff0f1f3.md
+harvested_nodes/e12270b8-5ad6-4b50-81a1-9eb0f5ead7f9.md -> wallaby-way/nodes/harvested/e12270b8-5ad6-4b50-81a1-9eb0f5ead7f9.md
+harvested_nodes/e19fa6ed-d745-413a-bf3f-a930a294ef13.md -> wallaby-way/nodes/harvested/e19fa6ed-d745-413a-bf3f-a930a294ef13.md
+harvested_nodes/e1a91bce-b813-4552-ace2-b63b38fda3c6.md -> wallaby-way/nodes/harvested/e1a91bce-b813-4552-ace2-b63b38fda3c6.md
+harvested_nodes/e2e14c73-8881-42b8-8bc0-70199b6c53a1.md -> wallaby-way/nodes/harvested/e2e14c73-8881-42b8-8bc0-70199b6c53a1.md
+harvested_nodes/e32e4c3a-c09d-4e9d-8e8f-5d1bc6ea28d0.md -> wallaby-way/nodes/harvested/e32e4c3a-c09d-4e9d-8e8f-5d1bc6ea28d0.md
+harvested_nodes/e346c1a0-0244-4989-aaac-2a9d01e1f009.md -> wallaby-way/nodes/harvested/e346c1a0-0244-4989-aaac-2a9d01e1f009.md
+harvested_nodes/e3ea75ad-46d3-48bb-881f-1a35f13d013e.md -> wallaby-way/nodes/harvested/e3ea75ad-46d3-48bb-881f-1a35f13d013e.md
+harvested_nodes/e49e2627-e6d1-49f7-9d41-9fb73d3edda0.md -> wallaby-way/nodes/harvested/e49e2627-e6d1-49f7-9d41-9fb73d3edda0.md
+harvested_nodes/e58c04f5-7059-4db9-ae75-98bda1917797.md -> wallaby-way/nodes/harvested/e58c04f5-7059-4db9-ae75-98bda1917797.md
+harvested_nodes/e831e30b-34fc-4af5-8815-160f4da1c565.md -> wallaby-way/nodes/harvested/e831e30b-34fc-4af5-8815-160f4da1c565.md
+harvested_nodes/eb3e7c4f-1ce1-4131-8081-f021b7bfbde7.md -> wallaby-way/nodes/harvested/eb3e7c4f-1ce1-4131-8081-f021b7bfbde7.md
+harvested_nodes/ef1f4151-e4d2-4ce2-b957-f1bb82b4dd97.md -> wallaby-way/nodes/harvested/ef1f4151-e4d2-4ce2-b957-f1bb82b4dd97.md
+harvested_nodes/ef3a40d4-bbe1-4fd0-aceb-d4f5817315b5.md -> wallaby-way/nodes/harvested/ef3a40d4-bbe1-4fd0-aceb-d4f5817315b5.md
+harvested_nodes/f29e5f26-845d-4896-91fb-a49dd8644e3e.md -> wallaby-way/nodes/harvested/f29e5f26-845d-4896-91fb-a49dd8644e3e.md
+harvested_nodes/f2a31cff-1ba6-44a3-a2d7-c782d2748e92.md -> wallaby-way/nodes/harvested/f2a31cff-1ba6-44a3-a2d7-c782d2748e92.md
+harvested_nodes/f6d508c8-213f-489d-8d25-8c862cc106af.md -> wallaby-way/nodes/harvested/f6d508c8-213f-489d-8d25-8c862cc106af.md
+harvested_nodes/f89f1496-ce4d-4b70-a26e-f38a22084e78.md -> wallaby-way/nodes/harvested/f89f1496-ce4d-4b70-a26e-f38a22084e78.md
+harvested_nodes/f990c2c3-fcd0-4bb9-a915-43ededaf6084.md -> wallaby-way/nodes/harvested/f990c2c3-fcd0-4bb9-a915-43ededaf6084.md
+harvested_nodes/fc723f55-308c-4bb0-b912-282783579eb9.md -> wallaby-way/nodes/harvested/fc723f55-308c-4bb0-b912-282783579eb9.md
+harvested_nodes/fcbd24fa-d560-4690-920e-5c8a08b42524.md -> wallaby-way/nodes/harvested/fcbd24fa-d560-4690-920e-5c8a08b42524.md
+harvested_nodes/fd96ef75-2756-40ea-9aa4-48b81dc2b5b7.md -> wallaby-way/nodes/harvested/fd96ef75-2756-40ea-9aa4-48b81dc2b5b7.md
+harvested_nodes/01327fa3-cc30-4c32-a2c2-9484d80269cd.md.parents.json -> wallaby-way/nodes/harvested/01327fa3-cc30-4c32-a2c2-9484d80269cd.md.parents.json
+harvested_nodes/0167e58a-a93d-4857-9c84-f3967460db0a.md.parents.json -> wallaby-way/nodes/harvested/0167e58a-a93d-4857-9c84-f3967460db0a.md.parents.json
+harvested_nodes/0191a925-75de-4795-a871-2d2551a327d9.md.parents.json -> wallaby-way/nodes/harvested/0191a925-75de-4795-a871-2d2551a327d9.md.parents.json
+harvested_nodes/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97.md.parents.json -> wallaby-way/nodes/harvested/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97.md.parents.json
+harvested_nodes/034c0d87-dbd1-4542-8c6f-7fb6737acea4.md.parents.json -> wallaby-way/nodes/harvested/034c0d87-dbd1-4542-8c6f-7fb6737acea4.md.parents.json
+harvested_nodes/042afde3-5c7e-4e52-a945-b9ba3eb98fa0.md.parents.json -> wallaby-way/nodes/harvested/042afde3-5c7e-4e52-a945-b9ba3eb98fa0.md.parents.json
+harvested_nodes/04e018c4-e690-41cc-8833-a35640104545.md.parents.json -> wallaby-way/nodes/harvested/04e018c4-e690-41cc-8833-a35640104545.md.parents.json
+harvested_nodes/08e29fc5-cb3a-41cd-b149-d0ba6ec6bb49.md.parents.json -> wallaby-way/nodes/harvested/08e29fc5-cb3a-41cd-b149-d0ba6ec6bb49.md.parents.json
+harvested_nodes/09db32a8-e311-4948-9355-3369bc45bdef.md.parents.json -> wallaby-way/nodes/harvested/09db32a8-e311-4948-9355-3369bc45bdef.md.parents.json
+harvested_nodes/0a703020-88c9-4d4c-9e9a-90f1d670b6bb.md.parents.json -> wallaby-way/nodes/harvested/0a703020-88c9-4d4c-9e9a-90f1d670b6bb.md.parents.json
+harvested_nodes/0ae83b8a-6e68-4a7c-9aff-5380a54ed6cf.md.parents.json -> wallaby-way/nodes/harvested/0ae83b8a-6e68-4a7c-9aff-5380a54ed6cf.md.parents.json
+harvested_nodes/114b5447-d97f-4418-92d6-3c51e8b0d073.md.parents.json -> wallaby-way/nodes/harvested/114b5447-d97f-4418-92d6-3c51e8b0d073.md.parents.json
+harvested_nodes/15b3bfee-79bf-4c0d-993d-9aabbef13878.md.parents.json -> wallaby-way/nodes/harvested/15b3bfee-79bf-4c0d-993d-9aabbef13878.md.parents.json
+harvested_nodes/189489f2-c84e-4915-9c0f-bc8930cdd81a.md.parents.json -> wallaby-way/nodes/harvested/189489f2-c84e-4915-9c0f-bc8930cdd81a.md.parents.json
+harvested_nodes/19ccd883-9efc-468b-a422-384379fe903f.md.parents.json -> wallaby-way/nodes/harvested/19ccd883-9efc-468b-a422-384379fe903f.md.parents.json
+harvested_nodes/1fcd6ba7-2f7f-44ac-936a-cb09c75dee14.md.parents.json -> wallaby-way/nodes/harvested/1fcd6ba7-2f7f-44ac-936a-cb09c75dee14.md.parents.json
+harvested_nodes/201646e5-f885-4f90-b398-f22491aa5422.md.parents.json -> wallaby-way/nodes/harvested/201646e5-f885-4f90-b398-f22491aa5422.md.parents.json
+harvested_nodes/20e2e718-8352-49c6-b22f-77602da9db77.md.parents.json -> wallaby-way/nodes/harvested/20e2e718-8352-49c6-b22f-77602da9db77.md.parents.json
+harvested_nodes/212e42fd-a09e-490d-b4bd-2489749a2bc5.md.parents.json -> wallaby-way/nodes/harvested/212e42fd-a09e-490d-b4bd-2489749a2bc5.md.parents.json
+harvested_nodes/21969b05-7bbb-4854-a7ab-53f41718dac8.md.parents.json -> wallaby-way/nodes/harvested/21969b05-7bbb-4854-a7ab-53f41718dac8.md.parents.json
+harvested_nodes/26a22a47-0e89-4843-9311-973bafe8c043.md.parents.json -> wallaby-way/nodes/harvested/26a22a47-0e89-4843-9311-973bafe8c043.md.parents.json
+harvested_nodes/28b26b87-7703-4264-b4fe-506a00396676.md.parents.json -> wallaby-way/nodes/harvested/28b26b87-7703-4264-b4fe-506a00396676.md.parents.json
+harvested_nodes/290f6d20-f4ae-4f78-b93e-f15a6f1f1419.md.parents.json -> wallaby-way/nodes/harvested/290f6d20-f4ae-4f78-b93e-f15a6f1f1419.md.parents.json
+harvested_nodes/2985b16d-99aa-4fe2-956e-829fc953e4db.md.parents.json -> wallaby-way/nodes/harvested/2985b16d-99aa-4fe2-956e-829fc953e4db.md.parents.json
+harvested_nodes/2ad5ef91-4234-456f-bfe3-5d6d4841c962.md.parents.json -> wallaby-way/nodes/harvested/2ad5ef91-4234-456f-bfe3-5d6d4841c962.md.parents.json
+harvested_nodes/2de045ac-6d9f-442a-b53e-b4e18f40cd86.md.parents.json -> wallaby-way/nodes/harvested/2de045ac-6d9f-442a-b53e-b4e18f40cd86.md.parents.json
+harvested_nodes/2fdeedf8-b873-4162-bb73-064353090a18.md.parents.json -> wallaby-way/nodes/harvested/2fdeedf8-b873-4162-bb73-064353090a18.md.parents.json
+harvested_nodes/2fea4234-0d49-4db3-8023-53109f3cc145.md.parents.json -> wallaby-way/nodes/harvested/2fea4234-0d49-4db3-8023-53109f3cc145.md.parents.json
+harvested_nodes/319d18e6-aa52-4538-9d9e-3dfa43453fed.md.parents.json -> wallaby-way/nodes/harvested/319d18e6-aa52-4538-9d9e-3dfa43453fed.md.parents.json
+harvested_nodes/320b5d1c-5a95-4749-b455-3926ef3dbb8a.md.parents.json -> wallaby-way/nodes/harvested/320b5d1c-5a95-4749-b455-3926ef3dbb8a.md.parents.json
+harvested_nodes/3661c680-16df-4722-b42e-a24a2b606625.md.parents.json -> wallaby-way/nodes/harvested/3661c680-16df-4722-b42e-a24a2b606625.md.parents.json
+harvested_nodes/3673b925-c606-41f1-919d-59565d6b9974.md.parents.json -> wallaby-way/nodes/harvested/3673b925-c606-41f1-919d-59565d6b9974.md.parents.json
+harvested_nodes/36a43f52-f237-4158-99ec-ee10334595de.md.parents.json -> wallaby-way/nodes/harvested/36a43f52-f237-4158-99ec-ee10334595de.md.parents.json
+harvested_nodes/37357022-2eb5-4006-9873-1d33ea7ca1fb.md.parents.json -> wallaby-way/nodes/harvested/37357022-2eb5-4006-9873-1d33ea7ca1fb.md.parents.json
+harvested_nodes/3805826d-1fe3-4503-ab44-ccee8287a6a9.md.parents.json -> wallaby-way/nodes/harvested/3805826d-1fe3-4503-ab44-ccee8287a6a9.md.parents.json
+harvested_nodes/383d9745-c5c2-4e93-bbc1-01a14d0b4bf1.md.parents.json -> wallaby-way/nodes/harvested/383d9745-c5c2-4e93-bbc1-01a14d0b4bf1.md.parents.json
+harvested_nodes/38e06fc1-b177-48b0-bd6e-c3005444cce8.md.parents.json -> wallaby-way/nodes/harvested/38e06fc1-b177-48b0-bd6e-c3005444cce8.md.parents.json
+harvested_nodes/39494f81-087b-44cf-ac83-aaa768914517.md.parents.json -> wallaby-way/nodes/harvested/39494f81-087b-44cf-ac83-aaa768914517.md.parents.json
+harvested_nodes/39589260-1542-4cd7-b605-455b3cb3eafb.md.parents.json -> wallaby-way/nodes/harvested/39589260-1542-4cd7-b605-455b3cb3eafb.md.parents.json
+harvested_nodes/39d07512-af4a-4e11-8f98-c18d2b1b65db.md.parents.json -> wallaby-way/nodes/harvested/39d07512-af4a-4e11-8f98-c18d2b1b65db.md.parents.json
+harvested_nodes/3e9a15f1-9c8c-4b12-a398-dd994a7b0710.md.parents.json -> wallaby-way/nodes/harvested/3e9a15f1-9c8c-4b12-a398-dd994a7b0710.md.parents.json
+harvested_nodes/400e9bef-4ffe-4330-9a5b-7888d48508e0.md.parents.json -> wallaby-way/nodes/harvested/400e9bef-4ffe-4330-9a5b-7888d48508e0.md.parents.json
+harvested_nodes/42a9f0d4-2eba-4971-8688-3c55576202f9.md.parents.json -> wallaby-way/nodes/harvested/42a9f0d4-2eba-4971-8688-3c55576202f9.md.parents.json
+harvested_nodes/4372d1b7-5b7b-4caf-9281-b6d39a854701.md.parents.json -> wallaby-way/nodes/harvested/4372d1b7-5b7b-4caf-9281-b6d39a854701.md.parents.json
+harvested_nodes/43df44a2-9ec2-4cf6-a45f-ab13f27c57ac.md.parents.json -> wallaby-way/nodes/harvested/43df44a2-9ec2-4cf6-a45f-ab13f27c57ac.md.parents.json
+harvested_nodes/43f1f036-267c-481b-ab85-3695c43c70eb.md.parents.json -> wallaby-way/nodes/harvested/43f1f036-267c-481b-ab85-3695c43c70eb.md.parents.json
+harvested_nodes/46db2c75-c1ef-4285-bed0-750ddb3191cc.md.parents.json -> wallaby-way/nodes/harvested/46db2c75-c1ef-4285-bed0-750ddb3191cc.md.parents.json
+harvested_nodes/480b07a4-8b8b-4d45-acd7-16215f0d3248.md.parents.json -> wallaby-way/nodes/harvested/480b07a4-8b8b-4d45-acd7-16215f0d3248.md.parents.json
+harvested_nodes/4a18bd06-60fc-48fc-895d-59b5e4768ac9.md.parents.json -> wallaby-way/nodes/harvested/4a18bd06-60fc-48fc-895d-59b5e4768ac9.md.parents.json
+harvested_nodes/4afba4db-1b89-442f-b3af-db38eca9fa56.md.parents.json -> wallaby-way/nodes/harvested/4afba4db-1b89-442f-b3af-db38eca9fa56.md.parents.json
+harvested_nodes/4b6e6aa1-1d45-4221-a945-618f63637c5a.md.parents.json -> wallaby-way/nodes/harvested/4b6e6aa1-1d45-4221-a945-618f63637c5a.md.parents.json
+harvested_nodes/4c725f2a-e2ff-46e7-9b16-c5e27c986e30.md.parents.json -> wallaby-way/nodes/harvested/4c725f2a-e2ff-46e7-9b16-c5e27c986e30.md.parents.json
+harvested_nodes/4d88185f-fe6c-495a-9b9e-713d4f532092.md.parents.json -> wallaby-way/nodes/harvested/4d88185f-fe6c-495a-9b9e-713d4f532092.md.parents.json
+harvested_nodes/4ebcbde1-e162-45e1-8fa6-01501ce4468d.md.parents.json -> wallaby-way/nodes/harvested/4ebcbde1-e162-45e1-8fa6-01501ce4468d.md.parents.json
+harvested_nodes/5008dc4f-e51f-4086-9c32-3eafbbfb23b0.md.parents.json -> wallaby-way/nodes/harvested/5008dc4f-e51f-4086-9c32-3eafbbfb23b0.md.parents.json
+harvested_nodes/50b3d308-6e9c-4f09-bd99-f5fa49fd81c1.md.parents.json -> wallaby-way/nodes/harvested/50b3d308-6e9c-4f09-bd99-f5fa49fd81c1.md.parents.json
+harvested_nodes/516c5e92-268e-4094-be74-3244bcb5fe2d.md.parents.json -> wallaby-way/nodes/harvested/516c5e92-268e-4094-be74-3244bcb5fe2d.md.parents.json
+harvested_nodes/51aaa213-2c4f-403a-88d2-fca8f5124316.md.parents.json -> wallaby-way/nodes/harvested/51aaa213-2c4f-403a-88d2-fca8f5124316.md.parents.json
+harvested_nodes/51c699e5-e597-4838-8f17-3b235893fbed.md.parents.json -> wallaby-way/nodes/harvested/51c699e5-e597-4838-8f17-3b235893fbed.md.parents.json
+harvested_nodes/5224d5ec-4ebb-4986-878a-43e447efe53a.md.parents.json -> wallaby-way/nodes/harvested/5224d5ec-4ebb-4986-878a-43e447efe53a.md.parents.json
+harvested_nodes/54221b0e-5214-4ebe-b555-0706e09c45de.md.parents.json -> wallaby-way/nodes/harvested/54221b0e-5214-4ebe-b555-0706e09c45de.md.parents.json
+harvested_nodes/54618ebd-f1d0-400f-9529-67110c9272c4.md.parents.json -> wallaby-way/nodes/harvested/54618ebd-f1d0-400f-9529-67110c9272c4.md.parents.json
+harvested_nodes/54749a3b-8f78-49ba-be80-b2ecab5905df.md.parents.json -> wallaby-way/nodes/harvested/54749a3b-8f78-49ba-be80-b2ecab5905df.md.parents.json
+harvested_nodes/567956f0-b205-48c8-b6a0-59aa38bfd2c0.md.parents.json -> wallaby-way/nodes/harvested/567956f0-b205-48c8-b6a0-59aa38bfd2c0.md.parents.json
+harvested_nodes/56927959-b03a-4874-85cc-616832794045.md.parents.json -> wallaby-way/nodes/harvested/56927959-b03a-4874-85cc-616832794045.md.parents.json
+harvested_nodes/56d9e542-de41-4e64-b836-fd4c737d6bf7.md.parents.json -> wallaby-way/nodes/harvested/56d9e542-de41-4e64-b836-fd4c737d6bf7.md.parents.json
+harvested_nodes/574def92-9f1d-43a6-af8b-246c774a2af2.md.parents.json -> wallaby-way/nodes/harvested/574def92-9f1d-43a6-af8b-246c774a2af2.md.parents.json
+harvested_nodes/59a6af8b-b38c-4153-b2e1-5c4fbdfbd62e.md.parents.json -> wallaby-way/nodes/harvested/59a6af8b-b38c-4153-b2e1-5c4fbdfbd62e.md.parents.json
+harvested_nodes/5a5efd53-c0e0-43f9-9876-f5bc6c4f10bd.md.parents.json -> wallaby-way/nodes/harvested/5a5efd53-c0e0-43f9-9876-f5bc6c4f10bd.md.parents.json
+harvested_nodes/5d0eba7c-49d9-41f3-a098-7cadebe9310f.md.parents.json -> wallaby-way/nodes/harvested/5d0eba7c-49d9-41f3-a098-7cadebe9310f.md.parents.json
+harvested_nodes/5d56198d-689e-468e-b1c2-c211d3c466f9.md.parents.json -> wallaby-way/nodes/harvested/5d56198d-689e-468e-b1c2-c211d3c466f9.md.parents.json
+harvested_nodes/60fc083b-eade-4c3a-ad0b-c63f7945006f.md.parents.json -> wallaby-way/nodes/harvested/60fc083b-eade-4c3a-ad0b-c63f7945006f.md.parents.json
+harvested_nodes/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0.md.parents.json -> wallaby-way/nodes/harvested/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0.md.parents.json
+harvested_nodes/642d8365-1e61-439b-a68c-63f7077925d4.md.parents.json -> wallaby-way/nodes/harvested/642d8365-1e61-439b-a68c-63f7077925d4.md.parents.json
+harvested_nodes/65c14aa5-652c-4ecd-afd7-ef2f16932dda.md.parents.json -> wallaby-way/nodes/harvested/65c14aa5-652c-4ecd-afd7-ef2f16932dda.md.parents.json
+harvested_nodes/65e79b9b-00da-42d2-8b81-2b7fd271e48d.md.parents.json -> wallaby-way/nodes/harvested/65e79b9b-00da-42d2-8b81-2b7fd271e48d.md.parents.json
+harvested_nodes/68c3fe4c-541f-4be5-a2d9-d536abec6a7d.md.parents.json -> wallaby-way/nodes/harvested/68c3fe4c-541f-4be5-a2d9-d536abec6a7d.md.parents.json
+harvested_nodes/6953b3b7-141e-4bc6-acf1-e22cb1fc1f6d.md.parents.json -> wallaby-way/nodes/harvested/6953b3b7-141e-4bc6-acf1-e22cb1fc1f6d.md.parents.json
+harvested_nodes/6a096d18-963e-49ce-8336-a49d08b043b9.md.parents.json -> wallaby-way/nodes/harvested/6a096d18-963e-49ce-8336-a49d08b043b9.md.parents.json
+harvested_nodes/6b15957f-9c3e-456b-9770-74da7463581e.md.parents.json -> wallaby-way/nodes/harvested/6b15957f-9c3e-456b-9770-74da7463581e.md.parents.json
+harvested_nodes/6b44447e-99ba-46df-be32-3df22245cdce.md.parents.json -> wallaby-way/nodes/harvested/6b44447e-99ba-46df-be32-3df22245cdce.md.parents.json
+harvested_nodes/6cf4541a-9baa-4150-a2a8-019db2ec60ee.md.parents.json -> wallaby-way/nodes/harvested/6cf4541a-9baa-4150-a2a8-019db2ec60ee.md.parents.json
+harvested_nodes/6dfb7310-4258-4493-b261-b61e2a112167.md.parents.json -> wallaby-way/nodes/harvested/6dfb7310-4258-4493-b261-b61e2a112167.md.parents.json
+harvested_nodes/6ea3ee66-e09e-4760-893c-0eda3a7b9954.md.parents.json -> wallaby-way/nodes/harvested/6ea3ee66-e09e-4760-893c-0eda3a7b9954.md.parents.json
+harvested_nodes/6f1e4eaa-5f62-40af-af88-ada80076467d.md.parents.json -> wallaby-way/nodes/harvested/6f1e4eaa-5f62-40af-af88-ada80076467d.md.parents.json
+harvested_nodes/6f8f9fd3-9861-4123-b811-352b6ad48fca.md.parents.json -> wallaby-way/nodes/harvested/6f8f9fd3-9861-4123-b811-352b6ad48fca.md.parents.json
+harvested_nodes/6fe468e6-6c3f-4ae0-85aa-a54adda7e6cd.md.parents.json -> wallaby-way/nodes/harvested/6fe468e6-6c3f-4ae0-85aa-a54adda7e6cd.md.parents.json
+harvested_nodes/70fd881f-2edd-46d8-81b4-ad330ba0bcda.md.parents.json -> wallaby-way/nodes/harvested/70fd881f-2edd-46d8-81b4-ad330ba0bcda.md.parents.json
+harvested_nodes/7220dbaf-ea87-4a5e-a70f-9477cf4f0741.md.parents.json -> wallaby-way/nodes/harvested/7220dbaf-ea87-4a5e-a70f-9477cf4f0741.md.parents.json
+harvested_nodes/745a1f3d-05a1-456c-ba60-63c040836283.md.parents.json -> wallaby-way/nodes/harvested/745a1f3d-05a1-456c-ba60-63c040836283.md.parents.json
+harvested_nodes/749cca01-c52f-44b8-b699-ae208fa7cb31.md.parents.json -> wallaby-way/nodes/harvested/749cca01-c52f-44b8-b699-ae208fa7cb31.md.parents.json
+harvested_nodes/74a736f5-c070-45d9-8ca9-63db0a3303d6.md.parents.json -> wallaby-way/nodes/harvested/74a736f5-c070-45d9-8ca9-63db0a3303d6.md.parents.json
+harvested_nodes/7828095e-3e65-4587-a28b-c1ff953df8a2.md.parents.json -> wallaby-way/nodes/harvested/7828095e-3e65-4587-a28b-c1ff953df8a2.md.parents.json
+harvested_nodes/78cf5192-2b3a-4705-8c0d-dff54c84bb04.md.parents.json -> wallaby-way/nodes/harvested/78cf5192-2b3a-4705-8c0d-dff54c84bb04.md.parents.json
+harvested_nodes/79369d93-9570-4f59-a5e4-8f33aca3024d.md.parents.json -> wallaby-way/nodes/harvested/79369d93-9570-4f59-a5e4-8f33aca3024d.md.parents.json
+harvested_nodes/79417130-d4cd-4f21-a0bb-101bcbfa5084.md.parents.json -> wallaby-way/nodes/harvested/79417130-d4cd-4f21-a0bb-101bcbfa5084.md.parents.json
+harvested_nodes/7a335a78-0c25-49c7-bc58-ee6741b713f5.md.parents.json -> wallaby-way/nodes/harvested/7a335a78-0c25-49c7-bc58-ee6741b713f5.md.parents.json
+harvested_nodes/7bd5d950-78d9-474e-ad07-666e1bd3881e.md.parents.json -> wallaby-way/nodes/harvested/7bd5d950-78d9-474e-ad07-666e1bd3881e.md.parents.json
+harvested_nodes/7cc78989-abc1-4b7b-937c-3d867e70c872.md.parents.json -> wallaby-way/nodes/harvested/7cc78989-abc1-4b7b-937c-3d867e70c872.md.parents.json
+harvested_nodes/7d022773-3276-4b9c-b8b2-828f68013be0.md.parents.json -> wallaby-way/nodes/harvested/7d022773-3276-4b9c-b8b2-828f68013be0.md.parents.json
+harvested_nodes/7e6a83b9-c368-438b-aa65-479976bd869c.md.parents.json -> wallaby-way/nodes/harvested/7e6a83b9-c368-438b-aa65-479976bd869c.md.parents.json
+harvested_nodes/80befe2a-6ba7-4398-83db-7026f716a022.md.parents.json -> wallaby-way/nodes/harvested/80befe2a-6ba7-4398-83db-7026f716a022.md.parents.json
+harvested_nodes/816890df-bc23-4a72-b9ef-a49d308eeaad.md.parents.json -> wallaby-way/nodes/harvested/816890df-bc23-4a72-b9ef-a49d308eeaad.md.parents.json
+harvested_nodes/84c65b83-deac-4f2f-809f-1fa6df8c4a4e.md.parents.json -> wallaby-way/nodes/harvested/84c65b83-deac-4f2f-809f-1fa6df8c4a4e.md.parents.json
+harvested_nodes/8586fbad-241f-4bbf-9e38-2e01d6b19e93.md.parents.json -> wallaby-way/nodes/harvested/8586fbad-241f-4bbf-9e38-2e01d6b19e93.md.parents.json
+harvested_nodes/86aa947a-3f7c-4ee0-a6c5-0c2ffce5d961.md.parents.json -> wallaby-way/nodes/harvested/86aa947a-3f7c-4ee0-a6c5-0c2ffce5d961.md.parents.json
+harvested_nodes/86d92aa0-ca0f-4b8f-a2db-4e45762b62d8.md.parents.json -> wallaby-way/nodes/harvested/86d92aa0-ca0f-4b8f-a2db-4e45762b62d8.md.parents.json
+harvested_nodes/8b1938bd-b4c6-4dc4-8ce7-6bdb7e627b72.md.parents.json -> wallaby-way/nodes/harvested/8b1938bd-b4c6-4dc4-8ce7-6bdb7e627b72.md.parents.json
+harvested_nodes/8c5b3275-4749-4054-a196-d6bb50213ed3.md.parents.json -> wallaby-way/nodes/harvested/8c5b3275-4749-4054-a196-d6bb50213ed3.md.parents.json
+harvested_nodes/8ca57af4-933d-43f1-bd96-b31e223d7932.md.parents.json -> wallaby-way/nodes/harvested/8ca57af4-933d-43f1-bd96-b31e223d7932.md.parents.json
+harvested_nodes/8d7e1401-a979-4ec9-90f6-75f9bc5aa14f.md.parents.json -> wallaby-way/nodes/harvested/8d7e1401-a979-4ec9-90f6-75f9bc5aa14f.md.parents.json
+harvested_nodes/8eb8ef22-aaac-4f05-bb81-6dcf4891fead.md.parents.json -> wallaby-way/nodes/harvested/8eb8ef22-aaac-4f05-bb81-6dcf4891fead.md.parents.json
+harvested_nodes/90833c4c-9951-4e6d-8236-9fb13819eba3.md.parents.json -> wallaby-way/nodes/harvested/90833c4c-9951-4e6d-8236-9fb13819eba3.md.parents.json
+harvested_nodes/948c5363-ead3-499b-b719-36cbec81ce48.md.parents.json -> wallaby-way/nodes/harvested/948c5363-ead3-499b-b719-36cbec81ce48.md.parents.json
+harvested_nodes/955cce09-2ad0-4ac5-8b85-aeec2f7f9687.md.parents.json -> wallaby-way/nodes/harvested/955cce09-2ad0-4ac5-8b85-aeec2f7f9687.md.parents.json
+harvested_nodes/963b9a5f-4ddc-470c-9cee-89b2340601c7.md.parents.json -> wallaby-way/nodes/harvested/963b9a5f-4ddc-470c-9cee-89b2340601c7.md.parents.json
+harvested_nodes/96dac56f-e69e-49ff-b14e-3ed4c842226d.md.parents.json -> wallaby-way/nodes/harvested/96dac56f-e69e-49ff-b14e-3ed4c842226d.md.parents.json
+harvested_nodes/9905f7f6-1ac5-4cd7-8c9a-9b7187178775.md.parents.json -> wallaby-way/nodes/harvested/9905f7f6-1ac5-4cd7-8c9a-9b7187178775.md.parents.json
+harvested_nodes/9a313396-d2a1-4c00-bcfe-6305f93d22b1.md.parents.json -> wallaby-way/nodes/harvested/9a313396-d2a1-4c00-bcfe-6305f93d22b1.md.parents.json
+harvested_nodes/9a48582c-f426-4955-aba8-6e8ed494d50c.md.parents.json -> wallaby-way/nodes/harvested/9a48582c-f426-4955-aba8-6e8ed494d50c.md.parents.json
+harvested_nodes/9b7e0c1a-7ee5-4c79-9d29-ae67581a6dcf.md.parents.json -> wallaby-way/nodes/harvested/9b7e0c1a-7ee5-4c79-9d29-ae67581a6dcf.md.parents.json
+harvested_nodes/9b932a60-5390-46ee-bc2c-9480b90f893d.md.parents.json -> wallaby-way/nodes/harvested/9b932a60-5390-46ee-bc2c-9480b90f893d.md.parents.json
+harvested_nodes/9bf5733a-d801-42e8-81a8-c4909cd6211b.md.parents.json -> wallaby-way/nodes/harvested/9bf5733a-d801-42e8-81a8-c4909cd6211b.md.parents.json
+harvested_nodes/9dc5ac95-8ab5-43d4-b8aa-d8f5fa273b63.md.parents.json -> wallaby-way/nodes/harvested/9dc5ac95-8ab5-43d4-b8aa-d8f5fa273b63.md.parents.json
+harvested_nodes/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5.md.parents.json -> wallaby-way/nodes/harvested/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5.md.parents.json
+harvested_nodes/9f75fa12-5a55-4c27-b7e5-0fe8ff7dfd46.md.parents.json -> wallaby-way/nodes/harvested/9f75fa12-5a55-4c27-b7e5-0fe8ff7dfd46.md.parents.json
+harvested_nodes/a0c19cf1-00ff-4430-864b-accaa4dd1094.md.parents.json -> wallaby-way/nodes/harvested/a0c19cf1-00ff-4430-864b-accaa4dd1094.md.parents.json
+harvested_nodes/a1330e8f-2a47-4dc9-b8d4-71a0d5211284.md.parents.json -> wallaby-way/nodes/harvested/a1330e8f-2a47-4dc9-b8d4-71a0d5211284.md.parents.json
+harvested_nodes/a1a302af-1a31-4961-a7ba-f0c3565d8afb.md.parents.json -> wallaby-way/nodes/harvested/a1a302af-1a31-4961-a7ba-f0c3565d8afb.md.parents.json
+harvested_nodes/a244ca75-41ea-420d-a863-ec4283ae3b24.md.parents.json -> wallaby-way/nodes/harvested/a244ca75-41ea-420d-a863-ec4283ae3b24.md.parents.json
+harvested_nodes/a3b06110-7ce5-4845-a5be-d26a2e3cca1f.md.parents.json -> wallaby-way/nodes/harvested/a3b06110-7ce5-4845-a5be-d26a2e3cca1f.md.parents.json
+harvested_nodes/a4233320-27b2-4bf6-94ef-22ec73466153.md.parents.json -> wallaby-way/nodes/harvested/a4233320-27b2-4bf6-94ef-22ec73466153.md.parents.json
+harvested_nodes/a5662006-50f8-4972-ba5f-e9ff5b701f23.md.parents.json -> wallaby-way/nodes/harvested/a5662006-50f8-4972-ba5f-e9ff5b701f23.md.parents.json
+harvested_nodes/a8679dd9-44dc-448a-b88d-7674aafb5aa9.md.parents.json -> wallaby-way/nodes/harvested/a8679dd9-44dc-448a-b88d-7674aafb5aa9.md.parents.json
+harvested_nodes/aba60de7-c523-4429-95af-d993f6b7992f.md.parents.json -> wallaby-way/nodes/harvested/aba60de7-c523-4429-95af-d993f6b7992f.md.parents.json
+harvested_nodes/abe2c722-60b1-4281-9fff-369b08bd0efb.md.parents.json -> wallaby-way/nodes/harvested/abe2c722-60b1-4281-9fff-369b08bd0efb.md.parents.json
+harvested_nodes/abe64eb8-2617-4e9a-88ca-212103c4866e.md.parents.json -> wallaby-way/nodes/harvested/abe64eb8-2617-4e9a-88ca-212103c4866e.md.parents.json
+harvested_nodes/acd2b950-2cd8-4124-9926-531186c4b5e7.md.parents.json -> wallaby-way/nodes/harvested/acd2b950-2cd8-4124-9926-531186c4b5e7.md.parents.json
+harvested_nodes/af1609c4-8e0c-4fd3-91df-09d58c844673.md.parents.json -> wallaby-way/nodes/harvested/af1609c4-8e0c-4fd3-91df-09d58c844673.md.parents.json
+harvested_nodes/aff6bacc-ba84-4784-87b3-84b28bbc83d0.md.parents.json -> wallaby-way/nodes/harvested/aff6bacc-ba84-4784-87b3-84b28bbc83d0.md.parents.json
+harvested_nodes/b029b9e7-050f-41f6-bec7-ac7caf6b77e7.md.parents.json -> wallaby-way/nodes/harvested/b029b9e7-050f-41f6-bec7-ac7caf6b77e7.md.parents.json
+harvested_nodes/b51296dd-fb57-4b4d-a058-5d2cb0948070.md.parents.json -> wallaby-way/nodes/harvested/b51296dd-fb57-4b4d-a058-5d2cb0948070.md.parents.json
+harvested_nodes/b5cefa7c-30d6-489c-9d36-e403cb1bca82.md.parents.json -> wallaby-way/nodes/harvested/b5cefa7c-30d6-489c-9d36-e403cb1bca82.md.parents.json
+harvested_nodes/b90c9a8c-d61e-4d19-893c-66f536424b2d.md.parents.json -> wallaby-way/nodes/harvested/b90c9a8c-d61e-4d19-893c-66f536424b2d.md.parents.json
+harvested_nodes/b9639f2b-eea5-430f-a91d-508c2f2a19a1.md.parents.json -> wallaby-way/nodes/harvested/b9639f2b-eea5-430f-a91d-508c2f2a19a1.md.parents.json
+harvested_nodes/bb11442b-215d-4fb1-bee3-23bd67477322.md.parents.json -> wallaby-way/nodes/harvested/bb11442b-215d-4fb1-bee3-23bd67477322.md.parents.json
+harvested_nodes/bc49c5eb-ea4d-461f-a1df-f69c471d61d4.md.parents.json -> wallaby-way/nodes/harvested/bc49c5eb-ea4d-461f-a1df-f69c471d61d4.md.parents.json
+harvested_nodes/bd59de6e-c2ee-498e-905b-b3c38c195c11.md.parents.json -> wallaby-way/nodes/harvested/bd59de6e-c2ee-498e-905b-b3c38c195c11.md.parents.json
+harvested_nodes/be124952-7a02-461f-81e9-2e113b1daf32.md.parents.json -> wallaby-way/nodes/harvested/be124952-7a02-461f-81e9-2e113b1daf32.md.parents.json
+harvested_nodes/be889066-5fb5-4134-a4e5-5b2fbfa9612d.md.parents.json -> wallaby-way/nodes/harvested/be889066-5fb5-4134-a4e5-5b2fbfa9612d.md.parents.json
+harvested_nodes/bec24d10-76ec-4d45-a411-2b0e15dcc567.md.parents.json -> wallaby-way/nodes/harvested/bec24d10-76ec-4d45-a411-2b0e15dcc567.md.parents.json
+harvested_nodes/c0c420ff-2dd7-4e5f-bf5b-7ad8e502379a.md.parents.json -> wallaby-way/nodes/harvested/c0c420ff-2dd7-4e5f-bf5b-7ad8e502379a.md.parents.json
+harvested_nodes/c1ab4ddb-8be3-4667-864d-14ba5b65e608.md.parents.json -> wallaby-way/nodes/harvested/c1ab4ddb-8be3-4667-864d-14ba5b65e608.md.parents.json
+harvested_nodes/c3823a3c-3610-4acf-9071-e641f3d2a7d1.md.parents.json -> wallaby-way/nodes/harvested/c3823a3c-3610-4acf-9071-e641f3d2a7d1.md.parents.json
+harvested_nodes/c47c2aaa-a381-4016-835d-a84188ca2265.md.parents.json -> wallaby-way/nodes/harvested/c47c2aaa-a381-4016-835d-a84188ca2265.md.parents.json
+harvested_nodes/c56189c6-0b9e-4f7b-ac69-7caa9e5fa4bb.md.parents.json -> wallaby-way/nodes/harvested/c56189c6-0b9e-4f7b-ac69-7caa9e5fa4bb.md.parents.json
+harvested_nodes/c8415bff-4c4e-4048-99fa-345d8c841626.md.parents.json -> wallaby-way/nodes/harvested/c8415bff-4c4e-4048-99fa-345d8c841626.md.parents.json
+harvested_nodes/c8520a38-6b8f-49cc-a85c-9dbe6b106c53.md.parents.json -> wallaby-way/nodes/harvested/c8520a38-6b8f-49cc-a85c-9dbe6b106c53.md.parents.json
+harvested_nodes/c9aa7f7c-a9da-496d-b836-178ca5053d41.md.parents.json -> wallaby-way/nodes/harvested/c9aa7f7c-a9da-496d-b836-178ca5053d41.md.parents.json
+harvested_nodes/cda6d5d1-ca13-492b-8740-620a85f5d278.md.parents.json -> wallaby-way/nodes/harvested/cda6d5d1-ca13-492b-8740-620a85f5d278.md.parents.json
+harvested_nodes/cdd48eaa-3d09-4fcc-8351-7399c2920cc6.md.parents.json -> wallaby-way/nodes/harvested/cdd48eaa-3d09-4fcc-8351-7399c2920cc6.md.parents.json
+harvested_nodes/cecb663d-a622-4d69-a5c8-b851a7b11a5a.md.parents.json -> wallaby-way/nodes/harvested/cecb663d-a622-4d69-a5c8-b851a7b11a5a.md.parents.json
+harvested_nodes/d00951fc-0bf8-4cd9-9ec3-2dc9ba77b621.md.parents.json -> wallaby-way/nodes/harvested/d00951fc-0bf8-4cd9-9ec3-2dc9ba77b621.md.parents.json
+harvested_nodes/d0471d43-f334-4237-9c32-46ebd22c61c3.md.parents.json -> wallaby-way/nodes/harvested/d0471d43-f334-4237-9c32-46ebd22c61c3.md.parents.json
+harvested_nodes/d42be555-d86b-41af-9201-f7f4d2d9d911.md.parents.json -> wallaby-way/nodes/harvested/d42be555-d86b-41af-9201-f7f4d2d9d911.md.parents.json
+harvested_nodes/d7287656-5556-4168-af4b-590112279d10.md.parents.json -> wallaby-way/nodes/harvested/d7287656-5556-4168-af4b-590112279d10.md.parents.json
+harvested_nodes/d77db66e-b55a-41ed-9165-883e91052731.md.parents.json -> wallaby-way/nodes/harvested/d77db66e-b55a-41ed-9165-883e91052731.md.parents.json
+harvested_nodes/da8dac95-53ca-49a7-974b-b50d8235478d.md.parents.json -> wallaby-way/nodes/harvested/da8dac95-53ca-49a7-974b-b50d8235478d.md.parents.json
+harvested_nodes/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca.md.parents.json -> wallaby-way/nodes/harvested/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca.md.parents.json
+harvested_nodes/db6b7073-306a-4396-8659-77ee05c95b6f.md.parents.json -> wallaby-way/nodes/harvested/db6b7073-306a-4396-8659-77ee05c95b6f.md.parents.json
+harvested_nodes/dbb2dacd-0a6f-4406-9446-a8ab88a5e440.md.parents.json -> wallaby-way/nodes/harvested/dbb2dacd-0a6f-4406-9446-a8ab88a5e440.md.parents.json
+harvested_nodes/dbe5475f-5a5a-4da0-8eb6-b2f1488d08c1.md.parents.json -> wallaby-way/nodes/harvested/dbe5475f-5a5a-4da0-8eb6-b2f1488d08c1.md.parents.json
+harvested_nodes/e09ccd9b-7735-4542-a9cd-cb2b7ff0f1f3.md.parents.json -> wallaby-way/nodes/harvested/e09ccd9b-7735-4542-a9cd-cb2b7ff0f1f3.md.parents.json
+harvested_nodes/e12270b8-5ad6-4b50-81a1-9eb0f5ead7f9.md.parents.json -> wallaby-way/nodes/harvested/e12270b8-5ad6-4b50-81a1-9eb0f5ead7f9.md.parents.json
+harvested_nodes/e19fa6ed-d745-413a-bf3f-a930a294ef13.md.parents.json -> wallaby-way/nodes/harvested/e19fa6ed-d745-413a-bf3f-a930a294ef13.md.parents.json
+harvested_nodes/e1a91bce-b813-4552-ace2-b63b38fda3c6.md.parents.json -> wallaby-way/nodes/harvested/e1a91bce-b813-4552-ace2-b63b38fda3c6.md.parents.json
+harvested_nodes/e2e14c73-8881-42b8-8bc0-70199b6c53a1.md.parents.json -> wallaby-way/nodes/harvested/e2e14c73-8881-42b8-8bc0-70199b6c53a1.md.parents.json
+harvested_nodes/e32e4c3a-c09d-4e9d-8e8f-5d1bc6ea28d0.md.parents.json -> wallaby-way/nodes/harvested/e32e4c3a-c09d-4e9d-8e8f-5d1bc6ea28d0.md.parents.json
+harvested_nodes/e346c1a0-0244-4989-aaac-2a9d01e1f009.md.parents.json -> wallaby-way/nodes/harvested/e346c1a0-0244-4989-aaac-2a9d01e1f009.md.parents.json
+harvested_nodes/e3ea75ad-46d3-48bb-881f-1a35f13d013e.md.parents.json -> wallaby-way/nodes/harvested/e3ea75ad-46d3-48bb-881f-1a35f13d013e.md.parents.json
+harvested_nodes/e49e2627-e6d1-49f7-9d41-9fb73d3edda0.md.parents.json -> wallaby-way/nodes/harvested/e49e2627-e6d1-49f7-9d41-9fb73d3edda0.md.parents.json
+harvested_nodes/e58c04f5-7059-4db9-ae75-98bda1917797.md.parents.json -> wallaby-way/nodes/harvested/e58c04f5-7059-4db9-ae75-98bda1917797.md.parents.json
+harvested_nodes/e831e30b-34fc-4af5-8815-160f4da1c565.md.parents.json -> wallaby-way/nodes/harvested/e831e30b-34fc-4af5-8815-160f4da1c565.md.parents.json
+harvested_nodes/eb3e7c4f-1ce1-4131-8081-f021b7bfbde7.md.parents.json -> wallaby-way/nodes/harvested/eb3e7c4f-1ce1-4131-8081-f021b7bfbde7.md.parents.json
+harvested_nodes/ef1f4151-e4d2-4ce2-b957-f1bb82b4dd97.md.parents.json -> wallaby-way/nodes/harvested/ef1f4151-e4d2-4ce2-b957-f1bb82b4dd97.md.parents.json
+harvested_nodes/ef3a40d4-bbe1-4fd0-aceb-d4f5817315b5.md.parents.json -> wallaby-way/nodes/harvested/ef3a40d4-bbe1-4fd0-aceb-d4f5817315b5.md.parents.json
+harvested_nodes/f29e5f26-845d-4896-91fb-a49dd8644e3e.md.parents.json -> wallaby-way/nodes/harvested/f29e5f26-845d-4896-91fb-a49dd8644e3e.md.parents.json
+harvested_nodes/f2a31cff-1ba6-44a3-a2d7-c782d2748e92.md.parents.json -> wallaby-way/nodes/harvested/f2a31cff-1ba6-44a3-a2d7-c782d2748e92.md.parents.json
+harvested_nodes/f6d508c8-213f-489d-8d25-8c862cc106af.md.parents.json -> wallaby-way/nodes/harvested/f6d508c8-213f-489d-8d25-8c862cc106af.md.parents.json
+harvested_nodes/f89f1496-ce4d-4b70-a26e-f38a22084e78.md.parents.json -> wallaby-way/nodes/harvested/f89f1496-ce4d-4b70-a26e-f38a22084e78.md.parents.json
+harvested_nodes/f990c2c3-fcd0-4bb9-a915-43ededaf6084.md.parents.json -> wallaby-way/nodes/harvested/f990c2c3-fcd0-4bb9-a915-43ededaf6084.md.parents.json
+harvested_nodes/fc723f55-308c-4bb0-b912-282783579eb9.md.parents.json -> wallaby-way/nodes/harvested/fc723f55-308c-4bb0-b912-282783579eb9.md.parents.json
+harvested_nodes/fcbd24fa-d560-4690-920e-5c8a08b42524.md.parents.json -> wallaby-way/nodes/harvested/fcbd24fa-d560-4690-920e-5c8a08b42524.md.parents.json
+harvested_nodes/fd96ef75-2756-40ea-9aa4-48b81dc2b5b7.md.parents.json -> wallaby-way/nodes/harvested/fd96ef75-2756-40ea-9aa4-48b81dc2b5b7.md.parents.json
+pipeline/nodes/0167e58a-a93d-4857-9c84-f3967460db0a.md -> wallaby-way/inspect-later/nodes-S34/0167e58a-a93d-4857-9c84-f3967460db0a.md
+pipeline/nodes/09db32a8-e311-4948-9355-3369bc45bdef.md -> wallaby-way/inspect-later/nodes-S34/09db32a8-e311-4948-9355-3369bc45bdef.md
+pipeline/nodes/201646e5-f885-4f90-b398-f22491aa5422.md -> wallaby-way/inspect-later/nodes-S34/201646e5-f885-4f90-b398-f22491aa5422.md
+pipeline/nodes/290f6d20-f4ae-4f78-b93e-f15a6f1f1419.md -> wallaby-way/inspect-later/nodes-S34/290f6d20-f4ae-4f78-b93e-f15a6f1f1419.md
+pipeline/nodes/2fea4234-0d49-4db3-8023-53109f3cc145.md -> wallaby-way/inspect-later/nodes-S34/2fea4234-0d49-4db3-8023-53109f3cc145.md
+pipeline/nodes/3e9a15f1-9c8c-4b12-a398-dd994a7b0710.md -> wallaby-way/inspect-later/nodes-S34/3e9a15f1-9c8c-4b12-a398-dd994a7b0710.md
+pipeline/nodes/43df44a2-9ec2-4cf6-a45f-ab13f27c57ac.md -> wallaby-way/inspect-later/nodes-S34/43df44a2-9ec2-4cf6-a45f-ab13f27c57ac.md
+pipeline/nodes/4c725f2a-e2ff-46e7-9b16-c5e27c986e30.md -> wallaby-way/inspect-later/nodes-S34/4c725f2a-e2ff-46e7-9b16-c5e27c986e30.md
+pipeline/nodes/4d88185f-fe6c-495a-9b9e-713d4f532092.md -> wallaby-way/inspect-later/nodes-S34/4d88185f-fe6c-495a-9b9e-713d4f532092.md
+pipeline/nodes/5a5efd53-c0e0-43f9-9876-f5bc6c4f10bd.md -> wallaby-way/inspect-later/nodes-S34/5a5efd53-c0e0-43f9-9876-f5bc6c4f10bd.md
+pipeline/nodes/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0.md -> wallaby-way/inspect-later/nodes-S34/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0.md
+pipeline/nodes/642d8365-1e61-439b-a68c-63f7077925d4.md -> wallaby-way/inspect-later/nodes-S34/642d8365-1e61-439b-a68c-63f7077925d4.md
+pipeline/nodes/6953b3b7-141e-4bc6-acf1-e22cb1fc1f6d.md -> wallaby-way/inspect-later/nodes-S34/6953b3b7-141e-4bc6-acf1-e22cb1fc1f6d.md
+pipeline/nodes/6a096d18-963e-49ce-8336-a49d08b043b9.md -> wallaby-way/inspect-later/nodes-S34/6a096d18-963e-49ce-8336-a49d08b043b9.md
+pipeline/nodes/6b44447e-99ba-46df-be32-3df22245cdce.md -> wallaby-way/inspect-later/nodes-S34/6b44447e-99ba-46df-be32-3df22245cdce.md
+pipeline/nodes/80befe2a-6ba7-4398-83db-7026f716a022.md -> wallaby-way/inspect-later/nodes-S34/80befe2a-6ba7-4398-83db-7026f716a022.md
+pipeline/nodes/9905f7f6-1ac5-4cd7-8c9a-9b7187178775.md -> wallaby-way/inspect-later/nodes-S34/9905f7f6-1ac5-4cd7-8c9a-9b7187178775.md
+pipeline/nodes/9bf5733a-d801-42e8-81a8-c4909cd6211b.md -> wallaby-way/inspect-later/nodes-S34/9bf5733a-d801-42e8-81a8-c4909cd6211b.md
+pipeline/nodes/abe2c722-60b1-4281-9fff-369b08bd0efb.md -> wallaby-way/inspect-later/nodes-S34/abe2c722-60b1-4281-9fff-369b08bd0efb.md
+pipeline/nodes/acd2b950-2cd8-4124-9926-531186c4b5e7.md -> wallaby-way/inspect-later/nodes-S34/acd2b950-2cd8-4124-9926-531186c4b5e7.md
+pipeline/nodes/b51296dd-fb57-4b4d-a058-5d2cb0948070.md -> wallaby-way/inspect-later/nodes-S34/b51296dd-fb57-4b4d-a058-5d2cb0948070.md
+pipeline/nodes/c3823a3c-3610-4acf-9071-e641f3d2a7d1.md -> wallaby-way/inspect-later/nodes-S34/c3823a3c-3610-4acf-9071-e641f3d2a7d1.md
+pipeline/nodes/dbb2dacd-0a6f-4406-9446-a8ab88a5e440.md -> wallaby-way/inspect-later/nodes-S34/dbb2dacd-0a6f-4406-9446-a8ab88a5e440.md
+pipeline/nodes/e49e2627-e6d1-49f7-9d41-9fb73d3edda0.md -> wallaby-way/inspect-later/nodes-S34/e49e2627-e6d1-49f7-9d41-9fb73d3edda0.md
+pipeline/nodes/variance -> wallaby-way/inspect-later/nodes-S34/variance
+pipeline/nodes/variance_tuned -> wallaby-way/inspect-later/nodes-S34/variance_tuned
+pipeline/nodes/variance_large/ EMPTY -> DELETE DEFERRED
+pipeline/s41_nodes_audit.md -> wallaby-way/inspect-later/s41_nodes_audit.md
+pipeline/_variance_uuids.json -> wallaby-way/inspect-later/_variance_uuids.json
+pipeline/s39/worklist.csv -> wallaby-way/runs/2026-06-08/worklist.csv
+pipeline/s39/batch_list_S44.csv -> wallaby-way/runs/2026-06-07/batch_list_S44.csv
+pipeline/s39/quarantine/20e2e718-8352-49c6-b22f-77602da9db77.quarantined.md -> wallaby-way/nodes/quarantine/20e2e718-8352-49c6-b22f-77602da9db77.quarantined.md
+pipeline/s39/quarantine/68c3fe4c-541f-4be5-a2d9-d536abec6a7d.quarantined.md -> wallaby-way/nodes/quarantine/68c3fe4c-541f-4be5-a2d9-d536abec6a7d.quarantined.md
+pipeline/s39/quarantine/_RESOLVED_567956f0.quarantined.md -> wallaby-way/nodes/quarantine/_RESOLVED_567956f0.quarantined.md
+pipeline/s39/quarantine/e49e2627-e6d1-49f7-9d41-9fb73d3edda0.quarantined.md -> wallaby-way/nodes/quarantine/e49e2627-e6d1-49f7-9d41-9fb73d3edda0.quarantined.md
+pipeline/s39/s39-archived-data/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97_nodes_raw.txt -> history/s39-archived-data/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97_nodes_raw.txt
+pipeline/s39/s39-archived-data/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97_payload.txt -> history/s39-archived-data/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97_payload.txt
+pipeline/s39/s39-archived-data/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97_payload.txt.parents.json -> history/s39-archived-data/01eb6e56-9546-4c91-ab60-0d7ac8ff0a97_payload.txt.parents.json
+pipeline/s39/s39-archived-data/2fdeedf8-b873-4162-bb73-064353090a18_nodes_raw.txt -> history/s39-archived-data/2fdeedf8-b873-4162-bb73-064353090a18_nodes_raw.txt
+pipeline/s39/s39-archived-data/2fdeedf8-b873-4162-bb73-064353090a18_payload.txt -> history/s39-archived-data/2fdeedf8-b873-4162-bb73-064353090a18_payload.txt
+pipeline/s39/s39-archived-data/2fdeedf8-b873-4162-bb73-064353090a18_payload.txt.parents.json -> history/s39-archived-data/2fdeedf8-b873-4162-bb73-064353090a18_payload.txt.parents.json
+pipeline/s39/s39-archived-data/37357022-2eb5-4006-9873-1d33ea7ca1fb_nodes_raw.txt -> history/s39-archived-data/37357022-2eb5-4006-9873-1d33ea7ca1fb_nodes_raw.txt
+pipeline/s39/s39-archived-data/37357022-2eb5-4006-9873-1d33ea7ca1fb_payload.txt -> history/s39-archived-data/37357022-2eb5-4006-9873-1d33ea7ca1fb_payload.txt
+pipeline/s39/s39-archived-data/37357022-2eb5-4006-9873-1d33ea7ca1fb_payload.txt.parents.json -> history/s39-archived-data/37357022-2eb5-4006-9873-1d33ea7ca1fb_payload.txt.parents.json
+pipeline/s39/s39-archived-data/37357022-e3d2-4009-b1bd-e01e4491e48c_nodes_raw.txt -> history/s39-archived-data/37357022-e3d2-4009-b1bd-e01e4491e48c_nodes_raw.txt
+pipeline/s39/s39-archived-data/480b07a4-8b8b-4d45-acd7-16215f0d3248_nodes_raw.txt -> history/s39-archived-data/480b07a4-8b8b-4d45-acd7-16215f0d3248_nodes_raw.txt
+pipeline/s39/s39-archived-data/480b07a4-8b8b-4d45-acd7-16215f0d3248_payload.txt -> history/s39-archived-data/480b07a4-8b8b-4d45-acd7-16215f0d3248_payload.txt
+pipeline/s39/s39-archived-data/480b07a4-8b8b-4d45-acd7-16215f0d3248_payload.txt.parents.json -> history/s39-archived-data/480b07a4-8b8b-4d45-acd7-16215f0d3248_payload.txt.parents.json
+pipeline/s39/s39-archived-data/480b07a4-c4e9-4e04-a18a-5bb7c4bde33c_nodes_raw.txt -> history/s39-archived-data/480b07a4-c4e9-4e04-a18a-5bb7c4bde33c_nodes_raw.txt
+pipeline/s39/s39-archived-data/4afba4db-1b89-442f-b3af-db38eca9fa56_nodes_raw.txt -> history/s39-archived-data/4afba4db-1b89-442f-b3af-db38eca9fa56_nodes_raw.txt
+pipeline/s39/s39-archived-data/4afba4db-1b89-442f-b3af-db38eca9fa56_payload.txt -> history/s39-archived-data/4afba4db-1b89-442f-b3af-db38eca9fa56_payload.txt
+pipeline/s39/s39-archived-data/4afba4db-1b89-442f-b3af-db38eca9fa56_payload.txt.parents.json -> history/s39-archived-data/4afba4db-1b89-442f-b3af-db38eca9fa56_payload.txt.parents.json
+pipeline/s39/s39-archived-data/4d88185f-fe6c-495a-9b9e-713d4f532092_nodes_raw.txt -> history/s39-archived-data/4d88185f-fe6c-495a-9b9e-713d4f532092_nodes_raw.txt
+pipeline/s39/s39-archived-data/4d88185f-fe6c-495a-9b9e-713d4f532092_payload.txt -> history/s39-archived-data/4d88185f-fe6c-495a-9b9e-713d4f532092_payload.txt
+pipeline/s39/s39-archived-data/4d88185f-fe6c-495a-9b9e-713d4f532092_payload.txt.parents.json -> history/s39-archived-data/4d88185f-fe6c-495a-9b9e-713d4f532092_payload.txt.parents.json
+pipeline/s39/s39-archived-data/51aaa213-2c4f-403a-88d2-fca8f5124316_nodes_raw.txt -> history/s39-archived-data/51aaa213-2c4f-403a-88d2-fca8f5124316_nodes_raw.txt
+pipeline/s39/s39-archived-data/51aaa213-2c4f-403a-88d2-fca8f5124316_payload.txt -> history/s39-archived-data/51aaa213-2c4f-403a-88d2-fca8f5124316_payload.txt
+pipeline/s39/s39-archived-data/51aaa213-2c4f-403a-88d2-fca8f5124316_payload.txt.parents.json -> history/s39-archived-data/51aaa213-2c4f-403a-88d2-fca8f5124316_payload.txt.parents.json
+pipeline/s39/s39-archived-data/51aaa213-5d01-4e81-ae98-88b6e28a85a8_nodes_raw.txt -> history/s39-archived-data/51aaa213-5d01-4e81-ae98-88b6e28a85a8_nodes_raw.txt
+pipeline/s39/s39-archived-data/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0_nodes_raw.txt -> history/s39-archived-data/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0_nodes_raw.txt
+pipeline/s39/s39-archived-data/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0_payload.txt -> history/s39-archived-data/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0_payload.txt
+pipeline/s39/s39-archived-data/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0_payload.txt.parents.json -> history/s39-archived-data/63b6e85a-2d9a-4b52-8923-d8d3a63f0cf0_payload.txt.parents.json
+pipeline/s39/s39-archived-data/6b44447e-99ba-46df-be32-3df22245cdce_payload.txt -> history/s39-archived-data/6b44447e-99ba-46df-be32-3df22245cdce_payload.txt
+pipeline/s39/s39-archived-data/6b44447e-99ba-46df-be32-3df22245cdce_payload.txt.parents.json -> history/s39-archived-data/6b44447e-99ba-46df-be32-3df22245cdce_payload.txt.parents.json
+pipeline/s39/s39-archived-data/6f1e4eaa-5f62-40af-af88-ada80076467d_nodes_raw.txt -> history/s39-archived-data/6f1e4eaa-5f62-40af-af88-ada80076467d_nodes_raw.txt
+pipeline/s39/s39-archived-data/6f1e4eaa-5f62-40af-af88-ada80076467d_payload.txt -> history/s39-archived-data/6f1e4eaa-5f62-40af-af88-ada80076467d_payload.txt
+pipeline/s39/s39-archived-data/6f1e4eaa-5f62-40af-af88-ada80076467d_payload.txt.parents.json -> history/s39-archived-data/6f1e4eaa-5f62-40af-af88-ada80076467d_payload.txt.parents.json
+pipeline/s39/s39-archived-data/6f1e4eaa-7a52-4ec1-aaec-a8b63b6e9eb8_nodes_raw.txt -> history/s39-archived-data/6f1e4eaa-7a52-4ec1-aaec-a8b63b6e9eb8_nodes_raw.txt
+pipeline/s39/s39-archived-data/9b932a60-5390-46ee-bc2c-9480b90f893d_nodes_raw.txt -> history/s39-archived-data/9b932a60-5390-46ee-bc2c-9480b90f893d_nodes_raw.txt
+pipeline/s39/s39-archived-data/9b932a60-5390-46ee-bc2c-9480b90f893d_payload.txt -> history/s39-archived-data/9b932a60-5390-46ee-bc2c-9480b90f893d_payload.txt
+pipeline/s39/s39-archived-data/9b932a60-5390-46ee-bc2c-9480b90f893d_payload.txt.parents.json -> history/s39-archived-data/9b932a60-5390-46ee-bc2c-9480b90f893d_payload.txt.parents.json
+pipeline/s39/s39-archived-data/9e3bcd69-4484-4284-b8b6-1dcd91da32b5_nodes_raw.txt -> history/s39-archived-data/9e3bcd69-4484-4284-b8b6-1dcd91da32b5_nodes_raw.txt
+pipeline/s39/s39-archived-data/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5_nodes_raw.txt -> history/s39-archived-data/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5_nodes_raw.txt
+pipeline/s39/s39-archived-data/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5_payload.txt -> history/s39-archived-data/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5_payload.txt
+pipeline/s39/s39-archived-data/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5_payload.txt.parents.json -> history/s39-archived-data/9e3bcd69-4ed0-4c6b-8880-7c1283a3d7d5_payload.txt.parents.json
+pipeline/s39/s39-archived-data/bd59de6e-c2ee-498e-905b-b3c38c195c11_payload.txt -> history/s39-archived-data/bd59de6e-c2ee-498e-905b-b3c38c195c11_payload.txt
+pipeline/s39/s39-archived-data/bd59de6e-c2ee-498e-905b-b3c38c195c11_payload.txt.parents.json -> history/s39-archived-data/bd59de6e-c2ee-498e-905b-b3c38c195c11_payload.txt.parents.json
+pipeline/s39/s39-archived-data/be889066-5fb5-4134-a4e5-5b2fbfa9612d_nodes_raw.txt -> history/s39-archived-data/be889066-5fb5-4134-a4e5-5b2fbfa9612d_nodes_raw.txt
+pipeline/s39/s39-archived-data/be889066-5fb5-4134-a4e5-5b2fbfa9612d_payload.txt -> history/s39-archived-data/be889066-5fb5-4134-a4e5-5b2fbfa9612d_payload.txt
+pipeline/s39/s39-archived-data/be889066-5fb5-4134-a4e5-5b2fbfa9612d_payload.txt.parents.json -> history/s39-archived-data/be889066-5fb5-4134-a4e5-5b2fbfa9612d_payload.txt.parents.json
+pipeline/s39/s39-archived-data/be889066-e7e2-4e61-bb8a-a5c4a5d1e43f_nodes_raw.txt -> history/s39-archived-data/be889066-e7e2-4e61-bb8a-a5c4a5d1e43f_nodes_raw.txt
+pipeline/s39/s39-archived-data/c8415bff-0be1-4264-9e07-ddddc7a5fe60_nodes_raw.txt -> history/s39-archived-data/c8415bff-0be1-4264-9e07-ddddc7a5fe60_nodes_raw.txt
+pipeline/s39/s39-archived-data/c8415bff-4c4e-4048-99fa-345d8c841626_nodes_raw.txt -> history/s39-archived-data/c8415bff-4c4e-4048-99fa-345d8c841626_nodes_raw.txt
+pipeline/s39/s39-archived-data/c8415bff-4c4e-4048-99fa-345d8c841626_payload.txt -> history/s39-archived-data/c8415bff-4c4e-4048-99fa-345d8c841626_payload.txt
+pipeline/s39/s39-archived-data/c8415bff-4c4e-4048-99fa-345d8c841626_payload.txt.parents.json -> history/s39-archived-data/c8415bff-4c4e-4048-99fa-345d8c841626_payload.txt.parents.json
+pipeline/s39/s39-archived-data/daa8d496-6e0c-44a9-bb18-a32b45e90f3c_nodes_raw.txt -> history/s39-archived-data/daa8d496-6e0c-44a9-bb18-a32b45e90f3c_nodes_raw.txt
+pipeline/s39/s39-archived-data/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca_nodes_raw.txt -> history/s39-archived-data/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca_nodes_raw.txt
+pipeline/s39/s39-archived-data/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca_payload.txt -> history/s39-archived-data/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca_payload.txt
+pipeline/s39/s39-archived-data/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca_payload.txt.parents.json -> history/s39-archived-data/daa8d496-ffb2-49fb-8619-7f49e3f7a5ca_payload.txt.parents.json
+pipeline/s39/s39-archived-data/e831e30b-34fc-4af5-8815-160f4da1c565_payload.txt -> history/s39-archived-data/e831e30b-34fc-4af5-8815-160f4da1c565_payload.txt
+pipeline/s39/s39-archived-data/e831e30b-34fc-4af5-8815-160f4da1c565_payload.txt.parents.json -> history/s39-archived-data/e831e30b-34fc-4af5-8815-160f4da1c565_payload.txt.parents.json
+pipeline/s39/_turd_567956f0_payload.json -> graveyard/_turd_567956f0_payload.json
+pipeline/s39/_turd_567956f0_payload.json.parents.json -> graveyard/_turd_567956f0_payload.json.parents.json
+batch_run_S44.log -> wallaby-way/runs/2026-06-07/batch_run_S44.log
+pipeline/secrets/floor_db.env -> wallaby-way/secrets/floor_db.env
+FAILED: CC-plans/S39_courier_stageB_plan.md -> history/cc-plans/S39_courier_stageB_plan.md
+FAILED: CC-plans/S39_plan.md -> history/cc-plans/S39_plan.md
+FAILED: CC-plans/S39_stageB_onsub_loop_plan.md -> history/cc-plans/S39_stageB_onsub_loop_plan.md
+FAILED: CC-plans/S40_cost_trueup.md -> history/cc-plans/S40_cost_trueup.md
+FAILED: CC-plans/S40_delivery_diagnostic_readonly.md -> history/cc-plans/S40_delivery_diagnostic_readonly.md
+FAILED: CC-plans/S40_delivery_fix.md -> history/cc-plans/S40_delivery_fix.md
+FAILED: CC-plans/S40_model_grade.md -> history/cc-plans/S40_model_grade.md
+FAILED: CC-plans/S40_precision_addendum_grade.md -> history/cc-plans/S40_precision_addendum_grade.md
+CC-plans/S39_courier_stageB_plan.md -> history/cc-plans/S39_courier_stageB_plan.md
+CC-plans/S39_plan.md -> history/cc-plans/S39_plan.md
+CC-plans/S39_stageB_onsub_loop_plan.md -> history/cc-plans/S39_stageB_onsub_loop_plan.md
+CC-plans/S40_cost_trueup.md -> history/cc-plans/S40_cost_trueup.md
+CC-plans/S40_delivery_diagnostic_readonly.md -> history/cc-plans/S40_delivery_diagnostic_readonly.md
+CC-plans/S40_delivery_fix.md -> history/cc-plans/S40_delivery_fix.md
+CC-plans/S40_model_grade.md -> history/cc-plans/S40_model_grade.md
+CC-plans/S40_precision_addendum_grade.md -> history/cc-plans/S40_precision_addendum_grade.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/review_panel_process.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/review_panel_report.html
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/review_panel_report.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_10_claim_verification.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_11_severity_verification.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_14_5_judge_verification.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_14_judge_ruling.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_6_round1_summary.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_6_round2_summary.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_8_audit.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_3.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_4.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_5_round1.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_5_round2.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_7.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_3.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_4.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_5_round1.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_5_round2.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_7.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_3.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_4.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_5_round1.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_5_round2.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_7.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_3.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_4.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_5_round1.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_5_round2.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_7.md
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_edge_copy.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_final.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_final_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b1.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b1_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b2_rt.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b2_rt_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b3_forest.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b3_forest_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b4_uni.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b4_uni_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b5_empty.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b5_empty_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_edge.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_edge_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_main.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_main_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_num.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_num_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_schema.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_schema_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_src.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_src_OUT.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_hawk_v1.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_t.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_v4.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify2.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify3.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_env.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_facts.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_hawk_v1.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_ping.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_probe.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_pyprobe.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_t.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_v4.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_v4_out.json
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify2.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify2_out.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify3.py
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify3_out.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify_out.txt
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify_run.log
+FAILED: docs/reviews/2026-05-29-d9-supabase-floor-lock/state/context_brief.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/review_panel_process.md -> reviews/review_panel_process.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/review_panel_report.md -> reviews/review_panel_report.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/review_panel_report.html -> reviews/review_panel_report.html
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_10_claim_verification.md -> reviews/phase_10_claim_verification.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_11_severity_verification.md -> reviews/phase_11_severity_verification.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_14_5_judge_verification.md -> reviews/phase_14_5_judge_verification.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_14_judge_ruling.md -> reviews/phase_14_judge_ruling.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_6_round1_summary.md -> reviews/phase_6_round1_summary.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_6_round2_summary.md -> reviews/phase_6_round2_summary.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/phase_8_audit.md -> reviews/phase_8_audit.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_3.md -> reviews/reviewer_correctness_hawk_phase_3.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_4.md -> reviews/reviewer_correctness_hawk_phase_4.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_5_round1.md -> reviews/reviewer_correctness_hawk_phase_5_round1.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_5_round2.md -> reviews/reviewer_correctness_hawk_phase_5_round2.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_correctness_hawk_phase_7.md -> reviews/reviewer_correctness_hawk_phase_7.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_3.md -> reviews/reviewer_database_specialist_phase_3.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_4.md -> reviews/reviewer_database_specialist_phase_4.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_5_round1.md -> reviews/reviewer_database_specialist_phase_5_round1.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_5_round2.md -> reviews/reviewer_database_specialist_phase_5_round2.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_database_specialist_phase_7.md -> reviews/reviewer_database_specialist_phase_7.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_3.md -> reviews/reviewer_devils_advocate_phase_3.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_4.md -> reviews/reviewer_devils_advocate_phase_4.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_5_round1.md -> reviews/reviewer_devils_advocate_phase_5_round1.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_5_round2.md -> reviews/reviewer_devils_advocate_phase_5_round2.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_devils_advocate_phase_7.md -> reviews/reviewer_devils_advocate_phase_7.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_3.md -> reviews/reviewer_risk_assessor_phase_3.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_4.md -> reviews/reviewer_risk_assessor_phase_4.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_5_round1.md -> reviews/reviewer_risk_assessor_phase_5_round1.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_5_round2.md -> reviews/reviewer_risk_assessor_phase_5_round2.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/reviewer_risk_assessor_phase_7.md -> reviews/reviewer_risk_assessor_phase_7.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_env.txt -> graveyard/d9-review-debug/_env.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_facts.txt -> graveyard/d9-review-debug/_facts.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_hawk_v1.py -> graveyard/d9-review-debug/_hawk_v1.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_ping.txt -> graveyard/d9-review-debug/_ping.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_probe.txt -> graveyard/d9-review-debug/_probe.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_pyprobe.txt -> graveyard/d9-review-debug/_pyprobe.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_t.py -> graveyard/d9-review-debug/_t.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_v4.py -> graveyard/d9-review-debug/_v4.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_v4_out.json -> graveyard/d9-review-debug/_v4_out.json
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify.py -> graveyard/d9-review-debug/_verify.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify2.py -> graveyard/d9-review-debug/_verify2.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify2_out.txt -> graveyard/d9-review-debug/_verify2_out.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify3.py -> graveyard/d9-review-debug/_verify3.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify3_out.txt -> graveyard/d9-review-debug/_verify3_out.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify_out.txt -> graveyard/d9-review-debug/_verify_out.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/_verify_run.log -> graveyard/d9-review-debug/_verify_run.log
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/context_brief.md -> graveyard/d9-review-debug/context_brief.md
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_edge_copy.txt -> graveyard/d9-review-debug/zz_edge_copy.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_final.py -> graveyard/d9-review-debug/zz_final.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_final_OUT.txt -> graveyard/d9-review-debug/zz_final_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b1.py -> graveyard/d9-review-debug/zz_hawk_b1.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b1_OUT.txt -> graveyard/d9-review-debug/zz_hawk_b1_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b2_rt.py -> graveyard/d9-review-debug/zz_hawk_b2_rt.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b2_rt_OUT.txt -> graveyard/d9-review-debug/zz_hawk_b2_rt_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b3_forest.py -> graveyard/d9-review-debug/zz_hawk_b3_forest.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b3_forest_OUT.txt -> graveyard/d9-review-debug/zz_hawk_b3_forest_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b4_uni.py -> graveyard/d9-review-debug/zz_hawk_b4_uni.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b4_uni_OUT.txt -> graveyard/d9-review-debug/zz_hawk_b4_uni_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b5_empty.py -> graveyard/d9-review-debug/zz_hawk_b5_empty.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_b5_empty_OUT.txt -> graveyard/d9-review-debug/zz_hawk_b5_empty_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_edge.py -> graveyard/d9-review-debug/zz_hawk_edge.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_edge_OUT.txt -> graveyard/d9-review-debug/zz_hawk_edge_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_main.py -> graveyard/d9-review-debug/zz_hawk_main.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_main_OUT.txt -> graveyard/d9-review-debug/zz_hawk_main_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_num.py -> graveyard/d9-review-debug/zz_hawk_num.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_num_OUT.txt -> graveyard/d9-review-debug/zz_hawk_num_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_schema.py -> graveyard/d9-review-debug/zz_hawk_schema.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_schema_OUT.txt -> graveyard/d9-review-debug/zz_hawk_schema_OUT.txt
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_src.py -> graveyard/d9-review-debug/zz_hawk_src.py
+docs/reviews/2026-05-29-d9-supabase-floor-lock/state/zz_hawk_src_OUT.txt -> graveyard/d9-review-debug/zz_hawk_src_OUT.txt
+FAILED: archive/ANCHOR_apparatus.v2.old.md
+archive/claude.ai.har -> graveyard/har-dumps/claude.ai.har (plain mv)
+archive/claude.ai2.har -> graveyard/har-dumps/claude.ai2.har (plain mv)
+archive/ANCHOR_apparatus.v2.old.md -> history/old-anchors/ANCHOR_apparatus.v2.old.md (plain mv)
+archive/Hardened Block B -> history/cc-plans/ (plain mv)
+slicer/Seeding_Council_Boot_Kit_v1.2_2026-06-02.md -> wallaby-way/canon/Seeding_Council_Boot_Kit_v1.2_2026-06-02.md
+slicer/seeding_working_examples.md -> wallaby-way/canon/seeding_working_examples.md
+slicer/Boot_VolumeReader.md -> wallaby-way/canon/Boot_VolumeReader.md
+slicer/Boot_ScopeReader.md -> graveyard/stale-canon-slicer/Boot_ScopeReader.md
+slicer/JAKE-RULES.md -> graveyard/stale-canon-slicer/JAKE-RULES.md
+slicer/JAKE-STACK.md -> graveyard/stale-canon-slicer/JAKE-STACK.md
+slicer/Shape_Slice_Over_Ceiling_Rule_v1_2026-06-02 (1).md -> graveyard/Shape_Slice_Over_Ceiling_Rule_v1_2026-06-02_dup.md
+slicer/The_Progenitor_v4_2026-06-01.md -> graveyard/stale-canon-slicer/The_Progenitor_v4_2026-06-01.md
+apparatus-scratch/__pycache__ DELETED -> (rm -rf pycache)
+apparatus-scratch/_cred_scan.py -> graveyard/scratch/_cred_scan.py (plain mv)
+apparatus-scratch/apparatus_capture_probe.py -> graveyard/scratch/apparatus_capture_probe.py (plain mv)
+apparatus-scratch/apparatus_robustness_probe.py -> graveyard/scratch/apparatus_robustness_probe.py (plain mv)
+apparatus-scratch/apparatus_safety_probe.py -> graveyard/scratch/apparatus_safety_probe.py (plain mv)
+apparatus-scratch/apparatus_stage0_probe.py -> graveyard/scratch/apparatus_stage0_probe.py (plain mv)
+apparatus-scratch/export_field_inventory_2026-05-27.md -> graveyard/scratch/export_field_inventory_2026-05-27.md (plain mv)
+apparatus-scratch/pipeline_v14_readonly.py -> graveyard/scratch/pipeline_v14_readonly.py (plain mv)
+apparatus-scratch/robustness_probe_output.md -> graveyard/scratch/robustness_probe_output.md (plain mv)
+apparatus-scratch/s14_display_content_scan.py -> graveyard/scratch/s14_display_content_scan.py (plain mv)
+apparatus-scratch/s14_drill_largest.py -> graveyard/scratch/s14_drill_largest.py (plain mv)
+apparatus-scratch/s14_export_characterization.md -> graveyard/scratch/s14_export_characterization.md (plain mv)
+apparatus-scratch/s14_export_characterization.py -> graveyard/scratch/s14_export_characterization.py (plain mv)
+apparatus-scratch/s14_field_drift_raw.py -> graveyard/scratch/s14_field_drift_raw.py (plain mv)
+apparatus-scratch/s14_null_scan.py -> graveyard/scratch/s14_null_scan.py (plain mv)
+apparatus-scratch/s14_presence_rates.md -> graveyard/scratch/s14_presence_rates.md (plain mv)
+apparatus-scratch/s14_presence_rates.py -> graveyard/scratch/s14_presence_rates.py (plain mv)
+apparatus-scratch/s14_shape_analysis.py -> graveyard/scratch/s14_shape_analysis.py (plain mv)
+apparatus-scratch/s18_v11_tests.py -> graveyard/scratch/s18_v11_tests.py (plain mv)
+apparatus-scratch/s19_noop_proof.py -> graveyard/scratch/s19_noop_proof.py (plain mv)
+apparatus-scratch/s19_rung3_fixture.py -> graveyard/scratch/s19_rung3_fixture.py (plain mv)
+apparatus-scratch/safety_probe_output.md -> graveyard/scratch/safety_probe_output.md (plain mv)
+apparatus-scratch/stage0_probe_output.md -> graveyard/scratch/stage0_probe_output.md (plain mv)
+apparatus-scratch/thinking_block_shape.py -> graveyard/scratch/thinking_block_shape.py (plain mv)
+apparatus-scratch/s19_rung3_fixture -> graveyard/scratch/ (plain mv)
+--- Step 2A routing pass 2026-06-08 ---
+wallaby-way/runs/grade-evidence/ -> CREATED (Step 2A)
+graveyard/pipeline-probes/ -> CREATED (Step 2A)
+pipeline/test_call_system_prompt_S40.md -> wallaby-way/scripts/test_call_system_prompt_S40.md
+pipeline/test_call_system_prompt_S32.md -> history/superseded-specs/test_call_system_prompt_S32.md
+pipeline/s39/_grade_result_precision.txt -> wallaby-way/runs/grade-evidence/_grade_result_precision.txt
+pipeline/s39/_grade_result_recut_S42.txt -> wallaby-way/runs/grade-evidence/_grade_result_recut_S42.txt
+pipeline/s39/_grade_result_sonnet.txt -> wallaby-way/runs/grade-evidence/_grade_result_sonnet.txt
+pipeline/s39/batch_list_S46_refire3.csv -> wallaby-way/runs/2026-06-07/batch_list_S46_refire3.csv
+pipeline/s39/payload_result.json -> graveyard/pipeline-probes/payload_result.json
+pipeline/s39/run_log.csv -> graveyard/pipeline-probes/run_log.csv
+pipeline/s39/strip_affected.csv -> graveyard/pipeline-probes/strip_affected.csv
+pipeline/probe1 -> graveyard/pipeline-probes/probe1 (plain mv dir)
+pipeline/probe2 -> graveyard/pipeline-probes/probe2 (plain mv dir)
+pipeline/_large_variance_uuids.json -> graveyard/pipeline-probes/_large_variance_uuids.json
+pipeline/_variance_skeleton.txt -> graveyard/pipeline-probes/_variance_skeleton.txt
+--- Step 2A completion pass 2026-06-08 ---
+pipeline/probe_bigconv -> graveyard/pipeline-probes/probe_bigconv (plain mv dir)
+pipeline/probe_bigconv2 -> graveyard/pipeline-probes/probe_bigconv2 (plain mv dir)
+pipeline/strip_measure -> graveyard/pipeline-probes/strip_measure (plain mv dir)
+pipeline/whales -> graveyard/pipeline-probes/whales (plain mv dir)
+pipeline/d9d05961_seam_manifest.json -> graveyard/pipeline-probes/d9d05961_seam_manifest.json
+pipeline/payload_d9d05961_chunk_00.txt -> graveyard/pipeline-probes/payload_d9d05961_chunk_00.txt (plain mv)
+pipeline/payload_d9d05961_chunk_01.txt -> graveyard/pipeline-probes/payload_d9d05961_chunk_01.txt (plain mv)
+pipeline/shape_run_ledger.csv -> graveyard/pipeline-probes/shape_run_ledger.csv
+pipeline/test_s38_verify.txt -> graveyard/pipeline-probes/test_s38_verify.txt
+pipeline/test_s38_verify.txt.parents.json -> graveyard/pipeline-probes/test_s38_verify.txt.parents.json (plain mv)
+pipeline/result_492e164b.md -> DELETE BLOCKED (rm rule, identical to wallaby-way/nodes/catalogs/ copy, Jake removes by hand)
+pipeline/result_55217328.md -> DELETE BLOCKED (rm rule, identical to wallaby-way/nodes/catalogs/ copy, Jake removes by hand)
+pipeline/result_83506215.md -> DELETE BLOCKED (rm rule, identical to wallaby-way/nodes/catalogs/ copy, Jake removes by hand)
+pipeline/result_cfc7a70a.md -> DELETE BLOCKED (rm rule, identical to wallaby-way/nodes/catalogs/ copy, Jake removes by hand)
+pipeline/result_d6e23963.md -> DELETE BLOCKED (rm rule, identical to wallaby-way/nodes/catalogs/ copy, Jake removes by hand)
+pipeline/result_d9d05961_chunk_00.md -> DELETE BLOCKED (rm rule, identical to wallaby-way/nodes/catalogs/ copy, Jake removes by hand)
+pipeline/result_d9d05961_chunk_01.md -> DELETE BLOCKED (rm rule, identical to wallaby-way/nodes/catalogs/ copy, Jake removes by hand)
+wallaby-way/scripts/reserve/ -> CREATED (Step 2A-final)
+pipeline/s39/onsub_loop.js -> wallaby-way/scripts/reserve/onsub_loop.js (held-in-reserve, git mv)
+wallaby-way/scripts/reserve/README.md -> CREATED (Step 2A-final)

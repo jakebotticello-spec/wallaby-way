@@ -1,0 +1,190 @@
+# SCOPE READER OUTPUT
+# conv c8415bff-4c4e-4048-99fa-345d8c841626 | baseline-2026-05-25-ae015455 | 28 messages
+
+## CONV — c8415bff-4c4e-4048-99fa-345d8c841626
+**Created:** 2026-01-28T22:30:14.662232Z | **Messages:** 28
+
+### NODE 1 — Initial request: AHK macro for YT Music random playlist shuffle
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06ba-8f0d-75a6-8593-823218323c20",
+  reach       : { up: 0, down: 2 }
+}
+```
+**Keywords:** AHK macro, AutoHotkey, YT Music, YouTube Music, random playlist, shuffle play, Chrome app, VSDCraft, three playlists
+**Named-continuity:** AutoHotkey, YouTube Music, Chrome, VSDCraft, YTMusicShuffle.ahk, YTMusicShuffle_ChromePWA.ahk
+**Summary:** Jake asks for an AHK v2 macro that launches the YouTube Music Chrome App, picks one of three specific playlists at random, and shuffles play. Two initial scripts are created: a simple browser-default version and a Chrome PWA version using --app flag. Jake mentions VSDCraft as a potential tool if needed.
+
+### NODE 2 — First iteration fails; switch to click-based approach with debug hotkey
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06bc-79b0-715d-8dac-466efef08ce2",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** AHK click coordinates, shuffle button click, debug hotkey, Ctrl+Alt+D, mouse position, relative coordinates, YT Music playlist
+**Named-continuity:** AutoHotkey, YouTube Music, YTMusicShuffle_Click.ahk
+**Summary:** The Chrome PWA version does not play. Claude replaces keyboard shortcut approach with mouse-click approach using relative window coordinates, and adds a Ctrl+Alt+D debug hotkey to report mouse position relative to the YT Music window so Jake can calibrate exact click positions.
+
+### NODE 3 — Secondary monitor placement decision; Jake provides two-click coordinates
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06be-03db-7375-8e7e-2a62f7d2852f",
+  reach       : { up: 1, down: 4 }
+}
+```
+**Keywords:** secondary monitor, left monitor, negative X coordinates, two clicks, shuffle button, play button, window placement, AHK click coordinates
+**Named-continuity:** AutoHotkey, YouTube Music, YTMusicShuffle_Click.ahk
+**Summary:** Jake decides the YT Music window should open on the secondary monitor. The debug tool reveals his secondary monitor is to the left of the primary (negative X values). Jake provides two calibrated click coordinates — one for the shuffle button and one for the play button — which are baked into the script.
+**Why:** Jake wants the music app on a secondary monitor for visual separation; negative X coordinates from debug output confirm the secondary monitor is physically to the left.
+**Predicate:** Script targets left-of-primary secondary monitor at negative X offset; if monitor arrangement changes, coordinates will be wrong.
+
+### NODE 4 — Monitor resolution update to 2560x1600
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06c0-ca7e-749f-9fc7-b53998fbd7c3",
+  reach       : { up: 0, down: 1 }
+}
+```
+**Keywords:** 2560x1600, monitor resolution, window size, window position, secondary monitor, Chrome flags
+**Named-continuity:** AutoHotkey, YouTube Music, YTMusicShuffle_Click.ahk
+**Summary:** Jake provides the secondary monitor's resolution as 2560x1600. The script is updated from 1920x1080 to use --window-position=-2560,0 and --window-size=2560,1600 Chrome flags.
+**Why:** Correct resolution needed so window fills the secondary monitor; 1920x1080 was assumed incorrectly.
+**Predicate:** Secondary monitor is 2560x1600; if resolution changes, position/size flags need updating.
+
+### NODE 5 — Chrome window-position flags do not work; menu shifts; new click coordinates provided
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06c2-c21a-752f-9a91-d095611b938d",
+  reach       : { up: 0, down: 2 }
+}
+```
+**Keywords:** Chrome flags not working, window not moving, menu shifted, new click coordinates, WinMove, AHK window management
+**Named-continuity:** AutoHotkey, YouTube Music, YTMusicShuffle_Click.ahk
+**Summary:** Chrome --window-position flags fail to move the window to the secondary monitor, and the layout shift caused the menu to move, invalidating previous click coordinates. Jake provides a fresh set of coordinates. Claude switches from Chrome flags to AHK WinMove command to position the window.
+
+### NODE 6 — WinMove also fails; Jake proposes Win+Left arrow x3
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06c4-15ac-7796-a923-7749212795ac",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** WinMove failed, Win+Left arrow, keyboard shortcut, window move, secondary monitor, three presses
+**Named-continuity:** AutoHotkey, YouTube Music, YTMusicShuffle_Click.ahk
+**Summary:** AHK WinMove also fails to move the window. Jake proposes using Win+Left arrow three times instead, which is the keyboard method he knows correctly positions the window on the secondary monitor. The script is updated to send #{Left} three times with 300ms delays.
+**Why:** Both Chrome flags and AHK WinMove failed; Win+Left x3 is Jake's known-working method for moving the window to his secondary monitor.
+**Predicate:** Win+Left x3 places the window correctly on Jake's current monitor layout; if layout or snap zones change, count may need adjustment.
+
+### NODE 7 — Win+Left approach also fails; Jake raises window visibility concern
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06c5-b25d-707e-8cf7-0eb8b040866a",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** Chrome window not distinct, window color, window visibility, standing out, PWA vs regular Chrome, colored border
+**Named-continuity:** AutoHotkey, YouTube Music, Chrome, PWA, WindowTop, Glass2k, Rainmeter
+**Summary:** Win+Left approach also fails. Jake raises a separate core requirement: he does not want a regular Chrome window because it does not stand out visually. He asks whether a window can be colored to stand out. Claude proposes using the actual YT Music PWA (installed app) for a distinct window presence, and asks about Jake's priorities between taskbar icon vs visual border.
+**Why:** Regular Chrome windows are visually indistinguishable; Jake needs the music window to be immediately identifiable.
+**Predicate:** Jake is already using the YT Music PWA — confirmed in next message.
+
+### NODE 8 — Confirmed: Jake is using the YT Music PWA; switch to chrome_proxy.exe with app-id
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06c6-0c28-7080-a7e3-d8c32563e01a",
+  reach       : { up: 1, down: 4 }
+}
+```
+**Keywords:** YT Music PWA, chrome_proxy.exe, app-id, cinhimbnkkaeohfgghhklpknlkffjgod, installed PWA, shortcut target, profile-directory Default
+**Named-continuity:** AutoHotkey, YouTube Music, Chrome, chrome_proxy.exe, PWA, YTMusicShuffle_Click.ahk
+**Summary:** Jake confirms he is already using the YT Music PWA. Claude asks for the shortcut target, and Jake provides it: chrome_proxy.exe with --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod. The script is updated to launch the PWA by app-id, then navigate to the random playlist via Ctrl+L.
+**Why:** Using the actual PWA app-id gives a distinct window with its own taskbar icon, satisfying the visual distinction requirement.
+**Predicate:** YT Music PWA app-id is cinhimbnkkaeohfgghhklpknlkffjgod on Default profile; valid as long as Jake does not reinstall or change Chrome profiles.
+
+### NODE 9 — PWA + Ctrl+L navigation approach completely fails
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06c8-928c-7621-9ea2-f980079f34ed",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** Ctrl+L failed, PWA no address bar, wrong window opened, wrong playlist, misclick, focus lost, chaos
+**Named-continuity:** AutoHotkey, YouTube Music, PWA, YTMusicShuffle_Click.ahk
+**Summary:** The PWA + Ctrl+L navigation attempt is a complete failure: the window opens in the wrong place, a wrong playlist loads, a misclick shifts focus away. Jake expresses frustration. Claude diagnoses that Ctrl+L does not work in a PWA (no address bar) and reverts to --app=URL approach with --profile-directory=Default, which should produce a PWA-style window directly on the playlist page.
+
+### NODE 10 — Timing fix: insufficient launch delay causes focus loss
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06ca-42a9-70cd-ad61-3ea66438350a",
+  reach       : { up: 1, down: 2 }
+}
+```
+**Keywords:** delay, timing, app launch delay, Sleep, WinActivate focus, launch not ready, timing fix
+**Named-continuity:** AutoHotkey, YouTube Music, YTMusicShuffle_Click.ahk
+**Summary:** The app is still not receiving focus when the next step executes because the delay after launch is too short. Jake identifies this as the issue; Claude adds a 3000ms Sleep after WinWait before WinActivate to give the app time to fully initialize before any interaction.
+**Why:** WinWait returns as soon as the window title appears, but the page content is not yet interactive; extra sleep prevents premature input.
+**Predicate:** 3000ms post-WinWait delay is sufficient on Jake's machine; may need adjustment on slower hardware or networks.
+
+### NODE 11 — Decision to split AHK + VSDCraft; final architecture
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06cb-44cc-772a-8843-4e838efa0586",
+  reach       : { up: 1, down: 4 }
+}
+```
+**Keywords:** VSDCraft, AHK hybrid, multi-step macro, split responsibilities, AHK launcher, VSDCraft window management, keyboard presses with delays, YTMusicLauncher.ahk
+**Named-continuity:** AutoHotkey, VSDCraft, YouTube Music, YTMusicLauncher.ahk
+**Summary:** Jake proposes combining AHK with VSDCraft, where AHK handles only the random playlist selection and launch, and VSDCraft handles all subsequent steps (window movement, waiting, clicking). Claude produces a stripped-down YTMusicLauncher.ahk that just picks a random playlist, runs Chrome with it, and exits. Claude then provides a 11-step VSDCraft macro sequence with delays, click positions, and Win+Left keystrokes. The conversation ends with Claude asking whether VSDCraft uses absolute or relative coordinates.
+**Why:** Pure AHK approach failed repeatedly due to timing and window management unreliability; splitting to let VSDCraft handle UI interaction is more robust.
+**Predicate:** VSDCraft is available and can issue keyboard events and mouse clicks with configurable delays; architecture valid as long as VSDCraft is installed.
+
+### NODE 12 — Repeated window-move failure pattern across four methods
+**Salience:** TEXTURE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "c8415bff-4c4e-4048-99fa-345d8c841626",
+  anchor_msg  : "019c06c4-15ac-7796-a923-7749212795ac",
+  reach       : { up: 2, down: 6 }
+}
+```
+**Keywords:** window move fails, Chrome flags failed, WinMove failed, Win+Left failed, secondary monitor, repeated failure, AHK window management limitation
+**Named-continuity:** AutoHotkey, YouTube Music, Chrome
+**Summary:** Four consecutive window-positioning approaches all fail within this conversation: Chrome --window-position flags, AHK WinMove, Win+Left x3 via Send, and finally the decision to hand off to VSDCraft. Each failure prompts a new approach.
+**Count-in-conv:** 4 distinct failed window-move attempts across messages 019c06c0 through 019c06cb. **Signals:** AHK window management for Chrome/PWA windows on this machine is unreliable; the pattern drives the architectural split to VSDCraft for UI control.
+
+--- DONE: 12 nodes (7 MOTION, 4 FENCE, 1 TEXTURE), 0 drops ---

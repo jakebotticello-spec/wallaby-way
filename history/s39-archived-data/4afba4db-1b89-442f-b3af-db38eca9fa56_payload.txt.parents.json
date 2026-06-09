@@ -1,0 +1,32 @@
+{
+  "conv_uuid": "4afba4db-1b89-442f-b3af-db38eca9fa56",
+  "snapshot_id": "baseline-2026-05-25-ae015455",
+  "parents": {
+    "019dada1-d724-7561-a5be-c87533ca10eb": "null",
+    "019dada1-d724-78a7-801d-9a3ce669eeff": "019dada1-d724-7561-a5be-c87533ca10eb",
+    "019dada6-c5fd-734a-88e3-c45882519973": "019dada1-d724-78a7-801d-9a3ce669eeff",
+    "019dada6-c5fd-760c-b3f2-c74d1373c367": "019dada6-c5fd-734a-88e3-c45882519973",
+    "019dada8-2407-774d-b8d3-dee1d00d2b59": "019dada6-c5fd-760c-b3f2-c74d1373c367",
+    "019dada8-2407-7a91-ba47-c946586623bd": "019dada8-2407-774d-b8d3-dee1d00d2b59",
+    "019dada9-0382-7eba-a744-49462de506b1": "019dada8-2407-7a91-ba47-c946586623bd",
+    "019dada9-0382-7ade-841f-8b149a6365b5": "019dada9-0382-7eba-a744-49462de506b1",
+    "019dadaa-3cfb-7d5b-8689-5017e547a493": "019dada9-0382-7ade-841f-8b149a6365b5",
+    "019dadaa-3cfb-7465-9ac2-52cb4df37efd": "019dadaa-3cfb-7d5b-8689-5017e547a493",
+    "019dadaa-db2c-7a8d-b683-50ba213af486": "019dadaa-3cfb-7465-9ac2-52cb4df37efd",
+    "019dadaa-db2c-7f8e-a348-11e973865d81": "019dadaa-db2c-7a8d-b683-50ba213af486",
+    "019dadab-304c-773c-8778-e4bf247f9612": "019dadaa-db2c-7f8e-a348-11e973865d81",
+    "019dadab-304c-717a-81bd-9facfd16dcb3": "019dadab-304c-773c-8778-e4bf247f9612",
+    "019dadb0-0f4b-7e0d-8f19-bde618adda3e": "019dadab-304c-717a-81bd-9facfd16dcb3",
+    "019dadb0-0f4b-79cf-9370-30e6b4a5dbc4": "019dadb0-0f4b-7e0d-8f19-bde618adda3e",
+    "019dadb1-89ed-7005-8e5a-0b8d4175e40a": "019dadb0-0f4b-79cf-9370-30e6b4a5dbc4",
+    "019dadb1-89ed-77a6-8ed0-ba5b454f32e4": "019dadb1-89ed-7005-8e5a-0b8d4175e40a",
+    "019dadbe-bcc5-7352-a047-66bf5e90a072": "019dadb1-89ed-77a6-8ed0-ba5b454f32e4",
+    "019dadbe-bcc5-7a66-b664-ca7d7db2368f": "019dadbe-bcc5-7352-a047-66bf5e90a072",
+    "019dadc3-f50d-7041-9d4d-8657db9b1cf8": "019dadbe-bcc5-7a66-b664-ca7d7db2368f",
+    "019dadc3-f50d-7f2a-a46f-418dfd92488b": "019dadc3-f50d-7041-9d4d-8657db9b1cf8",
+    "019dadc4-7147-7997-9d5c-763809a30d55": "019dadc3-f50d-7f2a-a46f-418dfd92488b",
+    "019dadc4-7148-7ce5-a067-a749fb1003b5": "019dadc4-7147-7997-9d5c-763809a30d55",
+    "019dadc6-1614-7521-a89a-db677679642d": "019dadc4-7148-7ce5-a067-a749fb1003b5",
+    "019dadc6-1614-72d2-b21d-9923e26bbe6b": "019dadc6-1614-7521-a89a-db677679642d"
+  }
+}

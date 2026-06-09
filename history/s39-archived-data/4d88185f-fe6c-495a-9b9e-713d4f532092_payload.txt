@@ -1,0 +1,1073 @@
+CONVERSATION: 4d88185f-fe6c-495a-9b9e-713d4f532092
+SNAPSHOT_ID: baseline-2026-05-25-ae015455
+CREATED: 2026-02-22T02:57:34.231187Z
+MESSAGES: 14
+
+===MSG===
+uuid: 019c8347-efb0-7551-894d-87f3cc81f0a3
+parent: null
+role: human
+---
+Claude, please review this context file.  I have something I need to track down.
+===END===
+
+===MSG===
+uuid: 019c8347-efb0-7551-894d-87f4540d27e5
+parent: 019c8347-efb0-7551-894d-87f3cc81f0a3
+role: assistant
+---
+[THINKING]
+Let me read the uploaded file to understand its contents.
+[TOOL_USE: view]
+{
+  "path": "/mnt/user-data/uploads/Claude_-_New_Service_Plans___Wix_Stores_Integration_2_14_26.md",
+  "description": "Reading the uploaded context file"
+}
+[TOOL_RESULT: view]
+     1	# 📄 CONTEXT FILE: LRN Wix Stores Migration & Email Checkout
+     2	## Jake's Project - Lance O's Recruiting Network
+     3	
+     4	**Created:** February 2026  
+     5	**Last Updated:** February 14, 2026 (v4)  
+     6	**Website:** lanceosrecruitingnetwork.com  
+     7	**Platform:** Wix (with Velo/Corvid code)  
+     8	**Current Working Page:** `/service-plans`  
+     9	**Project Partner:** Claude (Anthropic)  
+    10	**Human:** Jake
+    11	
+    12	---
+    13	
+    14	## Table of Contents
+    15	1. [Project Summary](#project-summary)
+    16	2. [Architecture Overview](#architecture-overview)
+    17	3. [Product IDs & Subscription Option IDs](#product-ids--subscription-option-ids)
+    18	4. [Add-On Product IDs](#add-on-product-ids)
+    19	5. [All Working Code](#all-working-code)
+    20	6. [CMS Collections](#cms-collections)
+    21	7. [Email Checkout System](#email-checkout-system)
+    22	8. [Google Apps Script Setup](#google-apps-script-setup)
+    23	9. [Member Access & Page Gating](#member-access--page-gating)
+    24	10. [Notification Automation](#notification-automation)
+    25	11. [Key Discoveries & Gotchas](#key-discoveries--gotchas)
+    26	12. [Site URLs & Element IDs](#site-urls--element-ids)
+    27	13. [Payment Methods](#payment-methods)
+    28	14. [Parking Lot / Future Items](#parking-lot--future-items)
+    29	
+    30	---
+    31	
+    32	## Project Summary
+    33	
+    34	### Original Problem
+    35	LRN sells recruiting service packages to help athletes get noticed by college coaches. The old system used **Wix Pricing Plans** which only offered popup checkout, no BNPL support, and no promo codes.
+    36	
+    37	### Solution
+    38	Migrated to **Wix Stores** using a "fake physical product" workaround (physical products with free shipping to unlock subscription functionality). This gives us:
+    39	- ✅ Full checkout page (not popup)
+    40	- ✅ BNPL support (Afterpay, Klarna confirmed working)
+    41	- ✅ Promo code / coupon functionality
+    42	- ✅ Email checkout links (send checkout to parent while on a sales call)
+    43	- ✅ Custom HTML pricing table with payment term selector
+    44	- ✅ Member CMS auto-update on purchase
+    45	- ✅ Page gating for subscribers
+    46	- ✅ Order notifications with plan name
+    47	- ✅ Additional Services add-ons (added Feb 14, 2026)
+    48	
+    49	### The Two Checkout Flows
+    50	
+    51	**Flow 1: Direct Checkout (Select Plan)**
+    52	```
+    53	You select plan + payment term + optional add-ons → Click "Select Plan" → Products added to YOUR cart → Navigate to /cart-page → Checkout
+    54	```
+    55	
+    56	**Flow 2: Email Checkout (Send Plan)**
+    57	```
+    58	You select plan + payment term + optional add-ons → Click "Send Plan" → Enter parent email → Click "Email Checkout Link"
+    59	→ Backend creates checkout template → Saves PendingCheckouts record → Sends branded HTML email via Google Apps Script
+    60	→ Parent clicks "Complete Selection" in email → Guest checkout on Wix → onOrderPaid fires
+    61	→ events.js matches PendingCheckouts record → Updates ATHLETE's Members record (not buyer's)
+    62	```
+    63	
+    64	---
+    65	
+    66	## Architecture Overview
+    67	
+    68	### How It All Connects
+    69	
+    70	```
+    71	HTML Embed (#htmlServicePlanTable)
+    72	  ├── Plan selection (6 columns)
+    73	  ├── Payment term toggle (One-Pay / Credit / 6-Pay / 12-Pay)
+    74	  ├── Additional Services dropdown (13 add-ons, multi-select)
+    75	  ├── "Select Plan" button → postMessage LRN_CHECKOUT → page code → addSubscriptionToCart() → /cart-page
+    76	  ├── "Send Plan" button → reveals email inputs
+    77	  └── "Email Checkout Link" button → postMessage LRN_EMAIL_CHECKOUT → page code → createCheckoutLinkAndEmail()
+    78	        ├── Creates Wix checkout template (shareable URL)
+    79	        ├── Inserts PendingCheckouts record (athlete email + member ID)
+    80	        └── Calls Google Apps Script to send branded HTML email
+    81	
+    82	Service Plans Page Code
+    83	  ├── Gets logged-in member info (email, name, memberId)
+    84	  ├── Sends member info to embed (auto-fills athlete email)
+    85	  ├── Listens for LRN_CHECKOUT → calls addSubscriptionToCart() → navigates to cart
+    86	  └── Listens for LRN_EMAIL_CHECKOUT → calls createCheckoutLinkAndEmail() → shows status
+    87	
+    88	backend/storeHelper.jsw
+    89	  ├── addSubscriptionToCart() — adds plan + add-ons to cart
+    90	  └── createCheckoutLinkAndEmail() — email checkout flow with add-ons
+    91	        ├── Uses checkoutTemplates.createCheckoutTemplate() with elevate()
+    92	        ├── Builds checkout URL: wixapis.com/ecom/v1/checkout-templates/{id}/create-and-redirect-to-checkout?siteId={id}
+    93	        ├── Inserts PendingCheckouts record
+    94	        ├── Builds full HTML email with plan image, pricing, add-ons list, CTA button
+    95	        └── POSTs to Google Apps Script URL via wix-fetch
+    96	
+    97	backend/events.js
+    98	  └── wixStores_onOrderPaid()
+    99	        ├── Gets product ID from order → looks up plan details
+   100	        ├── Checks PendingCheckouts collection first (for emailed checkout orders)
+   101	        │   ├── Matches by sendToEmail = buyer email
+   102	        │   └── Fallback: most recent pending for same product within 2 hours
+   103	        ├── If match found: uses athlete email/memberId from PendingCheckouts
+   104	        ├── If no match: falls back to buyer email (direct checkout flow)
+   105	        └── Updates Members collection: planName, planExpiration, datePurchased, subscription=true, category="Case Won"
+   106	```
+   107	
+   108	---
+   109	
+   110	## Product IDs & Subscription Option IDs
+   111	
+   112	### 6 Products × 3 Payment Terms = 18 Purchase Paths
+   113	
+   114	| Tier | Product ID | 6-Pay Sub ID | 12-Pay Sub ID |
+   115	|------|-----------|-------------|--------------|
+   116	| **JV** ($999, 2yr) | `80009c4e-5f5b-0c95-710b-2ce0da21f684` | `67bc6c5f-5691-4296-8647-cdb1378f7469` | `74d620f8-3a10-42ca-9d91-97a0c6b20317` |
+   117	| **Varsity** ($2,499, 3yr) | `da2e617d-ff9c-7c9f-2533-2f99ecc69f23` | `e42fd6ca-d44d-438b-baab-c4fe303ba118` | `45164cd1-f07a-41b1-a5cb-760cf223389c` |
+   118	| **Red Shirt** ($3,999, 5yr) | `d89f5806-bcd3-579c-c620-4a075b6f9238` | `2c3a45e4-5a4c-421c-8128-255a12d14860` | `ada27824-2fa7-4389-8d88-7dfe455ccea4` |
+   119	| **MVP** ($5,499, 7yr) | `c94a9e16-e25e-fe2e-b776-0dfbfcd45030` | `0b1eaef6-a2fe-4b70-8691-75c74699e769` | `dd40d45c-a317-43ba-8fda-f456a5d44d71` |
+   120	| **All-American** ($6,499, 9yr) | `fb85b062-75f6-904d-fa9a-32a71b5320c0` | `0aacbce3-df43-40eb-ba47-c7daa6d56377` | `7c2cb7cb-8d90-48c7-9c3e-2c947243b73f` |
+   121	| **Heisman** ($7,999, 10yr) | `c1a561a1-5362-5b1e-58b4-851fc25fad3b` | `f3f467aa-4b0f-4c18-8294-82dd2489568d` | `9cae61f8-ed41-47c9-8cc4-86df19b4206c` |
+   122	
+   123	**One-Pay** = no subscriptionOptionId (just the base product)  
+   124	**Credit** = same as One-Pay (for BNPL customers - Afterpay, Klarna, etc.)  
+   125	**6-Pay** = sub6 ID  
+   126	**12-Pay** = sub12 ID
+   127	
+   128	### Pricing Details
+   129	
+   130	| Tier | One-Pay | 6-Pay | 12-Pay | Term |
+   131	|------|---------|-------|--------|------|
+   132	| JV | $999 | $199/mo × 6 | $119/mo × 12 | 2 Years |
+   133	| Varsity | $2,499 | $499/mo × 6 | $259/mo × 12 | 3 Years |
+   134	| Red Shirt | $3,999 | $699/mo × 6 | $359/mo × 12 | 5 Years |
+   135	| MVP | $5,499 | $949/mo × 6 | $499/mo × 12 | 7 Years |
+   136	| All-American | $6,499 | $1,149/mo × 6 | $599/mo × 12 | 9 Years |
+   137	| Heisman | $7,999 | $1,349/mo × 6 | $699/mo × 12 | 10 Years |
+   138	
+   139	### Plan Images
+   140	
+   141	| Plan | Image URL |
+   142	|------|-----------|
+   143	| JV | `https://static.wixstatic.com/media/c45977_a57e98e79103445499341e072e295a35~mv2.png` |
+   144	| Varsity | `https://static.wixstatic.com/media/c45977_66604a9ba9c7480b8fb2ca8fb4f0bad6~mv2.png` |
+   145	| Red Shirt | `https://static.wixstatic.com/media/c45977_dd44e860b8364ccab9870e212ffdfa29~mv2.png` |
+   146	| MVP | `https://static.wixstatic.com/media/c45977_4e89198eea24426292067ac004f8117e~mv2.png` |
+   147	| All-American | `https://static.wixstatic.com/media/c45977_5db467fed754493b98c338fdc35c81f4~mv2.png` |
+   148	| Heisman | `https://static.wixstatic.com/media/c45977_c511e680738b41379f1b1eddde9a6207~mv2.png` |
+   149	
+   150	---
+   151	
+   152	## Add-On Product IDs
+   153	
+   154	| Add-on | Cost | Notes | WIX Product ID |
+   155	|--------|------|-------|----------------|
+   156	| NIL Consultation | $299 | | `63469fd0-d170-f04a-863e-2c85ce648c1b` |
+   157	| NIL Consultation + Package | $999 | $150 Consultation, $749 Non-refundable Deposit | `bd543aa5-9b5d-2e68-0f5b-fa9e2d473408` |
+   158	| 1-on-1 Virtual Coaching | $499 | Deposit | `faf75555-371f-ec0c-6d7d-f009990ddfb2` |
+   159	| 1-on-1 In-Person Coaching | $999 | Deposit | `7c6ecc08-22e2-daad-4633-6f154eacdac7` |
+   160	| Email Campaigns (1/yr) | $599 | | `4c0cd65d-ccf1-8405-25a5-d040d6a3574d` |
+   161	| Email Campaigns (2/yr) | $999 | | `e7ff5087-4b70-58ac-4330-4f05a626ade3` |
+   162	| Premium Film Consultation | $499 | | `7bfe81b5-ea1a-cdf1-5991-ac6b6e324d9f` |
+   163	| Personal Mentorship | $999 | | `5a1c04e7-b947-bf87-07de-6887c2994d10` |
+   164	| Direct Calls to Coaches (10) | $1,499 | | `4baad6da-4ad4-82e2-6329-6afb1683f1c1` |
+   165	| Direct Calls to Coaches (20) | $2,299 | | `70290036-50ad-47b5-6c27-7a33eb45d493` |
+   166	| Direct Calls to Coaches (30) | $2,999 | | `26f10df8-ecec-ce48-5083-9ceaa8066c42` |
+   167	| Highlight Film Edits (2/yr) | $999 | | `71aa0634-252f-9ca5-74f1-cebd24043b2d` |
+   168	| Media Training + 10min Podcast | $999 | | `24229940-100c-9762-4d93-b37235a8f564` |
+   169	
+   170	---
+   171	
+   172	## All Working Code
+   173	
+   174	### backend/storeHelper.jsw
+   175	
+   176	```javascript
+   177	import { currentCart } from 'wix-ecom-backend';
+   178	import { checkoutTemplates } from 'wix-ecom-backend';
+   179	import { elevate } from 'wix-auth';
+   180	import { fetch } from 'wix-fetch';
+   181	import wixData from 'wix-data';
+   182	
+   183	const SITE_ID = "3bc4e3c6-fa33-4760-976c-0afe3e5853c3";
+   184	const STORES_APP_ID = "215238eb-22a5-4c36-9e7b-e7c08025e04e";
+   185	const EMAIL_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9GCiXnd3O5FQoKOXCYYwSBFipTU41EPWTnMiTNZlo-MrV-B3VYR3FyHEoqcDN6Jjl/exec";
+   186	
+   187	const PLAN_IMAGES = {
+   188	    "JV": "https://static.wixstatic.com/media/c45977_a57e98e79103445499341e072e295a35~mv2.png",
+   189	    "Varsity": "https://static.wixstatic.com/media/c45977_66604a9ba9c7480b8fb2ca8fb4f0bad6~mv2.png",
+   190	    "Red Shirt": "https://static.wixstatic.com/media/c45977_dd44e860b8364ccab9870e212ffdfa29~mv2.png",
+   191	    "MVP": "https://static.wixstatic.com/media/c45977_4e89198eea24426292067ac004f8117e~mv2.png",
+   192	    "All-American": "https://static.wixstatic.com/media/c45977_5db467fed754493b98c338fdc35c81f4~mv2.png",
+   193	    "Heisman": "https://static.wixstatic.com/media/c45977_c511e680738b41379f1b1eddde9a6207~mv2.png"
+   194	};
+   195	
+   196	const PLAN_PRICES = {
+	< truncated lines 197-450 >
+   451	            memberResults = await wixData.query("Members")
+   452	                .eq("_id", athleteMemberId)
+   453	                .find({ suppressAuth: true });
+   454	        }
+   455	
+   456	        if (!memberResults || memberResults.items.length === 0) {
+   457	            memberResults = await wixData.query("Members")
+   458	                .eq("email", lookupEmail)
+   459	                .find({ suppressAuth: true });
+   460	        }
+   461	
+   462	        if (memberResults.items.length === 0) return;
+   463	
+   464	        const member = memberResults.items[0];
+   465	
+   466	        member.planName = "Lance O's | " + planDetails.name;
+   467	        member.planExpiration = expiration;
+   468	        member.datePurchased = now;
+   469	        member.subscription = true;
+   470	        member.category = "Case Won";
+   471	
+   472	        await wixData.update("Members", member, { suppressAuth: true });
+   473	
+   474	    } catch (err) {
+   475	        console.error("handleOrderPaid error:", err);
+   476	    }
+   477	}
+   478	```
+   479	
+   480	### Service Plans Page Code
+   481	
+   482	```javascript
+   483	import { addSubscriptionToCart, createCheckoutLinkAndEmail } from 'backend/storeHelper.jsw';
+   484	import wixLocationFrontend from 'wix-location-frontend';
+   485	import { currentMember } from 'wix-members';
+   486	import { updateMenu } from "public/headerUpdate.js";
+   487	import { formFactor } from 'wix-window-frontend';
+   488	import wixData from 'wix-data';
+   489	
+   490	$w.onReady(async function () {
+   491	
+   492	    let memberInfo = { email: "", name: "", memberId: "" };
+   493	
+   494	    try {
+   495	        const member = await currentMember.getMember();
+   496	        if (member) {
+   497	            memberInfo.memberId = member._id || "";
+   498	
+   499	            const memberData = await wixData.query("Members")
+   500	                .eq("_id", member._id)
+   501	                .find({ suppressAuth: true });
+   502	
+   503	            if (memberData.items.length > 0) {
+   504	                const m = memberData.items[0];
+   505	                memberInfo.email = m.email || "";
+   506	                memberInfo.name = (m.name || "") + (m.lastName ? " " + m.lastName : "");
+   507	            }
+   508	
+   509	            updateMenu(member, "#horizontalMenu4", "#mobileButton1", formFactor);
+   510	        }
+   511	    } catch (err) {
+   512	        console.error("Member info error:", err);
+   513	    }
+   514	
+   515	    $w('#htmlServicePlanTable').postMessage({
+   516	        type: "LRN_MEMBER_INFO",
+   517	        email: memberInfo.email,
+   518	        name: memberInfo.name,
+   519	        memberId: memberInfo.memberId
+   520	    });
+   521	
+   522	    $w('#htmlServicePlanTable').onMessage(async (event) => {
+   523	        let data = event.data;
+   524	        if (typeof data === "string") {
+   525	            try { data = JSON.parse(data); } catch(e) {}
+   526	        }
+   527	
+   528	        if (data && data.type === "LRN_CHECKOUT") {
+   529	            const result = await addSubscriptionToCart(
+   530	                data.productId, 
+   531	                data.subscriptionOptionId,
+   532	                data.addons || []
+   533	            );
+   534	            if (result.success) {
+   535	                wixLocationFrontend.to("/cart-page");
+   536	            } else {
+   537	                console.error("Failed to add to cart:", result.error);
+   538	            }
+   539	        }
+   540	
+   541	        if (data && data.type === "LRN_EMAIL_CHECKOUT") {
+   542	            $w('#htmlServicePlanTable').postMessage({ type: "LRN_EMAIL_STATUS", status: "sending" });
+   543	
+   544	            const result = await createCheckoutLinkAndEmail(
+   545	                data.productId,
+   546	                data.subscriptionOptionId,
+   547	                data.planName,
+   548	                data.paymentTerm,
+   549	                data.sendToEmail,
+   550	                data.athleteEmail || memberInfo.email,
+   551	                data.athleteName || memberInfo.name,
+   552	                memberInfo.memberId,
+   553	                data.addons || [],
+   554	                data.addonNames || []
+   555	            );
+   556	
+   557	            if (result.success) {
+   558	                $w('#htmlServicePlanTable').postMessage({
+   559	                    type: "LRN_EMAIL_STATUS",
+   560	                    status: "sent",
+   561	                    email: data.sendToEmail
+   562	                });
+   563	            } else {
+   564	                console.error("Email checkout error:", result.error);
+   565	                $w('#htmlServicePlanTable').postMessage({
+   566	                    type: "LRN_EMAIL_STATUS",
+   567	                    status: "error",
+   568	                    error: result.error
+   569	                });
+   570	            }
+   571	        }
+   572	    });
+   573	});
+   574	```
+   575	
+   576	---
+   577	
+   578	## CMS Collections
+   579	
+   580	### Members Collection
+   581	
+   582	| Field | Key | Type |
+   583	|-------|-----|------|
+   584	| Name | `name` | Text |
+   585	| Last Name | `lastName` | Text |
+   586	| Email | `email` | Text |
+   587	| Plan Name | `planName` | Text |
+   588	| Plan Expiration | `planExpiration` | Date |
+   589	| Date Purchased | `datePurchased` | Date |
+   590	| Subscription | `subscription` | Boolean |
+   591	| Category | `category` | Text |
+   592	
+   593	### PendingCheckouts Collection
+   594	
+   595	| Field | Key | Type |
+   596	|-------|-----|------|
+   597	| Checkout Template ID | `checkoutTemplateId` | Text |
+   598	| Athlete Email | `athleteEmail` | Text |
+   599	| Athlete Name | `athleteName` | Text |
+   600	| Athlete Member ID | `athleteMemberId` | Text |
+   601	| Send To Email | `sendToEmail` | Text |
+   602	| Plan Name | `planName` | Text |
+   603	| Payment Term | `paymentTerm` | Text |
+   604	| Product ID | `productId` | Text |
+   605	| Subscription Option ID | `subscriptionOptionId` | Text |
+   606	| Addons | `addons` | Text |
+   607	| Addon Names | `addonNames` | Text |
+   608	| Status | `status` | Text |
+   609	| Completed Date | `completedDate` | Date and Time |
+   610	
+   611	---
+   612	
+   613	## Key Constants
+   614	
+   615	- **Site ID:** `3bc4e3c6-fa33-4760-976c-0afe3e5853c3`
+   616	- **Stores App ID:** `215238eb-22a5-4c36-9e7b-e7c08025e04e`
+   617	- **Variant ID (no variants):** `00000000-0000-0000-0000-000000000000`
+   618	- **Google Apps Script URL:** `https://script.google.com/macros/s/AKfycbx9GCiXnd3O5FQoKOXCYYwSBFipTU41EPWTnMiTNZlo-MrV-B3VYR3FyHEoqcDN6Jjl/exec`
+   619	
+   620	---
+   621	
+   622	## Changelog
+   623	
+   624	### v4 (February 14, 2026)
+   625	- Added Additional Services dropdown with 13 add-ons
+   626	- Add-ons can be multi-selected and are added to cart with the plan
+   627	- Email checkout now includes add-ons in the checkout template and email body
+   628	- Added "Credit" payment term option (functions same as One-Pay, for BNPL clarity)
+   629	- Updated add-on display names with descriptive notes
+   630	- Fixed NIL Consultation product IDs
+   631	
+   632	### v3 (February 10, 2026)
+   633	- Completed email checkout system with status tracking
+   634	- Added PendingCheckouts CMS collection
+   635	- Integrated Google Apps Script for email delivery
+   636	
+   637	### v2 (February 8, 2026)
+   638	- Migrated from Wix Pricing Plans to Wix Stores
+   639	- Created custom HTML pricing table embed
+   640	- Implemented subscription options for 6-pay and 12-pay
+   641	
+   642	---
+   643	
+   644	**End of Context File**
+   645	
+   646	*Last Updated: February 14, 2026 | Version 4*
+   647	
+[THINKING]
+Got it. I've reviewed the full context file for Jake's LRN (Lance O's Recruiting Network) Wix Stores project.
+Got it — I've reviewed the full context file for your LRN Wix Stores project. I'm up to speed on the architecture, both checkout flows (direct and email), the product/subscription IDs, add-ons, CMS collections, events.js logic, and the Google Apps Script email integration.
+
+What do you need to track down?
+===END===
+
+===MSG===
+uuid: 019c834c-9542-77a0-ad95-daed1b14d49e
+parent: 019c8347-efb0-7551-894d-87f4540d27e5
+role: human
+---
+So with the email system - we just had a client receive an email that said the package was for "dick balls" enrollment.  Can you help me figure out how this happened?
+===END===
+
+===MSG===
+uuid: 019c834c-9542-77a0-ad95-daeef25cea78
+parent: 019c834c-9542-77a0-ad95-daed1b14d49e
+role: assistant
+---
+[THINKING]
+The user is dealing with a situation where a client received an email with inappropriate/offensive text ("dick balls") in the plan name field. Let me think about how this could happen based on the architecture.
+
+Looking at the email checkout flow:
+
+1. User selects plan + payment term + optional add-ons on the HTML embed
+2. Clicks "Send Plan" → enters parent email → clicks "Email Checkout Link"
+3. This sends a `LRN_EMAIL_CHECKOUT` postMessage with `data.planName` among other fields
+4. The page code passes `data.planName` directly to `createCheckoutLinkAndEmail()`
+5. The backend builds an HTML email using that plan name and sends it via Google Apps Script
+
+
+6. The real vulnerability is that `planName` comes directly from the client-side embed with no server-side validation—someone could modify the postMessage via dev tools or intercept it to inject any arbitrary text, which then gets embedded in the email without sanitization.
+
+7. The backend already has the product ID and could look up the legitimate plan name from `PLAN_PRICES` instead of trusting whatever the client sends, which would be the proper fix.
+
+8. This could've happened through dev tools tampering, a bug in the embed itself, or someone on Jake's team testing with fake data that accidentally went live.
+Yeah, this is a client-side trust issue. Let me trace the exact path that plan name takes:
+
+**The problem:** The `planName` displayed in the email comes directly from the frontend HTML embed — it's never validated on the backend.
+
+Here's the chain:
+
+1. The HTML embed sends a postMessage with whatever `data.planName` is set to
+2. The page code passes it straight through to the backend:
+   ```javascript
+   createCheckoutLinkAndEmail(
+       data.productId,
+       data.subscriptionOptionId,
+       data.planName,          // ← this is just whatever the embed sent
+       data.paymentTerm,
+       data.sendToEmail,
+       ...
+   )
+   ```
+3. The backend uses that string directly in the branded HTML email — no sanitization, no server-side lookup
+
+So **anyone** could open browser dev tools, modify the embed's JavaScript or intercept the postMessage, and inject whatever text they want into `planName`. It gets passed through the entire pipeline untouched.
+
+**The fix** is straightforward: in `storeHelper.jsw`, instead of trusting the client-supplied `planName`, derive it from the `productId` on the backend. You already have the `PLAN_PRICES` mapping there with all the product IDs — you just need a reverse lookup. Something like:
+
+```javascript
+// Derive plan name from productId server-side instead of trusting client
+const verifiedPlanName = Object.keys(PLAN_PRICES).find(
+    name => PLAN_PRICES[name].productId === productId
+) || "Unknown Plan";
+```
+
+Then use `verifiedPlanName` in the email and PendingCheckouts record instead of the passed-in `planName`.
+
+Want me to also check whether the same issue applies to `addonNames` and `paymentTerm`? Those are also client-supplied strings that likely end up in the email body.
+===END===
+
+===MSG===
+uuid: 019c834d-a1e8-701f-89da-2168fdc49ed9
+parent: 019c834c-9542-77a0-ad95-daeef25cea78
+role: human
+---
+You need to give me a better plain-speak explanation of how this happened.
+===END===
+
+===MSG===
+uuid: 019c834d-a1e8-701f-89da-2169bfbbc823
+parent: 019c834d-a1e8-701f-89da-2168fdc49ed9
+role: assistant
+---
+[THINKING]
+Jake wants a simpler explanation of how this happened, not technical jargon.
+Fair enough. Here's what happened:
+
+When someone clicks "Email Checkout Link," the pricing table on your webpage sends a message to your backend that basically says "send an email for the **Varsity** plan." Your backend trusts that message completely and drops that plan name right into the email — no questions asked.
+
+The problem is that someone with even basic tech knowledge can open their browser's developer tools (right-click → Inspect on any webpage), find where that plan name is being sent, change "Varsity" to "dick balls" (or anything else), and hit send. Your backend has no way of knowing the name was tampered with — it just builds the email with whatever it was told and fires it off.
+
+Think of it like a restaurant where the waiter writes down whatever the customer says on the ticket and the kitchen makes it, no questions asked. If someone writes something inappropriate on the order slip, it goes straight to the kitchen and gets made.
+
+**The fix:** Instead of trusting the name that comes from the webpage, your backend should look up the plan name itself based on the product ID (which is tied to real Wix products and can't be faked as easily). That way even if someone tampers with the name, the email will still show the correct one.
+
+Want me to write that fix for you?
+===END===
+
+===MSG===
+uuid: 019c834e-f2e6-73f6-b0ee-5c473b79be99
+parent: 019c834d-a1e8-701f-89da-2169bfbbc823
+role: human
+---
+It wasn't the plan name.  It was in the email where the athlete's name is supposed to go.  Right at the bottom of the email, next to his email address.  Review the email that gets sent, please.
+===END===
+
+===MSG===
+uuid: 019c834e-f2e6-73f6-b0ee-5c48bc52a837
+parent: 019c834e-f2e6-73f6-b0ee-5c473b79be99
+role: assistant
+---
+[THINKING]
+The user is saying the "dick balls" text appeared where the athlete's name is supposed to go in the email, not the plan name. Let me look at the truncated portion of the code to find the email template. The file was truncated at line 196-450. Let me view that section.
+Let me look at the email template code that got truncated.
+[TOOL_USE: view]
+{
+  "path": "/mnt/user-data/uploads/Claude_-_New_Service_Plans___Wix_Stores_Integration_2_14_26.md",
+  "view_range": [
+    196,
+    450
+  ],
+  "description": "Viewing the truncated portion of the file that contains the email template"
+}
+[TOOL_RESULT: view]
+   196	const PLAN_PRICES = {
+   197	    "JV": { onepay: "$999", "6pay": "$199/mo x 6", "12pay": "$119/mo x 12", term: "2 Years" },
+   198	    "Varsity": { onepay: "$2,499", "6pay": "$499/mo x 6", "12pay": "$259/mo x 12", term: "3 Years" },
+   199	    "Red Shirt": { onepay: "$3,999", "6pay": "$699/mo x 6", "12pay": "$359/mo x 12", term: "5 Years" },
+   200	    "MVP": { onepay: "$5,499", "6pay": "$949/mo x 6", "12pay": "$499/mo x 12", term: "7 Years" },
+   201	    "All-American": { onepay: "$6,499", "6pay": "$1,149/mo x 6", "12pay": "$599/mo x 12", term: "9 Years" },
+   202	    "Heisman": { onepay: "$7,999", "6pay": "$1,349/mo x 6", "12pay": "$699/mo x 12", term: "10 Years" }
+   203	};
+   204	
+   205	export async function addSubscriptionToCart(productId, subscriptionOptionId, addons = []) {
+   206	    const lineItems = [{
+   207	        catalogReference: {
+   208	            catalogItemId: productId,
+   209	            appId: STORES_APP_ID,
+   210	            options: subscriptionOptionId
+   211	                ? { variantId: "00000000-0000-0000-0000-000000000000", subscriptionOptionId: subscriptionOptionId }
+   212	                : { variantId: "00000000-0000-0000-0000-000000000000" }
+   213	        },
+   214	        quantity: 1
+   215	    }];
+   216	
+   217	    if (addons && addons.length > 0) {
+   218	        addons.forEach(addonProductId => {
+   219	            lineItems.push({
+   220	                catalogReference: {
+   221	                    catalogItemId: addonProductId,
+   222	                    appId: STORES_APP_ID,
+   223	                    options: { variantId: "00000000-0000-0000-0000-000000000000" }
+   224	                },
+   225	                quantity: 1
+   226	            });
+   227	        });
+   228	    }
+   229	
+   230	    try {
+   231	        const result = await currentCart.addToCurrentCart({ lineItems: lineItems });
+   232	        return { success: true, cart: result };
+   233	    } catch (err) {
+   234	        console.error("addToCurrentCart error:", err);
+   235	        return { success: false, error: err.message };
+   236	    }
+   237	}
+   238	
+   239	export async function createCheckoutLinkAndEmail(productId, subscriptionOptionId, planName, paymentTerm, sendToEmail, athleteEmail, athleteName, athleteMemberId, addons = [], addonNames = []) {
+   240	    try {
+   241	        const lineItems = [{
+   242	            quantity: 1,
+   243	            catalogReference: {
+   244	                catalogItemId: productId,
+   245	                appId: STORES_APP_ID,
+   246	                options: subscriptionOptionId
+   247	                    ? { variantId: "00000000-0000-0000-0000-000000000000", subscriptionOptionId: subscriptionOptionId }
+   248	                    : { variantId: "00000000-0000-0000-0000-000000000000" }
+   249	            }
+   250	        }];
+   251	
+   252	        if (addons && addons.length > 0) {
+   253	            addons.forEach(addonProductId => {
+   254	                lineItems.push({
+   255	                    quantity: 1,
+   256	                    catalogReference: {
+   257	                        catalogItemId: addonProductId,
+   258	                        appId: STORES_APP_ID,
+   259	                        options: { variantId: "00000000-0000-0000-0000-000000000000" }
+   260	                    }
+   261	                });
+   262	            });
+   263	        }
+   264	
+   265	        const elevatedCreateTemplate = elevate(checkoutTemplates.createCheckoutTemplate);
+   266	        const template = await elevatedCreateTemplate({ lineItems: lineItems });
+   267	
+   268	        const checkoutUrl = "https://www.wixapis.com/ecom/v1/checkout-templates/" + template._id + "/create-and-redirect-to-checkout?siteId=" + SITE_ID;
+   269	
+   270	        await wixData.insert("PendingCheckouts", {
+   271	            checkoutTemplateId: template._id,
+   272	            athleteEmail: athleteEmail,
+   273	            athleteName: athleteName,
+   274	            athleteMemberId: athleteMemberId,
+   275	            sendToEmail: sendToEmail,
+   276	            planName: planName,
+   277	            paymentTerm: paymentTerm,
+   278	            productId: productId,
+   279	            subscriptionOptionId: subscriptionOptionId || "",
+   280	            addons: addons.join(","),
+   281	            addonNames: addonNames.join(", "),
+   282	            status: "pending"
+   283	        }, { suppressAuth: true });
+   284	
+   285	        var priceInfo = PLAN_PRICES[planName] || {};
+   286	        var priceDisplay = priceInfo[paymentTerm] || "";
+   287	        var termDisplay = priceInfo.term || "";
+   288	        var imageUrl = PLAN_IMAGES[planName] || "";
+   289	
+   290	        var htmlBody = buildCheckoutEmail(planName, priceDisplay, termDisplay, paymentTerm, checkoutUrl, athleteName, athleteEmail, imageUrl, addonNames);
+   291	
+   292	        try {
+   293	            await fetch(EMAIL_SCRIPT_URL, {
+   294	                method: "POST",
+   295	                headers: { "Content-Type": "application/json" },
+   296	                body: JSON.stringify({
+   297	                    to: sendToEmail,
+   298	                    subject: "Complete Your Lance O's " + planName + " Checkout",
+   299	                    htmlBody: htmlBody
+   300	                })
+   301	            });
+   302	        } catch (emailErr) {
+   303	            console.error("Email fetch error (may still have sent):", emailErr);
+   304	        }
+   305	
+   306	        return { success: true, checkoutUrl: checkoutUrl, emailSent: true };
+   307	
+   308	    } catch (err) {
+   309	        console.error("createCheckoutLinkAndEmail error:", err);
+   310	        return { success: false, error: err.message };
+   311	    }
+   312	}
+   313	
+   314	function buildCheckoutEmail(planName, priceDisplay, termDisplay, paymentTerm, checkoutUrl, athleteName, athleteEmail, imageUrl, addonNames = []) {
+   315	    var paymentLabel = paymentTerm === "onepay" ? "One-Time Payment" : paymentTerm === "credit" ? "One-Time Payment" : paymentTerm === "6pay" ? "6-Month Plan" : "12-Month Plan";
+   316	    var year = new Date().getFullYear();
+   317	
+   318	    var addonsSection = "";
+   319	    if (addonNames && addonNames.length > 0) {
+   320	        addonsSection = '<tr><td style="padding:15px 30px;font-family:Arial,sans-serif;border-top:1px solid #e0e0e0;">'
+   321	            + '<div style="font-size:14px;font-weight:bold;color:#3a0809;margin-bottom:8px;">Additional Services Included:</div>'
+   322	            + '<ul style="margin:0;padding-left:20px;color:#333333;font-size:14px;line-height:1.6;">';
+   323	        
+   324	        addonNames.forEach(function(name) {
+   325	            addonsSection += '<li>' + name + '</li>';
+   326	        });
+   327	        
+   328	        addonsSection += '</ul></td></tr>';
+   329	    }
+   330	
+   331	    var html = '<!DOCTYPE html>'
+   332	        + '<html><head><meta charset="UTF-8"></head>'
+   333	        + '<body style="margin:0;padding:0;background-color:#f4f4f4;">'
+   334	        + '<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f4;padding:30px 0;">'
+   335	        + '<tr><td align="center">'
+   336	        + '<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;background-color:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);">'
+   337	        + '<tr><td style="background-color:#3a0809;padding:20px 30px;text-align:center;">'
+   338	        + '<span style="color:#ffffff;font-family:Arial,sans-serif;font-size:22px;font-weight:bold;letter-spacing:1px;">LANCE O\'S RECRUITING NETWORK</span>'
+   339	        + '</td></tr>'
+   340	        + '<tr><td style="text-align:center;padding:30px 20px 10px;background-color:#ffffff;">'
+   341	        + '<img src="' + imageUrl + '" alt="' + planName + ' Plan" width="260" style="max-width:260px;height:auto;display:block;margin:0 auto;" />'
+   342	        + '</td></tr>'
+   343	        + '<tr><td style="text-align:center;padding:10px 30px 5px;font-family:Arial,sans-serif;">'
+   344	        + '<span style="font-size:28px;font-weight:bold;color:#990000;">' + planName + '</span>'
+   345	        + '</td></tr>'
+   346	        + '<tr><td style="text-align:center;padding:0 30px 5px;font-family:Arial,sans-serif;">'
+   347	        + '<span style="font-size:18px;color:#333333;">' + priceDisplay + ' &nbsp;&middot;&nbsp; ' + termDisplay + ' Program</span>'
+   348	        + '</td></tr>'
+   349	        + '<tr><td style="text-align:center;padding:0 30px 20px;font-family:Arial,sans-serif;">'
+   350	        + '<span style="font-size:14px;color:#666666;background-color:#f0f0f0;padding:4px 12px;border-radius:4px;">' + paymentLabel + '</span>'
+   351	        + '</td></tr>'
+   352	        + addonsSection
+   353	        + '<tr><td style="padding:10px 30px 20px;font-family:Arial,sans-serif;font-size:16px;color:#333333;line-height:1.6;">'
+   354	        + 'Hi there,<br><br>'
+   355	        + 'You\'re one step away from securing <strong>' + athleteName + '</strong>\'s spot in the Lance O\'s Recruiting Network '
+   356	        + '<strong style="color:#990000;">' + planName + '</strong> program!<br><br>'
+   357	        + 'Click the button below to complete your selection:'
+   358	        + '</td></tr>'
+   359	        + '<tr><td style="text-align:center;padding:10px 30px 30px;">'
+   360	        + '<a href="' + checkoutUrl + '" style="background-color:#990000;color:#ffffff;text-decoration:none;padding:16px 50px;font-size:18px;font-weight:bold;border-radius:6px;display:inline-block;letter-spacing:0.5px;">Complete Selection</a>'
+   361	        + '</td></tr>'
+   362	        + '<tr><td style="padding:0 30px 20px;font-family:Arial,sans-serif;font-size:14px;color:#666666;line-height:1.5;border-top:1px solid #e0e0e0;padding-top:20px;">'
+   363	        + 'This plan will be applied to: <strong style="color:#333333;">' + athleteName + '</strong> (' + athleteEmail + ')<br><br>'
+   364	        + 'If you have any questions, reply to this email or call us directly.'
+   365	        + '</td></tr>'
+   366	        + '<tr><td style="background-color:#3a0809;padding:15px 30px;text-align:center;">'
+   367	        + '<span style="color:#999999;font-family:Arial,sans-serif;font-size:12px;">&copy; ' + year + ' Lance O\'s Recruiting Network</span>'
+   368	        + '</td></tr>'
+   369	        + '</table></td></tr></table></body></html>';
+   370	
+   371	    return html;
+   372	}
+   373	```
+   374	
+   375	### backend/events.js
+   376	
+   377	```javascript
+   378	import wixData from 'wix-data';
+   379	
+   380	const PLAN_MAP = {
+   381	    "80009c4e-5f5b-0c95-710b-2ce0da21f684": { name: "JV", years: 2 },
+   382	    "da2e617d-ff9c-7c9f-2533-2f99ecc69f23": { name: "Varsity", years: 3 },
+   383	    "d89f5806-bcd3-579c-c620-4a075b6f9238": { name: "Red Shirt", years: 5 },
+   384	    "c94a9e16-e25e-fe2e-b776-0dfbfcd45030": { name: "MVP", years: 7 },
+   385	    "fb85b062-75f6-904d-fa9a-32a71b5320c0": { name: "All-American", years: 9 },
+   386	    "c1a561a1-5362-5b1e-58b4-851fc25fad3b": { name: "Heisman", years: 10 }
+   387	};
+   388	
+   389	export function wixStores_onOrderPaid(event) {
+   390	    handleOrderPaid(event);
+   391	}
+   392	
+   393	async function handleOrderPaid(event) {
+   394	    try {
+   395	        const lineItems = event.lineItems || [];
+   396	        if (lineItems.length === 0) return;
+   397	
+   398	        const productId = lineItems[0].productId;
+   399	        const planDetails = PLAN_MAP[productId];
+   400	        if (!planDetails) return;
+   401	
+   402	        const buyerEmail = event.buyerInfo && event.buyerInfo.email ? event.buyerInfo.email.toLowerCase().trim() : "";
+   403	        const now = new Date();
+   404	        const expiration = new Date(now);
+   405	        expiration.setFullYear(expiration.getFullYear() + planDetails.years);
+   406	
+   407	        let athleteEmail = null;
+   408	        let athleteMemberId = null;
+   409	
+   410	        const pendingResults = await wixData.query("PendingCheckouts")
+   411	            .eq("productId", productId)
+   412	            .eq("status", "pending")
+   413	            .descending("_createdDate")
+   414	            .limit(10)
+   415	            .find({ suppressAuth: true });
+   416	
+   417	        if (pendingResults.items.length > 0) {
+   418	            let matchedPending = null;
+   419	
+   420	            for (let item of pendingResults.items) {
+   421	                if (item.sendToEmail && item.sendToEmail.toLowerCase().trim() === buyerEmail) {
+   422	                    matchedPending = item;
+   423	                    break;
+   424	                }
+   425	            }
+   426	
+   427	            if (!matchedPending && pendingResults.items.length > 0) {
+   428	                const twoHoursAgo = new Date(now.getTime() - (2 * 60 * 60 * 1000));
+   429	                const recent = pendingResults.items[0];
+   430	                if (new Date(recent._createdDate) > twoHoursAgo) {
+   431	                    matchedPending = recent;
+   432	                }
+   433	            }
+   434	
+   435	            if (matchedPending) {
+   436	                athleteEmail = matchedPending.athleteEmail;
+   437	                athleteMemberId = matchedPending.athleteMemberId;
+   438	
+   439	                matchedPending.status = "completed";
+   440	                matchedPending.completedDate = now;
+   441	                await wixData.update("PendingCheckouts", matchedPending, { suppressAuth: true });
+   442	            }
+   443	        }
+   444	
+   445	        const lookupEmail = athleteEmail || buyerEmail;
+   446	        if (!lookupEmail) return;
+   447	
+   448	        let memberResults;
+   449	
+   450	        if (athleteMemberId) {
+[647 lines total]
+[THINKING]
+Now I can see the email template. The user says the "dick balls" text appeared where the athlete's name is supposed to go, at the bottom of the email next to the email address. Let me look at line 363:
+
+```
++ 'This plan will be applied to: <strong style="color:#333333;">' + athleteName + '</strong> (' + athleteEmail + ')<br><br>'
+```
+
+So at the bottom of the email, there's a line that says "This plan will be applied to: **[athleteName]** ([athleteEmail])". The `athleteName` came through as "dick balls".
+
+Now let me trace where `athleteName` comes from. 
+
+The value gets passed through `buildCheckoutEmail()` from `createCheckoutLinkAndEmail()`, which constructs it by taking either the provided data or falling back to the member's name from the CMS collection. That name field is built by concatenating the first and last name from the Members collection. So the "dick balls" text either came directly from what was stored in the CMS for that athlete, or someone manually entered it into the data before the email was sent. The athlete name field in the embed is likely editable, so someone could have manually entered "dick balls" there before submitting, or it's the actual registered name in the Members collection. Either way, this points to either a genuine registration with that name or someone testing the system.
+Got it. I found it. Look at line 363 in the email template:
+
+```
+'This plan will be applied to: <strong>' + athleteName + '</strong> (' + athleteEmail + ')'
+```
+
+That's the line at the bottom of the email. So the question is — where did `athleteName` come from?
+
+Tracing it back through the page code (line 551):
+
+```javascript
+data.athleteName || memberInfo.name
+```
+
+So it checks two places in this order:
+
+1. **First** — whatever the HTML embed sends as `data.athleteName` (if someone typed something into the embed)
+2. **Fallback** — the logged-in member's name pulled from your Members CMS collection
+
+So there are really only two possibilities here:
+
+- **Someone edited the name field in the embed** before clicking "Email Checkout Link" — if the embed has an editable athlete name input, they could have typed anything in there.
+- **The athlete's actual name in your Members CMS collection** is set to that — meaning someone registered with a joke name, or it got edited.
+
+I'd start by checking your **Members collection** in the Wix CMS for that client's record. If the name looks normal there, then it came from the embed's input field, which means either the salesperson was messing around or the athlete themselves changed it before sending.
+
+Do you want to check the CMS, or do you already know what the member's name looks like in there?
+===END===
+
+===MSG===
+uuid: 019c8350-bc33-7204-8cbc-2cf0fedd0d20
+parent: 019c834e-f2e6-73f6-b0ee-5c48bc52a837
+role: human
+---
+The email does not have an editable athlete name input.
+
+Tell me what field the athlete's name is pulled from.
+===END===
+
+===MSG===
+uuid: 019c8350-bc33-7204-8cbc-2cf1077b8b27
+parent: 019c8350-bc33-7204-8cbc-2cf0fedd0d20
+role: assistant
+---
+[THINKING]
+The user wants to know exactly where the athlete name comes from. Let me trace it carefully.
+
+Looking at the page code, `memberInfo.name` is built on line 506:
+
+```javascript
+memberInfo.name = (m.name || "") + (m.lastName ? " " + m.lastName : "");
+```
+
+And `m` comes from a query to the "Members" CMS collection on line 499-501:
+
+```javascript
+const memberData = await wixData.query("Members")
+    .eq("_id", member._id)
+    .find({ suppressAuth: true });
+```
+
+Since there's no editable athlete name input in the embed, `data.athleteName` would be undefined/falsy, so it falls back to `memberInfo.name`.
+
+
+The athlete's name is ultimately pulled from the `name` and `lastName` fields stored in the Members CMS collection, retrieved using the current member's ID.
+It's pulled from the **Members CMS collection** — specifically the `name` and `lastName` fields. Here's the exact line (506):
+
+```javascript
+memberInfo.name = (m.name || "") + (m.lastName ? " " + m.lastName : "");
+```
+
+So whoever was logged in when that email was sent — their `name` and `lastName` fields in the Members collection combine to form what shows up in the email as the athlete name.
+
+Check that athlete's record in your Members CMS. If it says "dick balls" in there, that's your answer — either they signed up with that name, or someone edited it.
+===END===
+
+===MSG===
+uuid: 019c8352-1584-711b-a7e3-a884f08a7a06
+parent: 019c8350-bc33-7204-8cbc-2cf1077b8b27
+role: human
+---
+Nowhere are the words "dick balls" in the CMS record.
+===END===
+
+===MSG===
+uuid: 019c8352-1584-711b-a7e3-a8859319e42d
+parent: 019c8352-1584-711b-a7e3-a884f08a7a06
+role: assistant
+---
+[THINKING]
+OK so let me re-trace this more carefully.
+
+The athlete name in the email comes from `athleteName` parameter passed to `buildCheckoutEmail`. That comes from `createCheckoutLinkAndEmail`'s parameter `athleteName`.
+
+Looking at the page code, line 551:
+```javascript
+data.athleteName || memberInfo.name
+```
+
+Jake says the embed doesn't have an editable athlete name input, so `data.athleteName` would be undefined/empty, which means it falls back to `memberInfo.name`.
+
+But Jake says the CMS record doesn't have "dick balls" in it.
+
+So let me think... `memberInfo.name` is built from the Members CMS. 
+
+Now I need to trace how the member info flows between the page and the embed. The page retrieves member data from the CMS, then passes it to the embed through postMessage with the member's email, name, and ID. When the user triggers the checkout email action, the embed sends that information back to the page.
+
+The challenge is that I don't have the embed's source code to see exactly what it does with the athlete name field—whether it's editable, hardcoded, or just echoes back what it received. Jake's point about there being no visible editable field suggests the embed might just pass through the original member name, but without seeing the actual embed code, I can't confirm the exact data transformation happening there.
+
+Looking at the fallback logic, if the embed doesn't send back `athleteName` at all, the system would use `memberInfo.name` instead. Since Jake confirmed the CMS data is clean, that should be safe—unless the member lookup itself failed, which would leave the name empty.
+
+But Jake's pushing me to be specific about the source. He's saying the name doesn't appear anywhere in the CMS record itself, which means it's actually coming from `data.athleteName` in the embed's postMessage, not from the CMS fallback. The embed is sending that value even though we can't see the embed code here to verify exactly what it's pulling. and we need to look at what the embed is sending. Since we don't have the embed code in this context file, we can't see it.
+
+But actually, maybe I should look at this differently. Jake told me the email doesn't have an editable athlete name input. But the page code checks `data.athleteName` first. If the embed doesn't have that field, `data.athleteName` would be undefined, and it would fall to `memberInfo.name`, which comes from CMS, which Jake says is clean.
+
+So something doesn't add up. Unless the CMS was clean at the time Jake checked, but was different before. Or...
+
+Actually, maybe I'm overcomplicating this. The key issue is that `data.athleteName` takes priority over the CMS fallback, so whatever the embed is sending becomes the value that gets used. Without seeing the embed's HTML code, I can't trace where `athleteName` is actually coming from — it could be echoing back `memberInfo`, transforming it, or pulling from somewhere else entirely. I need to ask Jake for the embed code to figure out what's really happening here.
+Good, that narrows it down. Looking at the page code again (line 550-551):
+
+```javascript
+data.athleteEmail || memberInfo.email,
+data.athleteName || memberInfo.name,
+```
+
+The CMS name is only the **fallback**. The code checks `data.athleteName` **first** — that's whatever the HTML embed sends back in its `LRN_EMAIL_CHECKOUT` postMessage. If the embed sends anything at all for `athleteName`, that's what goes into the email. The CMS value never gets used.
+
+The problem is we don't have the HTML embed code in this context file. That's where the answer is — we need to see what the embed is sending back as `athleteName` in its postMessage and where it's getting that value from.
+
+Can you pull the HTML embed code so we can trace it the rest of the way?
+===END===
+
+===MSG===
+uuid: 019c8353-3b0b-71ef-b538-41817cea504e
+parent: 019c8352-1584-711b-a7e3-a8859319e42d
+role: human
+---
+
+===END===
+
+===MSG===
+uuid: 019c8353-3b0b-71ef-b538-418225d25314
+parent: 019c8353-3b0b-71ef-b538-41817cea504e
+role: assistant
+---
+[THINKING]
+Now I can see the full picture. Let me look at the `sendEmailCheckout()` function in the embed:
+
+```javascript
+function sendEmailCheckout() {
+    ...
+    window.parent.postMessage({
+      type: "LRN_EMAIL_CHECKOUT",
+      ...
+      athleteName: memberInfo.name || "",
+      ...
+    }, "*");
+  }
+```
+
+And `memberInfo` is set here:
+
+```javascript
+if (data.type === "LRN_MEMBER_INFO") {
+      memberInfo = { email: data.email || "", name: data.name || "", memberId: data.memberId || "" };
+
+
+```
+
+The embed gets `memberInfo.name` from the page, which constructs it by combining the first and last name fields. There's an athlete email input field in the form, but no separate athlete name input—the name comes entirely from `memberInfo.name` passed from the parent page. So if the CMS doesn't contain "dick balls" in those name fields, it wouldn't appear in the checkout data either.
+
+```
+... let me think about what else could cause this.
+
+The page code gets the member info:
+```javascript
+const member = await currentMember.getMember();
+```
+
+Then queries the Members CMS:
+```javascript
+const memberData = await wixData.query("Members")
+    .eq("_id", member._id)
+    .find({ suppressAuth: true });
+```
+
+If `memberData.items.length > 0`, it uses the CMS name. But what if the query returns 0 items? Then `memberInfo.name` stays as `""` (empty string).
+
+Then in the embed, `athleteName: memberInfo.name || ""` would be empty.
+
+Then in the page code: `data.athleteName || memberInfo.name` — both would be empty.
+
+Then in the backend, `athleteName` would be an empty string, not "dick balls".
+
+Hmm, so the CMS might be clean with no editable name field. But wait, the user said the text appeared in the email next to the athlete's email address. Looking at the email template, `athleteName` gets inserted into those confirmation messages. The embed passes `memberInfo.name` to the page, which then passes it to the backend function that builds the email. So I need to trace where `memberInfo.name` actually gets set.
+
+```
+
+javascript
+const memberInfo = await wixData.query("Members")
+    .eq("_id", currentMember._id)
+    .find({ suppressAuth: true });
+```
+
+If this query succeeds, `memberInfo.name` comes from the Members CMS record. Jake checked the CMS and it's clean. But what if the logged-in member at the time the email was sent was a different person? Or what if there's a fallback somewhere that's pulling from a different source?
+
+Actually, I should check if there's any other place where `athleteName` could be getting set to something unexpected. The embed sends it, the page receives it, the backend uses it. One of those steps must be where "dick balls" is coming from.
+
+If the Members CMS query returns no results, `memberInfo.name` would be empty. Then `athleteName` would be empty too. So the name showing up as "dick balls" means either the CMS record actually contains that, or it's coming from somewhere else entirely — maybe a default value, a test entry, or something in the embed's own logic. I'm realizing the code actually queries the Members CMS collection directly, so it wouldn't pull from the Wix account name at all. If that CMS lookup fails and returns no match, the `athleteName` would be empty, and even with the fallback logic using the Wix member object, it only uses the `_id` for the CMS query, not any name field. Let me trace through what's actually happening here.
+
+The athlete name has to come from either the embed's `memberInfo.name` or the page code's `memberInfo.name`, both ultimately sourced from the Members CMS record. If Jake verified the CMS is clean, then either he checked the wrong record, the CMS changed after the email went out, someone spoofed the postMessage, or the logged-in user was actually a different person—like a salesperson or admin—whose CMS record has the incorrect name.
+
+If the salesperson wasn't in the CMS at all, the name field would be empty rather than "dick balls," so they'd have to be in the system with that actual name. Looking at how the name gets constructed—combining the first name and last name fields with a space—if both fields were empty, the result would be an empty string, not the offensive text that appeared.
+
+The most likely explanation is either that whoever was actually logged in when the email was sent (possibly a parent rather than the athlete) had that text in their CMS record at the time, or the athlete's record itself contained it when the email went out and was changed afterward. I'm realizing the embed sends the logged-in member's name, not necessarily the athlete's name, so if a parent or salesperson was logged in during the checkout flow, their record would be what gets passed through.
+
+But wait — the `athleteEmail` field is actually editable in the form itself, which means someone could have manually injected or modified that data.
+
+Actually, I realize the real vulnerability here: `athleteName` comes from the `memberInfo.name` JavaScript variable, which sits in global scope completely unprotected. Someone could easily open the browser console and reassign it to "dick balls" before clicking send. That's almost certainly what happened.
+
+The solution is to stop trusting the client-side name and instead fetch the athlete name server-side using the memberId, the same way we'd handle the plan name.
+Found it. Here's the line in the embed's `sendEmailCheckout()` function:
+
+```javascript
+athleteName: memberInfo.name || "",
+```
+
+And `memberInfo.name` is set from the `LRN_MEMBER_INFO` message your page code sends — which pulls from the CMS. You've confirmed the CMS is clean. There's no editable name input in the embed.
+
+**But** — `memberInfo` is a plain global JavaScript variable sitting right here in the embed:
+
+```javascript
+var memberInfo = { email: "", name: "", memberId: "" };
+```
+
+Anyone on that page can open the browser console and type:
+
+```
+memberInfo.name = "dick balls"
+```
+
+Then hit "Email Checkout Link," and that's exactly what goes into the email. No hacking required — just right-click, Inspect, Console, done. Probably a teenager thinking they're funny.
+
+**The fix:** In `createCheckoutLinkAndEmail()` in your backend, ignore the client-supplied `athleteName` entirely. You already have `athleteMemberId` — use that to look up the name server-side:
+
+```javascript
+const memberData = await wixData.query("Members")
+    .eq("_id", athleteMemberId)
+    .find({ suppressAuth: true });
+const verifiedName = memberData.items.length > 0
+    ? (memberData.items[0].name || "") + (memberData.items[0].lastName ? " " + memberData.items[0].lastName : "")
+    : "Athlete";
+```
+
+Then use `verifiedName` in the email instead of `athleteName`. That way it doesn't matter what anyone types into the console — the email always shows whatever's in the CMS.
+
+Want me to write the full updated `createCheckoutLinkAndEmail()` function?
+===END===

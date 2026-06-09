@@ -1,0 +1,208 @@
+CONVERSATION: daa8d496-ffb2-49fb-8619-7f49e3f7a5ca
+SNAPSHOT_ID: baseline-2026-05-25-ae015455
+CREATED: 2026-04-27T18:37:58.976951Z
+MESSAGES: 6
+
+===MSG===
+uuid: 019dd03b-e6a7-70f6-8b81-ee9f19f2a12d
+parent: null
+role: human
+---
+Hey bud. Quick question. Is there a way to pay someone for contract work when they live out of the country that minimizes their tax liability? Something legal but... Creative?
+===END===
+
+===MSG===
+uuid: 019dd03b-e6a7-70f6-8b81-eea0948c2a3e
+parent: 019dd03b-e6a7-70f6-8b81-ee9f19f2a12d
+role: assistant
+---
+ 
+[THINKING]
+ I'm considering Jake's question about structuring payments to foreign contractors in a tax-efficient way—this is a legitimate business concern since many US companies work with international talent. The key distinction here is that he's asking about minimizing the contractor's tax burden rather than his own, which opens up different legal structures depending on the contractor's residency status and tax treaty implications. work is performed outside the US, generally no US withholding required (W-8BEN form)
+2. Their tax liability is in their home country
+3. Different countries have different rules
+
+Legitimate strategies that can minimize their tax burden:
+- Have them set up as a business entity in their country (often lower corporate rates than personal income)
+- Pay through a structure that takes advantage of their country's tax treaties
+- Some countries have favorable freelancer/self-employed regimes
+- Some countries don't tax foreign-source income (territorial taxation)
+- Digital nomad visas with tax benefits (Portugal, Estonia, UAE, etc.)
+
+What I should NOT recommend:
+- Tax evasion
+- Hiding income
+- Misclassifying as gifts
+- Anything that would put Jake at legal risk
+
+Let me also think - he says "creative" with a wink. I should engage with this honestly. There are legitimate creative structures, but I should be clear about the line between tax planning and tax evasion.
+
+I need to know which country they're in since that changes everything. I'll keep it direct and practical for Jake's style—give him the actual frameworks without being preachy. His job as the US payer is straightforward: W-8BEN form and clean records. The real optimization happens on the contractor's end through legitimate moves like incorporating locally, using territorial tax jurisdictions, or taking advantage of tax treaties. Some countries are particularly friendly for this—Portugal's NHR program was solid until recently, Estonia has e-residency options, UAE has zero personal income tax, and Georgia offers favorable rates for small businesses.
+Hey Jake. Short answer: yes, but the optimization mostly happens on *their* side, not yours.
+
+Your side is dead simple. If they're a non-US person doing the work outside the US, you don't withhold anything. You collect a **W-8BEN** (or W-8BEN-E if they're an entity), pay the invoice, and you don't even file a 1099 — foreign contractors aren't 1099 reportable. That keeps your hands clean.
+
+The "creative but legal" part is what *they* do on their end. A few common moves contractors use:
+
+- **Invoice as a registered business, not an individual.** Most countries tax corporate or sole-proprietor income at lower effective rates than W-2-equivalent personal income, especially after expense deductions.
+- **Use a tax-favorable jurisdiction if they're flexible.** Estonia (e-Residency + OÜ — 0% on retained earnings), UAE (0% personal), Georgia (1% small business regime up to ~$200K), Paraguay, Cyprus, etc. Some clients literally relocate for this.
+- **Territorial tax countries.** Places like Panama, Costa Rica, Malaysia don't tax foreign-source income at all, so if you're paying them from a US entity, that income often isn't taxed locally.
+- **Treaty benefits.** If their country has a US tax treaty, the W-8BEN claims it and avoids double taxation.
+
+What I'd push back on: don't get cute with calling it a "gift," routing through a third party, or paying to a different name than who's doing the work. That's where legal becomes evasion fast, and it's *their* exposure but it can splash on you if it ever unwinds.
+
+What country are they in? I can get more specific.
+===END===
+
+===MSG===
+uuid: 019dd075-08ec-72b1-a4de-d7b46f9c1308
+parent: 019dd03b-e6a7-70f6-8b81-eea0948c2a3e
+role: human
+---
+He's in Costa Rica, but can't start a business there. Is that helpful?
+===END===
+
+===MSG===
+uuid: 019dd075-08ec-72b1-a4de-d7b5e3280468
+parent: 019dd075-08ec-72b1-a4de-d7b46f9c1308
+role: assistant
+---
+ 
+[THINKING]
+ I'm diving into Costa Rica's tax framework—they use a territorial system that only taxes local-source income, which could be a major advantage here. The critical issue is determining what qualifies as Costa Rican-source income for service work, since that's where the contractor's tax exposure really lies.
+
+The traditional rule hinges on where the service is physically performed, but Costa Rica's been tightening these rules in recent years, especially around passive income. If the contractor is actually in Costa Rica doing the work, the tax authority has typically treated that as local-source income, though there's been some debate on this. I need to verify the current state of these rules since they've been evolving.
+
+I'm also realizing I should understand why he can't establish a business there—whether it's a residency issue or something else—because that constraint shapes what structures are actually viable.
+
+For someone in that position, the common workarounds are using a foreign entity like a US LLC (which gets disregarded for US tax purposes if there's no US-source income), an Estonia e-Residency company, or just invoicing personally and handling the tax obligations directly. The US LLC approach is particularly popular because it's relatively simple and the US doesn't tax foreign-source service income, though Costa Rica's treatment of that arrangement is the real question I need to verify.
+
+I should double-check the current status of Costa Rica's territorial tax system and whether there have been any recent changes that would affect how they treat foreign-source income for individuals or foreign entities, especially since tax rules shift.
+[TOOL_USE: web_search]
+{
+  "query": "Costa Rica territorial tax system foreign source income contractor 2026"
+}
+[TOOL_RESULT: web_search]
+Only revenue earned within Costa Rica is subject to Costa Rican tax. The country’s government operates on the tax principle of territoriality, which means that any personal income earned outside of Costa Rica is exempt from Costa Rican tax.
+
+Only revenue earned within Costa Rica is subject to Costa Rican tax. The country’s government operates on the tax principle of territoriality, which means that any personal income earned outside of Costa Rica is exempt from Costa Rican tax. Unlike in the US, Costa Rica’s tax year does not align with the calendar year. Instead, it runs from October 1 to September 30. Annual tax returns are due on February 15. Costa Rica imposes fewer forms of taxation than most countries. In addition to the income tax, the only taxes Americans living in Costa Rica are likely to encounter are: ... The annual property tax in Costa Rica is assessed at a fixed rate of 0.25% of the property’s value per year. When a property is purchased in Costa Rica, it must be transferred into the buyer’s name. This involves a property transfer tax of 1.5% of the property value.
+The Costa Rican tax system is based on the principle of territoriality, according to which only income received from a source within Costa Rican territory, or income that involves the use of the country&#x27;s infrastructure, is taxed.
+This principle means that only income earned within Costa Rica is subject to taxation, while foreign-source income is exempt. As a result, individuals residing in Costa Rica do not have to pay taxes on income earned from foreign sources, such ...
+
+Understand taxes for foreign residents in Costa Rica. We outline tax implications, filing requirements, and potential benefits for foreign residents in our ultimate guide.
+
+We will explore the intricacies of Costa Rica's tax framework, focusing on its territorial tax system, which taxes only income generated within the country. This means that income from external sources remains exempt, making Costa Rica an appealing destination for tax nomads and expatriates alike. Understanding the local tax regulations is crucial for foreign residents to manage their finances effectively and comply with local laws, potentially benefiting from significant tax advantages. Understanding whether you're considered a tax resident in Costa Rica is fundamental for navigating the country's tax landscape. Costa Rica's tax system differentiates between residents and non-residents, significantly impacting how your income is taxed. Costa Rica considers you a tax resident if you spend more than 183 days, continuous or discontinuous, in the country during a single fiscal year.
+
+Costa Rica's tax system is based on the principle of territoriality, which has significant implications for foreign residents. This principle means that only income earned within Costa Rica is subject to taxation, while foreign-source income is exempt. As a result, individuals residing in Costa Rica do not have to pay taxes on income earned from foreign sources, such as remote work with a foreign company or investments outside Costa Rica. The territorial tax system implies that Costa Rica taxes only the income generated within its borders. This includes income from employment, self-employment, and investments made within the country. For instance, if you are employed by a Costa Rican company, your salary is subject to Costa Rican income tax. Similarly, if you own a rental property in Costa Rica, the rental income is taxable. To ensure compliance, it's essential to maintain accurate records of your local income sources.
+
+Costa Rica's territorial tax system is a key factor in its appeal, as it means that only income generated within the country is subject to taxation. This, combined with the country's high quality of life, lush nature, and "pura vida" lifestyle, makes Costa Rica an attractive destination for expatriates and digital nomads. For personalized assistance with residency options and tax planning, you can contact Jaros CR at info@jaroscr.com or +(506)7182-8969 to discuss your specific situation and goals. You can also learn more about the benefits of residency in Costa Rica by visiting Jaros CR's website. Ultimately, careful planning and consultation with tax professionals who specialize in both Costa Rican tax laws and international taxation are crucial for ensuring compliance and optimizing your tax position. By doing so, you can fully leverage the benefits that Costa Rica has to offer.
+For individuals domiciled in Costa Rica, any income obtained within the boundaries of Costa Rica is considered as Costa Rican-source income and is taxable. Costa Rican-source income is understood to be any income derived from assets used, goods ...
+
+Use the advanced print options to create a tailored report including your topics of interest across a select group of territories ... Success! Your message has been sent. × · Error! Your message was not sent. Please try again. × ... Please contact for general WWTS inquiries. ... Income taxes on individuals in Costa Rica are levied on local income irrespective of nationality and resident status. For individuals domiciled in Costa Rica, any income obtained within the boundaries of Costa Rica is considered as Costa Rican-source income and is taxable. Costa Rican-source income is understood to be any income derived from assets used, goods located, or services rendered within Costa Rican territory. Non-residents are liable only for the applicable withholding taxes (WHTs), depending on the nature of the local income. Tax rates for self-employed individuals for tax year 2026, based on annual taxable income, are as follows: ...
+This expatriate tax guide provides an overview of the tax system and regulations that will affect your international mobile employees in Costa Rica.
+Non-residents are also subject ... establishments (PE): Non-resident entities that operate in Costa Rica through a PE must be taxed on income from local sources as if they were a local taxpayer....
+
+Use the advanced print options to create a tailored report including your topics of interest across a select group of territories ... Success! Your message has been sent. × · Error! Your message was not sent. Please try again. × ... Please contact for general WWTS inquiries. ... The Costa Rican tax system is based on the principle of territoriality, as a result of which only income considered to be of Costa Rican source should be subject to taxation. This is defined as income generated exclusively in the national territory from services rendered, goods located, capital invested, and rights used in Costa Rica. In the year 2023, Costa Rica passed a reform aimed at excluding Costa Rica from the 'gray list' of the European Union (EU), and, within the changes proposed, the taxation of foreign-source passive income was incorporated under exceptional conditions.
+
+Non-residents are also subject to the principle of territorial-source income; however, the method of taxation will depend on the presence of the non-resident in Costa Rica: Permanent establishments (PE): Non-resident entities that operate in Costa Rica through a PE must be taxed on income from local sources as if they were a local taxpayer. Entities without PE: Non-residents that do not constitute a PE are subject to withholding taxes (WHTs) on Costa Rican source income. Withholding rates vary according to the type of income but range from 5% to 50%, in specific cases; nevertheless, the general rate for non-contemplated classifications is 30%. There are no industry-specific CIT rates; however, certain exemptions apply to entities qualifying under the Free Trade Zone Regime (see the Tax credits and incentives section). There are no provincial income taxes in Costa Rica; however, there is a municipal tax.
+Any income earned abroad while tax resident in Costa Rica is not taxable if not related to the economic structure of the country. Salary income operates exclusively on a withholding basis.
+
+Use the advanced print options to create a tailored report including your topics of interest across a select group of territories ... Success! Your message has been sent. × · Error! Your message was not sent. Please try again. × ... Please contact for general WWTS inquiries. ... Individuals domiciled in Costa Rica are taxed on salaries, commissions, fees, royalties, and other forms of remuneration for services rendered. Any income earned abroad while tax resident in Costa Rica is not taxable if not related to the economic structure of the country. Salary income operates exclusively on a withholding basis. In this regard, according to the Income Tax Law, all elements paid to the employee related to the labour relationship are considered taxable. All elements considered ‘salary in kind’ must be included in the salary reported in the payroll, and that amount will be the taxable base for both the salary income tax and the social security contributions, with certain exceptions.
+Similar to Panama. Foreign-source income is not subject to Costa Rican taxation. The determination is based on where the economic activity generating the income takes place. Remote work for foreign clients from Costa Rica remains a gray area ...
+
+Which countries offer territorial taxation? Guide to Hong Kong, Singapore, Panama, and others where foreign income stays untaxed.
+
+Hong KongSingaporePanamaCosta RicaParaguayGeorgiaMalaysia ... Belgium introduced its first exit tax on 1 January 2026. Norway removed its deferral loophole. The Netherlands is exploring post-departure taxation. Here's what emigrating actually costs. ... Only a handful of countries impose annual taxes on net wealth, but the list is not shrinking. Here is where wealth taxes exist in 2026, what they actually cost, and why political momentum is building for more. ... Where SaaS companies and digital service providers must register for VAT or GST in 2026, including thresholds, compliance mechanics, and when to use a platform. ... EOR vs. own entity vs. contractors: a practical breakdown of costs, risks, and compliance obligations when hiring across borders in 2026.
+
+Similar to Panama. Foreign-source income is not subject to Costa Rican taxation. The determination is based on where the economic activity generating the income takes place. Remote work for foreign clients from Costa Rica remains a gray area that most interpret favorably. ... Territorial system with low rates even for local-source income (10% corporate, 10% personal on dividends). Foreign-source income exempt. Increasingly popular with remote workers seeking South American base. ... Offers territorial-like treatment for foreign-source income under certain structures. The Individual Entrepreneur status provides 1% tax on turnover up to GEL 500,000, with foreign-source income effectively exempt for small operators. ... Returned to territorial treatment in 2022 after a brief period of taxing remitted foreign income. Foreign-source income is now generally exempt when remitted by resident individuals, with some exceptions.
+
+For employment income, source is typically where the work is performed. Work from a Costa Rica apartment for a US employer? That's Costa Rica-source under most interpretations, which means Costa Rica could tax it (though enforcement is another matter). For business income, source can depend on: where contracts are signed, where services are performed, where customers are located, or where management decisions are made. Different countries apply different rules. For investment income, source typically follows the asset location or issuer residence. The practical result: "foreign-source income" requires careful analysis, not assumption. Working remotely from a territorial tax country doesn't automatically mean your income is foreign-source. Territorial taxation doesn't eliminate your home country obligations. If you're a US citizen, worldwide taxation applies regardless of where you live.
+So if your money comes from US Social Security, foreign rental properties, or investments, you won&#x27;t owe Costa Rican taxes on it. Costa Rica&#x27;s tax system includes various forms of taxation, each with its own set of rules and Costa Rica tax rates.
+
+For US expats, a health savings account can be one of the most valuable financial tools you carry ... Apr 23, 2026 · How to report foreign assets to IRS: Form 8938 vs 3520 vs 5471 vs 8865 · US citizens and green card holders living abroad may need to file up to eight separate IRS and Tre... Apr 23, 2026 · PFIC explained: What is a PFIC, form 8621 reporting requirements & US tax rules ... The FBAR maximum account value is the highest balance in each foreign financial account at any poi... Apr 21, 2026 · IRS voluntary disclosure explained: OVDP vs streamlined (What applies now?) ... FDAP income (Fixed, Determinable, Annual, or Periodical income) is a category of US-source income ... Apr 20, 2026 ... Prior year transcripts - who to call, which forms to fill out, etc. ... In cases where E-filing is not permitted (IRS rules), we outline where and how to snail mail the returns ...
+
+Moving to Costa Rica from the US: Complete 2026 guide for Americans · Retire in Costa Rica: the ultimate guide for US citizens ... Andrew Coleman, an accomplished CPA with a Master's in Accounting from the University of Kansas, has 15 years of experience.
+
+The short answer? No. Costa Rica has a territorial tax system, which means that only income earned within the country is taxed. So if your money comes from US Social Security, foreign rental properties, or investments, you won't owe Costa Rican taxes on it. Costa Rica's tax system includes various forms of taxation, each with its own set of rules and Costa Rica tax rates. Understanding these is crucial for anyone earning income in the country, especially for Americans who are either considering relocating or already living there. The primary focus here is on personal income tax, which applies to both self-employed and employed individuals. In Costa Rica, personal income tax is levied based on the source and amount of income. The system is progressive, meaning higher income brackets are subject to higher tax rates. Self-employed (2025 update) In Costa Rica, income tax is progressive, meaning the more you earn, the higher the tax rate.
+The reform also introduced rules for taxing foreign source passive income – such as dividends, royalties and interest – when derived by multinational entities lacking adequate economic substance.
+
+Costa Rica’s last comprehensive tax reform, implemented in 2019, introduced material changes that reshaped the country’s fiscal framework. A significant outcome was the replacement of the sales tax with VAT, alongside updates to the income tax system. These adjustments aimed to modernise taxation and enhance compliance. Since then, the administration has sought to introduce further reforms aimed at achieving simplification, efficiency and alignment with revenue collection. Among these proposals were attempts to transition from the territorial tax system to a worldwide income taxation model, and to unify the existing schedular income tax structure into an integrated global tax system. Despite their ambitious goals, these reform efforts encountered considerable resistance. Controversial elements, such as introducing worldwide income taxation, sparked debate in Congress and among stakeholders, leading to their rejection.
+
+Enacted in October 2023, the reform reaffirmed Costa Rica’s commitment to the territorial tax principle, stipulating that only income generated within the country’s borders is subject to income tax. This principle applies regardless of the taxpayer’s nationality or residence. The reform also introduced rules for taxing foreign source passive income – such as dividends, royalties and interest – when derived by multinational entities lacking adequate economic substance. These provisions are consistent with measures adopted by jurisdictions like Uruguay and Hong Kong, which faced similar EU scrutiny. Resolution No MH-DGT-RES-0030-2023 established objective criteria for determining economic substance within multinational groups. These criteria encompass operational presence, employee functions and financial resources. However, guidance on implementing these rules remains limited.
+
+The reform also emphasised the integration of the territoriality principle across Costa Rica’s schedular income tax system, which encompasses distinct regimes for corporate taxation, foreign remittances, individual income and passive income. While Congress intended the clarified territoriality principle to apply uniformly, the tax administration has challenged its application to withholding taxes on foreign remittances. This stance has fuelled uncertainty, prompting expectations of disputes that may escalate to litigation and involve the Supreme Court. Additionally, the reform represents an opportunity for Costa Rica to strengthen its international tax compliance. By adopting a proactive stance in resolving ambiguities and aligning its tax administration practices with global norms, the country could attract greater foreign direct investment while ensuring equitable tax enforcement.
+[THINKING]
+ So there's a territorial tax system in place, but the ambiguity lies in whether income earned by someone physically present in Costa Rica counts as Costa Rican-source income. The definition hinges on where the service is actually rendered, which creates that gray area most people interpret in their favor—essentially, if you're working from Costa Rica, that income likely qualifies as Costa Rican-source under their tax code.
+
+For Jake's contractor, there are two main approaches: either invoice directly as an individual and rely on the favorable interpretation that remote work for foreign clients is foreign-source (which many digital nomads do, though it carries some audit risk), or set up a US LLC structure that would be disregarded for US tax purposes and avoid US taxation entirely if there's no US-source income involved. He mentioned he can't start a business in Costa Rica, which likely means visa or residency constraints, but that doesn't prevent him from forming a US LLC abroad since he just needs an address and ID. For Jake's side, paying either an individual contractor or a foreign entity with proper tax forms keeps things clean, though a US LLC owned by a non-resident gets murkier since it has a US TIN but should still be treated as disregarded if structured correctly.
+
+I should give Jake the practical options without getting too deep into tax weeds—he needs a real CPA to execute this properly, but I can frame the strategic choices clearly for a casual chat format.
+Yeah, that's actually a pretty good setup. Costa Rica is one of the territorial-tax countries — they only tax Costa Rican-source income, and foreign-source income generally isn't taxed. The catch: "Costa Rican-source" technically includes services rendered within Costa Rican territory, so if he's physically there doing the work, the tax authority *could* argue it's local-source. In practice, remote work for foreign clients from Costa Rica is a gray area that most interpret favorably.
+
+Since he can't form a local entity, the cleanest play is forming one **somewhere else** and invoicing through it. Two solid options:
+
+**US LLC (most popular for this exact scenario).** A non-US person can form a single-member LLC in Wyoming, New Mexico, or Delaware for cheap (~$100 setup, ~$50–150/yr registered agent). Because it's a disregarded entity owned by a non-resident performing services *outside* the US, there's no US income tax. He files Form 5472 annually (informational, not a tax return). He opens a Mercury or Wise Business account, you pay the LLC, and he draws funds personally. From CR's side, the income is accruing to a foreign entity for foreign clients — strengthens the foreign-source argument considerably.
+
+**Estonia OÜ via e-Residency.** 0% tax on retained earnings, only taxed (~22-25%) when distributed as dividends. Great if he wants to reinvest or stockpile. More setup cost (~€500 + monthly accounting), but the structure is elegant if he's earning real money.
+
+**Your side stays the same regardless:**
+- Get a **W-8BEN-E** if he invoices via an entity, or **W-8BEN** if he invoices personally
+- No 1099 required for foreign payees
+- No US withholding since services are performed abroad
+- Pay via Wise, Mercury, or wire — all clean
+
+One note on the LLC route specifically: a foreign-owned single-member US LLC is technically treated as a foreign person for US withholding purposes, so the W-8BEN-E (with the owner's info) is the right form. Don't let him send you a W-9 even though it's a US entity — that's the most common mistake.
+
+Real talk though — both of you should each spend $300 on a one-hour call with a CPA who does international stuff before pulling the trigger. The strategy is solid; the execution details (where exactly he pays himself, how he documents the foreign-source position, his CR residency status) are where people get tripped up. Want me to put together a checklist of what to ask the CPA?
+===END===
+
+===MSG===
+uuid: 019dd077-5b2f-703c-97f8-f18b2fb4d4d7
+parent: 019dd075-08ec-72b1-a4de-d7b5e3280468
+role: human
+---
+He's a US resident.
+===END===
+
+===MSG===
+uuid: 019dd077-5b2f-703c-97f8-f18c9f140f06
+parent: 019dd077-5b2f-703c-97f8-f18b2fb4d4d7
+role: assistant
+---
+ 
+[THINKING]
+ Wait, that's a critical distinction — Jake mentioned the contractor is a US resident living in Costa Rica, not just a non-US person. That means they're subject to US tax on worldwide income, which completely invalidates all those tax minimization strategies I was considering like the US LLC structure or claiming foreign-source income.
+
+The real options for a US tax resident abroad are the Foreign Earned Income Exclusion (around $130K for 2026 if they meet either the bona fide residence or physical presence test), the Foreign Housing Exclusion for qualifying housing costs, and potentially a Foreign Tax Credit if Costa Rica taxes them — though that's unlikely since Costa Rica probably won't tax foreign-source income anyway.
+
+Self-employment tax is the real problem here since FEIE doesn't cover it, and Costa Rica has no totalization agreement with the US to help avoid the 15.3% hit. State taxes also matter depending on where they last lived — some states like California and New York are aggressive about claiming residents even abroad, so ideally they'd have moved to a tax-free state before leaving. An S-Corp election could theoretically split income between salary and distributions to reduce SE tax, but that's primarily designed for US-based work and gets messy when the owner is living abroad with foreign-source income and CFC/GILTI complications.
+
+For Jake specifically, since he's a US person, the contractor relationship is straightforward — they'd need to issue a 1099-NEC if payments exceed $600, collect a W-9, and treat him as a standard 1099 contractor with no withholding requirements.
+
+I should correct my earlier framing: the creative structures I mentioned don't actually work for US persons due to worldwide taxation, so the real optimization path is FEIE, though SE tax remains unavoidable. The key takeaway is keeping this practical — FEIE for the expat, standard 1099 treatment for Jake, and making sure the expat isn't still tethered to a high-tax state.
+Ah, that changes the picture significantly. Scratch most of what I just said.
+
+US citizens and green card holders are taxed on **worldwide income** no matter where they live, so the LLC/Estonia tricks don't really minimize his tax — they're just structural. The IRS still gets him.
+
+The actual play for a US person living in Costa Rica:
+
+**Foreign Earned Income Exclusion (FEIE) — Form 2555.** This is the big one. For 2026 it's ~$130K of earned income excluded from federal income tax. He needs to qualify via one of two tests:
+- **Physical Presence**: 330 full days outside the US in any 12-month period
+- **Bona Fide Residence**: established as a bona fide resident of CR for an entire tax year (more flexible on US visits but harder to prove first year)
+
+**Foreign Housing Exclusion** stacks on top — a chunk of his rent/utilities in CR above a base amount also gets excluded.
+
+**The unavoidable hit: self-employment tax.** FEIE doesn't reduce the 15.3% SE tax (Social Security + Medicare). Some countries have "totalization agreements" with the US that let you pay into the foreign system instead — **Costa Rica does not have one**. So he's stuck paying full US SE tax on net earnings up to the SS wage base, then 2.9% Medicare above.
+
+**State tax trap.** If his last US state was CA, NY, NJ, or VA, those states are aggressive about claiming continued residency. Ideally he severed ties cleanly or last lived in FL/TX/WA/NV/etc. Worth verifying.
+
+**Your side, corrected:**
+- He's a **US person**, so he gives you a **W-9**, not a W-8
+- You **do** issue a **1099-NEC** if you pay him $600+ in the year
+- No withholding (he's a contractor, handles his own taxes)
+- His foreign address on the 1099 is fine — doesn't change the form
+
+Bottom line for him: with FEIE + housing exclusion, he can probably get $130K–$150K of income federally tax-free, but he'll still owe ~15% in SE tax on the whole thing plus any state tax if he's hooked. That's the realistic floor. There's no clever structure that dodges this without renouncing citizenship or surrendering the green card.
+
+If he wants to push further, he should talk to an expat-focused CPA — Greenback, Bright!Tax, or Taxes for Expats are the usual names. The structuring conversation only matters if he's clearing well into six figures.
+===END===

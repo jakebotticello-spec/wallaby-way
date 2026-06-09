@@ -1,0 +1,5430 @@
+CONVERSATION: bd59de6e-c2ee-498e-905b-b3c38c195c11
+SNAPSHOT_ID: baseline-2026-05-25-ae015455
+CREATED: 2026-02-15T15:39:39.732400Z
+MESSAGES: 14
+
+===MSG===
+uuid: 019c61f5-21ec-7391-a012-dcd6a1bba823
+parent: null
+role: human
+---
+Read this and get ready for edits.  Review the entire file thoroughly for context.
+===END===
+
+===MSG===
+uuid: 019c61f5-21ec-7391-a012-dcd732b5210b
+parent: 019c61f5-21ec-7391-a012-dcd6a1bba823
+role: assistant
+---
+ 
+[TOOL_USE: view]
+{
+  "path": "/mnt/user-data/uploads/Claude_-_New_Service_Plans___Wix_Stores_Integration_2_14_26.md",
+  "description": "Reading the uploaded markdown file to understand its contents and prepare for edits"
+}
+[TOOL_RESULT: view]
+Here's the content of /mnt/user-data/uploads/Claude_-_New_Service_Plans___Wix_Stores_Integration_2_14_26.md with line numbers:
+     1	# 📄 CONTEXT FILE: LRN Wix Stores Migration & Email Checkout
+     2	## Jake's Project - Lance O's Recruiting Network
+     3	
+     4	**Created:** February 2026  
+     5	**Last Updated:** February 14, 2026 (v4)  
+     6	**Website:** lanceosrecruitingnetwork.com  
+     7	**Platform:** Wix (with Velo/Corvid code)  
+     8	**Current Working Page:** `/service-plans`  
+     9	**Project Partner:** Claude (Anthropic)  
+    10	**Human:** Jake
+    11	
+    12	---
+    13	
+    14	## Table of Contents
+    15	1. [Project Summary](#project-summary)
+    16	2. [Architecture Overview](#architecture-overview)
+    17	3. [Product IDs & Subscription Option IDs](#product-ids--subscription-option-ids)
+    18	4. [Add-On Product IDs](#add-on-product-ids)
+    19	5. [All Working Code](#all-working-code)
+    20	6. [CMS Collections](#cms-collections)
+    21	7. [Email Checkout System](#email-checkout-system)
+    22	8. [Google Apps Script Setup](#google-apps-script-setup)
+    23	9. [Member Access & Page Gating](#member-access--page-gating)
+    24	10. [Notification Automation](#notification-automation)
+    25	11. [Key Discoveries & Gotchas](#key-discoveries--gotchas)
+    26	12. [Site URLs & Element IDs](#site-urls--element-ids)
+    27	13. [Payment Methods](#payment-methods)
+    28	14. [Parking Lot / Future Items](#parking-lot--future-items)
+    29	
+    30	---
+    31	
+    32	## Project Summary
+    33	
+    34	### Original Problem
+    35	LRN sells recruiting service packages to help athletes get noticed by college coaches. The old system used **Wix Pricing Plans** which only offered popup checkout, no BNPL support, and no promo codes.
+    36	
+    37	### Solution
+    38	Migrated to **Wix Stores** using a "fake physical product" workaround (physical products with free shipping to unlock subscription functionality). This gives us:
+    39	- ✅ Full checkout page (not popup)
+    40	- ✅ BNPL support (Afterpay, Klarna confirmed working)
+    41	- ✅ Promo code / coupon functionality
+    42	- ✅ Email checkout links (send checkout to parent while on a sales call)
+    43	- ✅ Custom HTML pricing table with payment term selector
+    44	- ✅ Member CMS auto-update on purchase
+    45	- ✅ Page gating for subscribers
+    46	- ✅ Order notifications with plan name
+    47	- ✅ Additional Services add-ons (added Feb 14, 2026)
+    48	
+    49	### The Two Checkout Flows
+    50	
+    51	**Flow 1: Direct Checkout (Select Plan)**
+    52	```
+    53	You select plan + payment term + optional add-ons → Click "Select Plan" → Products added to YOUR cart → Navigate to /cart-page → Checkout
+    54	```
+    55	
+    56	**Flow 2: Email Checkout (Send Plan)**
+    57	```
+    58	You select plan + payment term + optional add-ons → Click "Send Plan" → Enter parent email → Click "Email Checkout Link"
+    59	→ Backend creates checkout template → Saves PendingCheckouts record → Sends branded HTML email via Google Apps Script
+    60	→ Parent clicks "Complete Selection" in email → Guest checkout on Wix → onOrderPaid fires
+    61	→ events.js matches PendingCheckouts record → Updates ATHLETE's Members record (not buyer's)
+    62	```
+    63	
+    64	---
+    65	
+    66	## Architecture Overview
+    67	
+    68	### How It All Connects
+    69	
+    70	```
+    71	HTML Embed (#htmlServicePlanTable)
+    72	  ├── Plan selection (6 columns)
+    73	  ├── Payment term toggle (One-Pay / Credit / 6-Pay / 12-Pay)
+    74	  ├── Additional Services dropdown (13 add-ons, multi-select)
+    75	  ├── "Select Plan" button → postMessage LRN_CHECKOUT → page code → addSubscriptionToCart() → /cart-page
+    76	  ├── "Send Plan" button → reveals email inputs
+    77	  └── "Email Checkout Link" button → postMessage LRN_EMAIL_CHECKOUT → page code → createCheckoutLinkAndEmail()
+    78	        ├── Creates Wix checkout template (shareable URL)
+    79	        ├── Inserts PendingCheckouts record (athlete email + member ID)
+    80	        └── Calls Google Apps Script to send branded HTML email
+    81	
+    82	Service Plans Page Code
+    83	  ├── Gets logged-in member info (email, name, memberId)
+    84	  ├── Sends member info to embed (auto-fills athlete email)
+    85	  ├── Listens for LRN_CHECKOUT → calls addSubscriptionToCart() → navigates to cart
+    86	  └── Listens for LRN_EMAIL_CHECKOUT → calls createCheckoutLinkAndEmail() → shows status
+    87	
+    88	backend/storeHelper.jsw
+    89	  ├── addSubscriptionToCart() — adds plan + add-ons to cart
+    90	  └── createCheckoutLinkAndEmail() — email checkout flow with add-ons
+    91	        ├── Uses checkoutTemplates.createCheckoutTemplate() with elevate()
+    92	        ├── Builds checkout URL: wixapis.com/ecom/v1/checkout-templates/{id}/create-and-redirect-to-checkout?siteId={id}
+    93	        ├── Inserts PendingCheckouts record
+    94	        ├── Builds full HTML email with plan image, pricing, add-ons list, CTA button
+    95	        └── POSTs to Google Apps Script URL via wix-fetch
+    96	
+    97	backend/events.js
+    98	  └── wixStores_onOrderPaid()
+    99	        ├── Gets product ID from order → looks up plan details
+   100	        ├── Checks PendingCheckouts collection first (for emailed checkout orders)
+   101	        │   ├── Matches by sendToEmail = buyer email
+   102	        │   └── Fallback: most recent pending for same product within 2 hours
+   103	        ├── If match found: uses athlete email/memberId from PendingCheckouts
+   104	        ├── If no match: falls back to buyer email (direct checkout flow)
+   105	        └── Updates Members collection: planName, planExpiration, datePurchased, subscription=true, category="Case Won"
+   106	```
+   107	
+   108	---
+   109	
+   110	## Product IDs & Subscription Option IDs
+   111	
+   112	### 6 Products × 3 Payment Terms = 18 Purchase Paths
+   113	
+   114	| Tier | Product ID | 6-Pay Sub ID | 12-Pay Sub ID |
+   115	|------|-----------|-------------|--------------|
+   116	| **JV** ($999, 2yr) | `80009c4e-5f5b-0c95-710b-2ce0da21f684` | `67bc6c5f-5691-4296-8647-cdb1378f7469` | `74d620f8-3a10-42ca-9d91-97a0c6b20317` |
+   117	| **Varsity** ($2,499, 3yr) | `da2e617d-ff9c-7c9f-2533-2f99ecc69f23` | `e42fd6ca-d44d-438b-baab-c4fe303ba118` | `45164cd1-f07a-41b1-a5cb-760cf223389c` |
+   118	| **Red Shirt** ($3,999, 5yr) | `d89f5806-bcd3-579c-c620-4a075b6f9238` | `2c3a45e4-5a4c-421c-8128-255a12d14860` | `ada27824-2fa7-4389-8d88-7dfe455ccea4` |
+   119	| **MVP** ($5,499, 7yr) | `c94a9e16-e25e-fe2e-b776-0dfbfcd45030` | `0b1eaef6-a2fe-4b70-8691-75c74699e769` | `dd40d45c-a317-43ba-8fda-f456a5d44d71` |
+   120	| **All-American** ($6,499, 9yr) | `fb85b062-75f6-904d-fa9a-32a71b5320c0` | `0aacbce3-df43-40eb-ba47-c7daa6d56377` | `7c2cb7cb-8d90-48c7-9c3e-2c947243b73f` |
+   121	| **Heisman** ($7,999, 10yr) | `c1a561a1-5362-5b1e-58b4-851fc25fad3b` | `f3f467aa-4b0f-4c18-8294-82dd2489568d` | `9cae61f8-ed41-47c9-8cc4-86df19b4206c` |
+   122	
+   123	**One-Pay** = no subscriptionOptionId (just the base product)  
+   124	**Credit** = same as One-Pay (for BNPL customers - Afterpay, Klarna, etc.)  
+   125	**6-Pay** = sub6 ID  
+   126	**12-Pay** = sub12 ID
+   127	
+   128	### Pricing Details
+   129	
+   130	| Tier | One-Pay | 6-Pay | 12-Pay | Term |
+   131	|------|---------|-------|--------|------|
+   132	| JV | $999 | $199/mo × 6 | $119/mo × 12 | 2 Years |
+   133	| Varsity | $2,499 | $499/mo × 6 | $259/mo × 12 | 3 Years |
+   134	| Red Shirt | $3,999 | $699/mo × 6 | $359/mo × 12 | 5 Years |
+   135	| MVP | $5,499 | $949/mo × 6 | $499/mo × 12 | 7 Years |
+   136	| All-American | $6,499 | $1,149/mo × 6 | $599/mo × 12 | 9 Years |
+   137	| Heisman | $7,999 | $1,349/mo × 6 | $699/mo × 12 | 10 Years |
+   138	
+   139	### Plan Images
+   140	
+   141	| Plan | Image URL |
+   142	|------|-----------|
+   143	| JV | `https://static.wixstatic.com/media/c45977_a57e98e79103445499341e072e295a35~mv2.png` |
+   144	| Varsity | `https://static.wixstatic.com/media/c45977_66604a9ba9c7480b8fb2ca8fb4f0bad6~mv2.png` |
+   145	| Red Shirt | `https://static.wixstatic.com/media/c45977_dd44e860b8364ccab9870e212ffdfa29~mv2.png` |
+   146	| MVP | `https://static.wixstatic.com/media/c45977_4e89198eea24426292067ac004f8117e~mv2.png` |
+   147	| All-American | `https://static.wixstatic.com/media/c45977_5db467fed754493b98c338fdc35c81f4~mv2.png` |
+   148	| Heisman | `https://static.wixstatic.com/media/c45977_c511e680738b41379f1b1eddde9a6207~mv2.png` |
+   149	
+   150	---
+   151	
+   152	## Add-On Product IDs
+   153	
+   154	| Add-on | Cost | Notes | WIX Product ID |
+   155	|--------|------|-------|----------------|
+   156	| NIL Consultation | $299 | | `63469fd0-d170-f04a-863e-2c85ce648c1b` |
+   157	| NIL Consultation + Package | $999 | $150 Consultation, $749 Non-refundable Deposit | `bd543aa5-9b5d-2e68-0f5b-fa9e2d473408` |
+   158	| 1-on-1 Virtual Coaching | $499 | Deposit | `faf75555-371f-ec0c-6d7d-f009990ddfb2` |
+   159	| 1-on-1 In-Person Coaching | $999 | Deposit | `7c6ecc08-22e2-daad-4633-6f154eacdac7` |
+   160	| Email Campaigns (1/yr) | $599 | | `4c0cd65d-ccf1-8405-25a5-d040d6a3574d` |
+   161	| Email Campaigns (2/yr) | $999 | | `e7ff5087-4b70-58ac-4330-4f05a626ade3` |
+   162	| Premium Film Consultation | $499 | | `7bfe81b5-ea1a-cdf1-5991-ac6b6e324d9f` |
+   163	| Personal Mentorship | $999 | | `5a1c04e7-b947-bf87-07de-6887c2994d10` |
+   164	| Direct Calls to Coaches (10) | $1,499 | | `4baad6da-4ad4-82e2-6329-6afb1683f1c1` |
+   165	| Direct Calls to Coaches (20) | $2,299 | | `70290036-50ad-47b5-6c27-7a33eb45d493` |
+   166	| Direct Calls to Coaches (30) | $2,999 | | `26f10df8-ecec-ce48-5083-9ceaa8066c42` |
+   167	| Highlight Film Edits (2/yr) | $999 | | `71aa0634-252f-9ca5-74f1-cebd24043b2d` |
+   168	| Media Training + 10min Podcast | $999 | | `24229940-100c-9762-4d93-b37235a8f564` |
+   169	
+   170	---
+   171	
+   172	## All Working Code
+   173	
+   174	### backend/storeHelper.jsw
+   175	
+   176	```javascript
+   177	import { currentCart } from 'wix-ecom-backend';
+   178	import { checkoutTemplates } from 'wix-ecom-backend';
+   179	import { elevate } from 'wix-auth';
+   180	import { fetch } from 'wix-fetch';
+   181	import wixData from 'wix-data';
+   182	
+   183	const SITE_ID = "3bc4e3c6-fa33-4760-976c-0afe3e5853c3";
+   184	const STORES_APP_ID = "215238eb-22a5-4c36-9e7b-e7c08025e04e";
+   185	const EMAIL_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9GCiXnd3O5FQoKOXCYYwSBFipTU41EPWTnMiTNZlo-MrV-B3VYR3FyHEoqcDN6Jjl/exec";
+   186	
+   187	const PLAN_IMAGES = {
+   188	    "JV": "https://static.wixstatic.com/media/c45977_a57e98e79103445499341e072e295a35~mv2.png",
+   189	    "Varsity": "https://static.wixstatic.com/media/c45977_66604a9ba9c7480b8fb2ca8fb4f0bad6~mv2.png",
+   190	    "Red Shirt": "https://static.wixstatic.com/media/c45977_dd44e860b8364ccab9870e212ffdfa29~mv2.png",
+   191	    "MVP": "https://static.wixstatic.com/media/c45977_4e89198eea24426292067ac004f8117e~mv2.png",
+   192	    "All-American": "https://static.wixstatic.com/media/c45977_5db467fed754493b98c338fdc35c81f4~mv2.png",
+   193	    "Heisman": "https://static.wixstatic.com/media/c45977_c511e680738b41379f1b1eddde9a6207~mv2.png"
+   194	};
+   195	
+   196	const PLAN_PRICES = {
+	< truncated lines 197-450 >
+   451	            memberResults = await wixData.query("Members")
+   452	                .eq("_id", athleteMemberId)
+   453	                .find({ suppressAuth: true });
+   454	        }
+   455	
+   456	        if (!memberResults || memberResults.items.length === 0) {
+   457	            memberResults = await wixData.query("Members")
+   458	                .eq("email", lookupEmail)
+   459	                .find({ suppressAuth: true });
+   460	        }
+   461	
+   462	        if (memberResults.items.length === 0) return;
+   463	
+   464	        const member = memberResults.items[0];
+   465	
+   466	        member.planName = "Lance O's | " + planDetails.name;
+   467	        member.planExpiration = expiration;
+   468	        member.datePurchased = now;
+   469	        member.subscription = true;
+   470	        member.category = "Case Won";
+   471	
+   472	        await wixData.update("Members", member, { suppressAuth: true });
+   473	
+   474	    } catch (err) {
+   475	        console.error("handleOrderPaid error:", err);
+   476	    }
+   477	}
+   478	```
+   479	
+   480	### Service Plans Page Code
+   481	
+   482	```javascript
+   483	import { addSubscriptionToCart, createCheckoutLinkAndEmail } from 'backend/storeHelper.jsw';
+   484	import wixLocationFrontend from 'wix-location-frontend';
+   485	import { currentMember } from 'wix-members';
+   486	import { updateMenu } from "public/headerUpdate.js";
+   487	import { formFactor } from 'wix-window-frontend';
+   488	import wixData from 'wix-data';
+   489	
+   490	$w.onReady(async function () {
+   491	
+   492	    let memberInfo = { email: "", name: "", memberId: "" };
+   493	
+   494	    try {
+   495	        const member = await currentMember.getMember();
+   496	        if (member) {
+   497	            memberInfo.memberId = member._id || "";
+   498	
+   499	            const memberData = await wixData.query("Members")
+   500	                .eq("_id", member._id)
+   501	                .find({ suppressAuth: true });
+   502	
+   503	            if (memberData.items.length > 0) {
+   504	                const m = memberData.items[0];
+   505	                memberInfo.email = m.email || "";
+   506	                memberInfo.name = (m.name || "") + (m.lastName ? " " + m.lastName : "");
+   507	            }
+   508	
+   509	            updateMenu(member, "#horizontalMenu4", "#mobileButton1", formFactor);
+   510	        }
+   511	    } catch (err) {
+   512	        console.error("Member info error:", err);
+   513	    }
+   514	
+   515	    $w('#htmlServicePlanTable').postMessage({
+   516	        type: "LRN_MEMBER_INFO",
+   517	        email: memberInfo.email,
+   518	        name: memberInfo.name,
+   519	        memberId: memberInfo.memberId
+   520	    });
+   521	
+   522	    $w('#htmlServicePlanTable').onMessage(async (event) => {
+   523	        let data = event.data;
+   524	        if (typeof data === "string") {
+   525	            try { data = JSON.parse(data); } catch(e) {}
+   526	        }
+   527	
+   528	        if (data && data.type === "LRN_CHECKOUT") {
+   529	            const result = await addSubscriptionToCart(
+   530	                data.productId, 
+   531	                data.subscriptionOptionId,
+   532	                data.addons || []
+   533	            );
+   534	            if (result.success) {
+   535	                wixLocationFrontend.to("/cart-page");
+   536	            } else {
+   537	                console.error("Failed to add to cart:", result.error);
+   538	            }
+   539	        }
+   540	
+   541	        if (data && data.type === "LRN_EMAIL_CHECKOUT") {
+   542	            $w('#htmlServicePlanTable').postMessage({ type: "LRN_EMAIL_STATUS", status: "sending" });
+   543	
+   544	            const result = await createCheckoutLinkAndEmail(
+   545	                data.productId,
+   546	                data.subscriptionOptionId,
+   547	                data.planName,
+   548	                data.paymentTerm,
+   549	                data.sendToEmail,
+   550	                data.athleteEmail || memberInfo.email,
+   551	                data.athleteName || memberInfo.name,
+   552	                memberInfo.memberId,
+   553	                data.addons || [],
+   554	                data.addonNames || []
+   555	            );
+   556	
+   557	            if (result.success) {
+   558	                $w('#htmlServicePlanTable').postMessage({
+   559	                    type: "LRN_EMAIL_STATUS",
+   560	                    status: "sent",
+   561	                    email: data.sendToEmail
+   562	                });
+   563	            } else {
+   564	                console.error("Email checkout error:", result.error);
+   565	                $w('#htmlServicePlanTable').postMessage({
+   566	                    type: "LRN_EMAIL_STATUS",
+   567	                    status: "error",
+   568	                    error: result.error
+   569	                });
+   570	            }
+   571	        }
+   572	    });
+   573	});
+   574	```
+   575	
+   576	---
+   577	
+   578	## CMS Collections
+   579	
+   580	### Members Collection
+   581	
+   582	| Field | Key | Type |
+   583	|-------|-----|------|
+   584	| Name | `name` | Text |
+   585	| Last Name | `lastName` | Text |
+   586	| Email | `email` | Text |
+   587	| Plan Name | `planName` | Text |
+   588	| Plan Expiration | `planExpiration` | Date |
+   589	| Date Purchased | `datePurchased` | Date |
+   590	| Subscription | `subscription` | Boolean |
+   591	| Category | `category` | Text |
+   592	
+   593	### PendingCheckouts Collection
+   594	
+   595	| Field | Key | Type |
+   596	|-------|-----|------|
+   597	| Checkout Template ID | `checkoutTemplateId` | Text |
+   598	| Athlete Email | `athleteEmail` | Text |
+   599	| Athlete Name | `athleteName` | Text |
+   600	| Athlete Member ID | `athleteMemberId` | Text |
+   601	| Send To Email | `sendToEmail` | Text |
+   602	| Plan Name | `planName` | Text |
+   603	| Payment Term | `paymentTerm` | Text |
+   604	| Product ID | `productId` | Text |
+   605	| Subscription Option ID | `subscriptionOptionId` | Text |
+   606	| Addons | `addons` | Text |
+   607	| Addon Names | `addonNames` | Text |
+   608	| Status | `status` | Text |
+   609	| Completed Date | `completedDate` | Date and Time |
+   610	
+   611	---
+   612	
+   613	## Key Constants
+   614	
+   615	- **Site ID:** `3bc4e3c6-fa33-4760-976c-0afe3e5853c3`
+   616	- **Stores App ID:** `215238eb-22a5-4c36-9e7b-e7c08025e04e`
+   617	- **Variant ID (no variants):** `00000000-0000-0000-0000-000000000000`
+   618	- **Google Apps Script URL:** `https://script.google.com/macros/s/AKfycbx9GCiXnd3O5FQoKOXCYYwSBFipTU41EPWTnMiTNZlo-MrV-B3VYR3FyHEoqcDN6Jjl/exec`
+   619	
+   620	---
+   621	
+   622	## Changelog
+   623	
+   624	### v4 (February 14, 2026)
+   625	- Added Additional Services dropdown with 13 add-ons
+   626	- Add-ons can be multi-selected and are added to cart with the plan
+   627	- Email checkout now includes add-ons in the checkout template and email body
+   628	- Added "Credit" payment term option (functions same as One-Pay, for BNPL clarity)
+   629	- Updated add-on display names with descriptive notes
+   630	- Fixed NIL Consultation product IDs
+   631	
+   632	### v3 (February 10, 2026)
+   633	- Completed email checkout system with status tracking
+   634	- Added PendingCheckouts CMS collection
+   635	- Integrated Google Apps Script for email delivery
+   636	
+   637	### v2 (February 8, 2026)
+   638	- Migrated from Wix Pricing Plans to Wix Stores
+   639	- Created custom HTML pricing table embed
+   640	- Implemented subscription options for 6-pay and 12-pay
+   641	
+   642	---
+   643	
+   644	**End of Context File**
+   645	
+   646	*Last Updated: February 14, 2026 | Version 4*
+   647	
+I've reviewed the entire file. This is a comprehensive context document for Jake's LRN (Lance O's Recruiting Network) Wix Stores migration project. It covers:
+
+- **Project overview**: Migration from Wix Pricing Plans to Wix Stores for better checkout, BNPL support, and promo codes
+- **Two checkout flows**: Direct checkout and email checkout (for sending to parents during sales calls)
+- **Product IDs**: 6 service tiers (JV through Heisman) with 3 payment terms each (One-Pay, 6-Pay, 12-Pay)
+- **13 Add-on products**: NIL consultations, coaching, email campaigns, mentorship, etc.
+- **Working code**: Backend storeHelper.jsw, events.js for order handling, and page code
+- **CMS collections**: Members and PendingCheckouts structures
+- **Key constants**: Site ID, Stores App ID, Google Apps Script URL
+- **Changelog**: Currently at v4 (February 14, 2026)
+
+I'm ready for your edits. What would you like to change?
+===END===
+
+===MSG===
+uuid: 019c61f6-5904-7490-97cb-af8cca85a9b8
+parent: 019c61f5-21ec-7391-a012-dcd732b5210b
+role: human
+---
+Have some updates to these plans.  Please revise the embed and post the embed code here in a box.
+===END===
+
+===MSG===
+uuid: 019c61f6-5904-7490-97cb-af8d71ffc7ba
+parent: 019c61f6-5904-7490-97cb-af8cca85a9b8
+role: assistant
+---
+ Looking at the image, I can see the updated plan features. Let me analyze the changes from the current embed to the new specifications:
+
+**Key changes I see:**
+1. **New columns/features added:** Premium Film Evaluation, Custom Graphics, Monthly Seminars, Player Podcast Interview/Media Training, Direct Calls to Coaches, Personalized Gameplan, Strategy Meetings, Study Guide and Classroom, Video Breakdowns, Workout Program, Nutrition Program, Professional Film Edits, Coaches Directory, Email Campaigns, Transfer Assistance, Personal Mentorship, X DMs, NIL Consultation
+2. **Values have changed significantly** - the distribution of features across tiers is different
+3. **Some features are now per-year quantities** where they weren't before
+
+Let me create the updated embed with all the corrected values:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --lance-red: #990000;
+    --dark-maroon: #3a0809;
+    --rich-crimson: #5e181a;
+    --highlight-red: #b71c1c;
+    --white: #ffffff;
+    --text-dark: #020303;
+    --border-light: #e0e0e0;
+    --tier-bottom: #fcfcfc;
+    --tier-middle: #f4f4f4;
+    --tier-top: #e8e8e8;
+    --label-col-width: 200px;
+    --plan-col-width: 146px;
+    --table-width: 1276px;
+    --scroll-height: 775px;
+    --header-img-height: 145px;
+    --row-height: 60px;
+    --sub-row-height: 40px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scroll-wrapper {
+    height: var(--scroll-height);
+    width: var(--table-width);
+    overflow: auto;
+    border-bottom: 3px solid var(--lance-red);
+    scroll-behavior: smooth;
+    background-color: var(--white);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-wrapper::-webkit-scrollbar { display: none; }
+
+  table {
+    width: var(--table-width);
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    background-color: var(--white);
+    border-bottom: 5px solid var(--lance-red);
+    padding: 0;
+    margin: 0;
+    width: var(--plan-col-width);
+    min-width: var(--plan-col-width);
+  }
+
+  thead th:first-child,
+  thead th:last-child {
+    position: sticky;
+    top: 0;
+    z-index: 400 !important;
+    background-color: var(--white);
+    border-bottom: 5px solid var(--lance-red);
+    width: var(--label-col-width);
+    min-width: var(--label-col-width);
+  }
+  thead th:first-child { left: 0; border-right: 3px solid var(--lance-red); }
+  thead th:last-child  { right: 0; border-left: 3px solid var(--lance-red); border-right: none; }
+
+  td:first-child,
+  td:last-child {
+    position: sticky;
+    z-index: 200;
+    background-color: var(--white);
+    width: var(--label-col-width);
+    min-width: var(--label-col-width);
+    text-align: center;
+    padding: 0 2px;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.1;
+    white-space: normal;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  td:first-child { left: 0; border-right: 3px solid var(--lance-red); }
+  td:last-child  { right: 0; border-left: 3px solid var(--lance-red); }
+
+  td {
+    height: var(--row-height);
+    padding: 0 2px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-dark);
+    vertical-align: middle;
+    position: relative;
+    background-color: var(--white);
+  }
+  td > span, td > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .tl-plan-name, .tl-price-label, .tl-term-label {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    font-weight: 900;
+    color: var(--dark-maroon);
+    background-color: var(--white);
+  }
+  .tl-plan-name {
+    height: var(--header-img-height);
+    align-items: flex-end;
+    font-size: 17px;
+    padding-bottom: 0;
+    margin-bottom: 5px;
+  }
+  .tl-price-label, .tl-term-label {
+    height: var(--sub-row-height);
+    align-items: center;
+    font-size: 17px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .header-top-container {
+    height: var(--header-img-height);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .header-img {
+    max-width: 95%;
+    max-height: 140px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .price-tag {
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-row-height);
+    color: var(--lance-red);
+    border-top: 1px solid var(--border-light);
+    background-color: var(--tier-middle);
+  }
+  th:nth-child(3) .price-tag,
+  th:nth-child(5) .price-tag,
+  th:nth-child(7) .price-tag {
+    background-color: #e0e0e0;
+  }
+
+  .term-label {
+    font-weight: 900;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-row-height);
+    color: var(--white);
+    background-color: var(--rich-crimson);
+    border-bottom: 1px solid #000000;
+  }
+  th:nth-child(3) .term-label,
+  th:nth-child(5) .term-label,
+  th:nth-child(7) .term-label {
+    background-color: var(--dark-maroon);
+  }
+  
+  th:first-child .tl-term-label,
+  th:last-child .tl-term-label {
+    border-bottom: 1px solid #000000;
+  }
+
+  td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+    background-color: var(--tier-bottom);
+    border-right: 1px solid var(--border-light);
+  }
+  td:nth-child(5), td:nth-child(6) {
+    background-color: var(--tier-middle);
+    border-right: 1px solid var(--border-light);
+  }
+  td:nth-child(7) {
+    background-color: var(--tier-top);
+    border-right: 1px solid var(--border-light);
+    border-left: 1px solid #d0d0d0;
+  }
+
+  .data-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 32px;
+    background-color: var(--lance-red);
+    color: white;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 18px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+  }
+  .check-mark { font-size: 20px; }
+
+  tbody tr:nth-child(even) td {
+    background-image: linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0.03));
+  }
+  tbody tr:nth-child(even) td:first-child,
+  tbody tr:nth-child(even) td:last-child {
+    background-image: none;
+    background-color: var(--white);
+  }
+
+  tbody tr:hover td::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.05);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hot-row td {
+    background-color: rgba(153, 0, 0, 0.12) !important;
+    border-bottom: 1px solid var(--border-light);
+    background-image: none !important;
+  }
+  .hot-row td:first-child,
+  .hot-row td:last-child {
+    color: var(--highlight-red);
+    font-weight: 900;
+    background-color: #fff5f5 !important;
+  }
+  .hot-row td:first-child { border-left: 10px solid var(--highlight-red); padding-left: 5px; }
+  .hot-row td:last-child  { border-right: 10px solid var(--highlight-red); padding-left: 5px; }
+
+  td.active-column {
+    box-shadow: inset 3px 0 0 0 var(--lance-red), inset -3px 0 0 0 var(--lance-red) !important;
+    background-color: rgba(186, 191, 190, 0.3) !important;
+  }
+  th.active-column {
+    box-shadow: inset 3px 0 0 0 var(--lance-red), inset -3px 0 0 0 var(--lance-red) !important;
+    background-color: #f2f2f2 !important;
+    opacity: 1 !important;
+  }
+  thead th:not(:first-child):not(:last-child):hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  #navArrow {
+    margin-top: 10px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+  .arrow-shape {
+    border: solid var(--lance-red);
+    border-width: 0 8px 8px 0;
+    display: inline-block;
+    padding: 10px;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  .arrow-up .arrow-shape {
+    transform: rotate(-135deg);
+    margin-top: 10px;
+  }
+
+  .addons-section {
+    width: 850px;
+    margin: 15px 0;
+  }
+
+  .addons-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background-color: var(--dark-maroon);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .addons-header:hover {
+    background-color: var(--rich-crimson);
+  }
+  .addons-header.open {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .addons-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .addons-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--white);
+  }
+
+  .addons-count {
+    display: none;
+    background-color: var(--lance
+===END===
+
+===MSG===
+uuid: 019c61f7-0e68-7358-ac41-dfe02eeb7c14
+parent: 019c61f6-5904-7490-97cb-af8d71ffc7ba
+role: human
+---
+Uh, there weren't that many changes.  Take a look at the embed again and make sure you're comparing the right things.
+===END===
+
+===MSG===
+uuid: 019c61f7-0e68-7358-ac41-dfe169a653c2
+parent: 019c61f7-0e68-7358-ac41-dfe02eeb7c14
+role: assistant
+---
+ Looking at the image more carefully and comparing it to the current embed's `<tbody>` rows, let me identify the actual changes:
+
+**Current embed rows (in order):**
+1. Monthly Seminars & Recruit Networking - ✓ all
+2. Personalized Gameplan - ✓ all (hot-row)
+3. Study Guide & Classroom - ✓ all
+4. National Coaches Directory - ✓ all
+5. Strategy Meetings (per year) - 4, 12, 24, 36, 48, Unl
+6. Video Breakdowns (per year) - 1, 2, 3, 4, 5, 6
+7. Highlight Film Edits (per year) - 1, 2, 3, 4, 5, Unl
+8. Email Campaigns - 2, 3, 5, 3/yr, 4/yr, 5/yr (hot-row)
+9. Transfer Assistance - ✗, ✓, ✓, ✓, ✓, ✓
+10. Workout, Exercise, Flexibility Program - ✗, ✓, ✓, ✓, ✓, ✓
+11. Nutrition Program - ✗, ✗, ✓, ✓, ✓, ✓
+12. Custom Graphics (per year) - ✗, ✗, 2, 5, 10, Unl
+13. Media Training & Podcast Interview - ✗, ✗, ✗, 1, 2, 3
+14. Direct Calls to College Coaches - ✗, ✗, ✗, 10, 20, 30 (hot-row)
+15. Personal Daily Mentorship - ✗, ✗, ✗, ✗, ✓, ✓ (hot-row)
+16. Premium Film Evaluation (per year) - ✗, ✗, ✗, ✗, 1, 1 (hot-row)
+17. 50 Twitter/X DMs (per year) - ✗, ✗, ✗, ✗, ✗, ✓
+18. NIL Consultation - ✗, ✗, ✗, ✗, ✗, 1 (hot-row)
+
+**From the spreadsheet image (reading left to right for JV, Varsity, Red Shirt, MVP, All-American, Heisman):**
+
+Looking at the differences I can see:
+- **Premium Film Evaluation**: Currently ✗, ✗, ✗, ✗, 1, 1 → Image shows: ✗, ✗, 2, ✗, 1, 1
+- **Custom Graphics**: Currently ✗, ✗, 2, 5, 10, Unl → Image shows: ✗, ✗, 5, 10, X (checkmark?), Unl
+- **Strategy Meetings**: Currently 4, 12, 24, 36, 48, Unl → Image shows: X, 12, X, 36, X, 60
+- **Video Breakdowns**: Image shows: X, 2, X, 4, X, 6
+- **Direct Calls**: Image shows: ✗, ✗, ✗, X, 2, 30
+- **Player Podcast/Media Training**: Image shows: ✗, ✗, 1, ✗, X, 30
+- **Email Campaigns**: Image shows: 1, X, 3, X, 4, 5
+- **Professional Film Edits**: Image shows: 1, X, 3, X, 4, Unl
+- **Personal Mentorship**: Image shows: ✗, ✗, ✗, ✗, X, ✓
+- **X DMs**: Image shows: ✗, ✗, ✗, ✗, ✗, 50/Year
+- **NIL Consultation**: Image shows: ✗, ✗, ✗, ✗, ✗, 1
+
+The image is a bit hard to read. Could you clarify which specific rows/values need to change? Or confirm the exact values for any rows that are different?
+===END===
+
+===MSG===
+uuid: 019c61f8-4f7c-7251-9af7-5efffac29af2
+parent: 019c61f7-0e68-7358-ac41-dfe169a653c2
+role: human
+---
+Nope.  You figure it out.  Here's two images - maybe you can read it better.
+===END===
+
+===MSG===
+uuid: 019c61f8-4f7c-7251-9af7-5f00bd4f0011
+parent: 019c61f8-4f7c-7251-9af7-5efffac29af2
+role: assistant
+---
+ Now I can read it clearly. Let me map out the changes:
+
+**From the spreadsheet (JV → Varsity → Red Shirt → MVP → All-American → Heisman):**
+
+| Feature | JV | Varsity | Red Shirt | MVP | All-American | Heisman |
+|---------|-----|---------|-----------|-----|--------------|---------|
+| Premium Film Evaluation (Qty/Yr) | - | - | - | - | 1 | 1 |
+| Custom Graphics (Qty/Yr) | - | - | 2 | 5 | 10 | X (check) |
+| Monthly Seminars | X | X | X | X | X | X |
+| Player Podcast Interview / Media Training | - | - | - | 1 | 2 | 3 |
+| Direct Calls to Coaches (Qty/Yr) | - | - | - | 10 | 20 | 30 |
+| Personalized Gameplan | X | X | X | X | X | X |
+| Strategy Meetings (Qty/Yr) | 4 | 12 | 24 | 36 | 48 | 60 |
+| Study Guide and Classroom | X | X | X | X | X | X |
+| Video Breakdowns (Qty/Yr) | 1 | 2 | 3 | 4 | 5 | 6 |
+| Workout Program | - | X | X | X | X | X |
+| Nutrition Program | - | - | - | X | X | X |
+| Professional Film Edits (Qty/Yr) | 1 | 2 | 3 | 4 | 5 | Unlimited |
+| Coaches Directory | X | X | X | X | X | X |
+| Email Campaigns (Qty/Yr) | 1 | 2 | 3 | 3 | 4 | 5 |
+| Transfer Assistance (HS and College) | - | - | X | X | X | X |
+| Personal Mentorship | - | - | - | - | X | X |
+| X DMs | - | - | - | - | - | 50/Year |
+| NIL Consultation | - | - | - | - | - | 1 |
+
+**Changes from current embed:**
+1. **Strategy Meetings**: Heisman changes from "Unl" to "60"
+2. **Highlight Film Edits** → renamed to **Professional Film Edits**: JV=1, Varsity=2, Red Shirt=3, MVP=4, All-American=5, Heisman=Unlimited (currently 1,2,3,4,5,Unl - same values, just name change)
+3. **Email Campaigns**: Changes from "2,3,5,3/yr,4/yr,5/yr" to "1,2,3,3,4,5"
+4. **Workout Program**: Row name changes from "Workout, Exercise, Flexibility Program" - values same
+5. **Nutrition Program**: Changes from "✗,✗,✓,✓,✓,✓" to "✗,✗,✗,✓,✓,✓" (Red Shirt loses it)
+6. **Custom Graphics**: Changes from "✗,✗,2,5,10,Unl" to "✗,✗,2,5,10,✓"
+7. **Transfer Assistance**: Row name changes to include "(HS and College)"
+8. **Personal Mentorship**: Row name changes from "Personal Daily Mentorship"
+9. **X DMs**: Changes from "50 Twitter/X DMs (per year)" showing checkmark to showing "50/Year"
+10. **National Coaches Directory** → renamed to **Coaches Directory**
+
+Let me create the updated embed:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --lance-red: #990000;
+    --dark-maroon: #3a0809;
+    --rich-crimson: #5e181a;
+    --highlight-red: #b71c1c;
+    --white: #ffffff;
+    --text-dark: #020303;
+    --border-light: #e0e0e0;
+    --tier-bottom: #fcfcfc;
+    --tier-middle: #f4f4f4;
+    --tier-top: #e8e8e8;
+    --label-col-width: 200px;
+    --plan-col-width: 146px;
+    --table-width: 1276px;
+    --scroll-height: 775px;
+    --header-img-height: 145px;
+    --row-height: 60px;
+    --sub-row-height: 40px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scroll-wrapper {
+    height: var(--scroll-height);
+    width: var(--table-width);
+    overflow: auto;
+    border-bottom: 3px solid var(--lance-red);
+    scroll-behavior: smooth;
+    background-color: var(--white);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-wrapper::-webkit-scrollbar { display: none; }
+
+  table {
+    width: var(--table-width);
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    background-color: var(--white);
+    border-bottom: 5px solid var(--lance-red);
+    padding: 0;
+    margin: 0;
+    width: var(--plan-col-width);
+    min-width: var(--plan-col-width);
+  }
+
+  thead th:first-child,
+  thead th:last-child {
+    position: sticky;
+    top: 0;
+    z-index: 400 !important;
+    background-color: var(--white);
+    border-bottom: 5px solid var(--lance-red);
+    width: var(--label-col-width);
+    min-width: var(--label-col-width);
+  }
+  thead th:first-child { left: 0; border-right: 3px solid var(--lance-red); }
+  thead th:last-child  { right: 0; border-left: 3px solid var(--lance-red); border-right: none; }
+
+  td:first-child,
+  td:last-child {
+    position: sticky;
+    z-index: 200;
+    background-color: var(--white);
+    width: var(--label-col-width);
+    min-width: var(--label-col-width);
+    text-align: center;
+    padding: 0 2px;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.1;
+    white-space: normal;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  td:first-child { left: 0; border-right: 3px solid var(--lance-red); }
+  td:last-child  { right: 0; border-left: 3px solid var(--lance-red); }
+
+  td {
+    height: var(--row-height);
+    padding: 0 2px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-dark);
+    vertical-align: middle;
+    position: relative;
+    background-color: var(--white);
+  }
+  td > span, td > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .tl-plan-name, .tl-price-label, .tl-term-label {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    font-weight: 900;
+    color: var(--dark-maroon);
+    background-color: var(--white);
+  }
+  .tl-plan-name {
+    height: var(--header-img-height);
+    align-items: flex-end;
+    font-size: 17px;
+    padding-bottom: 0;
+    margin-bottom: 5px;
+  }
+  .tl-price-label, .tl-term-label {
+    height: var(--sub-row-height);
+    align-items: center;
+    font-size: 17px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .header-top-container {
+    height: var(--header-img-height);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .header-img {
+    max-width: 95%;
+    max-height: 140px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .price-tag {
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-row-height);
+    color: var(--lance-red);
+    border-top: 1px solid var(--border-light);
+    background-color: var(--tier-middle);
+  }
+  th:nth-child(3) .price-tag,
+  th:nth-child(5) .price-tag,
+  th:nth-child(7) .price-tag {
+    background-color: #e0e0e0;
+  }
+
+  .term-label {
+    font-weight: 900;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-row-height);
+    color: var(--white);
+    background-color: var(--rich-crimson);
+    border-bottom: 1px solid #000000;
+  }
+  th:nth-child(3) .term-label,
+  th:nth-child(5) .term-label,
+  th:nth-child(7) .term-label {
+    background-color: var(--dark-maroon);
+  }
+  
+  th:first-child .tl-term-label,
+  th:last-child .tl-term-label {
+    border-bottom: 1px solid #000000;
+  }
+
+  td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+    background-color: var(--tier-bottom);
+    border-right: 1px solid var(--border-light);
+  }
+  td:nth-child(5), td:nth-child(6) {
+    background-color: var(--tier-middle);
+    border-right: 1px solid var(--border-light);
+  }
+  td:nth-child(7) {
+    background-color: var(--tier-top);
+    border-right: 1px solid var(--border-light);
+    border-left: 1px solid #d0d0d0;
+  }
+
+  .data-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 32px;
+    background-color: var(--lance-red);
+    color: white;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 18px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+  }
+  .check-mark { font-size: 20px; }
+
+  tbody tr:nth-child(even) td {
+    background-image: linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0.03));
+  }
+  tbody tr:nth-child(even) td:first-child,
+  tbody tr:nth-child(even) td:last-child {
+    background-image: none;
+    background-color: var(--white);
+  }
+
+  tbody tr:hover td::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.05);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hot-row td {
+    background-color: rgba(153, 0, 0, 0.12) !important;
+    border-bottom: 1px solid var(--border-light);
+    background-image: none !important;
+  }
+  .hot-row td:first-child,
+  .hot-row td:last-child {
+    color: var(--highlight-red);
+    font-weight: 900;
+    background-color: #fff5f5 !important;
+  }
+  .hot-row td:first-child { border-left: 10px solid var(--highlight-red); padding-left: 5px; }
+  .hot-row td:last-child  { border-right: 10px solid var(--highlight-red); padding-left: 5px; }
+
+  td.active-column {
+    box-shadow: inset 3px 0 0 0 var(--lance-red), inset -3px 0 0 0 var(--lance-red) !important;
+    background-color: rgba(186, 191, 190, 0.3) !important;
+  }
+  th.active-column {
+    box-shadow: inset 3px 0 0 0 var(--lance-red), inset -3px 0 0 0 var(--lance-red) !important;
+    background-color: #f2f2f2 !important;
+    opacity: 1 !important;
+  }
+  thead th:not(:first-child):not(:last-child):hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  #navArrow {
+    margin-top: 10px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+  .arrow-shape {
+    border: solid var(--lance-red);
+    border-width: 0 8px 8px 0;
+    display: inline-block;
+    padding: 10px;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  .arrow-up .arrow-shape {
+    transform: rotate(-135deg);
+    margin-top: 10px;
+  }
+
+  .addons-section {
+    width: 850px;
+    margin: 15px 0;
+  }
+
+  .addons-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background-color: var(--dark-maroon);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .addons-header:hover {
+    background-color: var(--rich-crimson);
+  }
+  .addons-header.open {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .addons-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .addons-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--white);
+  }
+
+  .addons-count {
+    display: none;
+    background-color: var(--lance-red);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .addons-count.visible {
+    display: inline-block;
+  }
+
+  .addons-arrow {
+    color: var(--white);
+    font-size: 12px;
+    transition: transform 0.3s ease;
+  }
+  .addons-header.open .addons-arrow {
+    transform: rotate(180deg);
+  }
+
+  .addons-content {
+    display: none;
+    background-color: #fafafa;
+    border: 2px solid var(--dark-maroon);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 15px;
+  }
+  .addons-content.open {
+    display: block;
+  }
+
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .addon-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    background-color: var(--white);
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .addon-item:hover {
+    border-color: var(--lance-red);
+    background-color: #fff8f8;
+  }
+  .addon-item.selected {
+    border-color: var(--lance-red);
+    background-color: rgba(153, 0, 0, 0.08);
+  }
+
+  .addon-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-light);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+  .addon-item.selected .addon-checkbox {
+    background-color: var(--lance-red);
+    border-color: var(--lance-red);
+  }
+  .addon-checkmark {
+    display: none;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .addon-item.selected .addon-checkmark {
+    display: block;
+  }
+
+  .addon-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .addon-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+
+  .addon-note {
+    font-size: 11px;
+    color: #888;
+  }
+
+  .addon-price {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--lance-red);
+    white-space: nowrap;
+  }
+
+  .checkout-bar {
+    width: var(--table-width);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    background-color: var(--white);
+    flex-wrap: wrap;
+  }
+
+  .pay-toggle {
+    display: none;
+    gap: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid var(--lance-red);
+  }
+  .pay-toggle.visible { display: flex; }
+
+  .pay-btn {
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--lance-red);
+    background-color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-right: 1px solid var(--lance-red);
+  }
+  .pay-btn:last-child { border-right: none; }
+  .pay-btn.active {
+    background-color: var(--lance-red);
+    color: var(--white);
+  }
+  .pay-btn:hover:not(.active) {
+    background-color: #f5e6e6;
+  }
+
+  .checkout-btn {
+    padding: 14px 40px;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--lance-red);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .checkout-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .checkout-btn.active:hover {
+    background-color: var(--highlight-red);
+  }
+  .checkout-btn.active:active {
+    opacity: 0.9;
+  }
+
+  .send-plan-btn {
+    padding: 14px 35px;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--dark-maroon);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .send-plan-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .send-plan-btn.active:hover {
+    background-color: var(--rich-crimson);
+  }
+  .send-plan-btn.active:active {
+    opacity: 0.9;
+  }
+
+  .email-section {
+    display: none;
+    width: var(--table-width);
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 15px;
+    background-color: var(--white);
+    flex-wrap: wrap;
+  }
+  .email-section.visible { display: flex; }
+
+  .email-label {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--dark-maroon);
+    white-space: nowrap;
+  }
+
+  .email-input {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    width: 220px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    transition: border-color 0.2s ease;
+  }
+  .email-input:focus {
+    outline: none;
+    border-color: var(--lance-red);
+  }
+
+  .email-checkout-btn {
+    padding: 12px 25px;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--dark-maroon);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  .email-checkout-btn:hover {
+    background-color: var(--rich-crimson);
+  }
+  .email-checkout-btn:active {
+    opacity: 0.9;
+  }
+  .email-checkout-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .status-bar {
+    width: var(--table-width);
+    display: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    margin-top: 5px;
+  }
+  .status-bar.visible { display: flex; }
+  
+  .status-bar.sending {
+    background-color: #fff5f5;
+    border: 2px solid var(--lance-red);
+    color: var(--dark-maroon);
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  
+  .status-bar.tracking {
+    background-color: #fff5f5;
+    border: 2px solid var(--lance-red);
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .status-bar.purchased {
+    background-color: var(--dark-maroon);
+    border: 2px solid var(--dark-maroon);
+  }
+  
+  .status-bar.purchased .status-info {
+    color: #ffffff;
+  }
+  
+  .status-bar.purchased .status-info strong {
+    color: #ffffff;
+  }
+  
+  .status-bar.purchased .status-label {
+    color: rgba(255,255,255,0.8);
+  }
+  
+  .status-bar.purchased .status-step.completed .status-label {
+    color: #ffffff;
+  }
+
+  .status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .status-info {
+    font-size: 13px;
+    color: #666;
+  }
+  .status-info strong {
+    color: var(--dark-maroon);
+  }
+  
+  .status-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    padding: 0 5px;
+  }
+  .status-close:hover {
+    color: var(--dark-maroon);
+  }
+  
+  .status-bar.purchased .status-close {
+    color: rgba(255,255,255,0.6);
+  }
+  .status-bar.purchased .status-close:hover {
+    color: #ffffff;
+  }
+
+  .status-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 5px 0;
+  }
+  
+  .status-line-bg {
+    position: absolute;
+    top: 50%;
+    left: 60px;
+    right: 60px;
+    height: 4px;
+    background-color: #e0c0c0;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .status-bar.purchased .status-line-bg {
+    background-color: rgba(255,255,255,0.3);
+  }
+  
+  .status-line-fill {
+    height: 100%;
+    background-color: var(--lance-red);
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  
+  .status-bar.purchased .status-line-fill {
+    background-color: #ffffff;
+  }
+
+  .status-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 2;
+    min-width: 80px;
+  }
+  
+  .status-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background-color: #f5e6e6;
+    color: #c99;
+    border: 2px solid #e0c0c0;
+    transition: all 0.3s ease;
+  }
+  
+  .status-step.waiting .status-icon {
+    background-color: #fff;
+    border-color: #e0c0c0;
+    color: #c99;
+  }
+  
+  .status-step.active .status-icon {
+    background-color: #fff;
+    border-color: var(--lance-red);
+    color: var(--lance-red);
+    animation: pulse 1.5s infinite;
+  }
+  
+  .status-step.completed .status-icon {
+    background-color: var(--lance-red);
+    border-color: var(--dark-maroon);
+    color: white;
+  }
+  
+  .status-bar.purchased .status-step.completed .status-icon {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: var(--dark-maroon);
+  }
+  
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(153, 0, 0, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(153, 0, 0, 0); }
+  }
+  
+  .status-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c99;
+    text-transform: uppercase;
+  }
+  
+  .status-step.active .status-label,
+  .status-step.completed .status-label {
+    color: var(--dark-maroon);
+  }
+  
+  .status-time {
+    font-size: 10px;
+    color: var(--lance-red);
+    font-weight: 600;
+    min-height: 14px;
+  }
+  
+  .status-bar.purchased .status-time {
+    color: rgba(255,255,255,0.8);
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-wrapper" id="scrollContainer">
+  <table id="pricingTable">
+    <thead>
+      <tr>
+        <th>
+          <div class="tl-plan-name">Service Plan</div>
+          <div class="tl-price-label">One-Time Cost</div>
+          <div class="tl-term-label">Program Duration</div>
+        </th>
+        <th onclick="selectPlan(0)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_a57e98e79103445499341e072e295a35~mv2.png" class="header-img" alt="JV Plan">
+          </div>
+          <div class="price-tag">$999</div>
+          <div class="term-label">2 Years</div>
+        </th>
+        <th onclick="selectPlan(1)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_66604a9ba9c7480b8fb2ca8fb4f0bad6~mv2.png" class="header-img" alt="Varsity Plan">
+          </div>
+          <div class="price-tag">$2,499</div>
+          <div class="term-label">3 Years</div>
+        </th>
+        <th onclick="selectPlan(2)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_dd44e860b8364ccab9870e212ffdfa29~mv2.png" class="header-img" alt="Red Shirt Plan">
+          </div>
+          <div class="price-tag">$3,999</div>
+          <div class="term-label">5 Years</div>
+        </th>
+        <th onclick="selectPlan(3)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_4e89198eea24426292067ac004f8117e~mv2.png" class="header-img" alt="MVP Plan">
+          </div>
+          <div class="price-tag">$5,499</div>
+          <div class="term-label">7 Years</div>
+        </th>
+        <th onclick="selectPlan(4)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_5db467fed754493b98c338fdc35c81f4~mv2.png" class="header-img" alt="All American Plan">
+          </div>
+          <div class="price-tag">$6,499</div>
+          <div class="term-label">9 Years</div>
+        </th>
+        <th onclick="selectPlan(5)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_c511e680738b41379f1b1eddde9a6207~mv2.png" class="header-img" alt="Heisman Plan">
+          </div>
+          <div class="price-tag">$7,999</div>
+          <div class="term-label">10 Years</div>
+        </th>
+        <th>
+          <div class="tl-plan-name">Service Plan</div>
+          <div class="tl-price-label">One-Time Cost</div>
+          <div class="tl-term-label">Program Duration</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Monthly Seminars &<br>Recruit Networking</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Monthly Seminars &<br>Recruit Networking</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Personalized Gameplan</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Personalized Gameplan</td>
+      </tr>
+      <tr>
+        <td>Study Guide &<br>Classroom</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Study Guide &<br>Classroom</td>
+      </tr>
+      <tr>
+        <td>Coaches Directory</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Coaches Directory</td>
+      </tr>
+      <tr>
+        <td>Strategy Meetings<br>(per year)</td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">12</div></td>
+        <td><div class="data-badge">24</div></td>
+        <td><div class="data-badge">36</div></td>
+        <td><div class="data-badge">48</div></td>
+        <td><div class="data-badge">60</div></td>
+        <td>Strategy Meetings<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Video Breakdowns<br>(per year)</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">6</div></td>
+        <td>Video Breakdowns<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Professional Film Edits<br>(per year)</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">Unl</div></td>
+        <td>Professional Film Edits<br>(per year)</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Email Campaigns<br>(per year)</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td>Email Campaigns<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Transfer Assistance<br>(HS and College)</td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Transfer Assistance<br>(HS and College)</td>
+      </tr>
+      <tr>
+        <td>Workout Program</td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Workout Program</td>
+      </tr>
+      <tr>
+        <td>Nutrition Program</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Nutrition Program</td>
+      </tr>
+      <tr>
+        <td>Custom Graphics<br>(per year)</td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">10</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Custom Graphics<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Player Podcast Interview /<br>Media Training</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td>Player Podcast Interview /<br>Media Training</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Direct Calls to<br>College Coaches</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">10</div></td>
+        <td><div class="data-badge">20</div></td>
+        <td><div class="data-badge">30</div></td>
+        <td>Direct Calls to<br>College Coaches</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Personal Mentorship</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Personal Mentorship</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Premium Film Evaluation<br>(per year)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">1</div></td>
+        <td>Premium Film Evaluation<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>X DMs<br>(per year)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">50</div></td>
+        <td>X DMs<br>(per year)</td>
+      </tr>
+      <tr class="hot-row">
+        <td>NIL Consultation</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td>NIL Consultation</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="navArrow" onclick="toggleScroll()">
+  <div class="arrow-shape"></div>
+</div>
+
+<div class="addons-section" id="addonsSection">
+  <div class="addons-header" id="addonsHeader" onclick="toggleAddons()">
+    <div class="addons-header-left">
+      <span class="addons-title">+ Additional Services</span>
+      <span class="addons-count" id="addonsCount">0 selected</span>
+    </div>
+    <span class="addons-arrow">▼</span>
+  </div>
+  <div class="addons-content" id="addonsContent">
+    <div class="addons-grid" id="addonsGrid">
+    </div>
+  </div>
+</div>
+
+<div class="checkout-bar">
+  <div class="pay-toggle" id="payToggle">
+    <button class="pay-btn active" onclick="selectTerm('onepay')">One-Pay</button>
+    <button class="pay-btn" onclick="selectTerm('credit')">Credit</button>
+    <button class="pay-btn" onclick="selectTerm('6pay')">6-Pay</button>
+    <button class="pay-btn" onclick="selectTerm('12pay')">12-Pay</button>
+  </div>
+  <button class="send-plan-btn" id="sendPlanBtn" onclick="toggleEmailSection()">Send Plan</button>
+  <button class="checkout-btn" id="checkoutBtn" onclick="sendCheckout()">Select Plan</button>
+</div>
+
+<div class="email-section" id="emailSection">
+  <span class="email-label">Send To:</span>
+  <input type="email" class="email-input" id="sendToEmail" placeholder="parent@email.com" />
+  <span class="email-label">Athlete Account:</span>
+  <input type="email" class="email-input" id="athleteEmail" placeholder="athlete@email.com" />
+  <button class="email-checkout-btn" id="emailBtn" onclick="sendEmailCheckout()" disabled>Email Checkout Link</button>
+</div>
+
+<div class="status-bar" id="statusBar">
+  <span id="statusText">Sending checkout link...</span>
+  <div class="status-header" id="statusHeader" style="display:none;">
+    <span class="status-info" id="statusInfo"></span>
+    <button class="status-close" onclick="closeStatusBar()">✕</button>
+  </div>
+  <div class="status-steps" id="statusSteps" style="display:none;">
+    <div class="status-line-bg"><div class="status-line-fill" id="statusLineFill"></div></div>
+    <div class="status-step completed" id="stepSent">
+      <div class="status-icon">✉️</div>
+      <span class="status-label">Sent</span>
+      <span class="status-time" id="timeSent"></span>
+    </div>
+    <div class="status-step waiting" id="stepOpened">
+      <div class="status-icon">👀</div>
+      <span class="status-label">Opened</span>
+      <span class="status-time" id="timeOpened"></span>
+    </div>
+    <div class="status-step waiting" id="stepClicked">
+      <div class="status-icon">🖱️</div>
+      <span class="status-label">Clicked</span>
+      <span class="status-time" id="timeClicked"></span>
+    </div>
+    <div class="status-step waiting" id="stepPurchased">
+      <div class="status-icon">✅</div>
+      <span class="status-label">Purchased</span>
+      <span class="status-time" id="timePurchased"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  var plans = [
+    { name: "JV", productId: "80009c4e-5f5b-0c95-710b-2ce0da21f684", sub6: "67bc6c5f-5691-4296-8647-cdb1378f7469", sub12: "74d620f8-3a10-42ca-9d91-97a0c6b20317" },
+    { name: "Varsity", productId: "da2e617d-ff9c-7c9f-2533-2f99ecc69f23", sub6: "e42fd6ca-d44d-438b-baab-c4fe303ba118", sub12: "45164cd1-f07a-41b1-a5cb-760cf223389c" },
+    { name: "Red Shirt", productId: "d89f5806-bcd3-579c-c620-4a075b6f9238", sub6: "2c3a45e4-5a4c-421c-8128-255a12d14860", sub12: "ada27824-2fa7-4389-8d88-7dfe455ccea4" },
+    { name: "MVP", productId: "c94a9e16-e25e-fe2e-b776-0dfbfcd45030", sub6: "0b1eaef6-a2fe-4b70-8691-75c74699e769", sub12: "dd40d45c-a317-43ba-8fda-f456a5d44d71" },
+    { name: "All-American", productId: "fb85b062-75f6-904d-fa9a-32a71b5320c0", sub6: "0aacbce3-df43-40eb-ba47-c7daa6d56377", sub12: "7c2cb7cb-8d90-48c7-9c3e-2c947243b73f" },
+    { name: "Heisman", productId: "c1a561a1-5362-5b1e-58b4-851fc25fad3b", sub6: "f3f467aa-4b0f-4c18-8294-82dd2489568d", sub12: "9cae61f8-ed41-47c9-8cc4-86df19b4206c" }
+  ];
+
+  var addons = [
+    { name: "NIL Consultation", price: "$299", productId: "63469fd0-d170-f04a-863e-2c85ce648c1b", note: "" },
+    { name: "NIL Consultation + Package", price: "$999", productId: "bd543aa5-9b5d-2e68-0f5b-fa9e2d473408", note: "$150 Consultation, $749 Non-refundable Deposit" },
+    { name: "1-on-1 Virtual Coaching", price: "$499", productId: "faf75555-371f-ec0c-6d7d-f009990ddfb2", note: "Deposit" },
+    { name: "1-on-1 In-Person Coaching", price: "$999", productId: "7c6ecc08-22e2-daad-4633-6f154eacdac7", note: "Deposit" },
+    { name: "Email Campaigns", price: "$599", productId: "4c0cd65d-ccf1-8405-25a5-d040d6a3574d", note: "1 per year" },
+    { name: "Email Campaigns", price: "$999", productId: "e7ff5087-4b70-58ac-4330-4f05a626ade3", note: "2 per year" },
+    { name: "Premium Film Consultation", price: "$499", productId: "7bfe81b5-ea1a-cdf1-5991-ac6b6e324d9f", note: "" },
+    { name: "Personal Mentorship", price: "$999", productId: "5a1c04e7-b947-bf87-07de-6887c2994d10", note: "" },
+    { name: "Direct Calls to Coaches", price: "$1,499", productId: "4baad6da-4ad4-82e2-6329-6afb1683f1c1", note: "10 calls to college coaches" },
+    { name: "Direct Calls to Coaches", price: "$2,299", productId: "70290036-50ad-47b5-6c27-7a33eb45d493", note: "20 calls to college coaches" },
+    { name: "Direct Calls to Coaches", price: "$2,999", productId: "26f10df8-ecec-ce48-5083-9ceaa8066c42", note: "30 calls to college coaches" },
+    { name: "Highlight Film Edits", price: "$999", productId: "71aa0634-252f-9ca5-74f1-cebd24043b2d", note: "2 per year" },
+    { name: "Media Training", price: "$999", productId: "24229940-100c-9762-4d93-b37235a8f564", note: "Includes 10-Minute Podcast Interview" }
+  ];
+
+  var selectedPlan = null;
+  var selectedTerm = "onepay";
+  var selectedAddons = [];
+  var memberInfo = { email: "", name: "", memberId: "" };
+  var currentCheckoutTemplateId = null;
+  var pollInterval = null;
+  var sentTime = null;
+
+  function initAddonsGrid() {
+    var grid = document.getElementById("addonsGrid");
+    grid.innerHTML = "";
+    
+    addons.forEach(function(addon) {
+      var item = document.createElement("div");
+      item.className = "addon-item";
+      item.setAttribute("data-product-id", addon.productId);
+      item.onclick = function() { toggleAddon(addon.productId); };
+      
+      var noteHtml = addon.note ? '<div class="addon-note">' + addon.note + '</div>' : '';
+      
+      item.innerHTML = 
+        '<div class="addon-checkbox"><span class="addon-checkmark">✓</span></div>' +
+        '<div class="addon-info">' +
+          '<div class="addon-name">' + addon.name + '</div>' +
+          noteHtml +
+        '</div>' +
+        '<div class="addon-price">' + addon.price + '</div>';
+      
+      grid.appendChild(item);
+    });
+  }
+
+  function toggleAddon(productId) {
+    var index = selectedAddons.indexOf(productId);
+    if (index > -1) {
+      selectedAddons.splice(index, 1);
+    } else {
+      selectedAddons.push(productId);
+    }
+    updateAddonUI();
+  }
+
+  function updateAddonUI() {
+    var items = document.querySelectorAll(".addon-item");
+    items.forEach(function(item) {
+      var productId = item.getAttribute("data-product-id");
+      if (selectedAddons.indexOf(productId) > -1) {
+        item.classList.add("selected");
+      } else {
+        item.classList.remove("selected");
+      }
+    });
+    
+    var countBadge = document.getElementById("addonsCount");
+    if (selectedAddons.length > 0) {
+      countBadge.textContent = selectedAddons.length + " selected";
+      countBadge.classList.add("visible");
+    } else {
+      countBadge.classList.remove("visible");
+    }
+  }
+
+  function toggleAddons() {
+    var header = document.getElementById("addonsHeader");
+    var content = document.getElementById("addonsContent");
+    header.classList.toggle("open");
+    content.classList.toggle("open");
+  }
+
+  window.addEventListener("message", function(event) {
+    var data = event.data;
+    if (typeof data === "string") {
+      try { data = JSON.parse(data); } catch(e) { return; }
+    }
+    if (!data || !data.type) return;
+
+    if (data.type === "LRN_MEMBER_INFO") {
+      memberInfo = { email: data.email || "", name: data.name || "", memberId: data.memberId || "" };
+      if (memberInfo.email) {
+        document.getElementById("athleteEmail").value = memberInfo.email;
+      }
+      validateEmailForm();
+    }
+
+    if (data.type === "LRN_EMAIL_STATUS") {
+      var statusBar = document.getElementById("statusBar");
+      var statusText = document.getElementById("statusText");
+      var emailBtn = document.getElementById("emailBtn");
+
+      if (data.status === "sending") {
+        statusBar.className = "status-bar visible sending";
+        statusText.style.display = "block";
+        statusText.textContent = "Sending checkout link...";
+        document.getElementById("statusHeader").style.display = "none";
+        document.getElementById("statusSteps").style.display = "none";
+        emailBtn.disabled = true;
+        emailBtn.textContent = "Sending...";
+      } else if (data.status === "sent") {
+        emailBtn.disabled = false;
+        emailBtn.textContent = "Email Checkout Link";
+        
+        if (data.checkoutTemplateId) {
+          startTracking(data.checkoutTemplateId, data.athleteName, data.planName, data.email);
+        }
+      } else if (data.status === "error") {
+        statusBar.className = "status-bar visible sending";
+        statusText.style.display = "block";
+        statusText.textContent = "Error: " + (data.error || "Failed to send. Try again.");
+        statusText.style.color = "#b71c1c";
+        statusBar.style.backgroundColor = "#fff5f5";
+        emailBtn.disabled = false;
+        emailBtn.textContent = "Email Checkout Link";
+      }
+    }
+
+    if (data.type === "LRN_STATUS_UPDATE") {
+      updateStatusTracker(data);
+    }
+  });
+
+  function selectPlan(planIndex) {
+    selectedPlan = plans[planIndex];
+    highlightColumn(planIndex + 1);
+    document.getElementById("payToggle").classList.add("visible");
+    document.getElementById("checkoutBtn").classList.add("active");
+    document.getElementById("sendPlanBtn").classList.add("active");
+    document.getElementById("emailSection").classList.remove("visible");
+    closeStatusBar();
+    validateEmailForm();
+  }
+
+  function toggleEmailSection() {
+    var section = document.getElementById("emailSection");
+    section.classList.toggle("visible");
+    if (section.classList.contains("visible")) {
+      document.getElementById("sendToEmail").focus();
+    }
+  }
+
+  function selectTerm(term) {
+    selectedTerm = term;
+    var btns = document.querySelectorAll(".pay-btn");
+    btns.forEach(function(b) { b.classList.remove("active"); });
+    event.target.classList.add("active");
+  }
+
+  function highlightColumn(colIndex) {
+    var table = document.getElementById("pricingTable");
+    var cells = table.querySelectorAll("td, th");
+    cells.forEach(function(cell) { cell.classList.remove("active-column"); });
+    for (var i = 0; i < table.rows.length; i++) {
+      if (table.rows[i].cells[colIndex]) {
+        table.rows[i].cells[colIndex].classList.add("active-column");
+      }
+    }
+  }
+
+  function validateEmailForm() {
+    var sendTo = document.getElementById("sendToEmail").value.trim();
+    var athlete = document.getElementById("athleteEmail").value.trim();
+    var btn = document.getElementById("emailBtn");
+    var isValid = sendTo.length > 0 && sendTo.indexOf("@") > -1 && athlete.length > 0 && athlete.indexOf("@") > -1 && selectedPlan;
+    btn.disabled = !isValid;
+  }
+
+  document.getElementById("sendToEmail").addEventListener("input", validateEmailForm);
+  document.getElementById("athleteEmail").addEventListener("input", validateEmailForm);
+
+  function sendCheckout() {
+    if (!selectedPlan) return;
+    
+    var subscriptionOptionId = null;
+    if (selectedTerm === "6pay") subscriptionOptionId = selectedPlan.sub6;
+    if (selectedTerm === "12pay") subscriptionOptionId = selectedPlan.sub12;
+
+    window.parent.postMessage({
+      type: "LRN_CHECKOUT",
+      productId: selectedPlan.productId,
+      planName: selectedPlan.name,
+      paymentTerm: selectedTerm,
+      subscriptionOptionId: subscriptionOptionId,
+      addons: selectedAddons
+    }, "*");
+  }
+
+  function sendEmailCheckout() {
+    if (!selectedPlan) return;
+    var sendToEmail = document.getElementById("sendToEmail").value.trim();
+    var athleteEmail = document.getElementById("athleteEmail").value.trim();
+    if (!sendToEmail || !athleteEmail) return;
+
+    var subscriptionOptionId = null;
+    if (selectedTerm === "6pay") subscriptionOptionId = selectedPlan.sub6;
+    if (selectedTerm === "12pay") subscriptionOptionId = selectedPlan.sub12;
+
+    var addonNames = selectedAddons.map(function(productId) {
+      var addon = addons.find(function(a) { return a.productId === productId; });
+      return addon ? addon.name : "";
+    }).filter(function(name) { return name; });
+
+    window.parent.postMessage({
+      type: "LRN_EMAIL_CHECKOUT",
+      productId: selectedPlan.productId,
+      planName: selectedPlan.name,
+      paymentTerm: selectedTerm,
+      subscriptionOptionId: subscriptionOptionId,
+      sendToEmail: sendToEmail,
+      athleteEmail: athleteEmail,
+      athleteName: memberInfo.name || "",
+      addons: selectedAddons,
+      addonNames: addonNames
+    }, "*");
+  }
+
+  function startTracking(checkoutTemplateId, athleteName, planName, sendToEmail) {
+    currentCheckoutTemplateId = checkoutTemplateId;
+    sentTime = new Date();
+
+    var statusBar = document.getElementById("statusBar");
+    statusBar.className = "status-bar visible tracking";
+    
+    document.getElementById("statusText").style.display = "none";
+    document.getElementById("statusHeader").style.display = "flex";
+    document.getElementById("statusSteps").style.display = "flex";
+    
+    document.getElementById("statusInfo").innerHTML = "<strong>" + (athleteName || "Athlete") + "</strong> • " + planName + " • " + sendToEmail;
+
+    resetStatusSteps();
+    document.getElementById("stepSent").className = "status-step completed";
+    document.getElementById("timeSent").textContent = formatTime(sentTime);
+    document.getElementById("stepOpened").className = "status-step active";
+    document.getElementById("statusLineFill").style.width = "0%";
+
+    if (pollInterval) clearInterval(pollInterval);
+    pollInterval = setInterval(function() {
+      window.parent.postMessage({
+        type: "LRN_POLL_STATUS",
+        checkoutTemplateId: currentCheckoutTemplateId
+      }, "*");
+    }, 5000);
+  }
+
+  function resetStatusSteps() {
+    ["stepSent", "stepOpened", "stepClicked", "stepPurchased"].forEach(function(id) {
+      document.getElementById(id).className = "status-step waiting";
+    });
+    document.getElementById("timeSent").textContent = "";
+    document.getElementById("timeOpened").textContent = "";
+    document.getElementById("timeClicked").textContent = "";
+    document.getElementById("timePurchased").textContent = "";
+  }
+
+  function updateStatusTracker(data) {
+    if (!data.found) return;
+
+    var lineFill = 0;
+    
+    document.getElementById("stepSent").className = "status-step completed";
+
+    if (data.emailOpenedAt) {
+      document.getElementById("stepOpened").className = "status-step completed";
+      document.getElementById("timeOpened").textContent = formatTime(new Date(data.emailOpenedAt));
+      lineFill = 33;
+      
+      if (!data.linkClickedAt) {
+        document.getElementById("stepClicked").className = "status-step active";
+      }
+    } else {
+      document.getElementById("stepOpened").className = "status-step active";
+    }
+
+    if (data.linkClickedAt) {
+      document.getElementById("stepClicked").className = "status-step completed";
+      document.getElementById("timeClicked").textContent = formatTime(new Date(data.linkClickedAt));
+      lineFill = 66;
+      
+      if (data.status !== "completed") {
+        document.getElementById("stepPurchased").className = "status-step active";
+      }
+    }
+
+    if (data.status === "completed" && data.completedDate) {
+      document.getElementById("stepPurchased").className = "status-step completed";
+      document.getElementById("timePurchased").textContent = formatTime(new Date(data.completedDate));
+      lineFill = 100;
+      
+      document.getElementById("statusBar").classList.add("purchased");
+
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
+    }
+
+    document.getElementById("statusLineFill").style.width = lineFill + "%";
+  }
+
+  function formatTime(date) {
+    if (!date) return "";
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var ampm = h >= 12 ? "pm" : "am";
+    h = h % 12;
+    h = h ? h : 12;
+    m = m < 10 ? "0" + m : m;
+    return h + ":" + m + ampm;
+  }
+
+  function closeStatusBar() {
+    document.getElementById("statusBar").className = "status-bar";
+    if (pollInterval) {
+      clearInterval(pollInterval);
+      pollInterval = null;
+    }
+    currentCheckoutTemplateId = null;
+  }
+
+  var scrollState = "top";
+  function toggleScroll() {
+    var container = document.getElementById("scrollContainer");
+    var arrow = document.getElementById("navArrow");
+    if (scrollState === "top") {
+      container.scrollTop = container.scrollHeight;
+      arrow.classList.add("arrow-up");
+      scrollState = "bottom";
+    } else {
+      container.scrollTop = 0;
+      arrow.classList.remove("arrow-up");
+      scrollState = "top";
+    }
+  }
+
+  document.getElementById("scrollContainer").addEventListener("scroll", function() {
+    var container = this;
+    var arrow = document.getElementById("navArrow");
+    if (container.scrollTop < 50) {
+      arrow.classList.remove("arrow-up");
+      scrollState = "top";
+    } else if (container.scrollTop + container.clientHeight >= container.scrollHeight - 50) {
+      arrow.classList.add("arrow-up");
+      scrollState = "bottom";
+    }
+  });
+
+  initAddonsGrid();
+</script>
+
+</body>
+</html>
+```
+
+**Summary of changes made:**
+1. **Strategy Meetings**: Heisman changed from "Unl" → "60"
+2. **Email Campaigns**: Changed from "2, 3, 5, 3/yr, 4/yr, 5/yr" → "1, 2, 3, 3, 4, 5" (now all per year, simplified labels)
+3. **Nutrition Program**: Red Shirt no longer has it (was ✓, now empty)
+4. **Transfer Assistance**: Varsity no longer has it (was ✓, now empty); label changed to "(HS and College)"
+5. **Custom Graphics**: Heisman changed from "Unl" → checkmark
+6. **Row renamed**: "Highlight Film Edits" → "Professional Film Edits"
+7. **Row renamed**: "National Coaches Directory" → "Coaches Directory"
+8. **Row renamed**: "Workout, Exercise, Flexibility Program" → "Workout Program"
+9. **Row renamed**: "Personal Daily Mentorship" → "Personal Mentorship"
+10. **Row renamed**: "Media Training & Podcast Interview" → "Player Podcast Interview / Media Training"
+11. **Row renamed**: "50 Twitter/X DMs (per year)" → "X DMs (per year)" with value "50" badge
+===END===
+
+===MSG===
+uuid: 019c61fb-c537-7620-bfb3-c8b827caecb6
+parent: 019c61f8-4f7c-7251-9af7-5f00bd4f0011
+role: human
+---
+Email campaigns: Leave it as 1, 2, 3, 3/yr, 4/yr, 5/yr.
+
+Workout Program: Leave the label.
+
+Custom graphics is none, none, 2, 5, 10, 30.
+
+X DMs: Change the row name to "X DMs".  Make Heisman 50/Year.
+
+Keep National Coaches Directory.
+===END===
+
+===MSG===
+uuid: 019c61fb-c537-7620-bfb3-c8b924317b78
+parent: 019c61fb-c537-7620-bfb3-c8b827caecb6
+role: assistant
+---
+ Got it. Here's the corrected embed:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --lance-red: #990000;
+    --dark-maroon: #3a0809;
+    --rich-crimson: #5e181a;
+    --highlight-red: #b71c1c;
+    --white: #ffffff;
+    --text-dark: #020303;
+    --border-light: #e0e0e0;
+    --tier-bottom: #fcfcfc;
+    --tier-middle: #f4f4f4;
+    --tier-top: #e8e8e8;
+    --label-col-width: 200px;
+    --plan-col-width: 146px;
+    --table-width: 1276px;
+    --scroll-height: 775px;
+    --header-img-height: 145px;
+    --row-height: 60px;
+    --sub-row-height: 40px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scroll-wrapper {
+    height: var(--scroll-height);
+    width: var(--table-width);
+    overflow: auto;
+    border-bottom: 3px solid var(--lance-red);
+    scroll-behavior: smooth;
+    background-color: var(--white);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-wrapper::-webkit-scrollbar { display: none; }
+
+  table {
+    width: var(--table-width);
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    background-color: var(--white);
+    border-bottom: 5px solid var(--lance-red);
+    padding: 0;
+    margin: 0;
+    width: var(--plan-col-width);
+    min-width: var(--plan-col-width);
+  }
+
+  thead th:first-child,
+  thead th:last-child {
+    position: sticky;
+    top: 0;
+    z-index: 400 !important;
+    background-color: var(--white);
+    border-bottom: 5px solid var(--lance-red);
+    width: var(--label-col-width);
+    min-width: var(--label-col-width);
+  }
+  thead th:first-child { left: 0; border-right: 3px solid var(--lance-red); }
+  thead th:last-child  { right: 0; border-left: 3px solid var(--lance-red); border-right: none; }
+
+  td:first-child,
+  td:last-child {
+    position: sticky;
+    z-index: 200;
+    background-color: var(--white);
+    width: var(--label-col-width);
+    min-width: var(--label-col-width);
+    text-align: center;
+    padding: 0 2px;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.1;
+    white-space: normal;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  td:first-child { left: 0; border-right: 3px solid var(--lance-red); }
+  td:last-child  { right: 0; border-left: 3px solid var(--lance-red); }
+
+  td {
+    height: var(--row-height);
+    padding: 0 2px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-dark);
+    vertical-align: middle;
+    position: relative;
+    background-color: var(--white);
+  }
+  td > span, td > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .tl-plan-name, .tl-price-label, .tl-term-label {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    font-weight: 900;
+    color: var(--dark-maroon);
+    background-color: var(--white);
+  }
+  .tl-plan-name {
+    height: var(--header-img-height);
+    align-items: flex-end;
+    font-size: 17px;
+    padding-bottom: 0;
+    margin-bottom: 5px;
+  }
+  .tl-price-label, .tl-term-label {
+    height: var(--sub-row-height);
+    align-items: center;
+    font-size: 17px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .header-top-container {
+    height: var(--header-img-height);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .header-img {
+    max-width: 95%;
+    max-height: 140px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .price-tag {
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-row-height);
+    color: var(--lance-red);
+    border-top: 1px solid var(--border-light);
+    background-color: var(--tier-middle);
+  }
+  th:nth-child(3) .price-tag,
+  th:nth-child(5) .price-tag,
+  th:nth-child(7) .price-tag {
+    background-color: #e0e0e0;
+  }
+
+  .term-label {
+    font-weight: 900;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-row-height);
+    color: var(--white);
+    background-color: var(--rich-crimson);
+    border-bottom: 1px solid #000000;
+  }
+  th:nth-child(3) .term-label,
+  th:nth-child(5) .term-label,
+  th:nth-child(7) .term-label {
+    background-color: var(--dark-maroon);
+  }
+  
+  th:first-child .tl-term-label,
+  th:last-child .tl-term-label {
+    border-bottom: 1px solid #000000;
+  }
+
+  td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+    background-color: var(--tier-bottom);
+    border-right: 1px solid var(--border-light);
+  }
+  td:nth-child(5), td:nth-child(6) {
+    background-color: var(--tier-middle);
+    border-right: 1px solid var(--border-light);
+  }
+  td:nth-child(7) {
+    background-color: var(--tier-top);
+    border-right: 1px solid var(--border-light);
+    border-left: 1px solid #d0d0d0;
+  }
+
+  .data-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 32px;
+    background-color: var(--lance-red);
+    color: white;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 18px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+  }
+  .check-mark { font-size: 20px; }
+
+  tbody tr:nth-child(even) td {
+    background-image: linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0.03));
+  }
+  tbody tr:nth-child(even) td:first-child,
+  tbody tr:nth-child(even) td:last-child {
+    background-image: none;
+    background-color: var(--white);
+  }
+
+  tbody tr:hover td::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.05);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hot-row td {
+    background-color: rgba(153, 0, 0, 0.12) !important;
+    border-bottom: 1px solid var(--border-light);
+    background-image: none !important;
+  }
+  .hot-row td:first-child,
+  .hot-row td:last-child {
+    color: var(--highlight-red);
+    font-weight: 900;
+    background-color: #fff5f5 !important;
+  }
+  .hot-row td:first-child { border-left: 10px solid var(--highlight-red); padding-left: 5px; }
+  .hot-row td:last-child  { border-right: 10px solid var(--highlight-red); padding-left: 5px; }
+
+  td.active-column {
+    box-shadow: inset 3px 0 0 0 var(--lance-red), inset -3px 0 0 0 var(--lance-red) !important;
+    background-color: rgba(186, 191, 190, 0.3) !important;
+  }
+  th.active-column {
+    box-shadow: inset 3px 0 0 0 var(--lance-red), inset -3px 0 0 0 var(--lance-red) !important;
+    background-color: #f2f2f2 !important;
+    opacity: 1 !important;
+  }
+  thead th:not(:first-child):not(:last-child):hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  #navArrow {
+    margin-top: 10px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+  .arrow-shape {
+    border: solid var(--lance-red);
+    border-width: 0 8px 8px 0;
+    display: inline-block;
+    padding: 10px;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  .arrow-up .arrow-shape {
+    transform: rotate(-135deg);
+    margin-top: 10px;
+  }
+
+  .addons-section {
+    width: 850px;
+    margin: 15px 0;
+  }
+
+  .addons-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background-color: var(--dark-maroon);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .addons-header:hover {
+    background-color: var(--rich-crimson);
+  }
+  .addons-header.open {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .addons-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .addons-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--white);
+  }
+
+  .addons-count {
+    display: none;
+    background-color: var(--lance-red);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .addons-count.visible {
+    display: inline-block;
+  }
+
+  .addons-arrow {
+    color: var(--white);
+    font-size: 12px;
+    transition: transform 0.3s ease;
+  }
+  .addons-header.open .addons-arrow {
+    transform: rotate(180deg);
+  }
+
+  .addons-content {
+    display: none;
+    background-color: #fafafa;
+    border: 2px solid var(--dark-maroon);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 15px;
+  }
+  .addons-content.open {
+    display: block;
+  }
+
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .addon-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    background-color: var(--white);
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .addon-item:hover {
+    border-color: var(--lance-red);
+    background-color: #fff8f8;
+  }
+  .addon-item.selected {
+    border-color: var(--lance-red);
+    background-color: rgba(153, 0, 0, 0.08);
+  }
+
+  .addon-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-light);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+  .addon-item.selected .addon-checkbox {
+    background-color: var(--lance-red);
+    border-color: var(--lance-red);
+  }
+  .addon-checkmark {
+    display: none;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .addon-item.selected .addon-checkmark {
+    display: block;
+  }
+
+  .addon-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .addon-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+
+  .addon-note {
+    font-size: 11px;
+    color: #888;
+  }
+
+  .addon-price {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--lance-red);
+    white-space: nowrap;
+  }
+
+  .checkout-bar {
+    width: var(--table-width);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    background-color: var(--white);
+    flex-wrap: wrap;
+  }
+
+  .pay-toggle {
+    display: none;
+    gap: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid var(--lance-red);
+  }
+  .pay-toggle.visible { display: flex; }
+
+  .pay-btn {
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--lance-red);
+    background-color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-right: 1px solid var(--lance-red);
+  }
+  .pay-btn:last-child { border-right: none; }
+  .pay-btn.active {
+    background-color: var(--lance-red);
+    color: var(--white);
+  }
+  .pay-btn:hover:not(.active) {
+    background-color: #f5e6e6;
+  }
+
+  .checkout-btn {
+    padding: 14px 40px;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--lance-red);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .checkout-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .checkout-btn.active:hover {
+    background-color: var(--highlight-red);
+  }
+  .checkout-btn.active:active {
+    opacity: 0.9;
+  }
+
+  .send-plan-btn {
+    padding: 14px 35px;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--dark-maroon);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .send-plan-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .send-plan-btn.active:hover {
+    background-color: var(--rich-crimson);
+  }
+  .send-plan-btn.active:active {
+    opacity: 0.9;
+  }
+
+  .email-section {
+    display: none;
+    width: var(--table-width);
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 15px;
+    background-color: var(--white);
+    flex-wrap: wrap;
+  }
+  .email-section.visible { display: flex; }
+
+  .email-label {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--dark-maroon);
+    white-space: nowrap;
+  }
+
+  .email-input {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    width: 220px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    transition: border-color 0.2s ease;
+  }
+  .email-input:focus {
+    outline: none;
+    border-color: var(--lance-red);
+  }
+
+  .email-checkout-btn {
+    padding: 12px 25px;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--dark-maroon);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  .email-checkout-btn:hover {
+    background-color: var(--rich-crimson);
+  }
+  .email-checkout-btn:active {
+    opacity: 0.9;
+  }
+  .email-checkout-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .status-bar {
+    width: var(--table-width);
+    display: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    margin-top: 5px;
+  }
+  .status-bar.visible { display: flex; }
+  
+  .status-bar.sending {
+    background-color: #fff5f5;
+    border: 2px solid var(--lance-red);
+    color: var(--dark-maroon);
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  
+  .status-bar.tracking {
+    background-color: #fff5f5;
+    border: 2px solid var(--lance-red);
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .status-bar.purchased {
+    background-color: var(--dark-maroon);
+    border: 2px solid var(--dark-maroon);
+  }
+  
+  .status-bar.purchased .status-info {
+    color: #ffffff;
+  }
+  
+  .status-bar.purchased .status-info strong {
+    color: #ffffff;
+  }
+  
+  .status-bar.purchased .status-label {
+    color: rgba(255,255,255,0.8);
+  }
+  
+  .status-bar.purchased .status-step.completed .status-label {
+    color: #ffffff;
+  }
+
+  .status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .status-info {
+    font-size: 13px;
+    color: #666;
+  }
+  .status-info strong {
+    color: var(--dark-maroon);
+  }
+  
+  .status-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    padding: 0 5px;
+  }
+  .status-close:hover {
+    color: var(--dark-maroon);
+  }
+  
+  .status-bar.purchased .status-close {
+    color: rgba(255,255,255,0.6);
+  }
+  .status-bar.purchased .status-close:hover {
+    color: #ffffff;
+  }
+
+  .status-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 5px 0;
+  }
+  
+  .status-line-bg {
+    position: absolute;
+    top: 50%;
+    left: 60px;
+    right: 60px;
+    height: 4px;
+    background-color: #e0c0c0;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .status-bar.purchased .status-line-bg {
+    background-color: rgba(255,255,255,0.3);
+  }
+  
+  .status-line-fill {
+    height: 100%;
+    background-color: var(--lance-red);
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  
+  .status-bar.purchased .status-line-fill {
+    background-color: #ffffff;
+  }
+
+  .status-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 2;
+    min-width: 80px;
+  }
+  
+  .status-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background-color: #f5e6e6;
+    color: #c99;
+    border: 2px solid #e0c0c0;
+    transition: all 0.3s ease;
+  }
+  
+  .status-step.waiting .status-icon {
+    background-color: #fff;
+    border-color: #e0c0c0;
+    color: #c99;
+  }
+  
+  .status-step.active .status-icon {
+    background-color: #fff;
+    border-color: var(--lance-red);
+    color: var(--lance-red);
+    animation: pulse 1.5s infinite;
+  }
+  
+  .status-step.completed .status-icon {
+    background-color: var(--lance-red);
+    border-color: var(--dark-maroon);
+    color: white;
+  }
+  
+  .status-bar.purchased .status-step.completed .status-icon {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: var(--dark-maroon);
+  }
+  
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(153, 0, 0, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(153, 0, 0, 0); }
+  }
+  
+  .status-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c99;
+    text-transform: uppercase;
+  }
+  
+  .status-step.active .status-label,
+  .status-step.completed .status-label {
+    color: var(--dark-maroon);
+  }
+  
+  .status-time {
+    font-size: 10px;
+    color: var(--lance-red);
+    font-weight: 600;
+    min-height: 14px;
+  }
+  
+  .status-bar.purchased .status-time {
+    color: rgba(255,255,255,0.8);
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-wrapper" id="scrollContainer">
+  <table id="pricingTable">
+    <thead>
+      <tr>
+        <th>
+          <div class="tl-plan-name">Service Plan</div>
+          <div class="tl-price-label">One-Time Cost</div>
+          <div class="tl-term-label">Program Duration</div>
+        </th>
+        <th onclick="selectPlan(0)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_a57e98e79103445499341e072e295a35~mv2.png" class="header-img" alt="JV Plan">
+          </div>
+          <div class="price-tag">$999</div>
+          <div class="term-label">2 Years</div>
+        </th>
+        <th onclick="selectPlan(1)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_66604a9ba9c7480b8fb2ca8fb4f0bad6~mv2.png" class="header-img" alt="Varsity Plan">
+          </div>
+          <div class="price-tag">$2,499</div>
+          <div class="term-label">3 Years</div>
+        </th>
+        <th onclick="selectPlan(2)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_dd44e860b8364ccab9870e212ffdfa29~mv2.png" class="header-img" alt="Red Shirt Plan">
+          </div>
+          <div class="price-tag">$3,999</div>
+          <div class="term-label">5 Years</div>
+        </th>
+        <th onclick="selectPlan(3)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_4e89198eea24426292067ac004f8117e~mv2.png" class="header-img" alt="MVP Plan">
+          </div>
+          <div class="price-tag">$5,499</div>
+          <div class="term-label">7 Years</div>
+        </th>
+        <th onclick="selectPlan(4)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_5db467fed754493b98c338fdc35c81f4~mv2.png" class="header-img" alt="All American Plan">
+          </div>
+          <div class="price-tag">$6,499</div>
+          <div class="term-label">9 Years</div>
+        </th>
+        <th onclick="selectPlan(5)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_c511e680738b41379f1b1eddde9a6207~mv2.png" class="header-img" alt="Heisman Plan">
+          </div>
+          <div class="price-tag">$7,999</div>
+          <div class="term-label">10 Years</div>
+        </th>
+        <th>
+          <div class="tl-plan-name">Service Plan</div>
+          <div class="tl-price-label">One-Time Cost</div>
+          <div class="tl-term-label">Program Duration</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Monthly Seminars &<br>Recruit Networking</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Monthly Seminars &<br>Recruit Networking</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Personalized Gameplan</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Personalized Gameplan</td>
+      </tr>
+      <tr>
+        <td>Study Guide &<br>Classroom</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Study Guide &<br>Classroom</td>
+      </tr>
+      <tr>
+        <td>National Coaches Directory</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>National Coaches Directory</td>
+      </tr>
+      <tr>
+        <td>Strategy Meetings<br>(per year)</td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">12</div></td>
+        <td><div class="data-badge">24</div></td>
+        <td><div class="data-badge">36</div></td>
+        <td><div class="data-badge">48</div></td>
+        <td><div class="data-badge">60</div></td>
+        <td>Strategy Meetings<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Video Breakdowns<br>(per year)</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">6</div></td>
+        <td>Video Breakdowns<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Professional Film Edits<br>(per year)</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">Unl</div></td>
+        <td>Professional Film Edits<br>(per year)</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Email Campaigns</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">3/yr</div></td>
+        <td><div class="data-badge">4/yr</div></td>
+        <td><div class="data-badge">5/yr</div></td>
+        <td>Email Campaigns</td>
+      </tr>
+      <tr>
+        <td>Transfer Assistance<br>(HS and College)</td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Transfer Assistance<br>(HS and College)</td>
+      </tr>
+      <tr>
+        <td>Workout, Exercise,<br>Flexibility Program</td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Workout, Exercise,<br>Flexibility Program</td>
+      </tr>
+      <tr>
+        <td>Nutrition Program</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Nutrition Program</td>
+      </tr>
+      <tr>
+        <td>Custom Graphics<br>(per year)</td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">10</div></td>
+        <td><div class="data-badge">30</div></td>
+        <td>Custom Graphics<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Player Podcast Interview /<br>Media Training</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td>Player Podcast Interview /<br>Media Training</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Direct Calls to<br>College Coaches</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">10</div></td>
+        <td><div class="data-badge">20</div></td>
+        <td><div class="data-badge">30</div></td>
+        <td>Direct Calls to<br>College Coaches</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Personal Mentorship</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Personal Mentorship</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Premium Film Evaluation<br>(per year)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">1</div></td>
+        <td>Premium Film Evaluation<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>X DMs</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">50/Yr</div></td>
+        <td>X DMs</td>
+      </tr>
+      <tr class="hot-row">
+        <td>NIL Consultation</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td>NIL Consultation</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="navArrow" onclick="toggleScroll()">
+  <div class="arrow-shape"></div>
+</div>
+
+<div class="addons-section" id="addonsSection">
+  <div class="addons-header" id="addonsHeader" onclick="toggleAddons()">
+    <div class="addons-header-left">
+      <span class="addons-title">+ Additional Services</span>
+      <span class="addons-count" id="addonsCount">0 selected</span>
+    </div>
+    <span class="addons-arrow">▼</span>
+  </div>
+  <div class="addons-content" id="addonsContent">
+    <div class="addons-grid" id="addonsGrid">
+    </div>
+  </div>
+</div>
+
+<div class="checkout-bar">
+  <div class="pay-toggle" id="payToggle">
+    <button class="pay-btn active" onclick="selectTerm('onepay')">One-Pay</button>
+    <button class="pay-btn" onclick="selectTerm('credit')">Credit</button>
+    <button class="pay-btn" onclick="selectTerm('6pay')">6-Pay</button>
+    <button class="pay-btn" onclick="selectTerm('12pay')">12-Pay</button>
+  </div>
+  <button class="send-plan-btn" id="sendPlanBtn" onclick="toggleEmailSection()">Send Plan</button>
+  <button class="checkout-btn" id="checkoutBtn" onclick="sendCheckout()">Select Plan</button>
+</div>
+
+<div class="email-section" id="emailSection">
+  <span class="email-label">Send To:</span>
+  <input type="email" class="email-input" id="sendToEmail" placeholder="parent@email.com" />
+  <span class="email-label">Athlete Account:</span>
+  <input type="email" class="email-input" id="athleteEmail" placeholder="athlete@email.com" />
+  <button class="email-checkout-btn" id="emailBtn" onclick="sendEmailCheckout()" disabled>Email Checkout Link</button>
+</div>
+
+<div class="status-bar" id="statusBar">
+  <span id="statusText">Sending checkout link...</span>
+  <div class="status-header" id="statusHeader" style="display:none;">
+    <span class="status-info" id="statusInfo"></span>
+    <button class="status-close" onclick="closeStatusBar()">✕</button>
+  </div>
+  <div class="status-steps" id="statusSteps" style="display:none;">
+    <div class="status-line-bg"><div class="status-line-fill" id="statusLineFill"></div></div>
+    <div class="status-step completed" id="stepSent">
+      <div class="status-icon">✉️</div>
+      <span class="status-label">Sent</span>
+      <span class="status-time" id="timeSent"></span>
+    </div>
+    <div class="status-step waiting" id="stepOpened">
+      <div class="status-icon">👀</div>
+      <span class="status-label">Opened</span>
+      <span class="status-time" id="timeOpened"></span>
+    </div>
+    <div class="status-step waiting" id="stepClicked">
+      <div class="status-icon">🖱️</div>
+      <span class="status-label">Clicked</span>
+      <span class="status-time" id="timeClicked"></span>
+    </div>
+    <div class="status-step waiting" id="stepPurchased">
+      <div class="status-icon">✅</div>
+      <span class="status-label">Purchased</span>
+      <span class="status-time" id="timePurchased"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  var plans = [
+    { name: "JV", productId: "80009c4e-5f5b-0c95-710b-2ce0da21f684", sub6: "67bc6c5f-5691-4296-8647-cdb1378f7469", sub12: "74d620f8-3a10-42ca-9d91-97a0c6b20317" },
+    { name: "Varsity", productId: "da2e617d-ff9c-7c9f-2533-2f99ecc69f23", sub6: "e42fd6ca-d44d-438b-baab-c4fe303ba118", sub12: "45164cd1-f07a-41b1-a5cb-760cf223389c" },
+    { name: "Red Shirt", productId: "d89f5806-bcd3-579c-c620-4a075b6f9238", sub6: "2c3a45e4-5a4c-421c-8128-255a12d14860", sub12: "ada27824-2fa7-4389-8d88-7dfe455ccea4" },
+    { name: "MVP", productId: "c94a9e16-e25e-fe2e-b776-0dfbfcd45030", sub6: "0b1eaef6-a2fe-4b70-8691-75c74699e769", sub12: "dd40d45c-a317-43ba-8fda-f456a5d44d71" },
+    { name: "All-American", productId: "fb85b062-75f6-904d-fa9a-32a71b5320c0", sub6: "0aacbce3-df43-40eb-ba47-c7daa6d56377", sub12: "7c2cb7cb-8d90-48c7-9c3e-2c947243b73f" },
+    { name: "Heisman", productId: "c1a561a1-5362-5b1e-58b4-851fc25fad3b", sub6: "f3f467aa-4b0f-4c18-8294-82dd2489568d", sub12: "9cae61f8-ed41-47c9-8cc4-86df19b4206c" }
+  ];
+
+  var addons = [
+    { name: "NIL Consultation", price: "$299", productId: "63469fd0-d170-f04a-863e-2c85ce648c1b", note: "" },
+    { name: "NIL Consultation + Package", price: "$999", productId: "bd543aa5-9b5d-2e68-0f5b-fa9e2d473408", note: "$150 Consultation, $749 Non-refundable Deposit" },
+    { name: "1-on-1 Virtual Coaching", price: "$499", productId: "faf75555-371f-ec0c-6d7d-f009990ddfb2", note: "Deposit" },
+    { name: "1-on-1 In-Person Coaching", price: "$999", productId: "7c6ecc08-22e2-daad-4633-6f154eacdac7", note: "Deposit" },
+    { name: "Email Campaigns", price: "$599", productId: "4c0cd65d-ccf1-8405-25a5-d040d6a3574d", note: "1 per year" },
+    { name: "Email Campaigns", price: "$999", productId: "e7ff5087-4b70-58ac-4330-4f05a626ade3", note: "2 per year" },
+    { name: "Premium Film Consultation", price: "$499", productId: "7bfe81b5-ea1a-cdf1-5991-ac6b6e324d9f", note: "" },
+    { name: "Personal Mentorship", price: "$999", productId: "5a1c04e7-b947-bf87-07de-6887c2994d10", note: "" },
+    { name: "Direct Calls to Coaches", price: "$1,499", productId: "4baad6da-4ad4-82e2-6329-6afb1683f1c1", note: "10 calls to college coaches" },
+    { name: "Direct Calls to Coaches", price: "$2,299", productId: "70290036-50ad-47b5-6c27-7a33eb45d493", note: "20 calls to college coaches" },
+    { name: "Direct Calls to Coaches", price: "$2,999", productId: "26f10df8-ecec-ce48-5083-9ceaa8066c42", note: "30 calls to college coaches" },
+    { name: "Highlight Film Edits", price: "$999", productId: "71aa0634-252f-9ca5-74f1-cebd24043b2d", note: "2 per year" },
+    { name: "Media Training", price: "$999", productId: "24229940-100c-9762-4d93-b37235a8f564", note: "Includes 10-Minute Podcast Interview" }
+  ];
+
+  var selectedPlan = null;
+  var selectedTerm = "onepay";
+  var selectedAddons = [];
+  var memberInfo = { email: "", name: "", memberId: "" };
+  var currentCheckoutTemplateId = null;
+  var pollInterval = null;
+  var sentTime = null;
+
+  function initAddonsGrid() {
+    var grid = document.getElementById("addonsGrid");
+    grid.innerHTML = "";
+    
+    addons.forEach(function(addon) {
+      var item = document.createElement("div");
+      item.className = "addon-item";
+      item.setAttribute("data-product-id", addon.productId);
+      item.onclick = function() { toggleAddon(addon.productId); };
+      
+      var noteHtml = addon.note ? '<div class="addon-note">' + addon.note + '</div>' : '';
+      
+      item.innerHTML = 
+        '<div class="addon-checkbox"><span class="addon-checkmark">✓</span></div>' +
+        '<div class="addon-info">' +
+          '<div class="addon-name">' + addon.name + '</div>' +
+          noteHtml +
+        '</div>' +
+        '<div class="addon-price">' + addon.price + '</div>';
+      
+      grid.appendChild(item);
+    });
+  }
+
+  function toggleAddon(productId) {
+    var index = selectedAddons.indexOf(productId);
+    if (index > -1) {
+      selectedAddons.splice(index, 1);
+    } else {
+      selectedAddons.push(productId);
+    }
+    updateAddonUI();
+  }
+
+  function updateAddonUI() {
+    var items = document.querySelectorAll(".addon-item");
+    items.forEach(function(item) {
+      var productId = item.getAttribute("data-product-id");
+      if (selectedAddons.indexOf(productId) > -1) {
+        item.classList.add("selected");
+      } else {
+        item.classList.remove("selected");
+      }
+    });
+    
+    var countBadge = document.getElementById("addonsCount");
+    if (selectedAddons.length > 0) {
+      countBadge.textContent = selectedAddons.length + " selected";
+      countBadge.classList.add("visible");
+    } else {
+      countBadge.classList.remove("visible");
+    }
+  }
+
+  function toggleAddons() {
+    var header = document.getElementById("addonsHeader");
+    var content = document.getElementById("addonsContent");
+    header.classList.toggle("open");
+    content.classList.toggle("open");
+  }
+
+  window.addEventListener("message", function(event) {
+    var data = event.data;
+    if (typeof data === "string") {
+      try { data = JSON.parse(data); } catch(e) { return; }
+    }
+    if (!data || !data.type) return;
+
+    if (data.type === "LRN_MEMBER_INFO") {
+      memberInfo = { email: data.email || "", name: data.name || "", memberId: data.memberId || "" };
+      if (memberInfo.email) {
+        document.getElementById("athleteEmail").value = memberInfo.email;
+      }
+      validateEmailForm();
+    }
+
+    if (data.type === "LRN_EMAIL_STATUS") {
+      var statusBar = document.getElementById("statusBar");
+      var statusText = document.getElementById("statusText");
+      var emailBtn = document.getElementById("emailBtn");
+
+      if (data.status === "sending") {
+        statusBar.className = "status-bar visible sending";
+        statusText.style.display = "block";
+        statusText.textContent = "Sending checkout link...";
+        document.getElementById("statusHeader").style.display = "none";
+        document.getElementById("statusSteps").style.display = "none";
+        emailBtn.disabled = true;
+        emailBtn.textContent = "Sending...";
+      } else if (data.status === "sent") {
+        emailBtn.disabled = false;
+        emailBtn.textContent = "Email Checkout Link";
+        
+        if (data.checkoutTemplateId) {
+          startTracking(data.checkoutTemplateId, data.athleteName, data.planName, data.email);
+        }
+      } else if (data.status === "error") {
+        statusBar.className = "status-bar visible sending";
+        statusText.style.display = "block";
+        statusText.textContent = "Error: " + (data.error || "Failed to send. Try again.");
+        statusText.style.color = "#b71c1c";
+        statusBar.style.backgroundColor = "#fff5f5";
+        emailBtn.disabled = false;
+        emailBtn.textContent = "Email Checkout Link";
+      }
+    }
+
+    if (data.type === "LRN_STATUS_UPDATE") {
+      updateStatusTracker(data);
+    }
+  });
+
+  function selectPlan(planIndex) {
+    selectedPlan = plans[planIndex];
+    highlightColumn(planIndex + 1);
+    document.getElementById("payToggle").classList.add("visible");
+    document.getElementById("checkoutBtn").classList.add("active");
+    document.getElementById("sendPlanBtn").classList.add("active");
+    document.getElementById("emailSection").classList.remove("visible");
+    closeStatusBar();
+    validateEmailForm();
+  }
+
+  function toggleEmailSection() {
+    var section = document.getElementById("emailSection");
+    section.classList.toggle("visible");
+    if (section.classList.contains("visible")) {
+      document.getElementById("sendToEmail").focus();
+    }
+  }
+
+  function selectTerm(term) {
+    selectedTerm = term;
+    var btns = document.querySelectorAll(".pay-btn");
+    btns.forEach(function(b) { b.classList.remove("active"); });
+    event.target.classList.add("active");
+  }
+
+  function highlightColumn(colIndex) {
+    var table = document.getElementById("pricingTable");
+    var cells = table.querySelectorAll("td, th");
+    cells.forEach(function(cell) { cell.classList.remove("active-column"); });
+    for (var i = 0; i < table.rows.length; i++) {
+      if (table.rows[i].cells[colIndex]) {
+        table.rows[i].cells[colIndex].classList.add("active-column");
+      }
+    }
+  }
+
+  function validateEmailForm() {
+    var sendTo = document.getElementById("sendToEmail").value.trim();
+    var athlete = document.getElementById("athleteEmail").value.trim();
+    var btn = document.getElementById("emailBtn");
+    var isValid = sendTo.length > 0 && sendTo.indexOf("@") > -1 && athlete.length > 0 && athlete.indexOf("@") > -1 && selectedPlan;
+    btn.disabled = !isValid;
+  }
+
+  document.getElementById("sendToEmail").addEventListener("input", validateEmailForm);
+  document.getElementById("athleteEmail").addEventListener("input", validateEmailForm);
+
+  function sendCheckout() {
+    if (!selectedPlan) return;
+    
+    var subscriptionOptionId = null;
+    if (selectedTerm === "6pay") subscriptionOptionId = selectedPlan.sub6;
+    if (selectedTerm === "12pay") subscriptionOptionId = selectedPlan.sub12;
+
+    window.parent.postMessage({
+      type: "LRN_CHECKOUT",
+      productId: selectedPlan.productId,
+      planName: selectedPlan.name,
+      paymentTerm: selectedTerm,
+      subscriptionOptionId: subscriptionOptionId,
+      addons: selectedAddons
+    }, "*");
+  }
+
+  function sendEmailCheckout() {
+    if (!selectedPlan) return;
+    var sendToEmail = document.getElementById("sendToEmail").value.trim();
+    var athleteEmail = document.getElementById("athleteEmail").value.trim();
+    if (!sendToEmail || !athleteEmail) return;
+
+    var subscriptionOptionId = null;
+    if (selectedTerm === "6pay") subscriptionOptionId = selectedPlan.sub6;
+    if (selectedTerm === "12pay") subscriptionOptionId = selectedPlan.sub12;
+
+    var addonNames = selectedAddons.map(function(productId) {
+      var addon = addons.find(function(a) { return a.productId === productId; });
+      return addon ? addon.name : "";
+    }).filter(function(name) { return name; });
+
+    window.parent.postMessage({
+      type: "LRN_EMAIL_CHECKOUT",
+      productId: selectedPlan.productId,
+      planName: selectedPlan.name,
+      paymentTerm: selectedTerm,
+      subscriptionOptionId: subscriptionOptionId,
+      sendToEmail: sendToEmail,
+      athleteEmail: athleteEmail,
+      athleteName: memberInfo.name || "",
+      addons: selectedAddons,
+      addonNames: addonNames
+    }, "*");
+  }
+
+  function startTracking(checkoutTemplateId, athleteName, planName, sendToEmail) {
+    currentCheckoutTemplateId = checkoutTemplateId;
+    sentTime = new Date();
+
+    var statusBar = document.getElementById("statusBar");
+    statusBar.className = "status-bar visible tracking";
+    
+    document.getElementById("statusText").style.display = "none";
+    document.getElementById("statusHeader").style.display = "flex";
+    document.getElementById("statusSteps").style.display = "flex";
+    
+    document.getElementById("statusInfo").innerHTML = "<strong>" + (athleteName || "Athlete") + "</strong> • " + planName + " • " + sendToEmail;
+
+    resetStatusSteps();
+    document.getElementById("stepSent").className = "status-step completed";
+    document.getElementById("timeSent").textContent = formatTime(sentTime);
+    document.getElementById("stepOpened").className = "status-step active";
+    document.getElementById("statusLineFill").style.width = "0%";
+
+    if (pollInterval) clearInterval(pollInterval);
+    pollInterval = setInterval(function() {
+      window.parent.postMessage({
+        type: "LRN_POLL_STATUS",
+        checkoutTemplateId: currentCheckoutTemplateId
+      }, "*");
+    }, 5000);
+  }
+
+  function resetStatusSteps() {
+    ["stepSent", "stepOpened", "stepClicked", "stepPurchased"].forEach(function(id) {
+      document.getElementById(id).className = "status-step waiting";
+    });
+    document.getElementById("timeSent").textContent = "";
+    document.getElementById("timeOpened").textContent = "";
+    document.getElementById("timeClicked").textContent = "";
+    document.getElementById("timePurchased").textContent = "";
+  }
+
+  function updateStatusTracker(data) {
+    if (!data.found) return;
+
+    var lineFill = 0;
+    
+    document.getElementById("stepSent").className = "status-step completed";
+
+    if (data.emailOpenedAt) {
+      document.getElementById("stepOpened").className = "status-step completed";
+      document.getElementById("timeOpened").textContent = formatTime(new Date(data.emailOpenedAt));
+      lineFill = 33;
+      
+      if (!data.linkClickedAt) {
+        document.getElementById("stepClicked").className = "status-step active";
+      }
+    } else {
+      document.getElementById("stepOpened").className = "status-step active";
+    }
+
+    if (data.linkClickedAt) {
+      document.getElementById("stepClicked").className = "status-step completed";
+      document.getElementById("timeClicked").textContent = formatTime(new Date(data.linkClickedAt));
+      lineFill = 66;
+      
+      if (data.status !== "completed") {
+        document.getElementById("stepPurchased").className = "status-step active";
+      }
+    }
+
+    if (data.status === "completed" && data.completedDate) {
+      document.getElementById("stepPurchased").className = "status-step completed";
+      document.getElementById("timePurchased").textContent = formatTime(new Date(data.completedDate));
+      lineFill = 100;
+      
+      document.getElementById("statusBar").classList.add("purchased");
+
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
+    }
+
+    document.getElementById("statusLineFill").style.width = lineFill + "%";
+  }
+
+  function formatTime(date) {
+    if (!date) return "";
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var ampm = h >= 12 ? "pm" : "am";
+    h = h % 12;
+    h = h ? h : 12;
+    m = m < 10 ? "0" + m : m;
+    return h + ":" + m + ampm;
+  }
+
+  function closeStatusBar() {
+    document.getElementById("statusBar").className = "status-bar";
+    if (pollInterval) {
+      clearInterval(pollInterval);
+      pollInterval = null;
+    }
+    currentCheckoutTemplateId = null;
+  }
+
+  var scrollState = "top";
+  function toggleScroll() {
+    var container = document.getElementById("scrollContainer");
+    var arrow = document.getElementById("navArrow");
+    if (scrollState === "top") {
+      container.scrollTop = container.scrollHeight;
+      arrow.classList.add("arrow-up");
+      scrollState = "bottom";
+    } else {
+      container.scrollTop = 0;
+      arrow.classList.remove("arrow-up");
+      scrollState = "top";
+    }
+  }
+
+  document.getElementById("scrollContainer").addEventListener("scroll", function() {
+    var container = this;
+    var arrow = document.getElementById("navArrow");
+    if (container.scrollTop < 50) {
+      arrow.classList.remove("arrow-up");
+      scrollState = "top";
+    } else if (container.scrollTop + container.clientHeight >= container.scrollHeight - 50) {
+      arrow.classList.add("arrow-up");
+      scrollState = "bottom";
+    }
+  });
+
+  initAddonsGrid();
+</script>
+
+</body>
+</html>
+```
+
+**Changes made:**
+1. **Strategy Meetings**: Heisman → 60 (was Unl)
+2. **Professional Film Edits**: Renamed from "Highlight Film Edits" (values unchanged: 1,2,3,4,5,Unl)
+3. **Email Campaigns**: 1, 2, 3, 3/yr, 4/yr, 5/yr (was 2, 3, 5, 3/yr, 4/yr, 5/yr)
+4. **Transfer Assistance**: Label changed to "(HS and College)", Varsity no longer has it
+5. **Workout, Exercise, Flexibility Program**: Label kept as-is
+6. **Nutrition Program**: Red Shirt no longer has it (was ✓)
+7. **Custom Graphics**: ✗, ✗, 2, 5, 10, 30 (was ✗, ✗, 2, 5, 10, Unl)
+8. **Player Podcast Interview / Media Training**: Renamed from "Media Training & Podcast Interview"
+9. **Personal Mentorship**: Renamed from "Personal Daily Mentorship"
+10. **X DMs**: Row name changed, Heisman shows "50/Yr"
+11. **National Coaches Directory**: Kept as-is
+===END===
+
+===MSG===
+uuid: 019c6201-39c0-73b3-9d32-396391857f48
+parent: 019c61fb-c537-7620-bfb3-c8b924317b78
+role: human
+---
+Ok, we gotta get Professional Film Edits (per year) and Premium Film Evaluation down to 2 rows.  How much smaller would you have to make the font to make it fit?  How much wider would you have to make the table?
+
+Also, let's rename "Player Podcast Interview/Media Training" to "Media Training/Player Podcasts".
+===END===
+
+===MSG===
+uuid: 019c6201-39c0-73b3-9d32-3964eff5de8f
+parent: 019c6201-39c0-73b3-9d32-396391857f48
+role: assistant
+---
+ Looking at the current setup:
+
+**Current constraints:**
+- Label column width: 200px
+- Font size in label cells: 16px
+- Row height: 60px
+
+**For "Professional Film Edits (per year)" and "Premium Film Evaluation (per year)":**
+
+These are currently using line breaks to fit. To get them on 2 lines instead of 3, here are the options:
+
+**Option 1: Reduce font size**
+- Current: 16px
+- To fit on 2 lines: ~13-14px would work
+- "Professional Film Edits" + "(per year)" on line 2
+- "Premium Film Evaluation" + "(per year)" on line 2
+
+**Option 2: Widen the label column**
+- Current: 200px
+- To fit on 2 lines at 16px: ~240-250px would work
+- This would increase total table width from 1276px to ~1376px
+
+**Option 3: Abbreviate**
+- "Pro Film Edits (per year)" - fits easier
+- "Premium Film Eval (per year)" - fits easier
+
+**My recommendation:** Widening the column to ~240px is probably cleanest - it keeps readability and doesn't require abbreviations. The table would go from 1276px to ~1356px (adding 80px for both left and right label columns).
+
+Want me to implement one of these options? And I'll also make the "Media Training / Player Podcasts" rename.
+===END===
+
+===MSG===
+uuid: 019c6202-3aa2-736b-8806-b1edf22df980
+parent: 019c6201-39c0-73b3-9d32-3964eff5de8f
+role: human
+---
+Let's make the columns wider.
+===END===
+
+===MSG===
+uuid: 019c6202-3aa2-736b-8806-b1ee37ad9aca
+parent: 019c6202-3aa2-736b-8806-b1edf22df980
+role: assistant
+---
+ Here's the updated embed with wider label columns (240px) and the rename:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --lance-red: #990000;
+    --dark-maroon: #3a0809;
+    --rich-crimson: #5e181a;
+    --highlight-red: #b71c1c;
+    --white: #ffffff;
+    --text-dark: #020303;
+    --border-light: #e0e0e0;
+    --tier-bottom: #fcfcfc;
+    --tier-middle: #f4f4f4;
+    --tier-top: #e8e8e8;
+    --label-col-width: 240px;
+    --plan-col-width: 146px;
+    --table-width: 1356px;
+    --scroll-height: 775px;
+    --header-img-height: 145px;
+    --row-height: 60px;
+    --sub-row-height: 40px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--white);
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scroll-wrapper {
+    height: var(--scroll-height);
+    width: var(--table-width);
+    overflow: auto;
+    border-bottom: 3px solid var(--lance-red);
+    scroll-behavior: smooth;
+    background-color: var(--white);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-wrapper::-webkit-scrollbar { display: none; }
+
+  table {
+    width: var(--table-width);
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    background-color: var(--white);
+    border-bottom: 5px solid var(--lance-red);
+    padding: 0;
+    margin: 0;
+    width: var(--plan-col-width);
+    min-width: var(--plan-col-width);
+  }
+
+  thead th:first-child,
+  thead th:last-child {
+    position: sticky;
+    top: 0;
+    z-index: 400 !important;
+    background-color: var(--white);
+    border-bottom: 5px solid var(--lance-red);
+    width: var(--label-col-width);
+    min-width: var(--label-col-width);
+  }
+  thead th:first-child { left: 0; border-right: 3px solid var(--lance-red); }
+  thead th:last-child  { right: 0; border-left: 3px solid var(--lance-red); border-right: none; }
+
+  td:first-child,
+  td:last-child {
+    position: sticky;
+    z-index: 200;
+    background-color: var(--white);
+    width: var(--label-col-width);
+    min-width: var(--label-col-width);
+    text-align: center;
+    padding: 0 2px;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.1;
+    white-space: normal;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  td:first-child { left: 0; border-right: 3px solid var(--lance-red); }
+  td:last-child  { right: 0; border-left: 3px solid var(--lance-red); }
+
+  td {
+    height: var(--row-height);
+    padding: 0 2px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-dark);
+    vertical-align: middle;
+    position: relative;
+    background-color: var(--white);
+  }
+  td > span, td > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .tl-plan-name, .tl-price-label, .tl-term-label {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    font-weight: 900;
+    color: var(--dark-maroon);
+    background-color: var(--white);
+  }
+  .tl-plan-name {
+    height: var(--header-img-height);
+    align-items: flex-end;
+    font-size: 17px;
+    padding-bottom: 0;
+    margin-bottom: 5px;
+  }
+  .tl-price-label, .tl-term-label {
+    height: var(--sub-row-height);
+    align-items: center;
+    font-size: 17px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .header-top-container {
+    height: var(--header-img-height);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .header-img {
+    max-width: 95%;
+    max-height: 140px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  .price-tag {
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-row-height);
+    color: var(--lance-red);
+    border-top: 1px solid var(--border-light);
+    background-color: var(--tier-middle);
+  }
+  th:nth-child(3) .price-tag,
+  th:nth-child(5) .price-tag,
+  th:nth-child(7) .price-tag {
+    background-color: #e0e0e0;
+  }
+
+  .term-label {
+    font-weight: 900;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-row-height);
+    color: var(--white);
+    background-color: var(--rich-crimson);
+    border-bottom: 1px solid #000000;
+  }
+  th:nth-child(3) .term-label,
+  th:nth-child(5) .term-label,
+  th:nth-child(7) .term-label {
+    background-color: var(--dark-maroon);
+  }
+  
+  th:first-child .tl-term-label,
+  th:last-child .tl-term-label {
+    border-bottom: 1px solid #000000;
+  }
+
+  td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+    background-color: var(--tier-bottom);
+    border-right: 1px solid var(--border-light);
+  }
+  td:nth-child(5), td:nth-child(6) {
+    background-color: var(--tier-middle);
+    border-right: 1px solid var(--border-light);
+  }
+  td:nth-child(7) {
+    background-color: var(--tier-top);
+    border-right: 1px solid var(--border-light);
+    border-left: 1px solid #d0d0d0;
+  }
+
+  .data-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 32px;
+    background-color: var(--lance-red);
+    color: white;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 18px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+  }
+  .check-mark { font-size: 20px; }
+
+  tbody tr:nth-child(even) td {
+    background-image: linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0.03));
+  }
+  tbody tr:nth-child(even) td:first-child,
+  tbody tr:nth-child(even) td:last-child {
+    background-image: none;
+    background-color: var(--white);
+  }
+
+  tbody tr:hover td::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.05);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hot-row td {
+    background-color: rgba(153, 0, 0, 0.12) !important;
+    border-bottom: 1px solid var(--border-light);
+    background-image: none !important;
+  }
+  .hot-row td:first-child,
+  .hot-row td:last-child {
+    color: var(--highlight-red);
+    font-weight: 900;
+    background-color: #fff5f5 !important;
+  }
+  .hot-row td:first-child { border-left: 10px solid var(--highlight-red); padding-left: 5px; }
+  .hot-row td:last-child  { border-right: 10px solid var(--highlight-red); padding-left: 5px; }
+
+  td.active-column {
+    box-shadow: inset 3px 0 0 0 var(--lance-red), inset -3px 0 0 0 var(--lance-red) !important;
+    background-color: rgba(186, 191, 190, 0.3) !important;
+  }
+  th.active-column {
+    box-shadow: inset 3px 0 0 0 var(--lance-red), inset -3px 0 0 0 var(--lance-red) !important;
+    background-color: #f2f2f2 !important;
+    opacity: 1 !important;
+  }
+  thead th:not(:first-child):not(:last-child):hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+
+  #navArrow {
+    margin-top: 10px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+  .arrow-shape {
+    border: solid var(--lance-red);
+    border-width: 0 8px 8px 0;
+    display: inline-block;
+    padding: 10px;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+  }
+  .arrow-up .arrow-shape {
+    transform: rotate(-135deg);
+    margin-top: 10px;
+  }
+
+  .addons-section {
+    width: 850px;
+    margin: 15px 0;
+  }
+
+  .addons-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background-color: var(--dark-maroon);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .addons-header:hover {
+    background-color: var(--rich-crimson);
+  }
+  .addons-header.open {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .addons-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .addons-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--white);
+  }
+
+  .addons-count {
+    display: none;
+    background-color: var(--lance-red);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 12px;
+  }
+  .addons-count.visible {
+    display: inline-block;
+  }
+
+  .addons-arrow {
+    color: var(--white);
+    font-size: 12px;
+    transition: transform 0.3s ease;
+  }
+  .addons-header.open .addons-arrow {
+    transform: rotate(180deg);
+  }
+
+  .addons-content {
+    display: none;
+    background-color: #fafafa;
+    border: 2px solid var(--dark-maroon);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 15px;
+  }
+  .addons-content.open {
+    display: block;
+  }
+
+  .addons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .addon-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    background-color: var(--white);
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .addon-item:hover {
+    border-color: var(--lance-red);
+    background-color: #fff8f8;
+  }
+  .addon-item.selected {
+    border-color: var(--lance-red);
+    background-color: rgba(153, 0, 0, 0.08);
+  }
+
+  .addon-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-light);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+  .addon-item.selected .addon-checkbox {
+    background-color: var(--lance-red);
+    border-color: var(--lance-red);
+  }
+  .addon-checkmark {
+    display: none;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .addon-item.selected .addon-checkmark {
+    display: block;
+  }
+
+  .addon-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .addon-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+
+  .addon-note {
+    font-size: 11px;
+    color: #888;
+  }
+
+  .addon-price {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--lance-red);
+    white-space: nowrap;
+  }
+
+  .checkout-bar {
+    width: var(--table-width);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    background-color: var(--white);
+    flex-wrap: wrap;
+  }
+
+  .pay-toggle {
+    display: none;
+    gap: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid var(--lance-red);
+  }
+  .pay-toggle.visible { display: flex; }
+
+  .pay-btn {
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--lance-red);
+    background-color: var(--white);
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-right: 1px solid var(--lance-red);
+  }
+  .pay-btn:last-child { border-right: none; }
+  .pay-btn.active {
+    background-color: var(--lance-red);
+    color: var(--white);
+  }
+  .pay-btn:hover:not(.active) {
+    background-color: #f5e6e6;
+  }
+
+  .checkout-btn {
+    padding: 14px 40px;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--lance-red);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .checkout-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .checkout-btn.active:hover {
+    background-color: var(--highlight-red);
+  }
+  .checkout-btn.active:active {
+    opacity: 0.9;
+  }
+
+  .send-plan-btn {
+    padding: 14px 35px;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--dark-maroon);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .send-plan-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .send-plan-btn.active:hover {
+    background-color: var(--rich-crimson);
+  }
+  .send-plan-btn.active:active {
+    opacity: 0.9;
+  }
+
+  .email-section {
+    display: none;
+    width: var(--table-width);
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 15px;
+    background-color: var(--white);
+    flex-wrap: wrap;
+  }
+  .email-section.visible { display: flex; }
+
+  .email-label {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--dark-maroon);
+    white-space: nowrap;
+  }
+
+  .email-input {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    width: 220px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    transition: border-color 0.2s ease;
+  }
+  .email-input:focus {
+    outline: none;
+    border-color: var(--lance-red);
+  }
+
+  .email-checkout-btn {
+    padding: 12px 25px;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--white);
+    background-color: var(--dark-maroon);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  .email-checkout-btn:hover {
+    background-color: var(--rich-crimson);
+  }
+  .email-checkout-btn:active {
+    opacity: 0.9;
+  }
+  .email-checkout-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .status-bar {
+    width: var(--table-width);
+    display: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    margin-top: 5px;
+  }
+  .status-bar.visible { display: flex; }
+  
+  .status-bar.sending {
+    background-color: #fff5f5;
+    border: 2px solid var(--lance-red);
+    color: var(--dark-maroon);
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  
+  .status-bar.tracking {
+    background-color: #fff5f5;
+    border: 2px solid var(--lance-red);
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .status-bar.purchased {
+    background-color: var(--dark-maroon);
+    border: 2px solid var(--dark-maroon);
+  }
+  
+  .status-bar.purchased .status-info {
+    color: #ffffff;
+  }
+  
+  .status-bar.purchased .status-info strong {
+    color: #ffffff;
+  }
+  
+  .status-bar.purchased .status-label {
+    color: rgba(255,255,255,0.8);
+  }
+  
+  .status-bar.purchased .status-step.completed .status-label {
+    color: #ffffff;
+  }
+
+  .status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .status-info {
+    font-size: 13px;
+    color: #666;
+  }
+  .status-info strong {
+    color: var(--dark-maroon);
+  }
+  
+  .status-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    padding: 0 5px;
+  }
+  .status-close:hover {
+    color: var(--dark-maroon);
+  }
+  
+  .status-bar.purchased .status-close {
+    color: rgba(255,255,255,0.6);
+  }
+  .status-bar.purchased .status-close:hover {
+    color: #ffffff;
+  }
+
+  .status-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 5px 0;
+  }
+  
+  .status-line-bg {
+    position: absolute;
+    top: 50%;
+    left: 60px;
+    right: 60px;
+    height: 4px;
+    background-color: #e0c0c0;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .status-bar.purchased .status-line-bg {
+    background-color: rgba(255,255,255,0.3);
+  }
+  
+  .status-line-fill {
+    height: 100%;
+    background-color: var(--lance-red);
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  
+  .status-bar.purchased .status-line-fill {
+    background-color: #ffffff;
+  }
+
+  .status-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 2;
+    min-width: 80px;
+  }
+  
+  .status-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background-color: #f5e6e6;
+    color: #c99;
+    border: 2px solid #e0c0c0;
+    transition: all 0.3s ease;
+  }
+  
+  .status-step.waiting .status-icon {
+    background-color: #fff;
+    border-color: #e0c0c0;
+    color: #c99;
+  }
+  
+  .status-step.active .status-icon {
+    background-color: #fff;
+    border-color: var(--lance-red);
+    color: var(--lance-red);
+    animation: pulse 1.5s infinite;
+  }
+  
+  .status-step.completed .status-icon {
+    background-color: var(--lance-red);
+    border-color: var(--dark-maroon);
+    color: white;
+  }
+  
+  .status-bar.purchased .status-step.completed .status-icon {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: var(--dark-maroon);
+  }
+  
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(153, 0, 0, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(153, 0, 0, 0); }
+  }
+  
+  .status-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #c99;
+    text-transform: uppercase;
+  }
+  
+  .status-step.active .status-label,
+  .status-step.completed .status-label {
+    color: var(--dark-maroon);
+  }
+  
+  .status-time {
+    font-size: 10px;
+    color: var(--lance-red);
+    font-weight: 600;
+    min-height: 14px;
+  }
+  
+  .status-bar.purchased .status-time {
+    color: rgba(255,255,255,0.8);
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-wrapper" id="scrollContainer">
+  <table id="pricingTable">
+    <thead>
+      <tr>
+        <th>
+          <div class="tl-plan-name">Service Plan</div>
+          <div class="tl-price-label">One-Time Cost</div>
+          <div class="tl-term-label">Program Duration</div>
+        </th>
+        <th onclick="selectPlan(0)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_a57e98e79103445499341e072e295a35~mv2.png" class="header-img" alt="JV Plan">
+          </div>
+          <div class="price-tag">$999</div>
+          <div class="term-label">2 Years</div>
+        </th>
+        <th onclick="selectPlan(1)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_66604a9ba9c7480b8fb2ca8fb4f0bad6~mv2.png" class="header-img" alt="Varsity Plan">
+          </div>
+          <div class="price-tag">$2,499</div>
+          <div class="term-label">3 Years</div>
+        </th>
+        <th onclick="selectPlan(2)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_dd44e860b8364ccab9870e212ffdfa29~mv2.png" class="header-img" alt="Red Shirt Plan">
+          </div>
+          <div class="price-tag">$3,999</div>
+          <div class="term-label">5 Years</div>
+        </th>
+        <th onclick="selectPlan(3)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_4e89198eea24426292067ac004f8117e~mv2.png" class="header-img" alt="MVP Plan">
+          </div>
+          <div class="price-tag">$5,499</div>
+          <div class="term-label">7 Years</div>
+        </th>
+        <th onclick="selectPlan(4)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_5db467fed754493b98c338fdc35c81f4~mv2.png" class="header-img" alt="All American Plan">
+          </div>
+          <div class="price-tag">$6,499</div>
+          <div class="term-label">9 Years</div>
+        </th>
+        <th onclick="selectPlan(5)">
+          <div class="header-top-container">
+            <img src="https://static.wixstatic.com/media/c45977_c511e680738b41379f1b1eddde9a6207~mv2.png" class="header-img" alt="Heisman Plan">
+          </div>
+          <div class="price-tag">$7,999</div>
+          <div class="term-label">10 Years</div>
+        </th>
+        <th>
+          <div class="tl-plan-name">Service Plan</div>
+          <div class="tl-price-label">One-Time Cost</div>
+          <div class="tl-term-label">Program Duration</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Monthly Seminars &<br>Recruit Networking</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Monthly Seminars &<br>Recruit Networking</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Personalized Gameplan</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Personalized Gameplan</td>
+      </tr>
+      <tr>
+        <td>Study Guide &<br>Classroom</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Study Guide &<br>Classroom</td>
+      </tr>
+      <tr>
+        <td>National Coaches Directory</td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>National Coaches Directory</td>
+      </tr>
+      <tr>
+        <td>Strategy Meetings<br>(per year)</td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">12</div></td>
+        <td><div class="data-badge">24</div></td>
+        <td><div class="data-badge">36</div></td>
+        <td><div class="data-badge">48</div></td>
+        <td><div class="data-badge">60</div></td>
+        <td>Strategy Meetings<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Video Breakdowns<br>(per year)</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">6</div></td>
+        <td>Video Breakdowns<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Professional Film Edits<br>(per year)</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">4</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">Unl</div></td>
+        <td>Professional Film Edits<br>(per year)</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Email Campaigns</td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td><div class="data-badge">3/yr</div></td>
+        <td><div class="data-badge">4/yr</div></td>
+        <td><div class="data-badge">5/yr</div></td>
+        <td>Email Campaigns</td>
+      </tr>
+      <tr>
+        <td>Transfer Assistance<br>(HS and College)</td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Transfer Assistance<br>(HS and College)</td>
+      </tr>
+      <tr>
+        <td>Workout, Exercise,<br>Flexibility Program</td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Workout, Exercise,<br>Flexibility Program</td>
+      </tr>
+      <tr>
+        <td>Nutrition Program</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Nutrition Program</td>
+      </tr>
+      <tr>
+        <td>Custom Graphics<br>(per year)</td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">5</div></td>
+        <td><div class="data-badge">10</div></td>
+        <td><div class="data-badge">30</div></td>
+        <td>Custom Graphics<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>Media Training /<br>Player Podcasts</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">2</div></td>
+        <td><div class="data-badge">3</div></td>
+        <td>Media Training /<br>Player Podcasts</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Direct Calls to<br>College Coaches</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">10</div></td>
+        <td><div class="data-badge">20</div></td>
+        <td><div class="data-badge">30</div></td>
+        <td>Direct Calls to<br>College Coaches</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Personal Mentorship</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td><div class="data-badge check-mark">&#10003;</div></td>
+        <td>Personal Mentorship</td>
+      </tr>
+      <tr class="hot-row">
+        <td>Premium Film Evaluation<br>(per year)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td><div class="data-badge">1</div></td>
+        <td>Premium Film Evaluation<br>(per year)</td>
+      </tr>
+      <tr>
+        <td>X DMs</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">50/Yr</div></td>
+        <td>X DMs</td>
+      </tr>
+      <tr class="hot-row">
+        <td>NIL Consultation</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class="data-badge">1</div></td>
+        <td>NIL Consultation</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="navArrow" onclick="toggleScroll()">
+  <div class="arrow-shape"></div>
+</div>
+
+<div class="addons-section" id="addonsSection">
+  <div class="addons-header" id="addonsHeader" onclick="toggleAddons()">
+    <div class="addons-header-left">
+      <span class="addons-title">+ Additional Services</span>
+      <span class="addons-count" id="addonsCount">0 selected</span>
+    </div>
+    <span class="addons-arrow">▼</span>
+  </div>
+  <div class="addons-content" id="addonsContent">
+    <div class="addons-grid" id="addonsGrid">
+    </div>
+  </div>
+</div>
+
+<div class="checkout-bar">
+  <div class="pay-toggle" id="payToggle">
+    <button class="pay-btn active" onclick="selectTerm('onepay')">One-Pay</button>
+    <button class="pay-btn" onclick="selectTerm('credit')">Credit</button>
+    <button class="pay-btn" onclick="selectTerm('6pay')">6-Pay</button>
+    <button class="pay-btn" onclick="selectTerm('12pay')">12-Pay</button>
+  </div>
+  <button class="send-plan-btn" id="sendPlanBtn" onclick="toggleEmailSection()">Send Plan</button>
+  <button class="checkout-btn" id="checkoutBtn" onclick="sendCheckout()">Select Plan</button>
+</div>
+
+<div class="email-section" id="emailSection">
+  <span class="email-label">Send To:</span>
+  <input type="email" class="email-input" id="sendToEmail" placeholder="parent@email.com" />
+  <span class="email-label">Athlete Account:</span>
+  <input type="email" class="email-input" id="athleteEmail" placeholder="athlete@email.com" />
+  <button class="email-checkout-btn" id="emailBtn" onclick="sendEmailCheckout()" disabled>Email Checkout Link</button>
+</div>
+
+<div class="status-bar" id="statusBar">
+  <span id="statusText">Sending checkout link...</span>
+  <div class="status-header" id="statusHeader" style="display:none;">
+    <span class="status-info" id="statusInfo"></span>
+    <button class="status-close" onclick="closeStatusBar()">✕</button>
+  </div>
+  <div class="status-steps" id="statusSteps" style="display:none;">
+    <div class="status-line-bg"><div class="status-line-fill" id="statusLineFill"></div></div>
+    <div class="status-step completed" id="stepSent">
+      <div class="status-icon">✉️</div>
+      <span class="status-label">Sent</span>
+      <span class="status-time" id="timeSent"></span>
+    </div>
+    <div class="status-step waiting" id="stepOpened">
+      <div class="status-icon">👀</div>
+      <span class="status-label">Opened</span>
+      <span class="status-time" id="timeOpened"></span>
+    </div>
+    <div class="status-step waiting" id="stepClicked">
+      <div class="status-icon">🖱️</div>
+      <span class="status-label">Clicked</span>
+      <span class="status-time" id="timeClicked"></span>
+    </div>
+    <div class="status-step waiting" id="stepPurchased">
+      <div class="status-icon">✅</div>
+      <span class="status-label">Purchased</span>
+      <span class="status-time" id="timePurchased"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  var plans = [
+    { name: "JV", productId: "80009c4e-5f5b-0c95-710b-2ce0da21f684", sub6: "67bc6c5f-5691-4296-8647-cdb1378f7469", sub12: "74d620f8-3a10-42ca-9d91-97a0c6b20317" },
+    { name: "Varsity", productId: "da2e617d-ff9c-7c9f-2533-2f99ecc69f23", sub6: "e42fd6ca-d44d-438b-baab-c4fe303ba118", sub12: "45164cd1-f07a-41b1-a5cb-760cf223389c" },
+    { name: "Red Shirt", productId: "d89f5806-bcd3-579c-c620-4a075b6f9238", sub6: "2c3a45e4-5a4c-421c-8128-255a12d14860", sub12: "ada27824-2fa7-4389-8d88-7dfe455ccea4" },
+    { name: "MVP", productId: "c94a9e16-e25e-fe2e-b776-0dfbfcd45030", sub6: "0b1eaef6-a2fe-4b70-8691-75c74699e769", sub12: "dd40d45c-a317-43ba-8fda-f456a5d44d71" },
+    { name: "All-American", productId: "fb85b062-75f6-904d-fa9a-32a71b5320c0", sub6: "0aacbce3-df43-40eb-ba47-c7daa6d56377", sub12: "7c2cb7cb-8d90-48c7-9c3e-2c947243b73f" },
+    { name: "Heisman", productId: "c1a561a1-5362-5b1e-58b4-851fc25fad3b", sub6: "f3f467aa-4b0f-4c18-8294-82dd2489568d", sub12: "9cae61f8-ed41-47c9-8cc4-86df19b4206c" }
+  ];
+
+  var addons = [
+    { name: "NIL Consultation", price: "$299", productId: "63469fd0-d170-f04a-863e-2c85ce648c1b", note: "" },
+    { name: "NIL Consultation + Package", price: "$999", productId: "bd543aa5-9b5d-2e68-0f5b-fa9e2d473408", note: "$150 Consultation, $749 Non-refundable Deposit" },
+    { name: "1-on-1 Virtual Coaching", price: "$499", productId: "faf75555-371f-ec0c-6d7d-f009990ddfb2", note: "Deposit" },
+    { name: "1-on-1 In-Person Coaching", price: "$999", productId: "7c6ecc08-22e2-daad-4633-6f154eacdac7", note: "Deposit" },
+    { name: "Email Campaigns", price: "$599", productId: "4c0cd65d-ccf1-8405-25a5-d040d6a3574d", note: "1 per year" },
+    { name: "Email Campaigns", price: "$999", productId: "e7ff5087-4b70-58ac-4330-4f05a626ade3", note: "2 per year" },
+    { name: "Premium Film Consultation", price: "$499", productId: "7bfe81b5-ea1a-cdf1-5991-ac6b6e324d9f", note: "" },
+    { name: "Personal Mentorship", price: "$999", productId: "5a1c04e7-b947-bf87-07de-6887c2994d10", note: "" },
+    { name: "Direct Calls to Coaches", price: "$1,499", productId: "4baad6da-4ad4-82e2-6329-6afb1683f1c1", note: "10 calls to college coaches" },
+    { name: "Direct Calls to Coaches", price: "$2,299", productId: "70290036-50ad-47b5-6c27-7a33eb45d493", note: "20 calls to college coaches" },
+    { name: "Direct Calls to Coaches", price: "$2,999", productId: "26f10df8-ecec-ce48-5083-9ceaa8066c42", note: "30 calls to college coaches" },
+    { name: "Highlight Film Edits", price: "$999", productId: "71aa0634-252f-9ca5-74f1-cebd24043b2d", note: "2 per year" },
+    { name: "Media Training", price: "$999", productId: "24229940-100c-9762-4d93-b37235a8f564", note: "Includes 10-Minute Podcast Interview" }
+  ];
+
+  var selectedPlan = null;
+  var selectedTerm = "onepay";
+  var selectedAddons = [];
+  var memberInfo = { email: "", name: "", memberId: "" };
+  var currentCheckoutTemplateId = null;
+  var pollInterval = null;
+  var sentTime = null;
+
+  function initAddonsGrid() {
+    var grid = document.getElementById("addonsGrid");
+    grid.innerHTML = "";
+    
+    addons.forEach(function(addon) {
+      var item = document.createElement("div");
+      item.className = "addon-item";
+      item.setAttribute("data-product-id", addon.productId);
+      item.onclick = function() { toggleAddon(addon.productId); };
+      
+      var noteHtml = addon.note ? '<div class="addon-note">' + addon.note + '</div>' : '';
+      
+      item.innerHTML = 
+        '<div class="addon-checkbox"><span class="addon-checkmark">✓</span></div>' +
+        '<div class="addon-info">' +
+          '<div class="addon-name">' + addon.name + '</div>' +
+          noteHtml +
+        '</div>' +
+        '<div class="addon-price">' + addon.price + '</div>';
+      
+      grid.appendChild(item);
+    });
+  }
+
+  function toggleAddon(productId) {
+    var index = selectedAddons.indexOf(productId);
+    if (index > -1) {
+      selectedAddons.splice(index, 1);
+    } else {
+      selectedAddons.push(productId);
+    }
+    updateAddonUI();
+  }
+
+  function updateAddonUI() {
+    var items = document.querySelectorAll(".addon-item");
+    items.forEach(function(item) {
+      var productId = item.getAttribute("data-product-id");
+      if (selectedAddons.indexOf(productId) > -1) {
+        item.classList.add("selected");
+      } else {
+        item.classList.remove("selected");
+      }
+    });
+    
+    var countBadge = document.getElementById("addonsCount");
+    if (selectedAddons.length > 0) {
+      countBadge.textContent = selectedAddons.length + " selected";
+      countBadge.classList.add("visible");
+    } else {
+      countBadge.classList.remove("visible");
+    }
+  }
+
+  function toggleAddons() {
+    var header = document.getElementById("addonsHeader");
+    var content = document.getElementById("addonsContent");
+    header.classList.toggle("open");
+    content.classList.toggle("open");
+  }
+
+  window.addEventListener("message", function(event) {
+    var data = event.data;
+    if (typeof data === "string") {
+      try { data = JSON.parse(data); } catch(e) { return; }
+    }
+    if (!data || !data.type) return;
+
+    if (data.type === "LRN_MEMBER_INFO") {
+      memberInfo = { email: data.email || "", name: data.name || "", memberId: data.memberId || "" };
+      if (memberInfo.email) {
+        document.getElementById("athleteEmail").value = memberInfo.email;
+      }
+      validateEmailForm();
+    }
+
+    if (data.type === "LRN_EMAIL_STATUS") {
+      var statusBar = document.getElementById("statusBar");
+      var statusText = document.getElementById("statusText");
+      var emailBtn = document.getElementById("emailBtn");
+
+      if (data.status === "sending") {
+        statusBar.className = "status-bar visible sending";
+        statusText.style.display = "block";
+        statusText.textContent = "Sending checkout link...";
+        document.getElementById("statusHeader").style.display = "none";
+        document.getElementById("statusSteps").style.display = "none";
+        emailBtn.disabled = true;
+        emailBtn.textContent = "Sending...";
+      } else if (data.status === "sent") {
+        emailBtn.disabled = false;
+        emailBtn.textContent = "Email Checkout Link";
+        
+        if (data.checkoutTemplateId) {
+          startTracking(data.checkoutTemplateId, data.athleteName, data.planName, data.email);
+        }
+      } else if (data.status === "error") {
+        statusBar.className = "status-bar visible sending";
+        statusText.style.display = "block";
+        statusText.textContent = "Error: " + (data.error || "Failed to send. Try again.");
+        statusText.style.color = "#b71c1c";
+        statusBar.style.backgroundColor = "#fff5f5";
+        emailBtn.disabled = false;
+        emailBtn.textContent = "Email Checkout Link";
+      }
+    }
+
+    if (data.type === "LRN_STATUS_UPDATE") {
+      updateStatusTracker(data);
+    }
+  });
+
+  function selectPlan(planIndex) {
+    selectedPlan = plans[planIndex];
+    highlightColumn(planIndex + 1);
+    document.getElementById("payToggle").classList.add("visible");
+    document.getElementById("checkoutBtn").classList.add("active");
+    document.getElementById("sendPlanBtn").classList.add("active");
+    document.getElementById("emailSection").classList.remove("visible");
+    closeStatusBar();
+    validateEmailForm();
+  }
+
+  function toggleEmailSection() {
+    var section = document.getElementById("emailSection");
+    section.classList.toggle("visible");
+    if (section.classList.contains("visible")) {
+      document.getElementById("sendToEmail").focus();
+    }
+  }
+
+  function selectTerm(term) {
+    selectedTerm = term;
+    var btns = document.querySelectorAll(".pay-btn");
+    btns.forEach(function(b) { b.classList.remove("active"); });
+    event.target.classList.add("active");
+  }
+
+  function highlightColumn(colIndex) {
+    var table = document.getElementById("pricingTable");
+    var cells = table.querySelectorAll("td, th");
+    cells.forEach(function(cell) { cell.classList.remove("active-column"); });
+    for (var i = 0; i < table.rows.length; i++) {
+      if (table.rows[i].cells[colIndex]) {
+        table.rows[i].cells[colIndex].classList.add("active-column");
+      }
+    }
+  }
+
+  function validateEmailForm() {
+    var sendTo = document.getElementById("sendToEmail").value.trim();
+    var athlete = document.getElementById("athleteEmail").value.trim();
+    var btn = document.getElementById("emailBtn");
+    var isValid = sendTo.length > 0 && sendTo.indexOf("@") > -1 && athlete.length > 0 && athlete.indexOf("@") > -1 && selectedPlan;
+    btn.disabled = !isValid;
+  }
+
+  document.getElementById("sendToEmail").addEventListener("input", validateEmailForm);
+  document.getElementById("athleteEmail").addEventListener("input", validateEmailForm);
+
+  function sendCheckout() {
+    if (!selectedPlan) return;
+    
+    var subscriptionOptionId = null;
+    if (selectedTerm === "6pay") subscriptionOptionId = selectedPlan.sub6;
+    if (selectedTerm === "12pay") subscriptionOptionId = selectedPlan.sub12;
+
+    window.parent.postMessage({
+      type: "LRN_CHECKOUT",
+      productId: selectedPlan.productId,
+      planName: selectedPlan.name,
+      paymentTerm: selectedTerm,
+      subscriptionOptionId: subscriptionOptionId,
+      addons: selectedAddons
+    }, "*");
+  }
+
+  function sendEmailCheckout() {
+    if (!selectedPlan) return;
+    var sendToEmail = document.getElementById("sendToEmail").value.trim();
+    var athleteEmail = document.getElementById("athleteEmail").value.trim();
+    if (!sendToEmail || !athleteEmail) return;
+
+    var subscriptionOptionId = null;
+    if (selectedTerm === "6pay") subscriptionOptionId = selectedPlan.sub6;
+    if (selectedTerm === "12pay") subscriptionOptionId = selectedPlan.sub12;
+
+    var addonNames = selectedAddons.map(function(productId) {
+      var addon = addons.find(function(a) { return a.productId === productId; });
+      return addon ? addon.name : "";
+    }).filter(function(name) { return name; });
+
+    window.parent.postMessage({
+      type: "LRN_EMAIL_CHECKOUT",
+      productId: selectedPlan.productId,
+      planName: selectedPlan.name,
+      paymentTerm: selectedTerm,
+      subscriptionOptionId: subscriptionOptionId,
+      sendToEmail: sendToEmail,
+      athleteEmail: athleteEmail,
+      athleteName: memberInfo.name || "",
+      addons: selectedAddons,
+      addonNames: addonNames
+    }, "*");
+  }
+
+  function startTracking(checkoutTemplateId, athleteName, planName, sendToEmail) {
+    currentCheckoutTemplateId = checkoutTemplateId;
+    sentTime = new Date();
+
+    var statusBar = document.getElementById("statusBar");
+    statusBar.className = "status-bar visible tracking";
+    
+    document.getElementById("statusText").style.display = "none";
+    document.getElementById("statusHeader").style.display = "flex";
+    document.getElementById("statusSteps").style.display = "flex";
+    
+    document.getElementById("statusInfo").innerHTML = "<strong>" + (athleteName || "Athlete") + "</strong> • " + planName + " • " + sendToEmail;
+
+    resetStatusSteps();
+    document.getElementById("stepSent").className = "status-step completed";
+    document.getElementById("timeSent").textContent = formatTime(sentTime);
+    document.getElementById("stepOpened").className = "status-step active";
+    document.getElementById("statusLineFill").style.width = "0%";
+
+    if (pollInterval) clearInterval(pollInterval);
+    pollInterval = setInterval(function() {
+      window.parent.postMessage({
+        type: "LRN_POLL_STATUS",
+        checkoutTemplateId: currentCheckoutTemplateId
+      }, "*");
+    }, 5000);
+  }
+
+  function resetStatusSteps() {
+    ["stepSent", "stepOpened", "stepClicked", "stepPurchased"].forEach(function(id) {
+      document.getElementById(id).className = "status-step waiting";
+    });
+    document.getElementById("timeSent").textContent = "";
+    document.getElementById("timeOpened").textContent = "";
+    document.getElementById("timeClicked").textContent = "";
+    document.getElementById("timePurchased").textContent = "";
+  }
+
+  function updateStatusTracker(data) {
+    if (!data.found) return;
+
+    var lineFill = 0;
+    
+    document.getElementById("stepSent").className = "status-step completed";
+
+    if (data.emailOpenedAt) {
+      document.getElementById("stepOpened").className = "status-step completed";
+      document.getElementById("timeOpened").textContent = formatTime(new Date(data.emailOpenedAt));
+      lineFill = 33;
+      
+      if (!data.linkClickedAt) {
+        document.getElementById("stepClicked").className = "status-step active";
+      }
+    } else {
+      document.getElementById("stepOpened").className = "status-step active";
+    }
+
+    if (data.linkClickedAt) {
+      document.getElementById("stepClicked").className = "status-step completed";
+      document.getElementById("timeClicked").textContent = formatTime(new Date(data.linkClickedAt));
+      lineFill = 66;
+      
+      if (data.status !== "completed") {
+        document.getElementById("stepPurchased").className = "status-step active";
+      }
+    }
+
+    if (data.status === "completed" && data.completedDate) {
+      document.getElementById("stepPurchased").className = "status-step completed";
+      document.getElementById("timePurchased").textContent = formatTime(new Date(data.completedDate));
+      lineFill = 100;
+      
+      document.getElementById("statusBar").classList.add("purchased");
+
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
+    }
+
+    document.getElementById("statusLineFill").style.width = lineFill + "%";
+  }
+
+  function formatTime(date) {
+    if (!date) return "";
+    var h = date.getHours();
+    var m = date.getMinutes();
+    var ampm = h >= 12 ? "pm" : "am";
+    h = h % 12;
+    h = h ? h : 12;
+    m = m < 10 ? "0" + m : m;
+    return h + ":" + m + ampm;
+  }
+
+  function closeStatusBar() {
+    document.getElementById("statusBar").className = "status-bar";
+    if (pollInterval) {
+      clearInterval(pollInterval);
+      pollInterval = null;
+    }
+    currentCheckoutTemplateId = null;
+  }
+
+  var scrollState = "top";
+  function toggleScroll() {
+    var container = document.getElementById("scrollContainer");
+    var arrow = document.getElementById("navArrow");
+    if (scrollState === "top") {
+      container.scrollTop = container.scrollHeight;
+      arrow.classList.add("arrow-up");
+      scrollState = "bottom";
+    } else {
+      container.scrollTop = 0;
+      arrow.classList.remove("arrow-up");
+      scrollState = "top";
+    }
+  }
+
+  document.getElementById("scrollContainer").addEventListener("scroll", function() {
+    var container = this;
+    var arrow = document.getElementById("navArrow");
+    if (container.scrollTop < 50) {
+      arrow.classList.remove("arrow-up");
+      scrollState = "top";
+    } else if (container.scrollTop + container.clientHeight >= container.scrollHeight - 50) {
+      arrow.classList.add("arrow-up");
+      scrollState = "bottom";
+    }
+  });
+
+  initAddonsGrid();
+</script>
+
+</body>
+</html>
+```
+
+**Changes made:**
+1. `--label-col-width`: 200px → **240px**
+2. `--table-width`: 1276px → **1356px** (added 80px for both label columns)
+3. Renamed "Player Podcast Interview / Media Training" → **"Media Training / Player Podcasts"**
+
+The wider columns should now allow "Professional Film Edits (per year)" and "Premium Film Evaluation (per year)" to fit on 2 lines instead of 3.
+===END===

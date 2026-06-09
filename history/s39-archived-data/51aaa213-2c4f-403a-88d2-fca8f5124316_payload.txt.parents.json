@@ -1,0 +1,14 @@
+{
+  "conv_uuid": "51aaa213-2c4f-403a-88d2-fca8f5124316",
+  "snapshot_id": "baseline-2026-05-25-ae015455",
+  "parents": {
+    "019d92b1-63fd-7830-a977-9de13b198aa4": "null",
+    "019d92b1-63fd-7f9c-9c21-c1eccab4c4ce": "019d92b1-63fd-7830-a977-9de13b198aa4",
+    "019d92b3-ee6a-73b7-8205-ae4c587112cf": "019d92b1-63fd-7f9c-9c21-c1eccab4c4ce",
+    "019d92b3-ee6a-7054-a479-8fad4eb30bd9": "019d92b3-ee6a-73b7-8205-ae4c587112cf",
+    "019d92b5-86ea-749a-a3e8-eb0f105bbf50": "019d92b3-ee6a-7054-a479-8fad4eb30bd9",
+    "019d92b5-86ea-7998-aa29-7211b52ffce9": "019d92b5-86ea-749a-a3e8-eb0f105bbf50",
+    "019d92b6-d707-7666-8129-afb7b16bbd77": "019d92b5-86ea-7998-aa29-7211b52ffce9",
+    "019d92b6-d707-73b5-815b-3e2e99b71c90": "019d92b6-d707-7666-8129-afb7b16bbd77"
+  }
+}

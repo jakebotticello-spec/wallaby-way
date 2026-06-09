@@ -1,0 +1,51 @@
+# SCOPE READER OUTPUT
+# conv daa8d496-ffb2-49fb-8619-7f49e3f7a5ca | baseline-2026-05-25-ae015455 | 6 messages
+
+## CONV — daa8d496-ffb2-49fb-8619-7f49e3f7a5ca
+**Created:** 2026-04-27T18:37:58.976951Z | **Messages:** 6
+
+### NODE 1 — Foreign contractor tax minimization: initial framing + strategies
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "daa8d496-ffb2-49fb-8619-7f49e3f7a5ca",
+  anchor_msg  : "019dd03b-e6a7-70f6-8b81-eea0948c2a3e",
+  reach       : { up: 1, down: 1 }
+}
+```
+**Keywords:** foreign contractor payment, international contractor tax, minimize tax liability contractor abroad, W-8BEN, 1099 foreign contractor, legal tax structures, Estonia OÜ, UAE zero tax, Georgia 1% regime, territorial tax countries, creative tax planning
+**Named-continuity:** W-8BEN, Estonia OÜ, UAE, Georgia, Panama, Costa Rica, Cyprus
+**Summary:** Jake asked how to pay an overseas contractor while minimizing their tax liability in a legal but creative way. Claude laid out the US payer's obligations (W-8BEN, no 1099, no withholding for foreign non-US persons doing work outside the US) and enumerated legitimate contractor-side strategies including invoicing as a local entity, relocating to a favorable jurisdiction (Estonia e-Residency, UAE, Georgia, Paraguay, Cyprus), and using territorial-tax countries. Warned against gift misclassification and third-party routing.
+
+### NODE 2 — Costa Rica territorial tax analysis + US LLC / Estonia OÜ structure recommendation
+**Salience:** MOTION
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "daa8d496-ffb2-49fb-8619-7f49e3f7a5ca",
+  anchor_msg  : "019dd075-08ec-72b1-a4de-d7b5e3280468",
+  reach       : { up: 1, down: 1 }
+}
+```
+**Keywords:** Costa Rica territorial tax, foreign source income Costa Rica, remote work Costa Rica gray area, US LLC Wyoming non-resident, Wyoming LLC foreign owner, New Mexico LLC, Form 5472, Mercury Wise Business account, Estonia OÜ e-Residency, W-8BEN-E foreign LLC, international contractor structure
+**Named-continuity:** Costa Rica, US LLC, Wyoming, New Mexico, Delaware, Estonia OÜ, Mercury, Wise, Form 5472, W-8BEN-E, Greenback CPA
+**Summary:** After learning the contractor is in Costa Rica and cannot form a local entity, Claude searched and confirmed Costa Rica's territorial tax system — only income generated within CR is taxed, with a gray area for remote work performed physically within CR for foreign clients. Recommended two structures: (1) a Wyoming/NM/DE single-member LLC owned by a non-resident foreign person (~$100 setup, no US income tax, annual Form 5472, pay via Mercury/Wise), or (2) Estonia OÜ via e-Residency (0% on retained earnings, taxed only on distribution). Covered Jake's payer obligations: W-8BEN-E for entity invoices, no 1099, no withholding. Flagged the common mistake of a foreign-owned US LLC sending a W-9.
+
+### NODE 3 — Correction: contractor is a US person — worldwide taxation applies, FEIE is the real tool
+**Salience:** FENCE
+```
+span = {
+  snapshot_id : "baseline-2026-05-25-ae015455",
+  conv_uuid   : "daa8d496-ffb2-49fb-8619-7f49e3f7a5ca",
+  anchor_msg  : "019dd077-5b2f-703c-97f8-f18c9f140f06",
+  reach       : { up: 1, down: 0 }
+}
+```
+**Keywords:** US citizen abroad taxes, worldwide income taxation, Foreign Earned Income Exclusion, FEIE Form 2555, self-employment tax abroad, totalization agreement Costa Rica, state tax trap California New York expat, 1099-NEC US contractor abroad, W-9 US person, expat CPA Greenback Bright!Tax Taxes for Expats
+**Named-continuity:** FEIE, Form 2555, Costa Rica, Greenback, Bright!Tax, Taxes for Expats, W-9, 1099-NEC
+**Summary:** Jake revealed the contractor is a US resident (citizen or green card holder), which invalidates all prior territorial-tax and LLC structures. Claude corrected course: US persons owe tax on worldwide income regardless of residence. The actual optimization path is the Foreign Earned Income Exclusion (~$130K for 2026 via 330-day physical presence or bona fide residence test) plus Foreign Housing Exclusion, but self-employment tax (15.3% up to SS wage base, then 2.9% Medicare) is unavoidable because Costa Rica has no totalization agreement with the US. State tax exposure flagged for CA/NY/NJ/VA residents. Jake's payer obligations also corrected: contractor is a US person, so W-9 applies, 1099-NEC required at $600+.
+**Why:** Prior strategies (LLC, territorial tax) were predicated on the contractor being a non-US person; US worldwide taxation eliminates those options and FEIE becomes the primary (and nearly only) federal income tax lever available.
+**Predicate:** Contractor is confirmed as a US citizen or green card holder living in Costa Rica; if their citizenship/residency status changes, the entire analysis resets.
+
+--- DONE: 3 nodes (2 MOTION, 1 FENCE, 0 TEXTURE), 0 drops ---

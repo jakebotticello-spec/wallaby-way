@@ -1,0 +1,750 @@
+CONVERSATION: 2fdeedf8-b873-4162-bb73-064353090a18
+SNAPSHOT_ID: baseline-2026-05-25-ae015455
+CREATED: 2026-01-10T22:36:22.088260Z
+MESSAGES: 24
+
+===MSG===
+uuid: 019baa0d-b1fd-77e7-83d5-ca70d7230a86
+parent: null
+role: human
+---
+This code is from the home page on our site - this is the same site we've been building the Evaluation Call Script pages on that you've been helping me with in other chats.
+
+On this page, if you are logged in and go to Athletes/Player Profile, it should take you to the player profile edit page (/editprofile-new/ID).  Instead, it's redirecting to /player-profile.  Here's the page code.  can you help me fix this?  It's related to some of the changes we made yesterdaywith the backend/public files.
+
+
+```javascript
+// Velo API Reference: https://www.wix.com/velo/reference/api-overview/introduction
+// // The code in this file will load on every page of your site
+import { currentMember } from 'wix-members';
+import { updateMenu } from "public/headerUpdate.js"
+import { formFactor } from 'wix-window-frontend';
+import wixLocation from 'wix-location';
+
+let member;
+$w.onReady(async function () {
+    member = await currentMember.getMember()
+    updateMenu(member, "#horizontalMenu4","#mobileButton1" , formFactor)
+});
+
+function truncateDescription(text, maxLength) {
+    if (!text) return "";
+    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+}
+
+$w('#repeater2').onItemReady(($item, itemData, index) => {
+    $item("#title").text = truncateDescription(itemData?.title, 30);
+    $item("#description").text = truncateDescription(itemData?.plainContent, 100);
+
+	$item("#button3").onClick(()=>{
+		wixLocation.to(`${itemData?.postPageUrl}`)
+	})
+})
+```
+===END===
+
+===MSG===
+uuid: 019baa0d-b1fd-77e7-83d5-ca71e3a6470c
+parent: 019baa0d-b1fd-77e7-83d5-ca70d7230a86
+role: assistant
+---
+ Looking at your code, I don't see any logic here that handles the "Athletes/Player Profile" menu click or navigation. The issue is likely in your `headerUpdate.js` file where the menu items are being configured.
+
+Based on what you've described - that clicking "Athletes/Player Profile" redirects to `/player-profile` instead of `/editprofile-new/ID` - the problem is probably in the `updateMenu` function in your `public/headerUpdate.js` file.
+
+Could you share the code from `public/headerUpdate.js`? That's where the menu items and their links are being set up, and that's almost certainly where the redirect logic needs to be fixed.
+
+The fix will likely involve something like:
+
+1. Getting the logged-in member's ID
+2. Setting the "Player Profile" menu item's link to `/editprofile-new/${memberId}` instead of a static `/player-profile` path
+
+But I need to see the `headerUpdate.js` code to give you the exact fix.
+===END===
+
+===MSG===
+uuid: 019baa0e-1942-70e9-97e7-3c45968bf772
+parent: 019baa0d-b1fd-77e7-83d5-ca71e3a6470c
+role: human
+---
+```javascript
+import wixLocation from 'wix-location';
+import { local } from 'wix-storage';
+// CORRECTED IMPORT: Matching your actual filename 'evaluationService.jsw'
+import { getEvaluationProgress } from 'backend/evaluationService'; 
+
+let statusInterval;
+
+export function initHeaderUpdates() {
+    // 1. Clear any existing interval to prevent "Zombie" loops
+    if (statusInterval) clearInterval(statusInterval);
+
+    // 2. Run the update immediately once
+    runUpdate();
+
+    // 3. Set the interval (every 5 seconds)
+    statusInterval = setInterval(() => {
+        runUpdate();
+    }, 5000);
+}
+
+function runUpdate() {
+    const evaluationId = local.getItem("currentEvaluationId");
+
+    // SAFETY CHECK: If there is no ID, do nothing.
+    if (!evaluationId) return;
+
+    // THE FIX: We add .catch() to handle errors gracefully
+    getEvaluationProgress(evaluationId)
+        .then((data) => {
+            if (data) {
+                updateHeaderUI(data);
+            }
+        })
+        .catch((err) => {
+            // This catches errors so they don't spam the console or break execution
+            // We log it simply once
+            console.warn("Header update skipped:", err); 
+        });
+}
+
+function updateHeaderUI(data) {
+    // Update your UI elements here
+    // Use optional chaining (?.) to prevent errors if elements aren't loaded yet
+    if ($w('#lblAthleteName').text !== data.athleteName) {
+        $w('#lblAthleteName').text = data.athleteName || "Athlete";
+    }
+    
+    // Example progress bar update
+    if ($w('#progressBar') && $w('#progressBar').collapsed === false) {
+        $w('#progressBar').value = data.percentComplete || 0;
+    }
+    
+    // Example status text
+    if ($w('#lblStatus')) {
+        $w('#lblStatus').text = data.status || "In Progress";
+    }
+}
+```
+===END===
+
+===MSG===
+uuid: 019baa0e-1942-70e9-97e7-3c467c4fc383
+parent: 019baa0e-1942-70e9-97e7-3c45968bf772
+role: assistant
+---
+ This `headerUpdate.js` file is for updating the evaluation progress UI - it's not the file that controls your menu navigation.
+
+You mentioned in your home page code that you're calling:
+
+```javascript
+updateMenu(member, "#horizontalMenu4", "#mobileButton1", formFactor)
+```
+
+But the file you just shared doesn't have an `updateMenu` function - it has `initHeaderUpdates()`.
+
+You likely have a **different** `headerUpdate.js` file, or the `updateMenu` function is in a different public file. Can you:
+
+1. Check if you have another file in your `public` folder that contains the `updateMenu` function, or
+2. Search your project for `updateMenu` to find where it's defined
+
+That's the function that's setting up your menu items and their links, and that's where the `/player-profile` URL is being set instead of `/editprofile-new/${memberId}`.
+
+Alternatively, if you recently refactored and removed `updateMenu`, that could also be causing the issue - the menu might be falling back to default link behavior set in the Wix editor.
+===END===
+
+===MSG===
+uuid: 019baa0f-d42c-708c-9c6a-3f0df05fde0b
+parent: 019baa0e-1942-70e9-97e7-3c467c4fc383
+role: human
+---
+this is from masterPage.js
+===END===
+
+===MSG===
+uuid: 019baa0f-d42c-708c-9c6a-3f0e6b0d9fa2
+parent: 019baa0f-d42c-708c-9c6a-3f0df05fde0b
+role: assistant
+---
+ Now I can see the issue! Your `masterPage.js` has the old menu logic commented out, and you're importing `updateMenu` from `public/headerUpdate.js` in your home page - but that function doesn't exist in the `headerUpdate.js` you showed me.
+
+Let me help you create the proper `updateMenu` function. Based on your old commented code and what you need, here's what should go in your `public/headerUpdate.js`:
+
+```javascript
+import wixLocation from 'wix-location';
+import wixData from 'wix-data';
+import { local } from 'wix-storage';
+import { getEvaluationProgress } from 'backend/evaluationService'; 
+
+let statusInterval;
+
+// ===== MENU UPDATE FUNCTION =====
+export async function updateMenu(member, menuSelector, mobileButtonSelector, formFactor) {
+    try {
+        let menuItems = $w(menuSelector).menuItems;
+        
+        if (member) {
+            // User is logged in - find their player record
+            let { items } = await wixData.query("Members").eq("member", member._id).find();
+            
+            if (items && items[0]) {
+                // Player record exists - update the Player Profile link
+                // Find the Athletes menu (index 4) and update Player Profile link
+                if (menuItems[4] && menuItems[4].menuItems) {
+                    // Check if PLAYER PROFILE menu item exists, if not add it
+                    let playerProfileIndex = menuItems[4].menuItems.findIndex(item => item.label === "PLAYER PROFILE");
+                    
+                    if (playerProfileIndex === -1) {
+                        // Add PLAYER PROFILE as first item
+                        menuItems[4].menuItems.unshift({
+                            link: `/editprofile-new/${items[0]._id}`,
+                            target: "_self",
+                            label: "PLAYER PROFILE",
+                            menuItems: []
+                        });
+                    } else {
+                        // Update existing PLAYER PROFILE link
+                        menuItems[4].menuItems[playerProfileIndex].link = `/editprofile-new/${items[0]._id}`;
+                    }
+                    
+                    $w(menuSelector).menuItems = menuItems;
+                }
+            }
+        }
+        // If no member or no player record, leave menu as-is (default links from editor)
+        
+    } catch (error) {
+        console.error("Error updating menu:", error);
+    }
+}
+
+// ===== EVALUATION HEADER UPDATES =====
+export function initHeaderUpdates() {
+    if (statusInterval) clearInterval(statusInterval);
+    runUpdate();
+    statusInterval = setInterval(() => {
+        runUpdate();
+    }, 5000);
+}
+
+function runUpdate() {
+    const evaluationId = local.getItem("currentEvaluationId");
+    if (!evaluationId) return;
+
+    getEvaluationProgress(evaluationId)
+        .then((data) => {
+            if (data) {
+                updateHeaderUI(data);
+            }
+        })
+        .catch((err) => {
+            console.warn("Header update skipped:", err); 
+        });
+}
+
+function updateHeaderUI(data) {
+    if ($w('#lblAthleteName').text !== data.athleteName) {
+        $w('#lblAthleteName').text = data.athleteName || "Athlete";
+    }
+    
+    if ($w('#progressBar') && $w('#progressBar').collapsed === false) {
+        $w('#progressBar').value = data.percentComplete || 0;
+    }
+    
+    if ($w('#lblStatus')) {
+        $w('#lblStatus').text = data.status || "In Progress";
+    }
+}
+```
+
+**Key changes:**
+1. Added the `updateMenu` export function that your home page is trying to import
+2. It queries your "Members" collection to get the player's record
+3. It sets the Player Profile link to `/editprofile-new/${items[0]._id}` instead of the old dynamic page link
+
+**One question:** In your old code, you were using `items[0]['link-members-2-name']` - is `/editprofile-new/ID` the correct new URL pattern you want, or should it be something else? Let me know and I can adjust the code.
+===END===
+
+===MSG===
+uuid: 019baa10-46de-72c6-a070-e19900fcede0
+parent: 019baa0f-d42c-708c-9c6a-3f0e6b0d9fa2
+role: human
+---
+Give me the complete headerUpdate.js with this included please
+===END===
+
+===MSG===
+uuid: 019baa10-46de-72c6-a070-e19ad461c5b1
+parent: 019baa10-46de-72c6-a070-e19900fcede0
+role: assistant
+---
+ Here's the complete `headerUpdate.js` file:
+
+```javascript
+import wixLocation from 'wix-location';
+import wixData from 'wix-data';
+import { local } from 'wix-storage';
+import { getEvaluationProgress } from 'backend/evaluationService'; 
+
+let statusInterval;
+
+// ===== MENU UPDATE FUNCTION =====
+export async function updateMenu(member, menuSelector, mobileButtonSelector, formFactor) {
+    try {
+        let menuItems = $w(menuSelector).menuItems;
+        
+        if (member) {
+            // User is logged in - find their player record
+            let { items } = await wixData.query("Members").eq("member", member._id).find();
+            
+            if (items && items[0]) {
+                // Player record exists - update the Player Profile link
+                // Find the Athletes menu (index 4) and update Player Profile link
+                if (menuItems[4] && menuItems[4].menuItems) {
+                    // Check if PLAYER PROFILE menu item exists, if not add it
+                    let playerProfileIndex = menuItems[4].menuItems.findIndex(item => item.label === "PLAYER PROFILE");
+                    
+                    if (playerProfileIndex === -1) {
+                        // Add PLAYER PROFILE as first item
+                        menuItems[4].menuItems.unshift({
+                            link: `/editprofile-new/${items[0]._id}`,
+                            target: "_self",
+                            label: "PLAYER PROFILE",
+                            menuItems: []
+                        });
+                    } else {
+                        // Update existing PLAYER PROFILE link
+                        menuItems[4].menuItems[playerProfileIndex].link = `/editprofile-new/${items[0]._id}`;
+                    }
+                    
+                    $w(menuSelector).menuItems = menuItems;
+                }
+            }
+        }
+        // If no member or no player record, leave menu as-is (default links from editor)
+        
+    } catch (error) {
+        console.error("Error updating menu:", error);
+    }
+}
+
+// ===== EVALUATION HEADER UPDATES =====
+export function initHeaderUpdates() {
+    if (statusInterval) clearInterval(statusInterval);
+    runUpdate();
+    statusInterval = setInterval(() => {
+        runUpdate();
+    }, 5000);
+}
+
+function runUpdate() {
+    const evaluationId = local.getItem("currentEvaluationId");
+    if (!evaluationId) return;
+
+    getEvaluationProgress(evaluationId)
+        .then((data) => {
+            if (data) {
+                updateHeaderUI(data);
+            }
+        })
+        .catch((err) => {
+            console.warn("Header update skipped:", err); 
+        });
+}
+
+function updateHeaderUI(data) {
+    if ($w('#lblAthleteName').text !== data.athleteName) {
+        $w('#lblAthleteName').text = data.athleteName || "Athlete";
+    }
+    
+    if ($w('#progressBar') && $w('#progressBar').collapsed === false) {
+        $w('#progressBar').value = data.percentComplete || 0;
+    }
+    
+    if ($w('#lblStatus')) {
+        $w('#lblStatus').text = data.status || "In Progress";
+    }
+}
+```
+
+**Summary of what this file now does:**
+
+1. **`updateMenu()`** - Handles navigation menu updates for logged-in users:
+   - Queries the "Members" collection to find the player's record
+   - Updates or adds the "PLAYER PROFILE" menu item with the correct link (`/editprofile-new/ID`)
+   - Works with the menu selector you pass in (`#horizontalMenu4`)
+
+2. **`initHeaderUpdates()`** - Handles the evaluation progress polling (your existing code)
+
+3. **`runUpdate()`** and **`updateHeaderUI()`** - Support functions for evaluation progress updates
+
+Let me know if the menu index (currently `menuItems[4]`) needs to be adjusted based on your actual menu structure, or if the URL pattern `/editprofile-new/${items[0]._id}` needs to change.
+===END===
+
+===MSG===
+uuid: 019baa11-7985-73f2-8c14-fb2b2f9c7fd9
+parent: 019baa10-46de-72c6-a070-e19ad461c5b1
+role: human
+---
+It's still going to player-profile
+===END===
+
+===MSG===
+uuid: 019baa11-7985-73f2-8c14-fb2cc04875cb
+parent: 019baa11-7985-73f2-8c14-fb2b2f9c7fd9
+role: assistant
+---
+ Let's debug this. First, let's check what the menu structure actually looks like and confirm the code is running. Can you update your home page code temporarily to add some console logs?
+
+```javascript
+import { currentMember } from 'wix-members';
+import { updateMenu } from "public/headerUpdate.js"
+import { formFactor } from 'wix-window-frontend';
+import wixLocation from 'wix-location';
+
+let member;
+$w.onReady(async function () {
+    member = await currentMember.getMember()
+    console.log("Member:", member);
+    
+    // Log the menu structure before updating
+    let menuItems = $w("#horizontalMenu4").menuItems;
+    console.log("Full menu structure:", JSON.stringify(menuItems, null, 2));
+    console.log("Menu index 4:", menuItems[4]);
+    console.log("Menu index 4 submenu:", menuItems[4]?.menuItems);
+    
+    await updateMenu(member, "#horizontalMenu4", "#mobileButton1", formFactor)
+    
+    // Log after update
+    let updatedMenuItems = $w("#horizontalMenu4").menuItems;
+    console.log("Updated menu structure:", JSON.stringify(updatedMenuItems, null, 2));
+});
+```
+
+Run this and check your browser's console (F12 > Console tab). This will tell us:
+
+1. If the member is being found
+2. What the actual menu structure looks like (which index is "Athletes")
+3. What the submenu items are labeled
+4. If the update is actually happening
+
+Can you share what you see in the console? That will help us pinpoint exactly where the issue is - whether it's the wrong menu index, a different label name, or something else.
+===END===
+
+===MSG===
+uuid: 019baa11-f3d7-7706-829d-0c20df8932f6
+parent: 019baa11-7985-73f2-8c14-fb2cc04875cb
+role: human
+---
+Do you mean which collection?  The CMS collection is Members
+===END===
+
+===MSG===
+uuid: 019baa11-f3d7-7706-829d-0c2125d1e6f2
+parent: 019baa11-f3d7-7706-829d-0c20df8932f6
+role: assistant
+---
+ No, I mean the browser console - the developer tools in your web browser. Here's how to check:
+
+1. Go to your live site (or preview it)
+2. Press **F12** on your keyboard (or right-click anywhere and select "Inspect")
+3. Click on the **Console** tab
+4. Now navigate/refresh the page
+5. Look for the `console.log` outputs
+
+The logs will show us:
+- What `member` looks like when logged in
+- The actual structure of your menu (so we can see which index "Athletes" is at)
+- Whether "PLAYER PROFILE" exists and what it's currently linked to
+
+**Alternatively**, if you can't easily check the console, tell me:
+
+1. What is the exact label of the menu item? Is it "PLAYER PROFILE" or "Player Profile" or something else?
+2. In your menu, what position is "Athletes"? (Count from left starting at 0 - so if it's the 5th item from the left, it would be index 4)
+3. What are the submenu items under "Athletes"?
+
+The issue is likely one of these:
+- Wrong menu index (not index 4)
+- Different label text (case-sensitive match failing)
+- The menu item link is being set in the Wix editor and overriding our code
+===END===
+
+===MSG===
+uuid: 019baa12-de3a-71d2-a9d2-813d0b1d97b4
+parent: 019baa11-f3d7-7706-829d-0c2125d1e6f2
+role: human
+---
+1. It's Player Profile (exact case)
+2. It's the 6th menu option.
+3. Items are: Player Profile, Study Guide, Coach Directory, Classroom
+===END===
+
+===MSG===
+uuid: 019baa12-de3a-71d2-a9d2-813e07c3a20c
+parent: 019baa12-de3a-71d2-a9d2-813d0b1d97b4
+role: assistant
+---
+ That's the issue. Since "Athletes" is the 6th menu option, its index is **5** (not 4), because arrays start at 0.
+
+Here's the corrected `headerUpdate.js`:
+
+```javascript
+import wixLocation from 'wix-location';
+import wixData from 'wix-data';
+import { local } from 'wix-storage';
+import { getEvaluationProgress } from 'backend/evaluationService'; 
+
+let statusInterval;
+
+// ===== MENU UPDATE FUNCTION =====
+export async function updateMenu(member, menuSelector, mobileButtonSelector, formFactor) {
+    try {
+        let menuItems = $w(menuSelector).menuItems;
+        
+        if (member) {
+            // User is logged in - find their player record
+            let { items } = await wixData.query("Members").eq("member", member._id).find();
+            
+            if (items && items[0]) {
+                // Player record exists - update the Player Profile link
+                // Athletes is the 6th menu item (index 5)
+                if (menuItems[5] && menuItems[5].menuItems) {
+                    // Check if Player Profile menu item exists
+                    let playerProfileIndex = menuItems[5].menuItems.findIndex(item => item.label === "Player Profile");
+                    
+                    if (playerProfileIndex === -1) {
+                        // Add Player Profile as first item
+                        menuItems[5].menuItems.unshift({
+                            link: `/editprofile-new/${items[0]._id}`,
+                            target: "_self",
+                            label: "Player Profile",
+                            menuItems: []
+                        });
+                    } else {
+                        // Update existing Player Profile link
+                        menuItems[5].menuItems[playerProfileIndex].link = `/editprofile-new/${items[0]._id}`;
+                    }
+                    
+                    $w(menuSelector).menuItems = menuItems;
+                }
+            }
+        }
+        // If no member or no player record, leave menu as-is (default links from editor)
+        
+    } catch (error) {
+        console.error("Error updating menu:", error);
+    }
+}
+
+// ===== EVALUATION HEADER UPDATES =====
+export function initHeaderUpdates() {
+    if (statusInterval) clearInterval(statusInterval);
+    runUpdate();
+    statusInterval = setInterval(() => {
+        runUpdate();
+    }, 5000);
+}
+
+function runUpdate() {
+    const evaluationId = local.getItem("currentEvaluationId");
+    if (!evaluationId) return;
+
+    getEvaluationProgress(evaluationId)
+        .then((data) => {
+            if (data) {
+                updateHeaderUI(data);
+            }
+        })
+        .catch((err) => {
+            console.warn("Header update skipped:", err); 
+        });
+}
+
+function updateHeaderUI(data) {
+    if ($w('#lblAthleteName').text !== data.athleteName) {
+        $w('#lblAthleteName').text = data.athleteName || "Athlete";
+    }
+    
+    if ($w('#progressBar') && $w('#progressBar').collapsed === false) {
+        $w('#progressBar').value = data.percentComplete || 0;
+    }
+    
+    if ($w('#lblStatus')) {
+        $w('#lblStatus').text = data.status || "In Progress";
+    }
+}
+```
+
+**Changes made:**
+1. Changed `menuItems[4]` to `menuItems[5]` (6th item = index 5)
+2. Changed `"PLAYER PROFILE"` to `"Player Profile"` (exact case match)
+
+Try this and let me know if it works!
+===END===
+
+===MSG===
+uuid: 019baa15-4ed1-7462-a02a-12cca4399b55
+parent: 019baa12-de3a-71d2-a9d2-813e07c3a20c
+role: human
+---
+sorry, the slug is /editprofile/{ID}, not newprofile-edit/
+
+Which line do I change this on in headerUpdate.js?
+===END===
+
+===MSG===
+uuid: 019baa15-4ed1-7462-a02a-12cd99e26bf5
+parent: 019baa15-4ed1-7462-a02a-12cca4399b55
+role: assistant
+---
+ Change it on **lines 23 and 29**. Replace `/editprofile-new/` with `/editprofile/`.
+
+**Line 23:**
+```javascript
+link: `/editprofile/${items[0]._id}`,
+```
+
+**Line 29:**
+```javascript
+menuItems[5].menuItems[playerProfileIndex].link = `/editprofile/${items[0]._id}`;
+```
+===END===
+
+===MSG===
+uuid: 019baa87-01ff-741b-b267-65f6ccd3988b
+parent: 019baa15-4ed1-7462-a02a-12cd99e26bf5
+role: human
+---
+Can you add a line to this code that goes to /viewprofile/${items[0]._id}` when #buttonPlayerProfile is pressed?
+===END===
+
+===MSG===
+uuid: 019baa87-01ff-741b-b267-65f7e74b6eba
+parent: 019baa87-01ff-741b-b267-65f6ccd3988b
+role: assistant
+---
+ Add this code inside your `$w.onReady` function, after the `updateMenu` call:
+
+```javascript
+$w('#buttonPlayerProfile').onClick(() => {
+    if (currentUser) {
+        to(`/viewprofile/${currentUser._id}`);
+    }
+});
+```
+
+Here's where it goes in context (showing just the relevant section):
+
+```javascript
+$w.onReady(async() => {
+    member = await currentMember.getMember();
+    console.log("Member", member)
+    updateMenu(member, "#horizontalMenu4", "#mobileButton1", formFactor)
+    
+    $w("#dynamicDataset").onReady(() => {
+        currentUser = $w("#dynamicDataset").getCurrentItem();
+        setValues(currentUser)
+    });
+
+    // Add this:
+    $w('#buttonPlayerProfile').onClick(() => {
+        if (currentUser) {
+            to(`/viewprofile/${currentUser._id}`);
+        }
+    });
+});
+```
+
+This uses the `to` function you already have imported from `wix-location-frontend` at the top of your file.
+===END===
+
+===MSG===
+uuid: 019baa8e-63a7-70ab-bda4-2872e68e6aa4
+parent: 019baa87-01ff-741b-b267-65f7e74b6eba
+role: human
+---
+Here's some code that links to the page I'm trying to get to with the above coding.  Can you figure out what edits we need to make to the above to make it work?
+
+
+```javascript
+$w.onReady(async function () {
+    let baseUrl = wixLocationFrontend.baseUrl;
+    $w('#dynamicDataset').onReady(async () => {
+        let val = $w('#dynamicDataset').getCurrentItem()
+        clipBoardText = `${baseUrl}${val["link-members-3-name"]}?sitevisitor=true`
+```
+===END===
+
+===MSG===
+uuid: 019baa8e-63a7-70ab-bda4-2873b8c471a0
+parent: 019baa8e-63a7-70ab-bda4-2872e68e6aa4
+role: assistant
+---
+ I see! The link to the view profile page uses the dynamic page URL stored in the field `link-members-3-name`, not a simple `/viewprofile/ID` pattern.
+
+Here's the corrected onClick code:
+
+```javascript
+$w('#buttonPlayerProfile').onClick(() => {
+    if (currentUser) {
+        to(currentUser["link-members-3-name"]);
+    }
+});
+```
+
+This uses the same `link-members-3-name` field that's used for the clipboard link, which contains the correct dynamic page URL for the player's profile.
+===END===
+
+===MSG===
+uuid: 019baa91-2e13-72c9-ab13-023cdf957cac
+parent: 019baa8e-63a7-70ab-bda4-2873b8c471a0
+role: human
+---
+For future reference, it looks like this is the convention for going to a member's profile.  For me, it looks like it's the member name and then their memberID
+
+https://www.lanceosrecruitingnetwork.com/viewprofile/jaiden/d8837d57-5b13-444b-bde3-31c1037fe778
+===END===
+
+===MSG===
+uuid: 019baa91-2e13-72c9-ab13-023d46087e88
+parent: 019baa91-2e13-72c9-ab13-023cdf957cac
+role: assistant
+---
+
+===END===
+
+===MSG===
+uuid: 019baa91-8982-74e3-9a94-4b62168ea529
+parent: 019baa8e-63a7-70ab-bda4-2873b8c471a0
+role: human
+---
+For future reference, it looks like this is the convention for going to a member's profile.  For me, it looks like it's the member name and then their memberID
+
+https://www.lanceosrecruitingnetwork.com/viewprofile/jaiden/d8837d57-5b13-444b-bde3-31c1037fe778
+===END===
+
+===MSG===
+uuid: 019baa91-8982-74e3-9a94-4b63ec8d6541
+parent: 019baa91-8982-74e3-9a94-4b62168ea529
+role: assistant
+---
+ Got it! So the URL pattern is:
+
+```
+/viewprofile/{firstName}/{memberId}
+```
+
+For future reference, if you ever need to construct this URL manually instead of using the `link-members-3-name` field, it would be:
+
+```javascript
+to(`/viewprofile/${currentUser.name.toLowerCase()}/${currentUser._id}`)
+```
+
+Or if the name field might have spaces or special characters:
+
+```javascript
+to(`/viewprofile/${currentUser.name.toLowerCase().replace(/\s+/g, '-')}/${currentUser._id}`)
+```
+
+But using `currentUser["link-members-3-name"]` is the safest approach since Wix generates that dynamic page link automatically and handles all the formatting for you.
+===END===
