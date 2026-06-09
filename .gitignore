@@ -23,8 +23,9 @@ wallaby-way/nodes/
 # --- Run artifacts — worklists, batch outputs, regenerable from floor ---
 wallaby-way/runs/
  
-# --- Graveyard — dead by definition. Includes d9-review-debug live-credential files. Never committed. ---
+# --- Graveyard — dead by definition. Includes d9-review-debug live-credential files. Never committed. Uncrappening is the files utilized to reset the file tree and rewrite project canon around S48.  Not for consumption, purely for record-keeping.---
 graveyard/
+the-uncrappening-NOT-FOR-OC/
  
 # --- Cypher-related context files + working reference-docs, not for this repo ---
 Chat Context Files/
