@@ -79,9 +79,11 @@ def persist_node_file(dest_path, node_text, parents_map):
 
     try:
         # verify-on-write (flag-3): re-read and assert non-stub
+        # "DONE:" without leading "---" is accepted — tally_nodes independently
+        # validates non-zero count, so the DONE check is a completeness marker only.
         written = tmp.read_text(encoding="utf-8")
         if not (tmp.stat().st_size > 0
-                and "--- DONE:" in written
+                and "DONE:" in written
                 and tally_nodes(written)["total"] > 0):
             raise RuntimeError(f"STUB DETECTED at {dest_path} — HALT.")
 

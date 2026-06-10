@@ -1,4 +1,4 @@
-# apparatus_freeze_pipeline.py · v1.6 · apparatus S20 · 2026-05-31 · overlay capability milestone
+# apparatus_freeze_pipeline.py · v1.7 · apparatus S50 · 2026-06-09 · scrub-v2 pattern expansion
 # v1.1: extracted _parse_and_inspect + _file_sha256; dry-run now exercises drift detection;
 #        stage1_freeze uses shutil.copyfile (baseline) / write_bytes (delta, filtered slice)
 # v1.2: moved to active/apparatus/ (canon, not scratch); idempotency check moved after
@@ -14,6 +14,9 @@
 #        hardcoded SCRUB_VERSION; no behavioral change on current floor (scrub-v1 only)
 # v1.6: overlay capability proved end-to-end (Rungs 5-6, S20) — scrub-v2/ minted + scaled
 #        for baseline; _build_seen_set max-N seam confirmed on real floor; pass-two (b) closed
+# v1.7: PATTERNS extended to scrub-v2 — adds Google OAuth/refresh, GitHub, AWS, JWT classes;
+#        SCRUB_VERSION bumped to 2; gap identified in S50 move-1b discovery (GOCSPX- tokens
+#        in 17 corpus convs had no coverage under v1)
 
 import argparse
 import hashlib
@@ -25,17 +28,23 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-SCRUB_VERSION = 1
+SCRUB_VERSION = 2
 ROOT_SENTINEL = '00000000-0000-4000-8000-000000000000'
 
 # Regex set v1 — locked at S12. Anthropic pattern listed before OpenAI; OpenAI uses
 # negative lookahead (?!ant-) so sk-ant-... never matches the OpenAI class.
+# v2 extension (S50): added Google OAuth/refresh, GitHub, AWS access key, JWT patterns.
 PATTERNS = [
-    ('RTSP',      r'rtsp://[^/\s:]+:[^/\s@]+@',            '<RTSP_CRED_REDACTED>'),
-    ('postgres',  r'postgres(?:ql)?://[^/\s:]+:[^/\s@]+@',  '<POSTGRES_CRED_REDACTED>'),
-    ('anthropic', r'sk-ant-[A-Za-z0-9_-]{20,}',             '<ANTHROPIC_KEY_REDACTED>'),
-    ('openai',    r'sk-(?!ant-)[A-Za-z0-9_-]{20,}',          '<OPENAI_KEY_REDACTED>'),
-    ('stripe',    r'(?:sk|rk)_live_[A-Za-z0-9]{20,}',        '<STRIPE_KEY_REDACTED>'),
+    ('RTSP',                 r'rtsp://[^/\s:]+:[^/\s@]+@',                                              '<RTSP_CRED_REDACTED>'),
+    ('postgres',             r'postgres(?:ql)?://[^/\s:]+:[^/\s@]+@',                                   '<POSTGRES_CRED_REDACTED>'),
+    ('anthropic',            r'sk-ant-[A-Za-z0-9_-]{20,}',                                              '<ANTHROPIC_KEY_REDACTED>'),
+    ('openai',               r'sk-(?!ant-)[A-Za-z0-9_-]{20,}',                                          '<OPENAI_KEY_REDACTED>'),
+    ('stripe',               r'(?:sk|rk)_live_[A-Za-z0-9]{20,}',                                        '<STRIPE_KEY_REDACTED>'),
+    ('google_oauth_secret',  r'GOCSPX-[A-Za-z0-9_-]{10,}',                                              '<GOOGLE_OAUTH_REDACTED>'),
+    ('google_refresh_token', r'1//[A-Za-z0-9_-]{20,}',                                                  '<GOOGLE_REFRESH_REDACTED>'),
+    ('github_token',         r'(?:ghp|gho|ghs|ghu)_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}',    '<GITHUB_TOKEN_REDACTED>'),
+    ('aws_access_key',       r'AKIA[0-9A-Z]{16}',                                                        '<AWS_KEY_REDACTED>'),
+    ('jwt',                  r'eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}',     '<JWT_REDACTED>'),
 ]
 
 # Population-confirmed at S12 (5 block types, 67,275 blocks; 5 content-item types)

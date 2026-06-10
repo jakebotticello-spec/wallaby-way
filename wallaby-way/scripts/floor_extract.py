@@ -1,6 +1,8 @@
-# pipeline/s39/floor_extract.py  S39
+# pipeline/s39/floor_extract.py  S39  (patched S50-wave2)
 # Reads ONE conv from the Supabase floor → writes ===MSG=== payload + .parents.json sidecar.
-# Source: DISTINCT ON (conv_uuid) highest scrub_version snapshot.
+# Messages come from ALL snapshots, deduped on msg_uuid (highest scrub_version wins).
+# The conversation is the unit — the snapshot is a storage detail.
+# SNAPSHOT_ID in the payload header = the latest scrub_version snapshot (metadata only).
 # render_block() is VERBATIM from pipeline/extract_whale.py:38-62 — do not alter.
 # Billing key must NOT be loaded. Floor read costs $0.
 #
@@ -78,14 +80,25 @@ with psycopg.connect(db_url) as conn:
 
         snapshot_id, conv_uuid, message_count, created_at = hdr
 
-        # Fetch all messages for this (snapshot_id, conv_uuid), ordered by created_at
+        # Fetch messages from ALL snapshots for this conv, deduped on msg_uuid.
+        # Continuation convs store new messages under a later snapshot_id but have
+        # no floor_conv_headers row for that snapshot — header JOIN would drop them.
+        # Use snapshot_id DESC as recency proxy (ISO-date-prefixed strings sort correctly).
         cur.execute("""
-            SELECT msg_uuid::text, parent_message_uuid::text, is_root,
-                   sender, content_blocks, created_at
-            FROM floor_conv_messages
-            WHERE snapshot_id = %s AND conv_uuid = %s::uuid
+            SELECT * FROM (
+                SELECT DISTINCT ON (msg_uuid)
+                    msg_uuid::text,
+                    parent_message_uuid::text,
+                    is_root,
+                    sender,
+                    content_blocks,
+                    created_at
+                FROM floor_conv_messages
+                WHERE conv_uuid = %s::uuid
+                ORDER BY msg_uuid, snapshot_id DESC
+            ) deduped
             ORDER BY created_at ASC
-        """, (snapshot_id, conv_uuid))
+        """, (conv_uuid,))
         msg_rows = cur.fetchall()
 
     conn.rollback()

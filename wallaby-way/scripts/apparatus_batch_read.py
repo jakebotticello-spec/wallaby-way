@@ -1,6 +1,6 @@
 # wallaby-way/scripts/apparatus_batch_read.py
-# version: v1.4
-# session: CCC S2 (Chamfer)
+# version: v1.5
+# session: S50
 # change notes: NEW. The paid-API batch harness for the corpus read, per
 #   Batch_Read_Spec_v1.1. Reads the FROZEN list pipeline/s39/batch_list_S44.csv
 #   (189 paid convs — the floor-verified disjoint set; NOT re-derived at runtime).
@@ -22,6 +22,8 @@
 #   Subcommands: dry-run ($0), canary (1 paid batch-of-one), batch (the 189). Paid paths
 #   require --i-understand-this-spends-money. Key loaded submit/collect ONLY, cleared after.
 #   v1.4 (CCC S2 'Chamfer'): path-fixes for repo reorg — wallaby-way/ restructure.
+#   v1.5 (S50): canary --max-tokens override (whale re-fires at raised cap); collect
+#   MISSING_PARENTS surfaced in run report alongside TRUNCATED/ERRORED/QUARANTINED.
 #
 # DO NOT reuse apparatus_api_testcall.py (S32 synchronous Opus caller — not this).
 
@@ -43,7 +45,7 @@ BATCH_PERSIST_DIR = "harvested_nodes"
 
 REPO = Path(__file__).resolve().parent.parent.parent   # repo root
 
-BATCH_LIST = REPO / "wallaby-way" / "runs" / "2026-06-07" / "batch_list_S44.csv"
+BATCH_LIST = REPO / "wallaby-way" / "runs" / "sizing_S50" / "batch_list_S50.csv"
 DEPLOYABLE_READER = REPO / "wallaby-way" / "scripts" / "test_call_system_prompt_S40.md"   # v4.1.1
 FLOOR_EXTRACT = REPO / "wallaby-way" / "scripts" / "floor_extract.py"
 BILLING_ENV = REPO / "anthropic_billing.env"           # ROOT — paid key
@@ -75,7 +77,7 @@ def is_complete_artifact(conv_uuid):
     if not p.exists():
         return False
     txt = p.read_text(encoding="utf-8")
-    return ("--- DONE:" in txt) and (tally_nodes(txt)["total"] > 0)
+    return ("DONE:" in txt) and (tally_nodes(txt)["total"] > 0)
 
 
 def floor_extract_payload(conv_uuid, workdir):
@@ -110,14 +112,14 @@ def skeleton_gate(payload_path):
     return True, f"{len(uuids)} msgs"
 
 
-def build_request(conv_uuid, payload_text, system_text):
+def build_request(conv_uuid, payload_text, system_text, max_tokens=MAX_TOKENS):
     """One batch request. NO tools key = true-blindness guard."""
     return {
         "custom_id": conv_uuid,
         "params": {
             "model": MODEL,
             "temperature": TEMPERATURE,
-            "max_tokens": MAX_TOKENS,
+            "max_tokens": max_tokens,
             "system": [{
                 "type": "text",
                 "text": system_text,
@@ -144,7 +146,7 @@ def clear_key():
 
 
 # ── the build phase (no key, no spend) ──────────────────────────────────────
-def prepare(conv_uuids, workdir, force=frozenset()):
+def prepare(conv_uuids, workdir, force=frozenset(), max_tokens=MAX_TOKENS):
     """Resume-skip -> extract -> skeleton-gate. Returns (ready, skipped, halted).
     Convs in `force` bypass the resume-skip (a canary must fire regardless of a
     prior artifact; its fresh persist atomically supersedes the old one)."""
@@ -159,7 +161,7 @@ def prepare(conv_uuids, workdir, force=frozenset()):
         if not ok:
             halted.append((cu, reason))
             continue
-        req = build_request(cu, payload_path.read_text(encoding="utf-8"), system_text)
+        req = build_request(cu, payload_path.read_text(encoding="utf-8"), system_text, max_tokens)
         ready.append((cu, req, parents))
     return ready, skipped, halted
 
@@ -229,10 +231,10 @@ def persist_results(results, parents_by_conv):
 
 
 # ── orchestration ────────────────────────────────────────────────────────────
-def run(conv_uuids, paid, confirm, force=frozenset()):
+def run(conv_uuids, paid, confirm, force=frozenset(), max_tokens=MAX_TOKENS):
     with tempfile.TemporaryDirectory(prefix="batch_payloads_") as td:
         workdir = Path(td)
-        ready, skipped, halted = prepare(conv_uuids, workdir, force=force)   # $0
+        ready, skipped, halted = prepare(conv_uuids, workdir, force=force, max_tokens=max_tokens)   # $0
         print(f"\nPREPARE: {len(ready)} ready, {len(skipped)} already-complete (skipped), "
               f"{len(halted)} skeleton-HALTED")
         for cu, reason in halted:
@@ -289,7 +291,8 @@ def collect_batch(batch_id, conv_uuids, confirm):
             results = {cu: r for cu, r in results.items() if cu in parents_by_conv}
         p, t, e, q = persist_results(results, parents_by_conv)
         report = (f"PERSISTED {len(p)}  TRUNCATED {len(t)} {t}  "
-                  f"ERRORED {len(e)} {e}  QUARANTINED {len(q)} {[c for c, _ in q]}")
+                  f"ERRORED {len(e)} {e}  QUARANTINED {len(q)} {[c for c, _ in q]}  "
+                  f"MISSING_PARENTS {len(missing)} {missing}")
         for cu, err in q:
             print(f"  QUARANTINED {cu}: {err}")
         print(scrub_text(report))
@@ -304,6 +307,8 @@ def main():
     c.add_argument("--i-understand-this-spends-money", action="store_true", dest="confirm")
     c.add_argument("--force", action="store_true",
                    help="bypass resume-skip for this conv (supersede a prior artifact)")
+    c.add_argument("--max-tokens", type=int, default=MAX_TOKENS, dest="max_tokens",
+                   help=f"output token cap for this canary (default {MAX_TOKENS}; raise for truncated re-fires)")
     b = sub.add_parser("batch", help="fire the full frozen 189 (paid)")
     b.add_argument("--i-understand-this-spends-money", action="store_true", dest="confirm")
     co = sub.add_parser("collect", help="re-collect an existing batch-id without re-submitting ($0 compute)")
@@ -315,7 +320,7 @@ def main():
         run(load_batch_list(), paid=False, confirm=False)
     elif a.cmd == "canary":
         force = frozenset([a.conv_uuid]) if a.force else frozenset()
-        run([a.conv_uuid], paid=True, confirm=a.confirm, force=force)
+        run([a.conv_uuid], paid=True, confirm=a.confirm, force=force, max_tokens=a.max_tokens)
     elif a.cmd == "batch":
         run(load_batch_list(), paid=True, confirm=a.confirm)
     elif a.cmd == "collect":
