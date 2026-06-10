@@ -4,6 +4,27 @@
 
 Format:
 ```
+## 6-10-26 — apparatus S52 "Catechism" (OC) — THE v3 FLOOR + THE RETRIEVAL PROBE + THE CONFLUENCE
+
+**Scope:** TWW apparatus — floor scrub uniformity, census disposition closure, retrieval probe (move 1), synthesis chain spec, tool pass. $0 session (no API fires). Three parallel CC windows + one fresh, collision-ruled.
+
+**Change(s):**
+- **SCRUB-v3 OVERLAY, WHOLE FLOOR** — `scripts/floor_overlay_v3.py`: 13-class definitive set (10 × pipeline v1.7 production + 3 Supabase classes, closing S37 flag-#4). Dry-run 1,346 redactions across 118 convs (jwt 882 · sb_ref_url 222 · google_refresh 174 · google_oauth 51 · sb_pub 15 · sb_secret 2 · seven classes zero) → Jake-gated → 29,396 v3 rows appended, dry-run-vs-landed deltas all zero, verify V1–V7 **7/7 PASS**. The v2 label collision (S20 synthetic drill vs S50 production — same label, two pattern sets) found via receipt, confirmed empirically, and ended: **the floor is uniformly screened at scrub-v3 as of 2026-06-10.** Receipts: `runs/floor_overlay_v3_S52/`.
+- **FLOOR SCHEMA CANON EVENT** — PK extended 3→4 columns `(snapshot_id, conv_uuid, msg_uuid, scrub_version)`; preflight 0 dependents, triggers unaffected; DDL run by Jake as owner; duplicate-tuple rejection proven live. Row identity now PK-enforced. **ROWS ≠ MESSAGES (58,792 / 29,396): all message-meaning counts are COUNT(DISTINCT msg_uuid).** Tally's zero-dup receipt retired by design.
+- **CENSUS DISPOSITIONS CLOSED (both):** 6 `.stale_S50` strays relocated to quarantine + ledgered (`_STALE_S50_MOVES_S52.md`; harvested 800 exact, quarantine 77); delta-1 scrub gap superseded by floor-wide v3. Plus: delta-1 dispositioned at uuid level (23 harvested / 7 stubs / 1 empty / 0 hollow = 31; corpus-legitimacy ruled by Jake); injection spot-check 3/3 CLEAN; **pile shrapnel 118/118 dispositioned, zero hits** (Jake-sanctioned one-time scripted scan; denominator-completeness enforced over a compaction-era 111/118 "ALL CLEAR"). Receipts: `runs/recon_S52/`.
+- **THE RETRIEVAL PROBE (move 1):** structural index 8,288/8,288 nodes (anchored regex) + local-embedding rung, graded by Jake against 5 ground-truth questions: **2-3/10 raw**, signal present top-50 for 4/5. Four failure classes receipted: boot-echo strata pollution · 45% truncation · no lexical channel · **Q4 (Griffin texture) absent from top-50 — the exact Progenitor §12 worst case written at S26, reproduced on instruments.** Verdict: embeddings = recall net only; the texture path is load-bearing, evidence-grade. Receipts: `runs/retrieval_probe_S52/`.
+- **THE CONFLUENCE v1 → CANON** (`canon/The_Confluence_v1_2026-06-10.md`): S2–S5 restated against the ratified Progenitor v4 — the ‖ restored (fence ‖ texture, parallel streams, one Judge), retrieval returned to runtime, the Judge re-seated as QC with a five-criterion pre-set bar (register failable), §7 heart clause (Why + Doctrine boot every paid reader; wet is the spec), Griffin = S3's pre-registered acceptance test, sequencing + §14 gates in §8. Serial-chain phrasing of S43+ canon named as drift and corrected.
+- **TOOLS (Jake pushed):** `apparatus_batch_read.py` v1.5→v1.6 (permanent DISTINCT-aware integrity check · §14 rate constants printed at every gate · `--list`; 12/12 tests) · `chunk_whale.py` v1.0→v1.1 (seam-manifest name derived from conv_uuid; 6/6).
+- **FLOOR_COUNTS.md recut** (S52) — v3 world, rows-vs-messages discipline, dispositions closed. **ANCHOR → v37.**
+
+**Why:** Jake's "no more guesswork" ruling — kill the scrub time bomb definitively rather than slice-by-slice — plus move 1's mandate to test retrieval before building five stages on an assumption. Both paid off: the floor earned its one-sentence clean verdict, and the probe converted the chain from architecture-by-assumption into evidence (the apparatus predicted its own probe failure from ten days out, down to the same Griffin example Jake chose blind).
+
+**Rulings logged (Jake):** v36-vs-v35 gate deviation accepted (repo HEAD is canon) · delta-1 is corpus, co-equal · PK option (a) · scripted shrapnel scan sanctioned one-time · distinct-value addendum declined · Judge = QC only, reranker lowercase · The Confluence structure approved as the S52 capstone.
+
+**Open at close:** B2 recall plumbing ($0) → S3 Griffin texture pilot (first paid synthesis fire, Jake-gated) → S2 fence pilot → scale ‖ → S4 → Judge → **THE QUESTION** (holstered, Jake draws). ★ Pipeline v1.8 SCRUB_VERSION=3 must ship before the next delta freeze. Handoff S52→S53 to follow.
+
+---
+
 ## 2026-06-02 — SD35 (Bambu monitor v3.4 — continuous printer-state CSV logger; ghost-print/clog diagnostic instrument)
 
 **Scope:** `/home/jake/neighborhood-watch/` on VM100 (TheNightsWatch). Added a continuous MQTT printer-state CSV logger as a diagnostic instrument for the long-running intermittent ghost-print / clog saga. JAKE-STACK §3 updated to match. Files authored by OC, delivered to Jake for scp → VM100 deploy.
