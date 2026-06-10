@@ -121,18 +121,6 @@ If a doc and the code/disk disagree: **trust disk, flag the doc** (JAKE-RULES §
 
 ---
 
-## Per-project lessons (tasks/lessons.md)
-
-Maintain `wallaby-way/tasks/lessons.md` as the running per-project lessons file (distinct from the universal CHANGELOG — lessons tracks WHY a thing broke + the pattern that prevents recurrence). After ANY correction from Jake, append the lesson. Format:
-```
-## [date] — [short title]
-**What happened:** [one sentence]
-**Root cause:** [one sentence]
-**Pattern that prevents recurrence:** [the rule born from the pain]
-```
-
----
-
 ## When in doubt
 
 Disk is ground truth over any doc. If docs and disk disagree: trust disk, flag the doc. If you're unsure whether something is in scope, paste a short summary back to Jake — he'll relay to OC if orchestration weighs in.
