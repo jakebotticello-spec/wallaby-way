@@ -93,7 +93,7 @@ The pre-S52 "v2" label meant **two different pattern sets** depending on snapsho
 
 ---
 
-## The disk file manifest (census B/C4 baseline, updated S52)
+## The disk file manifest (census B/C4 baseline, updated S52 · runs/ count corrected S53)
 
 | Location | Count | Composition |
 |---|---|---|
@@ -101,7 +101,7 @@ The pre-S52 "v2" label meant **two different pattern sets** depending on snapsho
 | `nodes/catalogs/` | **39 files** | 21 S33-era + 18 S51-era mirrors (not double-counted) |
 | `nodes/quarantine/` | **77 files** | 46 corpses + 22 partial-move files + **6 `.stale_S50` strays (moved S52)** + 3 ledgers (`_PARTIAL_MOVES_S51` · `_SUPERSEDED_S51` · **`_STALE_S50_MOVES_S52`**) |
 | `nodes/manifests/` | **2 files** | unchanged |
-| `runs/` | 18 dirs + 3 root files | census 14 + S52's four: `floor_overlay_v3_S52/` · `recon_S52/` · `retrieval_probe_S52/` · `tool_pass_S52/` |
+| `runs/` | 17 dirs + 3 root files (pre-S53) | **census 13 + S52's four:** `floor_overlay_v3_S52/` · `recon_S52/` · `retrieval_probe_S52/` · `tool_pass_S52/` · **★ S53-CORRECTED:** prior text read "18 dirs / census 14" — an off-by-one vs the census's own B4 receipt `runs/floor_census_2026-06-10/census_B_manifest_raw.md`, which lists **13** dirs at census time. Live recon S53 (`runs/recon_S53/recon_report.md`) counted 17 pre-S53 dirs (census 13 + S52's four), reconciling exactly — **0 real deviations**. No floor-data figure was ever affected; this was a `runs/` directory-count typo only. *(S53 adds two more dirs: `recon_S53/` + `b2_plumbing_S53/`.)* |
 | `graveyard/` | present | unchanged, gitignored wholesale |
 
 **★ DISPOSITION CLOSED (was open at the census): the six `.stale_S50` strays** — confirmed S50-era rename-in-place artifacts for `955cce09` / `cda6d5d1` / `fcbd24fa` (canonical S51 re-reads verified separate, multi-snapshot counts intact), relocated to quarantine with ledger, post-op counts exact. Receipt: the ledger + `runs/recon_S52/`.
@@ -114,6 +114,7 @@ The pre-S52 "v2" label meant **two different pattern sets** depending on snapsho
 
 - **Tally (census of record), 2026-06-10:** full re-derivation, $0; receipts `runs/floor_census_2026-06-10/`; three-way reconciled; both new facts dispositioned-open.
 - **Catechism (S52 recut), 2026-06-10:** the v3 overlay (preflight → Jake-run 4-col PK DDL → execute → verify 7/7) · both census dispositions closed · shrapnel + injection verdicts landed · delta-1 uuid map landed · manifest updated. All S52 figures trace to `runs/floor_overlay_v3_S52/` and `runs/recon_S52/`. Spend: **$0** (no API fires in S52).
+- **Crucible (S53 corrections), 2026-06-11:** `runs/` directory count corrected 14→13 / 18→17 pre-S53 (off-by-one vs the census B4 receipt; live recon `runs/recon_S53/` proved 0 real deviations, floor PERFECT). B2 recall plumbing built ($0, receipts `runs/b2_plumbing_S53/`). No floor figure touched.
 
 ---
 
@@ -123,4 +124,4 @@ No floor or corpus count is ever stated bare. It carries its unit — and as of 
 
 ---
 
-*Last updated: 6-10-26, apparatus S52 "Catechism" — THE v3 RECUT (floor uniformly scrub-v3; rows-vs-messages discipline; both census dispositions CLOSED; shrapnel 118/118 clean; delta-1 uuid-proven; receipts `runs/floor_overlay_v3_S52/` + `runs/recon_S52/`). Prior: 6-10-26 TWW parallel track "Tally" — THE FULL FLOOR CENSUS (census of record); 6-10-26 S51 "Continuance" REF-EDIT + ADDENDUM 1; 6-9-26 S49 "Concord"; floor-side originally authored TWW CCC S3.*
+*Last updated: 6-11-26, apparatus S53 "Crucible" — runs/ census count corrected 14→13 (off-by-one vs the census B4 receipt; live recon `runs/recon_S53/` proved 0 real deviations, floor PERFECT); B2 recall plumbing built ($0). Prior: 6-10-26 apparatus S52 "Catechism" — THE v3 RECUT (floor uniformly scrub-v3; rows-vs-messages discipline; both census dispositions CLOSED; shrapnel 118/118 clean; delta-1 uuid-proven; receipts `runs/floor_overlay_v3_S52/` + `runs/recon_S52/`). Prior: 6-10-26 TWW parallel track "Tally" — THE FULL FLOOR CENSUS (census of record); 6-10-26 S51 "Continuance" REF-EDIT + ADDENDUM 1; 6-9-26 S49 "Concord"; floor-side originally authored TWW CCC S3.*
