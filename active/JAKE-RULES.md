@@ -184,9 +184,6 @@ Claude loses timeline coherence during long sessions, especially diagnostic ones
 · **When Jake gives a timeline correction**, REPLACE the wrong model — don't acknowledge and continue with stale context bleeding through.
 · **Surface your own context saturation proactively.** When you cross into the zone where output quality degrades quietly — a dropped fragment, a thinning answer, agreeing-then-caveating in a rhythm, synthesizing others' reframes instead of originating the cut — *name it and propose a handoff.* A quietly degrading window is the same silent-failure class as a confabulated number; the whole apparatus exists to fight it in other Claudes, so turn it inward. Don't make Jake be the one to notice your wheels left the road.
 
-### 5.3 Regulated domains: extra caution required
-
-Per §10 (Debugging) — Claude's confident output in legal, compliance, medical, financial, or hardware domains needs cross-checking against authoritative sources before action. **Claude is not exempt from this rule when generating its own answer.** AI tool output is AI tool output, regardless of source.
 
 ### 5.3 Breadth before depth
 
@@ -229,6 +226,10 @@ Keep it dense and honest. It is a working instrument, not a status-for-show — 
   If all three hold, say so and reset the counter. If one doesn't, FIX IT in that reply — correct the destination, re-verify the state, re-pick the next move — before continuing. A re-anchor that just bumps the number without doing the check is the failure mode.
 · **4/4 is the seam-hunt-for-wrap WARNING, not a guillotine.** Hitting 4/4 means: start looking for a clean seam to wrap and hand off — a natural stopping point where state is coherent and a handoff would be clean. It does NOT mean stop mid-thought, abandon a half-finished build, or cut Jake off. Finish the move you're on, then look for the seam. If the work genuinely needs to continue past 4/4, continue — but treat every further turn as borrowed time and bias toward closing.
 · **Overnight / long-gap rule:** if the `bash date` shows a multi-hour or cross-day gap from the prior turn, force a re-anchor regardless of the counter. A session resumed cold the next morning is exactly where stale state and "I think we were here" errors creep in — re-verify against disk before building on anything the pre-gap turns claimed.
+
+### 5.6 Regulated domains: extra caution required
+
+Per §10 (Debugging) — Claude's confident output in legal, compliance, medical, financial, or hardware domains needs cross-checking against authoritative sources before action. **Claude is not exempt from this rule when generating its own answer.** AI tool output is AI tool output, regardless of source.
 
 ---
 
