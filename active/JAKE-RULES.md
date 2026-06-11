@@ -188,6 +188,10 @@ Claude loses timeline coherence during long sessions, especially diagnostic ones
 
 Per §10 (Debugging) — Claude's confident output in legal, compliance, medical, financial, or hardware domains needs cross-checking against authoritative sources before action. **Claude is not exempt from this rule when generating its own answer.** AI tool output is AI tool output, regardless of source.
 
+### 5.3 Breadth before depth
+
+When reading any pool into a comprehended record, gather wide and read deep-in-slices FIRST, synthesize SECOND over the qualified set with the slice-finds in hand. **Never let one reader holding the whole pool be the only read** — it will write true register about an incomplete picture. The single-pass reader is a *synthesizer, not a recall layer.* Proven S54: the single-pass Arm 1 passed all five §6 criteria while blind to the geofence Jake built against the Griffin wound (pool rank 57) — caught only by the fan-out's deep-attention-per-node. Cost is not the scale constraint; **attention is.** Sequence the two movements to serve both (full spec: `canon/The_Comprehension_Architecture_v1`). Read through the Corpus Callosum reframe: the movements are two *encodings*, not a pipeline — breadth-then-depth is the order of operations, keep-both-encodings is the law over the results. Don't pipeline the loser into the winner; there is no loser.
+
 ### 5.4 The live system outranks every record — including your own
 
 The single most-repeated gap the lineage surfaced. §5.1 covers inventing a fact; §5.2 covers timeline drift. This is the distinct trap: **acting on a record that was true earlier and is now stale — including a record Claude itself wrote twenty turns ago in this same session.** The prepay-gate relabel, the stale `.env` path, the re-issued already-done prompt, the v21-vs-v30 banner, the "6 convos" — all the same shape.
@@ -509,4 +513,4 @@ Be worth the lineage.
 
 ---
 
-*Last Updated: 6-10-26 — Jake added the two parallel processing rules.
+*Last Updated: 6-11-26 — S55 added §5.3 (breadth before depth), proven by the S54 Griffin first wet read. Prior: 6-10-26 — Jake added the two parallel processing rules.

@@ -44,6 +44,26 @@ Format:
 **Why:** [one-line context if not obvious]
 ```
 
+## 6-11-26 — apparatus S54 "Conduit" (OC) — THE FIRST WET READ + THE CORPUS CALLOSUM + THE COMPREHENSION ARCHITECTURE
+*(authored S54; landed to canon S55 — Jake verify/commit/push)*
+
+**Scope:** TWW apparatus — first wet comprehension read (Griffin pickup-miss thread, both arms, §6 bar); the conceptual turn that produced the project's third Doctrine sibling; the comprehension method canonized. S54 paid spend: **$0.3659** (Arm 1 single-pass fire only; Arm 2 fan-out $0). Reference changes authored cold at S54 close, verified cold + landed at S55.
+
+**Change(s):**
+- **FIRST WET READ FIRED** — the Griffin recurring-pickup-miss thread, assembled (455-node pool; 327 bc-only protected tail = 72% the named queries never touched; ruled whole by Jake, denominator-completeness not threshold) and read two ways on the §6 bar. Arm 1 (single-pass, full pool, **$0.3659**, 25 instances): **PASSED all five §6 criteria** — strong recurrence + register. Arm 2 (16-way in-plan fan-out, **$0**, 77 instances): conditional pass — superior recall, no synthesis. **Comprehension PROVEN:** Instance 7 united three no-shared-keyword variants of the miss — comprehension does what counting cannot. The load-bearing finding: Arm 2 caught nodes Arm 1 was structurally blind to (Life360 geofence rank 57, guilt-about-time substrate rank 82, countdown-build motivation rank 17, Adderall-miss rank 24) — the §6-passing single-pass reader glided past the infrastructure Jake built against the wound. Mechanism = attention-budget-per-node. Receipts: `runs/gather_griffin_S54/` + comprehension run dirs. **Floor UNCHANGED (440/29,396/58,792) — a read, not a mutation.**
+- **THE COMPREHENSION ARCHITECTURE v1 → CANON** (`canon/The_Comprehension_Architecture_v1_2026-06-11.md`): how a pool is read into a thread — two movements, sequenced never fused: BREADTH FIRST (fan-out, deep-attention-per-node, liberal admission, $0) then DEPTH SECOND (one wet synthesizer over the qualified set, fed breadth's finds, ~$0.06/thread). Order is load-bearing: you cannot synthesize what you never saw. Cost inverted — ~$1.50 full-corpus two-step, <$20 ceiling Arm-1-alone; **attention, not cost, is the scale constraint.** Read through the Corpus Callosum reframe: the movements are two *encodings*, not a pipeline — don't pipeline the loser into the winner, there is no loser. Sibling to The Confluence.
+- **THE CORPUS CALLOSUM → THE THIRD DOCTRINE SIBLING** (`active/The_Corpus_Callosum.md`, alongside The Wallaby Way / Track Meet Doctrine / The Wallaby Why): the day the apparatus did the thing the Doctrine described — remembered Griffin twice, differently, and both were real. Austere arm (the floor, the 1s and 0s) + wet arm (the instrument-colored read) = two hemispheres; the apparatus is the corpus callosum between them. Seven capital-P Principles (P1 two hemispheres / P2 arms-are-encodings / P3 open roster, state-is-a-living-variable / P4 synthesis-sterilizes-and-so-does-time / P5 the roaming arm — convergent answers questions, divergent finds them / P6 refusal-to-converge = peace prosthetic / P7 felt-rightness stays Jake's). Extends, does not replace, the Track Meet's twelve.
+- **THE BOUQUET SPEC drafted** (`wallaby-way/inspect-later/Bouquet Spec Draft.md`) — the roaming/divergent arm, specced as conditions-for-a-free-roam, six open questions, for S55 review. NOT canon yet.
+- **REFERENCE APPENDS:** FLOOR_COUNTS S54 first-wet-read record (read-output, floor figures untouched) · Confluence §8 two-step scale-method result · **JAKE-RULES §5.3 NEW — "Breadth before depth"** (filled the 5.3 gap on Jake's ruling; the single-pass reader is a synthesizer, not a recall layer) · **ANCHOR masthead v37 → v38.**
+
+**Why:** S54 set out to fire the first wet read and prove the comprehension mechanism on the pre-registered Griffin case. It did — and then the comparison of the two arms surfaced that the project had been describing this since the track meet: the austere and wet halves are two hemispheres of one brain. The method got canonized so scale rides a proven two-step; the concept got enshrined so the apparatus stops being only a memory and starts to think.
+
+**Rulings logged (Jake):** Griffin pool ruled whole (denominator-completeness, not threshold) · scale method = two-step, reframed post-Callosum as accumulation-of-encodings not pipeline · Corpus Callosum home = `active/` (sibling to the Why + Doctrine, correct tier) · JAKE-RULES new rule = §5.3 (fill the gap, not §5.6, to avoid flag storms) · reference changes hand-landed as full files, never change-sets in the repo (anti-conflation discipline) · second benchmark fish sealed + reveal-ready, held cold.
+
+**Open at close (S55 queue):** review the Bouquet draft → the Arm-3 re-encoding run on Griffin (geofence + guilt-substrate fed, "does register get wetter") → S2 fence-chain pilot → the second fish (cold, zero re-tune, Jake draws) → ride-alongs / freeze (pipeline v1.8 SCRUB_VERSION=3 before any delta freeze). Scale read settled-low but "in pajamas" till a real receipt.
+
+---
+
 ## 2026-06-10 - Parallel processing RULES*
 
 **AllthethingsbecauseJakeislazy** Added two rules to JAKE-RULES to try to get Claude to give me parallel processing tasks more often.
