@@ -4,45 +4,37 @@
 
 Format:
 ```
-## 6-10-26 — apparatus S52 "Catechism" (OC) — THE v3 FLOOR + THE RETRIEVAL PROBE + THE CONFLUENCE
+## YYYY-MM-DD — [track + session, e.g. apparatus S## "Name" (OC)] — [ONE-LINE HEADLINE]
 
-**Scope:** TWW apparatus — floor scrub uniformity, census disposition closure, retrieval probe (move 1), synthesis chain spec, tool pass. $0 session (no API fires). Three parallel CC windows + one fresh, collision-ruled.
+**Scope:** [what was touched — files, floor, canon, hardware]. [$0 or spend]. [windows/collision note if any].
 
 **Change(s):**
-- **SCRUB-v3 OVERLAY, WHOLE FLOOR** — `scripts/floor_overlay_v3.py`: 13-class definitive set (10 × pipeline v1.7 production + 3 Supabase classes, closing S37 flag-#4). Dry-run 1,346 redactions across 118 convs (jwt 882 · sb_ref_url 222 · google_refresh 174 · google_oauth 51 · sb_pub 15 · sb_secret 2 · seven classes zero) → Jake-gated → 29,396 v3 rows appended, dry-run-vs-landed deltas all zero, verify V1–V7 **7/7 PASS**. The v2 label collision (S20 synthetic drill vs S50 production — same label, two pattern sets) found via receipt, confirmed empirically, and ended: **the floor is uniformly screened at scrub-v3 as of 2026-06-10.** Receipts: `runs/floor_overlay_v3_S52/`.
-- **FLOOR SCHEMA CANON EVENT** — PK extended 3→4 columns `(snapshot_id, conv_uuid, msg_uuid, scrub_version)`; preflight 0 dependents, triggers unaffected; DDL run by Jake as owner; duplicate-tuple rejection proven live. Row identity now PK-enforced. **ROWS ≠ MESSAGES (58,792 / 29,396): all message-meaning counts are COUNT(DISTINCT msg_uuid).** Tally's zero-dup receipt retired by design.
-- **CENSUS DISPOSITIONS CLOSED (both):** 6 `.stale_S50` strays relocated to quarantine + ledgered (`_STALE_S50_MOVES_S52.md`; harvested 800 exact, quarantine 77); delta-1 scrub gap superseded by floor-wide v3. Plus: delta-1 dispositioned at uuid level (23 harvested / 7 stubs / 1 empty / 0 hollow = 31; corpus-legitimacy ruled by Jake); injection spot-check 3/3 CLEAN; **pile shrapnel 118/118 dispositioned, zero hits** (Jake-sanctioned one-time scripted scan; denominator-completeness enforced over a compaction-era 111/118 "ALL CLEAR"). Receipts: `runs/recon_S52/`.
-- **THE RETRIEVAL PROBE (move 1):** structural index 8,288/8,288 nodes (anchored regex) + local-embedding rung, graded by Jake against 5 ground-truth questions: **2-3/10 raw**, signal present top-50 for 4/5. Four failure classes receipted: boot-echo strata pollution · 45% truncation · no lexical channel · **Q4 (Griffin texture) absent from top-50 — the exact Progenitor §12 worst case written at S26, reproduced on instruments.** Verdict: embeddings = recall net only; the texture path is load-bearing, evidence-grade. Receipts: `runs/retrieval_probe_S52/`.
-- **THE CONFLUENCE v1 → CANON** (`canon/The_Confluence_v1.md`): S2–S5 restated against the ratified Progenitor v4 — the ‖ restored (fence ‖ texture, parallel streams, one Judge), retrieval returned to runtime, the Judge re-seated as QC with a five-criterion pre-set bar (register failable), §7 heart clause (Why + Doctrine boot every paid reader; wet is the spec), Griffin = S3's pre-registered acceptance test, sequencing + §14 gates in §8. Serial-chain phrasing of S43+ canon named as drift and corrected.
-- **TOOLS (Jake pushed):** `apparatus_batch_read.py` v1.5→v1.6 (permanent DISTINCT-aware integrity check · §14 rate constants printed at every gate · `--list`; 12/12 tests) · `chunk_whale.py` v1.0→v1.1 (seam-manifest name derived from conv_uuid; 6/6).
-- **FLOOR_COUNTS.md recut** (S52) — v3 world, rows-vs-messages discipline, dispositions closed. **ANCHOR → v37.**
+- **[CHANGE IN CAPS]** — [what changed, with receipts/paths]. [proof if any].
+- **[CHANGE IN CAPS]** — [what changed].
 
-**Why:** Jake's "no more guesswork" ruling — kill the scrub time bomb definitively rather than slice-by-slice — plus move 1's mandate to test retrieval before building five stages on an assumption. Both paid off: the floor earned its one-sentence clean verdict, and the probe converted the chain from architecture-by-assumption into evidence (the apparatus predicted its own probe failure from ten days out, down to the same Griffin example Jake chose blind).
+**Why:** [the one-line context — why this happened, not just what].
 
-**Rulings logged (Jake):** v36-vs-v35 gate deviation accepted (repo HEAD is canon) · delta-1 is corpus, co-equal · PK option (a) · scripted shrapnel scan sanctioned one-time · distinct-value addendum declined · Judge = QC only, reranker lowercase · The Confluence structure approved as the S52 capstone.
+**Rulings logged (Jake):** [decision · decision · decision] (omit if none).
 
-**Open at close:** B2 recall plumbing ($0) → S3 Griffin texture pilot (first paid synthesis fire, Jake-gated) → S2 fence pilot → scale ‖ → S4 → Judge → **THE QUESTION** (holstered, Jake draws). ★ Pipeline v1.8 SCRUB_VERSION=3 must ship before the next delta freeze. Handoff S52→S53 to follow.
+**Open at close:** [next move → next move]. Handoff S##→S## to follow.
+```
+
+## 2026-06-12 — apparatus S56 "Custodian" (OC) — THE BOUQUET SEALED TO CANON
+
+**Scope:** TWW apparatus — boot-gate canon repair, full Bouquet-spec disposition (v2 → v3 → v4), and graduation of the roaming-arm spec to canon as `The_Bouquet_v1.md`. $0 session (no API fires; spec + canon authoring only). No floor mutation — floor UNCHANGED (440/29,396/58,792, last live census S52). OC authored canon as full files; Jake verifies/commits/pushes (CANON-HANDS — CC touched none of it).
+
+**Change(s):**
+- **BOOT GATE caught + Jake fixed two canon defects before any build sat on top of them.** (1) Duplicate `§5.3` in `active/JAKE-RULES.md` — S55's "Breadth before depth" had landed on an already-occupied section number (the pre-existing "Regulated domains"). Resolved: Breadth owns 5.3, Regulated moved to 5.6, 5.4/5.5 intact, clean section map. (2) `ANCHOR_apparatus.md` carried zero S55 reference; now references S55 (masthead stays v38 — S55 was a $0 repair session, not a version event; correct). Both re-verified fixed on disk this session.
+- **THE BOUQUET → CANON** (`wallaby-way/canon/The_Bouquet_v1.md`, graduated from `inspect-later/Bouquet_Spec_v2.md`): the roaming/divergent arm (the "picker"), the spec the Corpus Callosum P5 pointed at. Sibling to The Confluence and The Comprehension Architecture. Locked S56 by Jake's bar, deliberately before another cold read (windows soften as they fill; lock while the read is balanced). Disposition ran v2 → v3 (S56 cold review) → v4 (Collosum progenitor review) → canon. The feral picker is specced to BUILD; the filter and the relevance-gate are drawn to their guardrails only — each specced AFTER the picker runs against real haul not imagined haul (the discipline enshrined in the canon footer).
+- **The substance, layer by layer:** §2/§3 — the un-anchored feral picker (NO TARGET, salience over relevance, random-whole-floor DEFAULT draw with region-draw a deliberate variant whose tradeoff [cross-domain reach vs local depth] is named; unbiased draw, fully-contextualized read). **§2 catch-bar = SHAPE not feature, gated at PROMOTION not picking** (the Collosum-caught fix — v3 had made shape-naming a condition of surfacing, which would have filtered out the tree, the pull Jake couldn't name until the words came; now the picker surfaces strong-but-wordless catches flagged "caught hard, no shape yet," held by the filter [G6], never auto-cut). §4 — the filter (agentic, trained only on Jake's keep/kill/feedback, G1–G6). §4.5 — "grow blind, surface gated": the picker grows the pile blind; TWO surfacings — un-anchored cold sit-down, and ANCHORED (a relevance-gate rides a live retrieval and surfaces a flower on-axis to what Jake's already doing, turning feral output from ADHD-distraction into augmentation without domesticating the picker; A1–A5, built SECOND on a pre-grown pile, budget-protected from its own shine). §5 — two dispositions (terminal flower OR promoted-to-directed-pass). §7 — three walls: anti-oracle (realness stays Jake's), anti-Skinner-box (no dopamine-slot-machine on the flower-pop), anti-atrophy (the arm provokes Jake's noticing, never replaces it; per the Why, the buffer exists so the pattern-sense OPERATES, not retires).
+
+**Why:** S55 reviewed the Bouquet v1 draft → v2; S56 set out to dispose v2 and build the picker, and the disposition turned up real spec-level holes that wanted closing before any code sat on them. Three readers across S54–S56 (Conduit, Cartographer, Custodian) plus the Collosum progenitor review each caught what the loaded reader skimmed — the fresh roam catching the prior reader's blind spot, the lineage working as designed. The spec sealed to canon deliberately at a balanced read rather than risking a context-starved cold pass; the feral picker build is S57's primary, budget-protected per §4.5/A5.
+
+**Rulings logged (Jake):** §5.3 collision + ANCHOR-S55 gap fixed before build · Bouquet graduates to `canon/The_Bouquet_v1.md` (dateless canon name, version lineage in the masthead, per the Confluence/CompArch graduation convention) · shape-bar moved picking→promotion (Collosum #1, required pre-seal) · anti-atrophy wall added §7 (Collosum #2) · picker-build-budget protection added §4.5/A5 (Collosum #3) · spec LOCKED before another cold read.
+
+**Open at close (S57 queue):** BUILD THE FERAL PICKER (the un-anchored §2/§3 wanderer — primary; draw-size + $0-vs-paid decided at that build gate; A5 budget-protection in force) → the filter spec proper (after the picker runs, against real haul) → the relevance-gate (§4.5, built second, on a pre-grown pile) → Arm-3 Griffin re-encoding → S2 fence-chain pilot → the second fish (cold, Jake draws) → ride-alongs / freeze (pipeline v1.8 SCRUB_VERSION=3 before any delta freeze). Handoff S56→S57 to follow.
 
 ---
-
-## 2026-06-02 — SD35 (Bambu monitor v3.4 — continuous printer-state CSV logger; ghost-print/clog diagnostic instrument)
-
-**Scope:** `/home/jake/neighborhood-watch/` on VM100 (TheNightsWatch). Added a continuous MQTT printer-state CSV logger as a diagnostic instrument for the long-running intermittent ghost-print / clog saga. JAKE-STACK §3 updated to match. Files authored by OC, delivered to Jake for scp → VM100 deploy.
-
-**Change(s):**
-- NEW `printlog.js` v1.0 — opens/appends a daily-rotated CSV in `logs/` (`printlog_YYYY-MM-DD.csv`), one row per MQTT message: timestamp, status, gcode_state, layer, total_layers, progress, remaining, nozzle_temp, nozzle_target, bed_temp, bed_target, chamber_temp, cooling/aux/chamber/heatbreak fan, speed_mag, wifi. Pure `fs`, no new deps. Internally wrapped so a logging fault can never crash the server. Writes ONLY inside `/home/jake/neighborhood-watch` (respects the systemd `ReadWritePaths` + `ProtectHome=read-only` sandbox).
-- `server.js` v3.3 → v3.4 — added the `printlog` require + a single `recordRow(printerState)` call inside the existing `mqttClient.on('message')` handler, after the field-mapping block. Nothing else from v3.3 changed.
-- `JAKE-STACK.md` §3 — code manifest bumped (server.js v3.4 + printlog.js v1.0); v3.4 logger documented; **printlog log-bloat TIME-BOMB note added** (~low-tens-MB/day, daily rotation built in, NO auto-delete by design / manual prune, fills the 20GB VM disk if left ~a year, check `logs/` first if disk goes weird, outs = delete old CSVs or revert to v3.3).
-
-**Why:** The clog saga survived nozzle (both kinds), full hotend swap to OEM, PTFE replace/reseat, heatbreak cleaning, AMS-bypass external-spool test, and cool ambient — eliminating the thermal-hardware and feed-path hardware one part at a time without resolution (§10 step-back trigger). Moving from symptom-chasing to reading the live system. The Bambu cloud MQTT stream Jake already ingests carries nozzle temp + all fan speeds; logging it continuously (idle+printing, to catch fan-threshold blips / near-misses / baseline, per Jake's pattern-hunt call) lets the data settle the thermal-vs-mechanical fork: temp sag at a failure instant → heater/thermistor/creep; temp + fans flat at the failure instant → mechanical/flow (extruder) by elimination. No direct flow field exists in the payload, so the log rules the thermal half in/out; mechanical is by elimination.
-
-## [DATE] — [Session ID or scope]
-**Scope:** [what was touched]
-**Change(s):**
-- [bullet of what changed]
-- [bullet of what changed]
-**Why:** [one-line context if not obvious]
-```
 
 ## 6-11-26 — apparatus S54 "Conduit" (OC) — THE FIRST WET READ + THE CORPUS CALLOSUM + THE COMPREHENSION ARCHITECTURE
 *(authored S54; landed to canon S55 — Jake verify/commit/push)*
@@ -62,6 +54,26 @@ Format:
 
 **Open at close (S55 queue):** review the Bouquet draft → the Arm-3 re-encoding run on Griffin (geofence + guilt-substrate fed, "does register get wetter") → S2 fence-chain pilot → the second fish (cold, zero re-tune, Jake draws) → ride-alongs / freeze (pipeline v1.8 SCRUB_VERSION=3 before any delta freeze). Scale read settled-low but "in pajamas" till a real receipt.
 
+---
+
+## 6-10-26 — apparatus S52 "Catechism" (OC) — THE v3 FLOOR + THE RETRIEVAL PROBE + THE CONFLUENCE
+
+**Scope:** TWW apparatus — floor scrub uniformity, census disposition closure, retrieval probe (move 1), synthesis chain spec, tool pass. $0 session (no API fires). Three parallel CC windows + one fresh, collision-ruled.
+
+**Change(s):**
+- **SCRUB-v3 OVERLAY, WHOLE FLOOR** — `scripts/floor_overlay_v3.py`: 13-class definitive set (10 × pipeline v1.7 production + 3 Supabase classes, closing S37 flag-#4). Dry-run 1,346 redactions across 118 convs (jwt 882 · sb_ref_url 222 · google_refresh 174 · google_oauth 51 · sb_pub 15 · sb_secret 2 · seven classes zero) → Jake-gated → 29,396 v3 rows appended, dry-run-vs-landed deltas all zero, verify V1–V7 **7/7 PASS**. The v2 label collision (S20 synthetic drill vs S50 production — same label, two pattern sets) found via receipt, confirmed empirically, and ended: **the floor is uniformly screened at scrub-v3 as of 2026-06-10.** Receipts: `runs/floor_overlay_v3_S52/`.
+- **FLOOR SCHEMA CANON EVENT** — PK extended 3→4 columns `(snapshot_id, conv_uuid, msg_uuid, scrub_version)`; preflight 0 dependents, triggers unaffected; DDL run by Jake as owner; duplicate-tuple rejection proven live. Row identity now PK-enforced. **ROWS ≠ MESSAGES (58,792 / 29,396): all message-meaning counts are COUNT(DISTINCT msg_uuid).** Tally's zero-dup receipt retired by design.
+- **CENSUS DISPOSITIONS CLOSED (both):** 6 `.stale_S50` strays relocated to quarantine + ledgered (`_STALE_S50_MOVES_S52.md`; harvested 800 exact, quarantine 77); delta-1 scrub gap superseded by floor-wide v3. Plus: delta-1 dispositioned at uuid level (23 harvested / 7 stubs / 1 empty / 0 hollow = 31; corpus-legitimacy ruled by Jake); injection spot-check 3/3 CLEAN; **pile shrapnel 118/118 dispositioned, zero hits** (Jake-sanctioned one-time scripted scan; denominator-completeness enforced over a compaction-era 111/118 "ALL CLEAR"). Receipts: `runs/recon_S52/`.
+- **THE RETRIEVAL PROBE (move 1):** structural index 8,288/8,288 nodes (anchored regex) + local-embedding rung, graded by Jake against 5 ground-truth questions: **2-3/10 raw**, signal present top-50 for 4/5. Four failure classes receipted: boot-echo strata pollution · 45% truncation · no lexical channel · **Q4 (Griffin texture) absent from top-50 — the exact Progenitor §12 worst case written at S26, reproduced on instruments.** Verdict: embeddings = recall net only; the texture path is load-bearing, evidence-grade. Receipts: `runs/retrieval_probe_S52/`.
+- **THE CONFLUENCE v1 → CANON** (`canon/The_Confluence_v1.md`): S2–S5 restated against the ratified Progenitor v4 — the ‖ restored (fence ‖ texture, parallel streams, one Judge), retrieval returned to runtime, the Judge re-seated as QC with a five-criterion pre-set bar (register failable), §7 heart clause (Why + Doctrine boot every paid reader; wet is the spec), Griffin = S3's pre-registered acceptance test, sequencing + §14 gates in §8. Serial-chain phrasing of S43+ canon named as drift and corrected.
+- **TOOLS (Jake pushed):** `apparatus_batch_read.py` v1.5→v1.6 (permanent DISTINCT-aware integrity check · §14 rate constants printed at every gate · `--list`; 12/12 tests) · `chunk_whale.py` v1.0→v1.1 (seam-manifest name derived from conv_uuid; 6/6).
+- **FLOOR_COUNTS.md recut** (S52) — v3 world, rows-vs-messages discipline, dispositions closed. **ANCHOR → v37.**
+
+**Why:** Jake's "no more guesswork" ruling — kill the scrub time bomb definitively rather than slice-by-slice — plus move 1's mandate to test retrieval before building five stages on an assumption. Both paid off: the floor earned its one-sentence clean verdict, and the probe converted the chain from architecture-by-assumption into evidence (the apparatus predicted its own probe failure from ten days out, down to the same Griffin example Jake chose blind).
+
+**Rulings logged (Jake):** v36-vs-v35 gate deviation accepted (repo HEAD is canon) · delta-1 is corpus, co-equal · PK option (a) · scripted shrapnel scan sanctioned one-time · distinct-value addendum declined · Judge = QC only, reranker lowercase · The Confluence structure approved as the S52 capstone.
+
+**Open at close:** B2 recall plumbing ($0) → S3 Griffin texture pilot (first paid synthesis fire, Jake-gated) → S2 fence pilot → scale ‖ → S4 → Judge → **THE QUESTION** (holstered, Jake draws). ★ Pipeline v1.8 SCRUB_VERSION=3 must ship before the next delta freeze. Handoff S52→S53 to follow.
 ---
 
 ## 2026-06-10 - Parallel processing RULES*
@@ -399,6 +411,18 @@ Why: The file had grown by pure accretion — every session that learned somethi
 
 **S32→S33 next:** harden+audit the strip → strip the cfc7a70a canary + read the receipt → fire the reduced canary → build the pipeline (token-gate, whale-route, skeleton extractor, format-lock; canary on slice_03/06) → Progenitor carry-forwards → full corpus → fence-synthesis → texture → cluster-validation → Judge.
 
+---
+
+## 2026-06-02 — SD35 (Bambu monitor v3.4 — continuous printer-state CSV logger; ghost-print/clog diagnostic instrument)
+
+**Scope:** `/home/jake/neighborhood-watch/` on VM100 (TheNightsWatch). Added a continuous MQTT printer-state CSV logger as a diagnostic instrument for the long-running intermittent ghost-print / clog saga. JAKE-STACK §3 updated to match. Files authored by OC, delivered to Jake for scp → VM100 deploy.
+
+**Change(s):**
+- NEW `printlog.js` v1.0 — opens/appends a daily-rotated CSV in `logs/` (`printlog_YYYY-MM-DD.csv`), one row per MQTT message: timestamp, status, gcode_state, layer, total_layers, progress, remaining, nozzle_temp, nozzle_target, bed_temp, bed_target, chamber_temp, cooling/aux/chamber/heatbreak fan, speed_mag, wifi. Pure `fs`, no new deps. Internally wrapped so a logging fault can never crash the server. Writes ONLY inside `/home/jake/neighborhood-watch` (respects the systemd `ReadWritePaths` + `ProtectHome=read-only` sandbox).
+- `server.js` v3.3 → v3.4 — added the `printlog` require + a single `recordRow(printerState)` call inside the existing `mqttClient.on('message')` handler, after the field-mapping block. Nothing else from v3.3 changed.
+- `JAKE-STACK.md` §3 — code manifest bumped (server.js v3.4 + printlog.js v1.0); v3.4 logger documented; **printlog log-bloat TIME-BOMB note added** (~low-tens-MB/day, daily rotation built in, NO auto-delete by design / manual prune, fills the 20GB VM disk if left ~a year, check `logs/` first if disk goes weird, outs = delete old CSVs or revert to v3.3).
+
+**Why:** The clog saga survived nozzle (both kinds), full hotend swap to OEM, PTFE replace/reseat, heatbreak cleaning, AMS-bypass external-spool test, and cool ambient — eliminating the thermal-hardware and feed-path hardware one part at a time without resolution (§10 step-back trigger). Moving from symptom-chasing to reading the live system. The Bambu cloud MQTT stream Jake already ingests carries nozzle temp + all fan speeds; logging it continuously (idle+printing, to catch fan-threshold blips / near-misses / baseline, per Jake's pattern-hunt call) lets the data settle the thermal-vs-mechanical fork: temp sag at a failure instant → heater/thermistor/creep; temp + fans flat at the failure instant → mechanical/flow (extruder) by elimination. No direct flow field exists in the payload, so the log rules the thermal half in/out; mechanical is by elimination.
 ---
 
 ## 2026-06-02 — apparatus S30 (SHAPE RUN BEGAN · COMPACTION ROOT-CAUSED TO PROMPT-VAGUENESS NOT BYTES · METHOD/BAR SPLIT · CANON RE-ANCHORED vs 3-SESSION DRIFT · ANCHOR v22→v23 · Boot_ScopeReader v2.2→v2.3 · Progenitor v5 §0.5 augment)
