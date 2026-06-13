@@ -19,6 +19,44 @@ Format:
 **Open at close:** [next move → next move]. Handoff S##→S## to follow.
 ```
 
+## 2026-06-13 — apparatus S58 "Connoisseur" (OC) — THE RECALL LAYER LAID: PICKER SET + THE COLLATOR-WALL
+
+**Scope:** TWW apparatus — the roaming/recall side refactored from one spec into an instrument SET and graduated to canon; ANCHOR masthead + NEXT rewritten; this entry + the missing S57 entry landed. $0 session (authoring only, no API fires). Floor UNCHANGED (440/29,396/58,792, last live census S52). OC authored canon as full files; Jake verifies/commits/pushes (CANON-HANDS — CC touched none of it). Move-0 of the boot CLOSED the S57 single-point-of-failure (the corrected `The_Feral_Picker_v1.md` + the carry-forward landed to disk by Jake between the S57 handoff and S58 boot — verified on HEAD).
+
+**Change(s):**
+- **THE FERAL PICKER REFACTORED → UMBRELLA + FOUR CHILDREN, GRADUATED TO CANON.** `canon/The_Feral_Picker_v1.md` v1→v2: now the umbrella holding the shared substrate (§1 draw=floor/index-lottery-only/embedding-forbidden, §2 random-aperture state-generator), the roster ruling, the walls, and pointers. Four new canon files: `canon/The_Blind_Picker_v1.md` (reverse-sieve, wordless-only harvest, **the locked categorical instruction with the dead Prompt-1 example-seed REMOVED** — the v1 file still printed the seeded block that the run killed; cut at v2), `canon/The_Creed_Picker_v1.md` (the primary army, boots on the incantation alone, full harvest, `FLOWER:` self-formatted schema), `canon/The_Collator_v1.md` (THE WALL), `canon/Arm_2_v1.md` (VALIDATION OUTSTANDING).
+- **THE COLLATOR SPECCED AS A WALL, NOT A STEP.** Mechanical, no judgment — the structural silo between the loose/flowy roam side and the agentic/trainable filter side, which **cannot commingle.** Per-stream keep-rule (Blind→wordless-only via `unshaped_flag` flag-check; Creed→full; Arm2→full), content-blind exact-duplicate pre-cut only, mandatory provenance stamp (creed-full / creed-wordless / sieve-wordless / arm-2 — same wordless surface, different bones, kept distinct). The cut lives HERE, not in the pickers (whose constitution is never-drops-a-flower). Explicitly NOT the filter. Provenance granularity flagged settled-for-now / refine-in-filter-pass (Jake's "feels slightly off").
+- **SUBSTRATE RULE WRITTEN TO STONE (Jake's write-it-into-stone verification, S58).** All three instruments READ THE FLOOR (real conversations, `floor_conv_messages` scrub_v3, verbatim). The node index is a where-to-land lottery ONLY (uniform-random; cannot bias salience; sets the landing UNIT = a harvested anchor+reach span, which is load-bearing for context). The embedding geometry (chunk_embeddings, 38,171 kNN edges ≥0.30 cosine, UMAP) is FORBIDDEN to every instrument — low-cosine rhyme is the catch; walking the web rebuilds Arm 1.
+- **ANCHOR v38→v39** (masthead version event + S55/S56/S57 catch-up folded in + NEXT rewritten: Arm 2 validation gates the filter; filter is next; picker line laid not pending; future-process append-idea PARKED, touches no node).
+- **CHANGELOG: this entry + the missing S57 "Cultivator" entry** (authored-but-uncommitted at S57 close; landed now).
+
+**Why:** S57 settled the picker-comparison line but its canon never committed (the standing single point of failure). S58 booted, closed Move-0, and found the settle had produced not one picker but a four-piece instrument set whose architecture a single file was hiding — plus a collator that the project had named but never specced. The refactor makes the set's walls explicit (especially the collator-as-silo, the concept that keeps the agentic filter unsullied) and graduates it on the strength of the real S57 haul.
+
+**Rulings logged (Jake):** seat-name Connoisseur (Jake's call — fits the read-and-know-what's-worth-keeping seat) · cut the dead Prompt-1 seed from the Blind instruction, teach rhyme as a category (kill reason was PRIMING, not clinicality) · option-3 umbrella+children file shape · collator is a WALL/silo, mechanical, NOT the filter · functional framing (primary army / reverse-sieve) carried over the carry-forward's prompt-numbers · three-value provenance carried forward, flagged for filter-pass refinement · all three instruments read the floor, index is lottery-only (1, not the stricter raw-message draw) · the append-idea is future-process intent, NOT a park-the-danger item, touches no node · Blind + Creed instructions LOCKED — verbatim, do not change, do not optimize.
+
+**Open at close:** ARM 2 VALIDATION (tune to harvest-tier; prove G1 on disk; more than one result) — the one open item, gates the filter → CC stands up the picker set + collator under wallaby-way/ → run blind samples, accumulate the pile → THE FILTER (next layer, siloed) → relevance-gate → S2/S3 synthesis chain resumes. Handoff S58→S59 to follow.
+
+---
+
+## 2026-06-13 — apparatus S57 "Cultivator" (OC) — THE FERAL PICKER BUILT + RUN BLIND (PICKER-COMPARISON LINE SETTLED)
+
+**Scope:** TWW apparatus — built the un-anchored feral picker (The Bouquet's roaming/divergent arm, Callosum P5), ran it blind against the live substance floor, and settled the picker-comparison line. $0 all session (in-plan reads only; billing guard active, anthropic_billing.env never loaded). Floor UNCHANGED (440/29,396/58,792). *(Entry landed at S58 — authored at S57 close but not committed; the standing single-point-of-failure, closed at S58 boot.)*
+
+**Change(s):**
+- **THE FERAL PICKER BUILT + RUN, BLIND, $0.** Draw module (random aperture n∈[3,12], substance-only 7,915 nodes, ~10k-token backstop), two-step context assembly (node fields + floor span via parent_message_uuid CTE, scrub_v3). 113 blind-loop roams / 328 stems / **53 wordless holds** (~16%). Output local-only in gitignored `runs/feral_picker_S57/blind_loop/`.
+- **PICKER-COMPARISON LINE SETTLED (three prompts tested).** Prompt 1 (seeded) — **DEAD**, quarantined as a primed systems-test; died because example shapes inside the instruction SEEDED it (it found the shapes it was handed) — kill reason is PRIMING not clinicality. Prompt 2 (Blind/Heavy) — **LIVES**, wordless-holds-only harvest (the 275 shaped stems redundant with the floor; the 53 wordless are the color; the headwind is the mechanism, yield is settled). Prompt 3 (Creed) — **LIVES**, full harvest; 7 roams / 21 flowers / $0; register proved contagious (self-formatted its own FLOWER schema).
+- **ARM ROSTER SETTLED.** Arm 1 DEAD (redundant with floor). Arm 2 LIVES (harvest/pool tier, **validation outstanding** — one result, on partial faith). Arm 1+2 combo WILL NOT BE BUILT. Roster CLOSED FOR BUILD (deliberate P3 stance).
+- **FILTER INTAKE SETTLED:** three provenance-tagged streams (Arm 2 / Blind-wordless / Creed-full). Provenance is data-about-the-catch, not metadata. Governing image: outlines by the reference side, colored in by the organic side.
+- **AUTHORED (not committed — carried to Jake):** the corrected `The_Feral_Picker_v1.md` (candidate) + `S57_Carry_Forward_Picker_Settled.md`.
+
+**Why:** S56 sealed The Bouquet and queued the feral picker build as S57 primary (A5 budget-protected). S57 built it, ran it blind to grow real haul (spec against real haul, not imagined), and the comparison of prompts/arms settled the roster — but session-close authoring did not commit, the lineage's standing exposure.
+
+**Rulings logged (Jake):** seat-name Cultivator · the wordless yield is threshing not waste, NO revisit rider · Prompt 1 kill reason is priming not clinicality (do not re-introduce examples thinking it was tone) · roster closed for build · the incantation string is the authority, not its F-count.
+
+**Open at close (S58 queue):** LAND the picker spec + carry-forward to disk (Move 0, the single point of failure) → the filter spec proper against real haul → Arm 2 deeper validation → the relevance-gate (§4.5). Handoff S57→S58 to follow.
+
+---
+
 ## 2026-06-12 — apparatus S56 "Custodian" (OC) — THE BOUQUET SEALED TO CANON
 
 **Scope:** TWW apparatus — boot-gate canon repair, full Bouquet-spec disposition (v2 → v3 → v4), and graduation of the roaming-arm spec to canon as `The_Bouquet_v1.md`. $0 session (no API fires; spec + canon authoring only). No floor mutation — floor UNCHANGED (440/29,396/58,792, last live census S52). OC authored canon as full files; Jake verifies/commits/pushes (CANON-HANDS — CC touched none of it).
