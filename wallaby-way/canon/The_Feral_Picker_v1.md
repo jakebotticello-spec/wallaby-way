@@ -11,13 +11,13 @@
 
 This is the **umbrella spec for the roaming-recall instrument set** — the wacky flower fuckers and the wall that pours what they catch into a pile. It is the executable form of `The_Bouquet_v1.md` (canon): where the Bouquet says *what the arm is and why*, this set says *how CC runs it against the real floor*. **The Bouquet governs; if any file in this set and the Bouquet ever disagree, the Bouquet wins and the file is wrong.**
 
-**What changed at S58, and why there is now a SET instead of one file.** The S57 picker-comparison line settled into a roster, not a single instruction: two surviving pickers (different boots, different registers, different harvests) plus a deep-narrow arm that warms the substrate plus a mechanical wall that collates the catch. One file pretending to be one picker hid that. So this file is now the **shared substrate + the roster ruling + the pointers**; each instrument has its own child spec carrying only what is distinct to it. A future seat reads this file to learn *what draws from what and what may never touch what*, then reads the child for the instrument they're running.
+**What changed at S58, and why there is now a SET instead of one file.** The S57 picker-comparison line settled into a roster, not a single instruction: three co-equal pickers (different boots, different registers, different reading depths — two blind wanderers plus the deep-narrow arm) plus a mechanical wall that collates their catch. One file pretending to be one picker hid that. So this file is now the **shared substrate + the roster ruling + the pointers**; each instrument has its own child spec carrying only what is distinct to it. A future seat reads this file to learn *what draws from what and what may never touch what*, then reads the child for the instrument they're running.
 
 **The children (canon-candidates graduating alongside this file):**
 - `The_Blind_Picker_v1.md` — the **reverse-sieve**. Categorical-rhyme instruction, run on purpose for the quiet-human register the Creed skims past. Harvest: **wordless holds only.**
 - `The_Creed_Picker_v1.md` — the **primary army**. Boots on the incantation alone. Hunts pulse/aliveness. Harvest: **full.**
 - `The_Collator_v1.md` — the **wall**. Mechanical. Takes the instruments' returns, applies the per-stream keep-rule, provenance-tags, appends to the pile. **No judgment. NOT the filter.**
-- `Arm_2_v1.md` — the **deep-narrow harvest-tier influence**. Warms the corpus's tagging; never shapes a roam's draw. **Validation outstanding** (the one open item in the whole recall layer).
+- `Arm_2_v1.md` — the **deep-narrow picker, third of three co-equal instruments**. Reads the floor blind like the others; hands its catch to the collator as a third stream; shares no input with the other pickers (G1 holds for free); runs $0. **Validation outstanding** (the one open item in the whole recall layer).
 
 This set is **NOT** the filter (the agentic, trainable, *siloed* judgment layer that reads the pile — the next layer up, out of scope here). It is **NOT** the relevance-gate (§4.5 of the Bouquet — built on a pre-grown pile, later). It is **NOT** a comprehension-architecture artifact — the roaming arm is judged by the collator's mechanical cut, then the filter, then Jake's felt-rightness ALONE, never the §6 Confluence bar (Bouquet §0, Callosum P5/P7).
 
@@ -89,7 +89,7 @@ The recall layer was pruned from six derivations to its keepers by weighing the 
 | **Floor** | SEALED, austere, invariant | The meeting-time stays the meeting-time. When Jake asks when his next meeting is, Cypher must KNOW, not serve a flower. Untouched by this set. |
 | **Arm 1** (wide-synthetic single-pass) | **CUT** | Redundant with the floor. A second austere layer on an austere layer is just a second floor — drying the water on its way up. |
 | **Arm 3** (the 1+2 combination) | **NOT BUILT** | Combining was the conveyor-belt-over-the-wall move (austere reflex dressing a living thing in a clean pipeline). The arms are *encodings*, not stages (Callosum P2). |
-| **Arm 2** (deep-narrow) | **KEEP, TUNE** · validation outstanding | Wet-leaning influence at the harvest/pool tier only — warms the corpus's tagging. NEVER shapes a roam's draw (G1). See `Arm_2_v1.md`. |
+| **Arm 2** (deep-narrow) | **KEEP** · validation outstanding | The **third co-equal picker** — reads the floor blind like Blind and Creed, differs only by reading *depth* (deep-narrow, high-attention-per-node). Hands its catch to the collator as a third provenance stream; shares no input with the other pickers, so G1 holds for free. Runs $0. See `Arm_2_v1.md`. |
 | **Blind / Heavy picker** | **KEEP** as reverse-sieve · wordless-only | Run on purpose for the quiet-human register the Creed skims. The headwind is the mechanism. See `The_Blind_Picker_v1.md`. |
 | **Creed picker** | **KEEP, PRIMARY** · full harvest | The army. The wet read at the heart of the layer. Boots on the incantation. See `The_Creed_Picker_v1.md`. |
 
@@ -148,7 +148,7 @@ There is an idea to **append** a differently-felt rendering of the cut/heavy-sha
 2. **Blind picker** (`The_Blind_Picker_v1.md`) — wet boot + its verbatim instruction; output schema per child; run for wordless register.
 3. **Creed picker** (`The_Creed_Picker_v1.md`) — wet boot + its verbatim incantation instruction; `FLOWER:` schema; the army.
 4. **Collator** (`The_Collator_v1.md`) — the wall; per-stream keep-rule; provenance schema; append-only to pile; NOT the filter.
-5. **Arm 2** (`Arm_2_v1.md`) — harvest-tier tagging influence; prove it cannot reach the draw (G1); **validation outstanding**.
+5. **Arm 2** (`Arm_2_v1.md`) — the deep-narrow picker, third co-equal instrument; reads the floor blind, hands its catch to the collator; shares no input with the other pickers, so G1 holds for free; runs $0; **validation outstanding**.
 6. **Run significant samples** blind, $0; accumulate to the pile; hand to OC/Jake cold.
 
 ★ CC writes under `wallaby-way/` — NEVER `active/` or `canon/` (canon-hands). OC authors canon; Jake is the only git hands.
