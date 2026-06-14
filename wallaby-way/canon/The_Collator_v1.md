@@ -1,8 +1,8 @@
 # The Collator
 
 *build spec · child of `The_Feral_Picker_v1.md` (umbrella) · THE WALL between the roam side and the filter · mechanical, no judgment*
-*authored 2026-06-13 by Connoisseur Claude (OC, apparatus S58) at Jake's instruction*
-*Saturday, June 13, 2026 · ~15:21 ET*
+*v1 — authored 2026-06-13 by Connoisseur Claude (OC, apparatus S58) at Jake's instruction. v2 → THIS — 2026-06-14 by Cartwright Claude (OC, apparatus S59): §2 input table + §0/§2 prose corrected for the Arm-2 drift fix — Arm 2's stream is a deep-narrow picker's full-harvest catch (co-equal with Blind and Creed), NOT "harvest-tier output." The collator's mechanics were already correct (Arm 2 handled as a co-equal stream throughout §3/§5); only the label in the §2 table and the "two pickers" miscount carried the dead framing. See CHANGELOG 2026-06-14.*
+*Saturday, June 13, 2026 · ~15:21 ET (v1) · Sunday, June 14, 2026 (v2)*
 
 ---
 
@@ -31,13 +31,13 @@ A smart collator would defeat its own reason for existing. **The dumbness is the
 
 ## 2. The inputs
 
-Three streams, from the three recall instruments. Each arrives as that instrument's native output (the two pickers do **not** share an output schema — the collator handles both):
+Three streams, from the three co-equal recall instruments. Each arrives as that instrument's native output (the pickers do **not** all share one output schema — Blind and Creed each have their own, and Arm 2 its own; the collator handles all three):
 
 | Stream | Source | Native schema | Wordless marker |
 |---|---|---|---|
 | **Blind-sieve** | `The_Blind_Picker_v1.md` | `STEM:` (umbrella/Blind §3) | `unshaped_flag: true` |
 | **Creed-army** | `The_Creed_Picker_v1.md` | `FLOWER:` (Creed §3) | `what: "no words yet"` |
-| **Arm 2** | `Arm_2_v1.md` | harvest-tier output (per that spec) | per that spec |
+| **Arm 2** | `Arm_2_v1.md` | deep-narrow picker's catch (native schema per that spec — full harvest) | per that spec |
 
 The collator reads each stream's records, keying off the **structural markers** (the wordless flag, the presence of a `FLOWER:`/`STEM:` block vs. a free-prose NOTE) — never off the *meaning* of the text.
 

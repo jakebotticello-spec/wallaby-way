@@ -60,7 +60,7 @@ The distinction that must not blur (this is the seam Jake flagged at S58 as the 
 
 ## 2. The draw mechanics — random aperture as the state-generator
 
-**THE DRAW IS UNBIASED; THE READ IS FULLY CONTEXTUALIZED.** (Bouquet §3.) Shared by both pickers.
+**THE DRAW IS UNBIASED; THE READ IS FULLY CONTEXTUALIZED.** (Bouquet §3.) Shared by all three pickers — Blind, Creed, and Arm 2 (see §3 note on Arm 2's draw, pending validation).
 
 **Destination: random, unranked, whole-substance-floor.** Uniform random over the 7,915 substance nodes. No salience weighting at the draw (salience belongs in the *reading*, never the *draw* — Bouquet §3, G1). No region fence (this is the DEFAULT cross-domain draw — the cross-domain rhyme is only reachable when the draw spans domains, Bouquet §3/§1).
 
@@ -109,7 +109,7 @@ Every instrument boots **WET** — Wallaby Why + Track Meet Doctrine + Corpus Ca
 
 ## 5. The output and the wall — how a catch becomes a pile entry
 
-Each picker returns a short list of flowers (schema in the child spec — the two pickers do NOT share an output schema; the collator handles both). **No hard cap on cardinality** — framed as a salience condition ("the ones that caught you"), never a count (a number induces quota-filling). **No ranking-for-truth, no certainty tiers, ever** — the picker reports; it does not rule (Bouquet §7 anti-oracle; Callosum P7 — the realness seat stays Jake's).
+Each picker returns a short list of flowers (schema in the child spec — the pickers do NOT all share one output schema; Blind, Creed, and Arm 2 each have their own, and the collator handles all three). **No hard cap on cardinality** — framed as a salience condition ("the ones that caught you"), never a count (a number induces quota-filling). **No ranking-for-truth, no certainty tiers, ever** — the picker reports; it does not rule (Bouquet §7 anti-oracle; Callosum P7 — the realness seat stays Jake's).
 
 **The collator is the wall** (`The_Collator_v1.md`). It is mechanical and it is a **structural silo**, not merely a simple step. It takes each instrument's return, applies the per-stream keep-rule (Blind → wordless-only; Creed → full; Arm 2 → full), provenance-tags every surviving stem, and appends to the pile. It performs **no judgment** and it is the deliberate, load-bearing boundary between the loose/flowy roam side and the thinking/trainable filter side: **the two cannot commingle.** The filter downstream is siloed from the pickers by this wall — it reads the pile, never the roam; it cannot see the unfiltered catch or know why a stem arrived. That separation is what keeps the filter's trained judgment unsullied. **The collator is NOT the filter.**
 
@@ -144,7 +144,7 @@ There is an idea to **append** a differently-felt rendering of the cut/heavy-sha
 
 ## 9. Build order for CC (across the set)
 
-1. **Shared draw + context-assembly module** (§1, §2) — read `index_v2.jsonl`, filter `strata == substance` (7,915), uniform-random aperture `n ∈ [3,12]`, uniform-random node draw, ~10k-token backstop with random-drop trim. Per drawn node: node `.md` fields + floor span-neighbors via `parent_message_uuid` recursive CTE (scrub_v3). Anchor identity from CONTENT. No salience weighting, no embedding/kNN, no region fence. **Both pickers share this module.**
+1. **Shared draw + context-assembly module** (§1, §2) — read `index_v2.jsonl`, filter `strata == substance` (7,915), uniform-random aperture `n ∈ [3,12]`, uniform-random node draw, ~10k-token backstop with random-drop trim. Per drawn node: node `.md` fields + floor span-neighbors via `parent_message_uuid` recursive CTE (scrub_v3). Anchor identity from CONTENT. No salience weighting, no embedding/kNN, no region fence. **All three pickers share this module — Blind, Creed, and Arm 2.** ★ Arm 2's use of this uniform-random module is the SPEC TARGET but is NOT yet proven: its one existing sample (S54) drew embedding-biased, the forbidden way (§1.4); whether the deep-narrow character survives the switch to uniform-random is the open validation question (`Arm_2_v1.md` §4). Build the module for all three; treat Arm 2's draw through it as provisional until validated.
 2. **Blind picker** (`The_Blind_Picker_v1.md`) — wet boot + its verbatim instruction; output schema per child; run for wordless register.
 3. **Creed picker** (`The_Creed_Picker_v1.md`) — wet boot + its verbatim incantation instruction; `FLOWER:` schema; the army.
 4. **Collator** (`The_Collator_v1.md`) — the wall; per-stream keep-rule; provenance schema; append-only to pile; NOT the filter.
