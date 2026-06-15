@@ -1,3 +1,11 @@
+> # ★ SUPERSEDED — RENAMED OUT OF CANON 2026-06-14 (Sidequest S1 "Cooper")
+> **DO NOT BUILD FROM THIS FILE. It is the OLD NAME, not a dead idea.**
+> This spec was **renamed** into the Leda family — it lives, live and current, as `canon/Leda_Creed.md`. The rename re-pointed its parent (`The_Feral_Picker_v1.md` → `Leda.md`, the old umbrella having been superseded by Leda at S60) and changed nothing else: the LOCKED §2 instruction block is byte-identical between this file and `Leda_Creed.md`. Build the Creed picker from `canon/Leda_Creed.md`, never from here.
+> This file is preserved **verbatim as the historical record** of the original `The_Creed_Picker_v1` name — true-as-written, kept only so the rename has a tombstone a cold reader can follow. It is moved to `history/superseded-specs/` and carries zero live authority.
+> *Original masthead and body follow, unaltered.*
+>
+> ---
+
 # The Creed Picker
 
 *build spec · child of `The_Feral_Picker_v1.md` (umbrella) · the primary army · a roaming instrument of the divergent arm (Bouquet, Callosum P5)*
