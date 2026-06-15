@@ -351,7 +351,7 @@ Rationale: §17.5d infra-sweep. 15 off-target-for-apparatus but in-wheelhouse fi
 
 ---
 
-*Last Update: 6-15-26 (SD40) by Jake + CC. Surgical edit — §1 Workhorse RAM line (specced 2×8/3200/slots-2+4; logged the failed+returned Corsair 2800 mixed-kit attempt; capacity-not-speed bottleneck noted). §8 SODIMM-spare lesson note + NEW Decokee Quake entry (16-key + knob touch-deck, arrived 6-15, role undecided, AHK window-group control-plane the lead candidate). No other section touched.*
+*Last Update: 6-15-26 (SD40) by Jake + OC. Surgical edit — §1 Workhorse RAM line (specced 2×8/3200/slots-2+4; logged the failed+returned Corsair 2800 mixed-kit attempt; capacity-not-speed bottleneck noted). §8 SODIMM-spare lesson note + NEW Decokee Quake entry (16-key + knob touch-deck, arrived 6-15, role undecided, AHK window-group control-plane the lead candidate). No other section touched.*
 
 *Prior: 6-5-26 (apparatus S38 "Conduit") by Jake + OC. Surgical edit — §1 Workhorse: added the **CC artifact-scatter note** (Claude Code drops outputs → working dir / plans → `~/.claude` AppData / code-review findings → a GitHub PR comment; no unified output dir; a CC-settings task if ever wanted). No other section touched. (Logged during the S38 apparatus Stage-A build, where the three-locations friction surfaced live.)*
 

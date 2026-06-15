@@ -19,6 +19,24 @@ Format:
 **Open at close:** [next move → next move]. Handoff S##→S## to follow.
 ```
 
+## 2026-06-15 — SD40 (Cockpit day-state, OC) — JAKE-STACK HARDWARE FOLD: RAM-ATTEMPT FAILED/RETURNED + DECOKEE QUAKE LOGGED
+
+**Scope:** `active/JAKE-STACK.md` §1 + §8 — three surgical edits authored from `JAKE-STACK_edits_SD40.md` (PK), pending since SD40 close (the SD40 footer bump never committed; this lands it). $0 — authoring only, no build, no floor, no API. OC authored the full file; Jake verifies/commits/pushes (CC never touches the repo). FIND-strings verified verbatim against codeload HEAD before authoring; diff confirms exactly the three blocks + footer changed, nothing collateral.
+
+**Change(s):**
+- **§1 WORKHORSE RAM LINE — specced + failed-attempt logged.** RAM line now carries the real config (2×8GB DDR4-3200, slots 2+4, dual-channel, 2 slots open) and the load-bearing reframe: **capacity, not speed, is the bottleneck** (the 2.12 GB-free swap-to-SSD cliff dwarfs any 3200-vs-2800 delta). Logged the **6-15-26 failed+returned Corsair `CMD32GX4M4A2800C16`** — 2 sticks of a 4×8 *quad* kit, mis-sold as a 2×8 pair, mis-listed as 3200 when the label reads 2800; would not train alongside the existing 3200 pair (persistent DRAM debug-LED, no POST, monitors to standby across reseats). Returned not-as-described. Next attempt = a single matched pair, speed verified against the physical label before buy.
+- **§8 SODIMM-SPARE LESSON NOTE.** The spare-RAM line gained a 6-15 note: the Corsair 2800 buy failed/returned (see §1), WH still 16GB; lesson — verify speed off the physical label not the listing, avoid mixed-kit 4-DIMM trains on this board.
+- **§8 NEW — DECOKEE QUAKE ENTRY (arrived 6-15-26).** 8.8" IPS touchscreen, 16 physical touch keys + 1 rotary knob, 5-pt multitouch, CNC aluminum, RGB. The AI-copilot marketing wrapper is noise — the real engine is a large programmable touch+key+knob surface firing arbitrary hotkeys/launches. Kickstarter backer reward. Role UNDECIDED, leading candidate as the physical control-plane for the multi-window/multi-context orchestration problem (per-context Brave-profile bulk-raise via AHK, launchers, knob for a TBD scrub axis — VDs dead). Joins the input fleet alongside the WH AHK macropad (VSD m18) and Nostromo N52. NOT YET CONFIGURED — its own future sidequest.
+- **FOOTER bumped → 6-15-26 (SD40)**; prior S38 "Conduit" footer demoted to "Prior:".
+
+**Why:** the SD40 STACK edits were authored at SD40 close but never committed — the file on HEAD still read the pre-SD40 RAM line and had no Quake entry, and its footer sat at 6-5-26 (S38). The SD41 Cockpit boot caught the gap (the ignition's freshness note flagged it: no Quake entry in §8 = STACK edits pending). This fold makes the reference layer match the hardware Jake actually has on the desk — load-bearing for the Cockpit build, which names the Quake as its Stage-3 front-end and the AHK input fleet as the Stage-1 surface.
+
+**Rulings logged (Jake):** apply the SD40 edits + deliver the full STACK file before any Cockpit build work begins (this session) · Quake role stays UNDECIDED in the STACK (the Cockpit spec is where its candidate role is worked, not canon yet).
+
+**Open at close:** Cockpit Stage-1 build (the choreography engine) is the live target — Jake picks the first sub-piece. Quake remains NOT-YET-CONFIGURED; its config is the Cockpit project, not a STACK event.
+
+---
+
 ## 2026-06-14 — apparatus S60 "Cinder" (OC, authoring) + Sidequest S1 "Cooper" (OC, reconciliation) — THE ARM-2 KNOT UN-COLLAPSED: RECALL LAYER CLOSED, QUERY ORGAN RESTORED, REPO RECONCILED
 
 **Scope:** TWW apparatus — a three-session structural error (S57–S59) un-collapsed and the reference layer reconciled to the fix. Two passes folded here: S60 "Cinder" authored four new canon files; Sidequest S1 "Cooper" landed the reference-layer consequences + began the canon pare-down. $0 (authoring only, no API fires; CC ran read-only disk pulls, also $0). Floor UNCHANGED (440/29,396/58,792, scrub-v3, last live census S52) — no floor event, no census. OC authored canon as full files; Jake verifies/commits/pushes (CANON-HANDS, sole git hands). HEAD re-pulled + verified before/after.
