@@ -1,6 +1,6 @@
 # Leda
 
-*build spec + canon · the picker layer · the un-anchored roaming recall · umbrella over `The_Blind_Picker_v1.md` + `The_Creed_Picker_v1.md` + `The_Collator_v1.md`*
+*build spec + canon · the picker layer · the un-anchored roaming recall · umbrella over `Leda_Blind.md` + `Leda_Creed.md` + `The_Collator_v1.md`*
 *authored 2026-06-14 by Cinder Claude (OC, apparatus S60) at Jake's instruction · NEW FILE, clean break — supersedes `The_Feral_Picker_v1.md`, not a version of it*
 *Sunday, June 14, 2026 · ~18:05 ET*
 
@@ -86,8 +86,8 @@ The recall layer was pruned to its keepers by weighing the whole and feeling the
 | Instrument | Ruling | Why (do not re-litigate) |
 |---|---|---|
 | **Floor** | SEALED, austere, invariant | The meeting-time stays the meeting-time. When Jake asks when his next meeting is, the apparatus must KNOW (that is the Gemini's Castor — `Castor.md`), not serve a flower. The floor is untouched by the pickers. |
-| **Blind / Heavy picker** | **KEEP** · reverse-sieve · wordless-only | Run on purpose for the quiet-human register the Creed skims. The headwind is the mechanism. `The_Blind_Picker_v1.md`. |
-| **Creed picker** | **KEEP, PRIMARY** · full harvest | The army. The wet read at the heart of the layer. Boots on the incantation. `The_Creed_Picker_v1.md`. |
+| **Blind / Heavy picker** | **KEEP** · reverse-sieve · wordless-only | Run on purpose for the quiet-human register the Creed skims. The headwind is the mechanism. `Leda_Blind.md`. |
+| **Creed picker** | **KEEP, PRIMARY** · full harvest | The army. The wet read at the heart of the layer. Boots on the incantation. `Leda_Creed.md`. |
 | ~~Arm 1~~ (wide-synthetic single-pass) | **CUT — and the function relocated** | Cut as a picker (redundant-with-floor). The referential-read-on-a-query function it gestured at is real and now lives as **Castor** (`Castor.md`), in the Gemini, not here. |
 | ~~Arm 2~~ (deep-narrow) | **REMOVED FROM LAYER → reborn as Pollux** | Never a picker — a query organ misfiled. The deep-narrow *read* lives free in the aperture (§2). The query-roam organ it actually was is **Pollux** (`Pollux.md`), in the Gemini. |
 | ~~Arm 3~~ (1+2 combine) | **NOT BUILT** | The conveyor-belt move; arms are encodings, not stages (Callosum P2). |
@@ -142,8 +142,8 @@ The "append a differently-felt rendering of the cut/heavy-shaped work toward an 
 ## 9. Build order for CC (across the set)
 
 1. **Shared draw + context-assembly module** (§1, §2) — read `index_v2.jsonl`, filter `strata == substance` (7,915), uniform-random aperture `n ∈ [3,12]`, uniform-random node draw, ~10k-token backstop with random-drop trim. Per drawn node: node `.md` fields + floor span-neighbors via `parent_message_uuid` recursive CTE (scrub_v3). Anchor identity from CONTENT. No salience weighting, no embedding/kNN, no region fence. **Both pickers share this module — Blind and Creed.** *(The `picker_set_S59/draw_assemble.py` already drafts this with a `_G1_FORBIDDEN` self-check; it reads only `index_v2.jsonl`. Build for two pickers — the Arm 2 path it once anticipated is gone.)*
-2. **Blind picker** (`The_Blind_Picker_v1.md`) — wet boot + verbatim instruction; output schema per child; run for wordless register.
-3. **Creed picker** (`The_Creed_Picker_v1.md`) — wet boot + verbatim incantation; `FLOWER:` schema; the army.
+2. **Blind picker** (`Leda_Blind.md`) — wet boot + verbatim instruction; output schema per child; run for wordless register.
+3. **Creed picker** (`Leda_Creed.md`) — wet boot + verbatim incantation; `FLOWER:` schema; the army.
 4. **Collator** (`The_Collator_v1.md`) — the wall; **two-stream** per-stream keep-rule (Blind → wordless-only; Creed → full); provenance schema; append-only to pile; NOT the filter. *(Arm 2 row to be struck — §5 note, audit lands it.)*
 
 CC writes under `wallaby-way/` (NEVER `active/` or `canon/`). Run blind, $0, accumulate the provenance-tagged pile. The filter is the next layer up, specced against real pile haul (Bouquet §4) — gated on a grown pile, not on Arm 2 (that gate is dissolved).
