@@ -1,3 +1,11 @@
+> # ★ SUPERSEDED — RETIRED FROM CANON 2026-06-14 (Sidequest S1 "Cooper")
+> **DO NOT BUILD FROM THIS FILE. "Arm 2" was never a picker.**
+> S60 ("Cinder") ruled, with Jake, that "Arm 2" was a **query organ** (the wet read on a question) mis-promoted into the un-anchored picker roam without its structure examined. It has left the recall layer entirely and been **reborn as `Pollux`** (`canon/Pollux.md`) — the wet hemisphere of the **Gemini** query-organ (`canon/The_Gemini.md`), where embedding-as-anchor is legal by construction. The whole "is the embedding read a crime" validation knot (the (A)/(B) fork this file's §4 carries) is **DISSOLVED, not answered** — it asked "what kind of picker is Arm 2" and the answer is "not one." Cost was never the question (the sample ran $0).
+> This file is preserved **verbatim as the historical record** of the S58–S59 picker framing — true-as-written for those sessions, wrong as a live spec. It is moved to `history/superseded-specs/` and carries zero live structure. Nothing references it as authority; the live picker layer is `canon/Leda.md` (Blind + Creed, roster closed), and the wet query read is `canon/Pollux.md`.
+> *Original masthead and body follow, unaltered.*
+>
+> ---
+
 # Arm 2
 
 *build spec · child of `The_Feral_Picker_v1.md` (umbrella) · the deep-narrow picker — third of three co-equal roaming instruments · the one OPEN validation item in the recall layer*

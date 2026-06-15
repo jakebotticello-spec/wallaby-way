@@ -1,8 +1,8 @@
 # The Collator
 
-*build spec · child of `The_Feral_Picker_v1.md` (umbrella) · THE WALL between the roam side and the filter · mechanical, no judgment*
-*v1 — authored 2026-06-13 by Connoisseur Claude (OC, apparatus S58) at Jake's instruction. v2 → THIS — 2026-06-14 by Cartwright Claude (OC, apparatus S59): §2 input table + §0/§2 prose corrected for the Arm-2 drift fix — Arm 2's stream is a deep-narrow picker's full-harvest catch (co-equal with Blind and Creed), NOT "harvest-tier output." The collator's mechanics were already correct (Arm 2 handled as a co-equal stream throughout §3/§5); only the label in the §2 table and the "two pickers" miscount carried the dead framing. See CHANGELOG 2026-06-14.*
-*Saturday, June 13, 2026 · ~15:21 ET (v1) · Sunday, June 14, 2026 (v2)*
+*build spec · child of `Leda.md` (umbrella) · THE WALL between the roam side and the filter · mechanical, no judgment*
+*v1 — authored 2026-06-13 by Connoisseur Claude (OC, apparatus S58) at Jake's instruction. v2 — 2026-06-14 by Cartwright Claude (OC, apparatus S59): §2 input table + §0/§2 prose corrected for the Arm-2 drift fix. v3 → THIS — 2026-06-14 by Cooper Claude (OC, Sidequest S1): **the wall is now TWO streams, not three.** S60 ("Cinder") found "Arm 2" was never a picker — it was a query organ (the wet read on a question) mis-filed into the roam, since removed from the recall layer and reborn as Pollux in the Gemini (`Pollux.md`, `The_Gemini.md`). So the Arm-2 input stream is STRUCK from this wall: the §2 table row, the §3 keep-rule branch, and the §5 provenance `arm-2` value are removed. Blind + Creed only. The collator's NAME and naming are deliberately held SEPARATE from the Leda family (it is the wall AFTER the pickers, not a picker — folding it into the Leda namespace would blur the silo it exists to enforce; Jake's call, Sidequest S1). See CHANGELOG 2026-06-14.*
+*Saturday, June 13, 2026 · ~15:21 ET (v1) · Sunday, June 14, 2026 (v2, v3)*
 
 ---
 
@@ -31,13 +31,12 @@ A smart collator would defeat its own reason for existing. **The dumbness is the
 
 ## 2. The inputs
 
-Three streams, from the three co-equal recall instruments. Each arrives as that instrument's native output (the pickers do **not** all share one output schema — Blind and Creed each have their own, and Arm 2 its own; the collator handles all three):
+Two streams, from the two co-equal recall instruments (Leda's roster, CLOSED at Blind + Creed — `Leda.md` §3). Each arrives as that instrument's native output (the pickers do **not** share one output schema — Blind and Creed each have their own; the collator handles both):
 
 | Stream | Source | Native schema | Wordless marker |
 |---|---|---|---|
-| **Blind-sieve** | `The_Blind_Picker_v1.md` | `STEM:` (umbrella/Blind §3) | `unshaped_flag: true` |
-| **Creed-army** | `The_Creed_Picker_v1.md` | `FLOWER:` (Creed §3) | `what: "no words yet"` |
-| **Arm 2** | `Arm_2_v1.md` | deep-narrow picker's catch (native schema per that spec — full harvest) | per that spec |
+| **Blind-sieve** | `Leda_Blind.md` | `STEM:` (umbrella/Blind §3) | `unshaped_flag: true` |
+| **Creed-army** | `Leda_Creed.md` | `FLOWER:` (Creed §3) | `what: "no words yet"` |
 
 The collator reads each stream's records, keying off the **structural markers** (the wordless flag, the presence of a `FLOWER:`/`STEM:` block vs. a free-prose NOTE) — never off the *meaning* of the text.
 
@@ -55,9 +54,6 @@ FOR EACH record arriving from a stream:
   if stream == "creed-army":
       KEEP  every FLOWER block (shaped AND wordless)          # full harvest
       IGNORE free-prose NOTE blocks (no FLOWER: header)       # empty-hand notes are not flowers
-
-  if stream == "arm-2":
-      KEEP  full output                                       # full harvest (per Arm_2_v1.md)
 ```
 
 That is the cut. The "chaff" (the Blind picker's shaped stems) is dropped here, **mechanically**, by a flag check — `WHERE unshaped_flag = true`. No reading. The cut is in the collator and **not** in the picker precisely because the picker's constitution is *never drops a flower* (Blind §3) — moving the flag-check downstream to dumb plumbing keeps the picker pure and keeps the cut judgment-free.
@@ -90,13 +86,12 @@ PILE_ENTRY:
   anchor:       { conv_uuid, anchor_msg }
   payload:      <the instrument's native record, kept whole>
   provenance:
-    mechanism:    blind-sieve | creed-army | arm-2
+    mechanism:    blind-sieve | creed-army
     shape_state:  shaped | wordless
     # → yields the distinguishable provenance values the filter learns from:
     #     creed-full      (creed-army + shaped)
     #     creed-wordless  (creed-army + wordless)   ← spiked under pure salience
     #     sieve-wordless  (blind-sieve + wordless)  ← survived a structure-finding headwind
-    #     arm-2           (arm-2)
   caught_at:    <timestamp>
   roam_id:      <which roam produced it>            # for reconciliation/audit, NOT for the filter to weight
 ```

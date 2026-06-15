@@ -1,3 +1,12 @@
+> # ★ SUPERSEDED — RETIRED FROM CANON 2026-06-14 (Sidequest S1 "Cooper")
+> **DO NOT BUILD FROM THIS FILE. The live picker-layer umbrella is `canon/Leda.md`.**
+> S60 ("Cinder") replaced this umbrella with `Leda.md` on a clean break (new name, not a version of this file). The structural correction Leda carries: the roster is **CLOSED at Blind + Creed** — the "third co-equal picker" / "Arm 2" leg that this file's lineage anticipated was never a picker; it was a query organ, now `canon/Pollux.md` in the Gemini (`canon/The_Gemini.md`). The recall layer was never incomplete; it had a query organ wedged into it.
+> Children re-pointed: the old `The_Blind_Picker_v1.md` / `The_Creed_Picker_v1.md` are renamed into the Leda family as `canon/Leda_Blind.md` / `canon/Leda_Creed.md`, parented to `Leda.md`. The wall after them remains `canon/The_Collator_v1.md` (deliberately NOT in the Leda namespace — it is the silo, not a picker).
+> This file is preserved **verbatim as the historical record** of the S57–S58 umbrella — true-as-written for those sessions, superseded as live authority. Moved to `history/superseded-specs/`; carries zero live structure. Retired terms inside ("Arm 1/2/3," "the tripod," "feral picker" as the layer name, the (A)/(B) fork) are dead — do not version them back in.
+> *Original masthead and body follow, unaltered.*
+>
+> ---
+
 # The Feral Picker
 
 *build spec · UMBRELLA / INDEX for the roaming-recall instrument set · the divergent arm, P5 of the Corpus Callosum*

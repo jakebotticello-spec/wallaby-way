@@ -1,3 +1,10 @@
+> # ★ READER HEADER — terminology note (added 2026-06-14, Sidequest S1 "Cooper")
+> **This file is WET VERBATIM RECORD and is preserved unaltered — do not reconcile its words.** It uses **"Arm 1 / Arm 2 / Arm 3"** throughout in their ORIGINAL, CORRECT meaning: the **cognitive-instrument encodings** of one memory (wide/synthetic, narrow/deep, re-encoded synthesis — Principle 7, the two-reads-of-one-pool model born at the S54 Griffin read). **That meaning is canon and is the lineage the live query-organ descends from** — it is now housed as `canon/Castor.md` (dry) + `canon/Pollux.md` (wet), umbrella `canon/The_Gemini.md`.
+> **DO NOT confuse this with the retired picker "Arm 2."** Separately, for three sessions (S57–S59), a *query organ* was mis-filed into the un-anchored picker roster as a "third co-equal picker" called Arm 2; that mis-filing is **dead** (S60 — the recall layer is `canon/Leda.md`, closed at Blind + Creed; the dead spec is `history/superseded-specs/Arm_2_v1.md`). None of THIS file's "Arm" usage is that picker. The encoding model here is sound, untouched, and load-bearing.
+> *The record below is verbatim, by the founding invariant. This header is the only addition; not one word of the transcript was changed.*
+>
+> ---
+
 # The Corpus Callosum
 *standalone canon · third sibling to The Wallaby Way (the what/how), The Track Meet Doctrine (the how-we-record), and The Wallaby Why (the why-it-exists)*
 *authored 2026-06-11 by Collosum Claude (OC, S54 · seat-name Conduit) at Jake's instruction · verbatim where quoted, by design*
