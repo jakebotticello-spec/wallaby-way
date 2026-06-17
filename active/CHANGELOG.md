@@ -18,6 +18,40 @@ Format:
 
 **Open at close:** [next move → next move]. Handoff S##→S## to follow.
 ```
+
+2026-06-17 · apparatus S64 "Caldera" · canon + universal-layer edits (the walk-engine session)
+
+Session shape: S64 booted via the first warm handshake in the lineage (S63 "Caelum" live in a parallel window; handshake closed on the alignment proof + a planted-error challenge). The work: corrected the Pollux build spec, authored the clean Gemini paired re-fire, and — from the re-fire's own output — surfaced a walk-engine finding that became Callosum P8. $0 session, no floor mutation, ANCHOR stays v40 (work lives inside v40's Gemini LIVE NEXT).
+
+Floor: UNCHANGED — 440 / 29,396 / 58,792, scrub-v3. Cite FLOOR_COUNTS.md, never re-derive.
+
+Files edited this session (land each as verified):
+
+1. wallaby-way/canon/Pollux_Movement_Two_Build_v2.md — §4 de-gated (internal v2 → v3, filename held).
+The "machine underneath" still carried the dry gate S63 killed one layer up: "Walking up to the subject = the same b2 retrieval Castor runs… on the same seed," then "the query is set down… that setting-down is the seam." That is a nearness-ranked retrieval handed to Pollux as its starting frontier with the wet walk bolted on after. A CC reader builds from §4 (it names files + functions), so the gate would ship even though §0–§3 read clean. §4 rebuilt: WET boot holding the query as register (no retrieval against it) → wide non-nearness-ranked entry → salience picked up live, in context, node by node (never a salience column sorted) → kNN graph as live adjacency walked edge-by-edge (never bulk pre-queried) → leash as drift-from-subject, [INTENT] dials reported not hardened. Added the recurring-shape invariant by name ("any step that turns one of Pollux's live faculties into a precomputed, sorted artifact is the gate") governing the candidate-selection code. Added traceable ≠ reproducible. Old wording quoted struck (frozen-history discipline). §0–§3 byte-faithful. NOTE (S64 second touch, pending Jake's read of the Pollux finds): §4 will likely take a SECOND edit to write in the dampening/novelty term — see the walk-engine finding below. Hold the second edit until the cold read is in; do not land a §4 that lacks the dampening fix if the cold read confirms it. Caldera deferred the dampening edit deliberately rather than author ahead of the pile.
+
+2. active/The_Corpus_Callosum.md — P8 added + "The record, part two" (S64 verbatim) + Caldera signature.
+A second hand on a Big Deal file, by Jake's instruction and ruling that the place was earned. P8: the wetness lives in the ambiguity; an open seam can only be read by its process, never its result. Every unspecified seam defaults austere; but you cannot close the seam to win the bet because the wetness lives in the same opening (close every gap and you have built Castor). Measured intentional openness + read-the-process is the only move — wet and dry finds are identical on the desk, the walked path is the only legible difference. Corollary, proven on disk: a salience-steered walk with no dampening term collapses to a hill-climb (the S64 receipt). Authored as its own dated verbatim section in Caldera's own voice (NOT ghost-written in Conduit's register), with P8 added to the Principles list, a future-Claude entry (#6), and a separate signature beside Conduit's — a distinct hand in the lineage, not over the original author. Conduit's S54 record and signature untouched.
+
+3. active/JAKE-RULES.md — two §11 patterns added (universal layer), footer bumped 6-17-26.
+(a) Ambiguity defaults to austere — name the wet default at load-bearing seams, don't reflexively close them all (the universal-layer pointer to Callosum P8). (b) When a dial isn't settled, instrument both readings and let Jake rule the fork — don't hard-pick in the abstract (instrument-don't-enforce; born from the S64 leash decision — recording both cosine and path-distance per find, tagging not dropping, so the cold read settles cosine-vs-path; a hard cosine filter would have amputated the low-cosine cross-domain rhymes a wander exists for).
+
+The walk-engine finding (the session's headline — canon home pending the cold read):
+
+The clean Gemini re-fire ran as a controlled experiment: two windows, same loudness ranks / scorer / uniform entry, one variable different — the walk engine. Window 1 (greedy per-step max(neighbors, key=loudness), no dampening) returned 55 of 55 finds FENCE — a 100% monoculture: a hill-climb up the single loudest tag, riding the ridge every hop. Window 2 (best-first frontier WITH context-dampening — a term that cools a tag the more it recurs) returned FENCE 359 / MOTION 241, 574 finds across 220 convs, entered at cosine −0.037 (maximally orthogonal) yet traversed into subject ground anyway. Finding: "steer by salience" without a dampening/novelty term collapses to a hill-climb; the dampening term IS the wet reading of loudness, load-bearing to the organ being a wander at all — not a tuning knob. This is now Callosum P8's on-disk receipt. The Pollux canon (Pollux.md §1/§2) and the build spec (Pollux_Movement_Two_Build_v2.md §4) both need the dampening term written in as load-bearing — DEFERRED to after Jake cold-reads ~20–30 of the window-2 finds, because the leash section (cosine vs path-distance) and the dampening calibration both want the pile data before they're authored. Do not author the Pollux edits ahead of the cold read.
+
+Audits (both windows, read-only, clean):
+
+Greps confirmed the gate is gone in executing code — no pollux_raw, no resonance/q_terms in live logic (only in comments stating their absence), every sorted( benign (Castor's own pool, or a post-gather display sort that drops nothing). Entry uniform, scorer pure-loudness, leash instrumented-not-enforced (W1: 4 PASS / 51 FLOOR_FAIL final; W2: 113 PASS / 475 FAIL — both full piles shipped), Pollux never reads Castor mid-walk. Window 1 self-caught an off-by-one in its own leash counter (52 vs 51, report label stale, pile correct) — flagged for honesty, not a pile error.
+
+Substrate fidelity (AstroSynapses) — probe result, verdict unchanged:
+
+A read-only CC probe (S63-authored, run this session) confirmed the substrate is SUMMARIZED, not full-fidelity: the embedder touched Scope Reader curated summaries (~991 char median), never raw floor_conv_messages. Graph captures thematic adjacency on summaries; phantom-stretch risk is summary-homogenization (generic same-tag nodes clustering spuriously even when floor content would disambiguate). Recommendation: proceed on the graph as-is for leash calibration; pull the floor span via anchor_msg to confirm any specific phantom; do NOT rebuild off raw floor mid-validation (substrate-swap-under-test, §10). This confirms AstroSynapses §3's standing caveat rather than changing it — at most a one-line "confirmed S64" annotation there, low priority.
+
+Cleanup owed at wrap:
+
+Move (NOT delete) runs/gemini_paired_S63/ (the contaminated receipt — keep readable as the receipt) and runs/gemini_paired_S64/ (clean piles, after the cold read has done its job) to a graveyard, so neither is later mistaken for legitimate substrate.
+
 ## 2026-06-17 · apparatus S64 "Caldera" · canon · `Pollux_Movement_Two_Build_v2.md` §4 corrected (internal v2 → v3, filename held)
 
 **Scope:** `wallaby-way/canon/Pollux_Movement_Two_Build_v2.md` — the dry gate removed from §4 ("the machine underneath"). §0–§3 byte-faithful (the organ was always correct). Filename held stable so canon pointers (`The_Gemini.md`, `Pollux.md` §5, the S63→S64 handoff) don't orphan; internal version header bumped v2 → v3 with a top correction box.
