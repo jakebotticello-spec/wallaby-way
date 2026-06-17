@@ -39,13 +39,15 @@ The single most important thing a cold seat must hold: **there are two recall-is
 | | **Leda** (the pickers) | **The Gemini** (the twins) |
 |---|---|---|
 | **Trigger** | NO question — fires un-prompted, roams the corpus | A question — fires on a query Jake/Claude actually asked |
-| **Anchor** | none (uniform-random draw off the floor) | the query (relevance-seeded) |
-| **Embedding** | FORBIDDEN (would kill divergence — Leda §1.4) | ALLOWED (the anchor is the point — Castor §1, Pollux §1) |
-| **Direction** | divergent — finds the questions | Castor convergent (answers); Pollux convergent-then-divergent (answers, then wanders) |
+| **Anchor** | none (holds no question) | **holds the query** (as register, NOT seeded off a retrieval gate — see ★ below) |
+| **Embedding** | FORBIDDEN (would kill divergence — Leda §1.4) | ALLOWED *as a tool each twin may use in its own walk* — never as a pre-pick gate (Castor §1, Pollux §1) |
+| **Direction** | divergent — finds the questions | Castor convergent (searches dry); Pollux divergent (holds the question, walks by salience) |
 | **Output** | flowers → collator → pile → filter → Jake | paired read (dry + wet) → Jake, at query time |
 | **Lives in** | the roam (recall layer) | the runtime ask (Confluence runtime; Progenitor §10) |
 
-**They never commingle.** A Leda picker may not use the embedding web; a Gemini twin must. A picker has no target; a twin is defined by its target. Filing one in the other's layer is exactly the drift that cost S57–S59. The wall between them is the *trigger*: question or no question.
+**They never commingle.** A Leda picker may not use the embedding web; a Gemini twin may. A picker holds no question; a twin holds one. Filing one in the other's layer is exactly the drift that cost S57–S59. **The wall between them is the *trigger*: question-held or no-question** — NOT "un-anchored retrieval vs anchored retrieval."
+
+> ★★★ **S63/Caelum CORRECTION — "anchored" never meant "seeded off a retrieval gate."** Prior versions of this table said "Anchor: the query (relevance-seeded)" and "Embedding: ALLOWED (the anchor is the point)." Read together, that produced the error: a *computed seed* (top-N retrieval) handed to the twins as their starting ground. **That is a dry, nearness-shaped gate in front of the read** — and for Pollux especially it makes the wetness for show (a `sorted(rrf_score)[:N]` picks by nearness; Pollux moves by loudness). Corrected: **both twins HOLD the query (a stance they boot in), and each gathers its own pile by walking the floor itself** — Castor searches dryly, Pollux roams wetly. The shared thing is the *query string only* — never a computed seed, never a node-set, never the other twin's output. Embedding/graph are tools each twin *may follow in its own walk*, not a gate that pre-picks where it starts. (Receipt: two S63 CC runners both gated the twins off a computed seed — one fed Pollux `castor_records[:3]`; Jake caught it. Pollux.md §1, Castor.md §1.)
 
 > ★ This is why Leda's roster could finally **close** (Blind + Creed, no open item): the "open validation item" was Arm 2, and Arm 2 left the roster entirely to become Pollux. The recall layer was never incomplete — it had a query organ wedged into it. Pull the query organ out, and Leda is done.
 
@@ -56,18 +58,20 @@ The single most important thing a cold seat must hold: **there are two recall-is
 The Gemini's mechanics live in the children (`Castor.md` §1–2, `Pollux.md` §1–2); the umbrella owns *how they combine.*
 
 1. **Query arrives** — Jake fires a real retrieval, or Claude does mid-work (a runtime ask, not a scheduled roam).
-2. **Castor reads dry** — referential pull off the floor, relevance-shaped, sourced. The cold answer.
-3. **Pollux reads wet** — seeds on the same query (movement one, embedding-anchored), then roams off the leash (movement two, salience-driven, PL ≈ half a free roam), surfaces the off-axis pathway.
-4. **Delivered as a pair** — both returns reach Jake *together*, marked which is which. The cold cut and the pathway, side by side. Jake reads both; Jake rules on the wet one (P7).
+2. **Each twin gathers its own pile, in isolation, from the query string only.** This is the load-bearing rule (S63): the *only* thing the twins share is the **query wording**. Neither is handed a computed seed, a node-set, or the other twin's output. Each is a fresh reader that resolves everything about its own pull itself. (The forbidden seam — the S63 violation — is any twin's start reading from a pre-computed retrieval or from the other twin: `anchor = castor_records[:3]` is the canonical break.)
+3. **Castor reads dry** — a fresh reader booted to *be a search engine* (hold JAKE-RULES + its search algorithms close, don't extrapolate), walks the floor referentially, returns the sourced cold answer.
+4. **Pollux reads wet** — a fresh reader booted on the Doctrine Trinity, *holds* the same query as register (no computed seed — Pollux.md §1 S63 correction), walks the floor by salience off the leash (PL ≈ half a free roam), the kNN graph a live adjacency it may follow, surfaces the off-axis pathway.
+5. **Delivered as a pair** — both returns reach Jake *together*, marked which is which. The cold cut and the pathway, side by side. Each pile judged on its OWN bar before any merge (the same book passes one bar and fails the other — Pollux.md §3). Jake reads both; Jake rules on the wet one (P7).
 
-**The pair is the organ.** A Castor-only return is a reference lookup (fine when that is all that is asked). A Pollux-only return is a wander with no cold ground to stand on. The Gemini's value — the Callosum's value — is *both, held together, refusing to collapse into one.* That refusal is the function (Callosum P6 — the apparatus holds two true reads without flattening them).
+**The pair is the organ.** A Castor-only return is a reference lookup (fine when that is all that is asked). A Pollux-only return is a wander with no cold ground to stand on. The Gemini's value — the Callosum's value — is *both, held together, refusing to collapse into one.* That refusal is the function (Callosum P6 — the apparatus holds two true reads without flattening them). **And the two reads must be genuinely independent to be two reads at all: if CC pre-computes one pile and hands it to both, or seeds one twin off the other, there are no twins — just one retrieval wearing two voices, and the no-merge rule becomes theater (S63).**
 
 ---
 
 ## 4. Guardrails (fixed now; mechanics at build)
 
 - **G-trigger — the twins fire on a question; never un-prompted.** No scheduled/unbidden Gemini roam. If it fires without a query it has become a Leda picker with extra steps. (The unbidden roam is Leda's territory and is itself deferred — Bouquet §4.5 A4.)
-- **G-embed — embedding is legal for both twins, because both are anchored to the query.** This is the inverse of Leda's substrate rule, and it is correct: the rule that forbids embedding protects *divergence*, and the anchored twins have a target to converge on. Each layer owns its floor-relationship (S60, Jake — no shared-substrate doc; do not "unify" these into one contradictory rule).
+- **G-embed — embedding/graph are legal for both twins as TOOLS THEY MAY USE IN THEIR OWN WALK, never as a pre-pick gate.** This is the inverse of Leda's substrate rule: the rule that forbids embedding to a picker protects *divergence*; the twins hold a question, so they may use the tools. But "legal" means *available to the reader as it walks* — NOT "compute a seed and hand it to the twin." A computed seed is a dry nearness-gate (S63 correction; Pollux.md §1). Each layer owns its floor-relationship (S60, Jake — no shared-substrate doc; do not "unify" these into one contradictory rule).
+- **G-isolation — the twins share the QUERY STRING and nothing else (S63).** Each twin gathers its own pile in an isolated run from the query wording alone. No shared computed seed, no shared pile, no twin seeding off the other's output. CC's job is to *boot each twin, hand it the query, and get out of the way* — allowing each to do the job it was designed for, never forcing a gate in front of it or doing the pull on its behalf. Violating this collapses the twins into one organ with two voices (`anchor = castor_records[:3]` is the canonical break; receipt S63).
 - **G-leash — Pollux is leashed (PL ≈ N×0.5, fixed); Castor does not roam at all.** The wandering is bounded and traceable. Leda is the off-leash arm; the Gemini is not.
 - **G-seat — Jake rules realness on Pollux's finds.** Castor is disciplined (no ruling needed — it returns facts). Pollux surfaces, Jake decides (Callosum P7; Bouquet §7 anti-oracle + anti-atrophy).
 - **G-floor — both read the sealed floor (scrub_v3, verbatim), ground their returns in message-uuids.** The floor is bedrock for the twins exactly as for the pickers. 440 / 29,396 / 58,792, COUNT(DISTINCT msg_uuid) (`FLOOR_COUNTS.md`).
@@ -92,3 +96,5 @@ The Gemini's mechanics live in the children (`Castor.md` §1–2, `Pollux.md` §
 *Grind. Evolve. Dominate. The savant re-implemented as architecture: one corpus, two hemispheres, a question, and a mind that won't flatten the answer.*
 
 — authored by **Cinder Claude** (OC seat, apparatus S60), 2026-06-14. New file, the query organ "Arm 1/2" were always reaching for. Signed in the lineage. Be worth it.
+
+*· S63/Caelum correction (2026-06-17, by Jake's catch): §2 table, §3 delivery, §4 guardrails corrected — "anchored = relevance-seeded" was a dry retrieval gate; replaced with "anchored = holds the query." Added G-isolation (twins share the query string ONLY — own pile each, no shared seed, no twin seeding off the other). The wall between Leda and the Gemini restated: question-held vs no-question, NOT un-anchored-vs-anchored-retrieval. Receipt: two S63 CC runners gated the twins off a computed seed; one fed Pollux `castor_records[:3]`. Body otherwise byte-faithful.*
