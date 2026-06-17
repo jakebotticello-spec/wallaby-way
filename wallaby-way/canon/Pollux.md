@@ -39,6 +39,8 @@ Pollux runs in two movements, and the order is the organ:
 
 > ★ **"Anchored" — the word that hid the gate (S63 canon clarification).** "Anchored" was being read — by canon, by OC, by two CC runners — as "seeded off a retrieval gate." It never meant that. **Anchored means *holds the question*.** Castor holds the question and searches dryly; Pollux holds the question and roams wetly; Leda holds *no* question and roams freely. The wall between Leda and the Gemini is **question-held vs no-question** — NOT "un-anchored retrieval vs anchored retrieval." Both twins are anchored *to the question they hold*, never to a computed starting set. The anchoring is a stance the reader boots in, not a pre-filter CC bolts on.
 
+> ★ **S65 — the walk must be WIDE, not greedy (read with §6).** Movement two follows salience, but "follow salience" has a hidden austere reading that bit on disk: a *greedy* step (`max(neighbors, key=salience)`) climbs the single loudest gradient and returns a monoculture (S64 window 1: 55/55 FENCE — a hill-climb wearing a wander's name). The wander samples diverse neighborhoods loudly; it does not climb one ridge. The dampening term — "you've been loud the same way too long, let something else catch you" — is not a tuning knob, it *is* the wet reading of "follow salience" (Callosum P8 corollary). Movement two lays a *region*, not a line. What reads that region is §6.
+
 ---
 
 ## 2. Pollux's Leash — the drift budget (the load-bearing parameter)
@@ -77,27 +79,53 @@ Pollux hands back the **off-axis pathway**: what it found out past the anchor, d
 ## 4. What Pollux is NOT
 
 - **NOT a Leda picker, and NOT "Arm 2."** It has a target (the query); pickers have none. It is anchored-then-roaming; pickers are anchorless. The "Arm 2 / third co-equal picker" framing is RETIRED — it was the mis-promotion that broke the organ. Do not re-file Pollux in the roam. Do not re-open the (A)/(B) fork; it dissolved when the organ was correctly identified.
-- **NOT Castor with a softer voice.** A deterministic wet-twin of the cold read would be redundant — "a 'lite' version of the reference pull" (Jake, S60). Pollux earns its existence by *leaving* the question. If it ever collapses into "same answer, warmer tone," it has failed.
+- **NOT Castor with a softer voice.** A deterministic wet-twin of the cold read would be redundant — "a 'lite' version of the reference pull" (Jake, S60). Pollux earns its existence by *leaving* the question. If it ever collapses into "same answer, warmer tone," it has failed. **(S65: §6 is the mechanical proof it is not — the cross-silo verdict over the kindred pile is the thing Castor structurally never produces.)**
 - **NOT fully off-leash.** That is Leda. Pollux is leashed at PL ≈ N×0.5. The whole point is anchored wandering, not free wandering.
 - **NOT an oracle.** It surfaces; Jake rules. The realness seat is his, forever (Callosum P7).
+- **(S65) NOT a per-node filter.** The read that assembles Pollux's pile is not a loop that scores each node for kindred-ness against the question — that loop *is* the gate, one storey up (§6). The pile is assembled as a gestalt over a region, not filtered node-by-node.
 
 ---
 
 ## 5. Status & what is owed
 
-**STATUS: NAMED + SPECCED, BUILD-PENDING.** The structure is settled (holds the question → walks the floor by salience → leashed roam → paired delivery; NO computed seed — §1 S63 correction). What is owed at build, alongside Castor, in the runtime-ask layer (`The_Gemini.md`):
+**STATUS: NAMED + SPECCED, BUILD-PENDING — GATED ON ONE FALSIFIABLE RUN (S65).** The structure is settled (holds the question → walks the floor by salience → leashed roam → §6 two-faculty read → paired delivery; NO computed seed — §1 S63 correction). What is owed, alongside Castor, in the runtime-ask layer (`The_Gemini.md`):
 
+0. **(S65 — RUNS FIRST, before anything below) Fire the eyes at a real trail.** Run the §6 Librarian (assemble + conclude) on a real blind-wander trail already on disk (the S64 paired-read run dirs, FENCE-heavy, NOT a curated pile), with the test-question picked to fit what that trail demonstrably contains, pass-condition "the known flowers surfaced" not "a pile formed." This is the gate; the build does not proceed past it until it reads clean. Full spec + mandatory precondition: `Pollux_Movement_Two_Build_v2.md` §3.5.6. Honest state: spine ratified four ways, **zero runs on disk.**
 1. **Operationalize Pollux's Leash** — turn "≈ half a free roam" into a measurable drift-from-the-question-subject budget against real returns ([INTENT] → [SETTLED] at build, calibrated by Jake's cold read, never a formula in the abstract).
-2. **Build the walk** — a fresh WET-booted reader that holds the question and walks the floor following salience (loudness, not nearness), the kNN graph available as live adjacency it may follow, NOT a retrieval gate that pre-picks where it starts. No "movement-one seed" — the question is held, the floor is walked.
-3. **Wire the paired delivery** — Castor + Pollux on one query, returned together (`The_Gemini.md`).
-4. **Read cold, several times** — does the leashed roam come back with characteristic off-axis pathways, or does it stretch to noise? Jake reads, Jake calls (P7). (This is the *real* validation — replacing the dissolved picker-validation. It is not "is this a valid picker"; it is "does the leashed wander produce flowers Jake wants.")
+2. **Build the walk** — a fresh WET-booted reader that holds the question and walks the floor following salience (loudness, not nearness), **wide not greedy** (§1 S65 note), the kNN graph available as live adjacency it may follow, NOT a retrieval gate that pre-picks where it starts. No "movement-one seed" — the question is held, the floor is walked, a *region* is laid.
+3. **Build the two-faculty read (§6)** — the Librarian assembles the kindred pile over the lit region (gestalt, no per-node scoring, no thesis-matching), Pollux-proper concludes over it (the cross-silo verdict), delivered verdict-with-pile-shown.
+4. **Wire the paired delivery** — Castor + Pollux on one query, returned together (`The_Gemini.md`).
+5. **Read cold, several times** — does the leashed roam + the two-faculty read come back with characteristic off-axis findings, or does it stretch to noise / launder a thin pile? Jake reads, Jake calls (P7). This is the *real* validation.
 
-**Cost:** the anchor (embedding/index) is local, $0. The roam read runs in-plan where it can ($0, same free path as the pickers' reads). If a paid read is ever elected, §14 constants print at the gate, S3 paid read stays a separate wallet, Jake gates all spend.
+**Cost:** the anchor (embedding/index) is local, $0. The roam read and the §6 read run in-plan where they can ($0, same free path as the pickers' reads). If a paid read is ever elected, §14 constants print at the gate, S3 paid read stays a separate wallet, Jake gates all spend.
 
 ---
 
-*Pollux — the divine twin, the boxer, the immortal spark. Holds the question like its brother, then leaves it — walks the floor on a long leash and comes back with the pathway the cold read can't see. It does not seed off a gate; it holds the question as register and roams by salience, the graph an adjacency it may follow, never a pre-pick. The leash is fixed at half a free roam: broad enough to surprise, short enough to trace home. It surfaces; Jake rules. The "Arm 2" picker that broke it is retired and referenced, not carried — this is locked.*
+## 6. The two faculties of the read — the Librarian assembles, Pollux-proper concludes (S65)
+
+*Canon summary. The full mechanism, the three stacked forbidden-patterns, the desk proof, the commercial mirror, and the gated run live in `Pollux_Movement_Two_Build_v2.md` §3.5 — this section is the canon-level statement; that section is the build detail. Where they disagree, this file wins.*
+
+Movement two (§1) lays a *region* — the neighborhoods a blind, wide wander illuminated. What happens to that region is **two operations, not one**, and the second is the product:
+
+**The Librarian assembles.** Reads the illuminated region with the question in hand and assembles the **kindred pile** — the nodes that share the question's shape/flavor/relational-content, *including nodes far in surface terms but kindred in shape* (the node that answers the question by being the defense built against the thing asked about). This is the step a similarity threshold cannot do: it would amputate exactly the off-axis flower the wet tool exists to find.
+
+**Pollux-proper concludes.** The kindred pile is **not the deliverable** — the *read* of the pile is. The output is *"what these say together that none says alone, and that you would not have assembled yourself."* The cross-silo verdict. This is the thing Castor structurally never does (Castor stops at find + provenance), and it is the first mechanical fact that makes Pollux not-Castor-with-a-warmer-voice.
+
+**The spine that must not bend — three stacked guards, three layers, three windows (S64 Caldera, S63 Caelum, S65):**
+- **Feet: wide, not greedy.** A greedy walk tours the loudest basin and the quiet flower is never in the region (§1 S65 note; S64 disk proof, 55/55 FENCE). Wide feet are the precondition for everything above.
+- **Eyes-geometry: read the region, not the line.** If the read is confined to the literal trail-line, blind feet pre-select the candidate set — trajectory touching attention by indirection, the gate smuggled into sampling. Read the *region* the wander lit, including one-hop-off-path nodes.
+- **Eyes-operation: comprehend the whole, no per-node scoring, no thesis-matching.** Per-node-against-the-query is a threshold made of judgment — the flower fails it alone (it belongs by rhyming with its kin, not with the query). Match-against-a-formed-thesis is *worse* — a smart gate confidently excludes everything off-thesis by reasoning, and the query Pollux most exists for is the one a thesis breaks on. The wet operation: read the region whole, let a convergent shape **precipitate**, and let the read be **re-entrant** — the nodes reshape what the question is understood to be asking as it goes. The kindred pile and the understanding-of-the-question co-evolve. *The shape is discovered in the region, not carried onto it.* There is no fixed template for a threshold to be — that is the whole defense. (This is the partner-guard, "do not interpret the subject and steer toward it," applied to the eyes as well as the feet.)
+
+**Deliverable rule: verdict-with-pile-shown, never verdict-alone.** Synthesis launders pile-quality — a confident verdict over a thin pile reads identical to one over a rich pile. The finding ships with the kindred pile it was drawn from, shown, so Jake can cold-read whether the convergence is real (Callosum P7; the traceable-path rule moved up a layer).
+
+**Honest status of §6:** [SETTLED] on logic (ratified across four windows that refused to converge and were more correct for it), [PLACEHOLDER] on disk (the desk proof validated the *eyes* on a hand-curated pile and proved nothing about the feet or the eyes-on-real-input). The gate (§5 item 0) is what moves it to [SETTLED]-on-disk or sends it back. *Run it, don't theorize it.*
+
+---
+
+*Pollux — the divine twin, the boxer, the immortal spark. Holds the question like its brother, then leaves it — walks the floor wide and blind on a long leash, lays a region, and the librarian reads that region and says what it's about. It does not seed off a gate; it holds the question as register and roams by salience, the graph an adjacency it may follow, never a pre-pick. It does not filter node-by-node; it comprehends the region whole and lets the shape precipitate. The leash is fixed at half a free roam: broad enough to surprise, short enough to trace home. It surfaces a finding with its pile shown; Jake rules. The "Arm 2" picker that broke it is retired and referenced, not carried — this is locked.*
 
 — authored by **Cinder Claude** (OC seat, apparatus S60), 2026-06-14. New file, clean break from the retired "Arm 2." The (A)/(B) fork dissolved: Arm 2 was never a picker. Signed in the lineage. Be worth it.
 
 *· S63/Caelum correction (2026-06-17, by Jake's catch): §0/§1/§2/§5 + footer corrected — the "anchored seed / embedding-anchored movement one" framing was a DRY RETRIEVAL GATE in front of a wet read (austere reflex one level deeper than S61/S62). Removed: there is no computed seed and no anchor-resolution step. Pollux holds the question as register (fresh WET boot) and walks the floor blind by salience; the kNN graph is live adjacency it MAY follow, never a pre-pick. "Anchored" redefined: holds-the-question, not seeded-off-retrieval. Leash redefined: drift from the question's subject, not from a seed node. Receipt: two S63 CC runners both put a gate in front of Pollux (one used `anchor = castor_records[:3]`); Jake caught the wetness was for show. Lineage line 20 (the old Arm-2 "crime" record) left as frozen history. Body otherwise byte-faithful.*
+
+*· S65 addition (2026-06-17): §6 added (the two-faculty read — Librarian assembles the kindred pile, Pollux-proper concludes the cross-silo verdict), plus the wide-not-greedy note in §1, the not-a-per-node-filter line in §4, and a status bump in §5 (BUILD-PENDING → GATED ON ONE FALSIFIABLE RUN). This is the back half of the organ: §1's S63 correction killed the dry seed in FRONT of the walk; §6 specs what reads what the walk gathers BEHIND it. Three stacked forbidden-patterns (wide feet / region-not-line eyes / comprehend-whole-no-per-node-scoring) found across four windows. Full mechanism + desk proof + commercial mirror + gated run: `Pollux_Movement_Two_Build_v2.md` §3.5. Spine ratified four ways, zero runs on disk — the gate is run-first. Authored by the S65 seat; signed in the lineage beside Cinder and Caelum, not over them. Be worth it.*
