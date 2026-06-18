@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AstroSynapses — Constructs (prototype)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;500&family=Space+Mono:wght@400&display=swap');
+  :root{
+    --void:#05060A; --ink:#9DB4D0; --ink-dim:#54627A; --accent:#FF6B3D;
+    --panel:rgba(10,13,22,.74); --hair:rgba(157,180,208,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:var(--void);overflow:hidden;color:var(--ink);font-family:'Space Mono',monospace}
+  #cv{position:fixed;inset:0;display:block}
+  .masthead{position:fixed;top:24px;left:28px;z-index:5;pointer-events:none}
+  .masthead h1{font-family:'Chakra Petch',sans-serif;font-weight:300;font-size:23px;letter-spacing:.42em;color:#E8EEF6;text-transform:uppercase}
+  .masthead .sub{font-size:10px;letter-spacing:.28em;color:var(--ink-dim);margin-top:6px;text-transform:uppercase}
+
+  /* mode switcher */
+  .modes{position:fixed;top:22px;left:50%;transform:translateX(-50%);z-index:6;display:flex;gap:6px;
+    background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--hair);border-radius:4px;padding:5px}
+  .modes button{font-family:'Chakra Petch',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-dim);background:none;border:none;padding:8px 15px;cursor:pointer;border-radius:2px;transition:.2s}
+  .modes button:hover{color:var(--ink)}
+  .modes button.on{color:#E8EEF6;background:rgba(157,180,208,.12)}
+
+  /* secondary controls */
+  .ctl{position:fixed;top:74px;left:50%;transform:translateX(-50%);z-index:6;display:flex;gap:7px;align-items:center}
+  .ctl .chip{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);
+    background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--hair);border-radius:3px;padding:7px 12px;cursor:pointer;transition:.2s}
+  .ctl .chip:hover{color:var(--ink)}
+  .ctl .chip.on{color:var(--accent);border-color:rgba(255,107,61,.4)}
+  .ctl .chip.hidden{display:none}
+
+  .legend{position:fixed;top:24px;right:28px;z-index:5;background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--hair);border-radius:3px;padding:14px 16px;min-width:178px}
+  .legend .lh{font-family:'Chakra Petch',sans-serif;font-size:9.5px;letter-spacing:.24em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:10px}
+  .legend .row{display:flex;align-items:center;gap:9px;font-size:11px;padding:3px 0;cursor:pointer;color:var(--ink);transition:opacity .2s;letter-spacing:.03em}
+  .legend .row:hover{opacity:.6}
+  .legend .row .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 8px currentColor}
+  .legend .row.off{opacity:.26}
+  .legend .row .ct{margin-left:auto;color:var(--ink-dim);font-size:9.5px}
+
+  #tip{position:fixed;z-index:7;pointer-events:none;opacity:0;transform:translate(-50%,-128%);transition:opacity .12s;
+    background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--hair);border-left:2px solid var(--accent);
+    border-radius:2px;padding:8px 11px;max-width:260px;font-size:10.5px;line-height:1.5;letter-spacing:.02em;color:#D6E0EC}
+  #tip .t-lobe{font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:3px}
+  #tip .t-sal{color:var(--ink-dim);font-size:9.5px;margin-top:4px}
+
+  .hud{position:fixed;bottom:22px;left:28px;z-index:5;font-size:10.5px;line-height:1.85;color:var(--ink-dim);letter-spacing:.05em}
+  .hud b{color:var(--ink);font-weight:400}.hud .av{color:var(--accent)}
+  .hint{position:fixed;bottom:22px;right:28px;z-index:5;font-size:9.5px;letter-spacing:.14em;color:var(--ink-dim);text-transform:uppercase;text-align:right;line-height:1.85}
+  .hint span{color:var(--ink)}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<div class="masthead">
+  <h1>AstroSynapses</h1>
+  <div class="sub">8,288 nodes &middot; 49,078 synapses &middot; prototype / sample data</div>
+</div>
+
+<div class="modes" id="modes">
+  <button data-mode="octa" class="on">Octahedron</button>
+  <button data-mode="sphere">Geodesic</button>
+  <button data-mode="cloud">Cloud</button>
+</div>
+
+<div class="ctl" id="ctl">
+  <div class="chip" id="chip-edges" data-on="air">edges: <span id="edgemode">through air</span></div>
+  <div class="chip hidden" id="chip-flatten">click a face to flatten</div>
+  <div class="chip" id="chip-ghost" data-on="1">ghost scaffold: on</div>
+</div>
+
+<div class="legend" id="legend"><div class="lh">Regions / Faces</div></div>
+<div id="tip"></div>
+
+<div class="hud" id="hud">
+  <div>construct &nbsp;<b id="m-mode">octahedron</b></div>
+  <div>focus &nbsp;&nbsp;&nbsp;&nbsp;<b id="m-focus">whole corpus</b></div>
+  <div>node &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b id="m-node" class="av">&mdash;</b></div>
+</div>
+<div class="hint">drag <span>orbit</span> · scroll <span>zoom</span><br>hover <span>trace</span> · dbl-click <span>reset</span></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ===========================================================
+   AstroSynapses — three constructs, one node set.
+   SYNTHETIC look-and-feel data: real 8 cluster names + proportions,
+   ~720 sample nodes (real corpus 8,288). NOT wired to nodes.json.
+   Modes: OCTAHEDRON (8 faces=8 clusters, ghost Sierpinski scaffold,
+   face-flatten to 2D), GEODESIC SPHERE (nodes on vertices, edges
+   through-air OR along-struts), CLOUD (lobe baseline).
+   r128: no OrbitControls (hand-rolled orbit), no Capsule geometry.
+   =========================================================== */
+
+const REGIONS = [
+  { key:'apparatus', name:'Apparatus / Memory',  color:0x3FA7FF, frac:0.50 },
+  { key:'pyris',     name:'Pyris / Ops',         color:0x5FE3C0, frac:0.10 },
+  { key:'cypher',    name:'Cypher / Voice',      color:0xB98CFF, frac:0.085},
+  { key:'ccf',       name:'CCF / Recruiting',    color:0xFFC857, frac:0.07 },
+  { key:'maker',     name:'Maker / 3D-print',    color:0xFF8A5F, frac:0.07 },
+  { key:'lrn',       name:'RecruitMail / LRN',   color:0x6E8BB0, frac:0.045},
+  { key:'sched',     name:'Scheduling / Body',   color:0x4FD6E6, frac:0.045},
+  { key:'glotwp',    name:'GloTwp / Portal',     color:0xC77DFF, frac:0.025},
+];
+const N = 720, ACCENT = 0xFF6B3D, R = 120;
+
+const cv=document.getElementById('cv');
+const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true});
+renderer.setSize(innerWidth,innerHeight); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x05060A,0.0016);
+const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,1,5000);
+
+let camR=380,camTh=0.7,camPh=1.1,target=new THREE.Vector3(0,0,0),autoOrbit=true;
+function placeCam(){ camera.position.set(
+  camR*Math.sin(camPh)*Math.cos(camTh)+target.x,
+  camR*Math.cos(camPh)+target.y,
+  camR*Math.sin(camPh)*Math.sin(camTh)+target.z); camera.lookAt(target); }
+
+function gauss(){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function norm(v){const l=Math.hypot(v[0],v[1],v[2])||1;return [v[0]/l,v[1]/l,v[2]/l];}
+
+/* ---------- nodes: region + salience, plus a position PER MODE ---------- */
+const nodes=[]; let acc=0;
+REGIONS.forEach((r,ri)=>{ const cnt=Math.round(N*r.frac);
+  for(let i=0;i<cnt;i++){ const sal=Math.random()<0.18?3:(Math.random()<0.45?2:1);
+    nodes.push({region:ri,sal,color:r.color,id:r.key+'·'+String(acc+i).padStart(4,'0'),
+      pCloud:null,pSphere:null,pOcta:null,faceUV:null}); }
+  acc+=cnt; });
+
+/* ---------- OCTAHEDRON: 6 verts, 8 triangular faces. region -> face ---------- */
+const OV=[[0,1,0],[0,-1,0],[1,0,0],[-1,0,0],[0,0,1],[0,0,-1]].map(v=>v.map(x=>x*R));
+const OF=[ [0,2,4],[0,4,3],[0,3,5],[0,5,2], [1,4,2],[1,3,4],[1,5,3],[1,2,5] ]; // 8 faces
+function triPoint(a,b,c){ let u=Math.random(),v=Math.random(); if(u+v>1){u=1-u;v=1-v;} const w=1-u-v;
+  return [a[0]*w+b[0]*u+c[0]*v, a[1]*w+b[1]*u+c[1]*v, a[2]*w+b[2]*u+c[2]*v]; }
+// assign each region its own face (regions 0..7 -> faces 0..7)
+nodes.forEach(n=>{ const f=OF[n.region]; const A=OV[f[0]],B=OV[f[1]],C=OV[f[2]];
+  // bias loud nodes toward face centroid
+  let u=Math.random(),v=Math.random(); if(u+v>1){u=1-u;v=1-v;}
+  if(n.sal===3){u*=0.5;v*=0.5;} else if(n.sal===2){u*=0.78;v*=0.78;}
+  const w=1-u-v;
+  n.pOcta=[A[0]*w+B[0]*u+C[0]*v, A[1]*w+B[1]*u+C[1]*v, A[2]*w+B[2]*u+C[2]*v];
+  // slight outward lift so they sit ON the face, not in it
+  const nl=norm(n.pOcta); const lift=2.5; n.pOcta=[n.pOcta[0]+nl[0]*lift,n.pOcta[1]+nl[1]*lift,n.pOcta[2]+nl[2]*lift];
+  n.faceUV=[u,v]; });
+
+/* ---------- GEODESIC SPHERE: subdivided icosahedron vertices ---------- */
+function icosphere(subdiv){
+  const t=(1+Math.sqrt(5))/2;
+  let verts=[[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(norm);
+  let faces=[[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+  const mid={}; function midpoint(a,b){const k=a<b?a+'_'+b:b+'_'+a; if(mid[k]!=null)return mid[k];
+    const m=norm([(verts[a][0]+verts[b][0])/2,(verts[a][1]+verts[b][1])/2,(verts[a][2]+verts[b][2])/2]);
+    verts.push(m); return mid[k]=verts.length-1; }
+  for(let s=0;s<subdiv;s++){ const nf=[]; faces.forEach(f=>{ const a=midpoint(f[0],f[1]),b=midpoint(f[1],f[2]),c=midpoint(f[2],f[0]);
+    nf.push([f[0],a,c],[f[1],b,a],[f[2],c,b],[a,b,c]); }); faces=nf; }
+  // edge set
+  const eset=new Set(),edges=[]; faces.forEach(f=>{ [[f[0],f[1]],[f[1],f[2]],[f[2],f[0]]].forEach(([a,b])=>{
+    const k=a<b?a+'_'+b:b+'_'+a; if(!eset.has(k)){eset.add(k);edges.push([a,b]);} }); });
+  return {verts:verts.map(v=>[v[0]*R,v[1]*R,v[2]*R]),edges};
+}
+const ico=icosphere(3); // 642 verts ~ matches our ~720 nodes nicely
+// map each node to a sphere vertex (region-contiguous so clusters stay together on the surface)
+(function assignSphere(){
+  // sort ico verts by spherical angle so region blocks are contiguous patches
+  const order=ico.verts.map((v,i)=>({i,ang:Math.atan2(v[2],v[0])+Math.PI, y:v[1]})).sort((a,b)=>a.y-b.y||a.ang-b.ang).map(o=>o.i);
+  let k=0; nodes.forEach(n=>{ const vi=order[k%order.length]; n.sphereVi=vi; n.pSphere=ico.verts[vi].slice(); k++; });
+})();
+
+/* ---------- CLOUD: lobe positions ---------- */
+const lobePos=[[0,10,0],[95,20,35],[-90,30,28],[70,-38,-72],[-78,-30,-66],[12,-64,86],[-44,64,80],[60,58,-30]];
+nodes.forEach(n=>{ const lp=lobePos[n.region]; const r=REGIONS[n.region]; const sp=17+r.frac*36;
+  const pull=n.sal===3?0.62:n.sal===2?0.82:1; n.pCloud=[lp[0]+gauss()*sp*pull,lp[1]+gauss()*sp*pull*0.8,lp[2]+gauss()*sp*pull]; });
+
+/* ---------- semantic edges (same node pairs across all modes) ---------- */
+const intra=[],inter=[];
+for(let i=0;i<nodes.length;i++){ const same=[];
+  for(let j=0;j<nodes.length;j++){ if(i===j||nodes[j].region!==nodes[i].region)continue;
+    const a=nodes[i].pCloud,b=nodes[j].pCloud; const d=(a[0]-b[0])**2+(a[1]-b[1])**2+(a[2]-b[2])**2; same.push([d,j]); }
+  same.sort((x,y)=>x[0]-y[0]); for(let k=0;k<Math.min(3,same.length);k++) if(same[k][1]>i) intra.push([i,same[k][1]]); }
+const loud=nodes.map((n,idx)=>({n,idx})).filter(o=>o.n.sal>=2);
+for(let f=0;f<52;f++){ const a=loud[(Math.random()*loud.length)|0],b=loud[(Math.random()*loud.length)|0];
+  if(a.n.region!==b.n.region) inter.push([a.idx,b.idx]); }
+const allEdges=intra.concat(inter);
+
+/* ---------- sprite ---------- */
+const sprite=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');
+  const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.25,'rgba(255,255,255,.85)');
+  gr.addColorStop(.55,'rgba(255,255,255,.3)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,64,64);
+  return new THREE.CanvasTexture(c);})();
+
+/* ---------- node Points (per region) ---------- */
+const pointObjs=[]; const regionOn=REGIONS.map(()=>true);
+REGIONS.forEach((r,ri)=>{ const idxs=nodes.map((n,i)=>n.region===ri?i:-1).filter(i=>i>=0);
+  const geo=new THREE.BufferGeometry(); const pos=new Float32Array(idxs.length*3),siz=new Float32Array(idxs.length);
+  idxs.forEach((ni,k)=>{const n=nodes[ni];pos[k*3]=n.pOcta[0];pos[k*3+1]=n.pOcta[1];pos[k*3+2]=n.pOcta[2];siz[k]=n.sal===3?7:n.sal===2?4.5:2.7;});
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3)); geo.setAttribute('asize',new THREE.BufferAttribute(siz,1));
+  const mat=new THREE.ShaderMaterial({uniforms:{uColor:{value:new THREE.Color(r.color)},uMap:{value:sprite}},
+    vertexShader:`attribute float asize;varying float vs;void main(){vs=asize;vec4 mv=modelViewMatrix*vec4(position,1.0);gl_PointSize=asize*(300.0/-mv.z);gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`uniform vec3 uColor;uniform sampler2D uMap;varying float vs;void main(){vec4 t=texture2D(uMap,gl_PointCoord);float glow=vs>6.0?1.5:vs>4.0?1.1:0.82;gl_FragColor=vec4(uColor*glow,t.a);}`,
+    transparent:true,depthWrite:false,blending:THREE.AdditiveBlending});
+  const pts=new THREE.Points(geo,mat); pts.userData={region:ri,idxs}; scene.add(pts); pointObjs.push(pts); });
+
+function setNodePositions(mode){ pointObjs.forEach((pts,ri)=>{ const idxs=pts.userData.idxs; const arr=pts.geometry.attributes.position.array;
+  idxs.forEach((ni,k)=>{ const n=nodes[ni]; const p= mode==='octa'?n.pOcta : mode==='sphere'?n.pSphere : n.pCloud;
+    arr[k*3]=p[0];arr[k*3+1]=p[1];arr[k*3+2]=p[2]; }); pts.geometry.attributes.position.needsUpdate=true; }); }
+
+/* ---------- edge line objects (rebuilt per mode/edge-routing) ---------- */
+let edgeLines=null;
+function buildEdges(mode,routing){
+  if(edgeLines){scene.remove(edgeLines);edgeLines.geometry.dispose();edgeLines=null;}
+  const segs=[]; const colors=[];
+  const col=new THREE.Color();
+  function nodePos(i){ return mode==='octa'?nodes[i].pOcta : mode==='sphere'?nodes[i].pSphere : nodes[i].pCloud; }
+  function push(a,b,c){ segs.push(a[0],a[1],a[2],b[0],b[1],b[2]); for(let q=0;q<2;q++) colors.push(c.r,c.g,c.b); }
+
+  if(mode==='sphere' && routing==='struts'){
+    // edges TRACE the wireframe: draw the icosphere struts (the woven look)
+    col.set(0x2E4E72);
+    ico.edges.forEach(e=>{ push(ico.verts[e[0]],ico.verts[e[1]],col); });
+    // plus the inter-region semantic edges through air, in faint ink, so the cross-links still read
+    col.set(0x9DB4D0);
+    inter.forEach(e=>{ push(nodePos(e[0]),nodePos(e[1]),col); });
+  } else {
+    // through-air semantic edges (both intra + inter)
+    col.set(0x294a6e);
+    intra.forEach(e=>{ push(nodePos(e[0]),nodePos(e[1]),col); });
+    col.set(0x9DB4D0);
+    inter.forEach(e=>{ push(nodePos(e[0]),nodePos(e[1]),col); });
+  }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(segs),3));
+  g.setAttribute('color',new THREE.BufferAttribute(new Float32Array(colors),3));
+  edgeLines=new THREE.LineSegments(g,new THREE.LineBasicMaterial({vertexColors:true,transparent:true,opacity:0.34,blending:THREE.AdditiveBlending,depthWrite:false}));
+  scene.add(edgeLines);
+}
+
+/* ---------- ghost scaffold (octahedron Sierpinski-ish wireframe) ---------- */
+let ghost=null;
+function buildGhost(show){
+  if(ghost){scene.remove(ghost);ghost.traverse(o=>{if(o.geometry)o.geometry.dispose();});ghost=null;}
+  if(!show) return;
+  ghost=new THREE.Group();
+  // outer octahedron edges
+  function octaWire(scale,opacity){
+    const V=OV.map(v=>v.map(x=>x*scale));
+    const E=[[0,2],[0,3],[0,4],[0,5],[1,2],[1,3],[1,4],[1,5],[2,4],[4,3],[3,5],[5,2]];
+    const seg=[]; E.forEach(e=>{seg.push(...V[e[0]],...V[e[1]]);});
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(seg),3));
+    return new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x6E86A6,transparent:true,opacity,depthWrite:false}));
+  }
+  ghost.add(octaWire(1.0,0.22));
+  // recursive inner subdivision lines on each face (the Sierpinski ghost)
+  OF.forEach(f=>{ const A=OV[f[0]],B=OV[f[1]],C=OV[f[2]];
+    function sub(a,b,c,depth){ if(depth<=0)return;
+      const ab=a.map((x,i)=>(x+b[i])/2),bc=b.map((x,i)=>(x+c[i])/2),ca=c.map((x,i)=>(x+a[i])/2);
+      const seg=[...ab,...bc,...bc,...ca,...ca,...ab];
+      const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(seg),3));
+      ghost.add(new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0x4A6080,transparent:true,opacity:0.13*depth,depthWrite:false})));
+      sub(a,ab,ca,depth-1); sub(ab,b,bc,depth-1); sub(ca,bc,c,depth-1);
+    }
+    sub(A,B,C,2);
+  });
+  // faint translucent faces so the solid reads as present
+  const fgeo=new THREE.BufferGeometry(); const fp=[];
+  OF.forEach(f=>{ fp.push(...OV[f[0]],...OV[f[1]],...OV[f[2]]); });
+  fgeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(fp),3));
+  const fmat=new THREE.MeshBasicMaterial({color:0x12203A,transparent:true,opacity:0.16,side:THREE.DoubleSide,depthWrite:false});
+  ghost.add(new THREE.Mesh(fgeo,fmat));
+  scene.add(ghost);
+}
+
+/* ---------- highlight trace ---------- */
+let hl=null;
+function clearHL(){if(hl){scene.remove(hl);hl.geometry.dispose();hl=null;}}
+function trace(gi,mode){ clearHL(); const segs=[];
+  function np(i){return mode==='octa'?nodes[i].pOcta:mode==='sphere'?nodes[i].pSphere:nodes[i].pCloud;}
+  allEdges.forEach(e=>{ if(e[0]===gi||e[1]===gi){const a=np(e[0]),b=np(e[1]);segs.push(a[0],a[1],a[2],b[0],b[1],b[2]);} });
+  if(!segs.length)return; const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(new Float32Array(segs),3));
+  hl=new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:ACCENT,transparent:true,opacity:0.92,blending:THREE.AdditiveBlending,depthWrite:false})); scene.add(hl); }
+
+/* ---------- legend ---------- */
+const legend=document.getElementById('legend');
+REGIONS.forEach((r,ri)=>{ const row=document.createElement('div'); row.className='row';
+  row.innerHTML=`<span class="dot" style="color:#${r.color.toString(16).padStart(6,'0')}"></span>${r.name}<span class="ct">${(r.frac*100).toFixed(0)}%</span>`;
+  row.onclick=()=>{ regionOn[ri]=!regionOn[ri]; row.classList.toggle('off',!regionOn[ri]); pointObjs[ri].visible=regionOn[ri]; updFocus(); };
+  legend.appendChild(row); });
+function updFocus(){ const on=regionOn.filter(Boolean).length;
+  document.getElementById('m-focus').textContent= on===8?'whole corpus':on===1?REGIONS[regionOn.indexOf(true)].name:on+' regions'; }
+
+/* ---------- mode + control state ---------- */
+let MODE='octa', EDGE='air', GHOST=true, flatFace=-1;
+const mModeEl=document.getElementById('m-mode');
+function applyMode(){
+  setNodePositions(MODE);
+  buildEdges(MODE, MODE==='sphere'?EDGE:'air');
+  buildGhost(MODE==='octa' && GHOST);
+  mModeEl.textContent= MODE==='octa'?'octahedron':MODE==='sphere'?'geodesic sphere':'lobe cloud';
+  // control visibility
+  document.getElementById('chip-edges').classList.toggle('hidden', MODE!=='sphere');
+  document.getElementById('chip-ghost').classList.toggle('hidden', MODE!=='octa');
+  document.getElementById('chip-flatten').classList.toggle('hidden', MODE!=='octa');
+  clearHL();
+  // sensible camera per mode
+  camR = MODE==='cloud'?380:300;
+}
+document.querySelectorAll('.modes button').forEach(b=>{ b.onclick=()=>{
+  document.querySelectorAll('.modes button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  MODE=b.dataset.mode; flatFace=-1; applyMode(); }; });
+
+document.getElementById('chip-edges').onclick=function(){ EDGE = EDGE==='air'?'struts':'air';
+  document.getElementById('edgemode').textContent= EDGE==='air'?'through air':'along struts';
+  this.classList.toggle('on',EDGE==='struts'); if(MODE==='sphere') buildEdges('sphere',EDGE); };
+document.getElementById('chip-ghost').onclick=function(){ GHOST=!GHOST; this.classList.toggle('on',!GHOST);
+  this.firstChild.textContent='ghost scaffold: '; this.innerHTML='ghost scaffold: '+(GHOST?'on':'off'); buildGhost(MODE==='octa'&&GHOST); };
+
+/* ---------- picking ---------- */
+const ray=new THREE.Raycaster(); ray.params.Points.threshold=4.4; const mouse=new THREE.Vector2();
+const tip=document.getElementById('tip'), mNode=document.getElementById('m-node');
+let hovering=false;
+function onMove(e){ mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1;
+  if(dragging){tip.style.opacity=0;return;}
+  ray.setFromCamera(mouse,camera); let best=null,bd=1e9;
+  pointObjs.forEach(po=>{ if(!po.visible)return; const h=ray.intersectObject(po); if(h.length&&h[0].distanceToRay<bd){bd=h[0].distanceToRay;best={po,index:h[0].index};} });
+  if(best){ const gi=best.po.userData.idxs[best.index]; const n=nodes[gi]; const r=REGIONS[n.region];
+    tip.style.opacity=1; tip.style.left=e.clientX+'px'; tip.style.top=e.clientY+'px';
+    const st=n.sal===3?'loud · decision/reversal':n.sal===2?'medium':'ambient';
+    tip.innerHTML=`<div class="t-lobe" style="color:#${r.color.toString(16).padStart(6,'0')}">${r.name}</div>node ${n.id}<div class="t-sal">salience: ${st}</div>`;
+    mNode.textContent=n.id; trace(gi,MODE); autoOrbit=false; hovering=true;
+  } else if(hovering){ tip.style.opacity=0; clearHL(); mNode.textContent='—'; hovering=false; } }
+
+/* ---------- octa face flatten: click empty space near a face -> rotate that face to camera & spread 2D ---------- */
+// lightweight version: clicking a legend region in octa mode "flattens" by isolating that region and snapping camera to face normal
+function flattenFace(ri){ // isolate region, aim camera down its face normal
+  regionOn.fill(false); regionOn[ri]=true;
+  pointObjs.forEach((p,i)=>p.visible=(i===ri));
+  [...legend.querySelectorAll('.row')].forEach((r,i)=>r.classList.toggle('off',i!==ri)); updFocus();
+  const f=OF[ri]; const c=[(OV[f[0]][0]+OV[f[1]][0]+OV[f[2]][0])/3,(OV[f[0]][1]+OV[f[1]][1]+OV[f[2]][1])/3,(OV[f[0]][2]+OV[f[1]][2]+OV[f[2]][2])/3];
+  const nrm=norm(c); camTh=Math.atan2(nrm[2],nrm[0]); camPh=Math.acos(Math.max(-1,Math.min(1,nrm[1]))); camR=210; autoOrbit=false;
+}
+
+/* in octa mode, dbl-click a legend row already toggles; add: clicking the flatten chip arms face-view via legend */
+document.getElementById('chip-flatten').onclick=function(){ this.classList.toggle('on');
+  this.innerHTML = this.classList.contains('on') ? 'pick a region → flatten' : 'click a face to flatten'; };
+// when flatten armed, legend click flattens instead of toggles
+legend.querySelectorAll('.row').forEach((row,ri)=>{ row.addEventListener('click',()=>{ const armed=document.getElementById('chip-flatten').classList.contains('on');
+  if(MODE==='octa'&&armed){ flattenFace(ri); } },true); });
+
+cv.addEventListener('dblclick',()=>{ regionOn.fill(true); pointObjs.forEach(p=>p.visible=true);
+  [...legend.querySelectorAll('.row')].forEach(r=>r.classList.remove('off')); updFocus();
+  camR=MODE==='cloud'?380:300; autoOrbit=true;
+  const fc=document.getElementById('chip-flatten'); fc.classList.remove('on'); fc.innerHTML='click a face to flatten'; });
+
+/* ---------- orbit + zoom ---------- */
+let dragging=false,px=0,py=0;
+cv.addEventListener('mousedown',e=>{dragging=true;px=e.clientX;py=e.clientY;autoOrbit=false;});
+addEventListener('mouseup',()=>dragging=false);
+addEventListener('mousemove',e=>{ if(dragging){camTh-=(e.clientX-px)*0.005;camPh=Math.max(0.12,Math.min(3.0,camPh-(e.clientY-py)*0.005));px=e.clientX;py=e.clientY;} onMove(e); });
+cv.addEventListener('wheel',e=>{e.preventDefault();camR=Math.max(80,Math.min(900,camR+e.deltaY*0.4));},{passive:false});
+cv.addEventListener('touchstart',e=>{if(e.touches.length===1){dragging=true;px=e.touches[0].clientX;py=e.touches[0].clientY;autoOrbit=false;}},{passive:true});
+cv.addEventListener('touchmove',e=>{if(dragging&&e.touches.length===1){camTh-=(e.touches[0].clientX-px)*0.005;camPh=Math.max(0.12,Math.min(3.0,camPh-(e.touches[0].clientY-py)*0.005));px=e.touches[0].clientX;py=e.touches[0].clientY;}},{passive:true});
+addEventListener('touchend',()=>dragging=false);
+
+/* ---------- loop ---------- */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; let t=0;
+function loop(){ requestAnimationFrame(loop); t+=0.0016;
+  if(autoOrbit&&!reduce) camTh+=0.0011;
+  if(edgeLines) edgeLines.material.opacity=0.26+0.12*Math.sin(t*1.6);
+  if(ghost) ghost.rotation.y=0; // ghost stays aligned with nodes
+  placeCam(); renderer.render(scene,camera); }
+applyMode(); updFocus(); placeCam(); loop();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+</script>
+</body>
+</html>

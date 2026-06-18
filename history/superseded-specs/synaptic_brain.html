@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AstroSynapses — Synaptic Brain (prototype)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;500&family=Space+Mono:wght@400&display=swap');
+  :root{
+    --void:#05060A; --void2:#0A0D16;
+    --ink:#9DB4D0; --ink-dim:#54627A;
+    --accent:#FF6B3D;           /* selection/trace only */
+    --panel:rgba(10,13,22,.72);
+    --hair:rgba(157,180,208,.14);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:var(--void);overflow:hidden;color:var(--ink);font-family:'Space Mono',monospace}
+  #cv{position:fixed;inset:0;display:block}
+  /* title */
+  .masthead{position:fixed;top:26px;left:30px;z-index:5;pointer-events:none}
+  .masthead h1{font-family:'Chakra Petch',sans-serif;font-weight:300;font-size:25px;letter-spacing:.42em;color:#E8EEF6;text-transform:uppercase}
+  .masthead .sub{font-size:10.5px;letter-spacing:.30em;color:var(--ink-dim);margin-top:7px;text-transform:uppercase}
+  /* instrument readout */
+  .hud{position:fixed;bottom:24px;left:30px;z-index:5;font-size:11px;line-height:1.9;color:var(--ink-dim);letter-spacing:.06em}
+  .hud b{color:var(--ink);font-weight:400}
+  .hud .accentv{color:var(--accent)}
+  /* legend */
+  .legend{position:fixed;top:26px;right:30px;z-index:5;background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--hair);border-radius:3px;padding:15px 17px;min-width:182px}
+  .legend .lh{font-family:'Chakra Petch',sans-serif;font-size:10px;letter-spacing:.26em;color:var(--ink-dim);text-transform:uppercase;margin-bottom:11px}
+  .legend .row{display:flex;align-items:center;gap:10px;font-size:11.5px;padding:3.5px 0;cursor:pointer;color:var(--ink);transition:opacity .2s;letter-spacing:.04em}
+  .legend .row:hover{opacity:.6}
+  .legend .row .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 9px currentColor}
+  .legend .row.off{opacity:.28}
+  .legend .row .ct{margin-left:auto;color:var(--ink-dim);font-size:10px}
+  /* hover tooltip */
+  #tip{position:fixed;z-index:6;pointer-events:none;opacity:0;transform:translate(-50%,-128%);transition:opacity .12s;
+    background:var(--panel);backdrop-filter:blur(9px);border:1px solid var(--hair);border-left:2px solid var(--accent);
+    border-radius:2px;padding:9px 12px;max-width:280px;font-size:11px;line-height:1.55;letter-spacing:.03em;color:#D6E0EC}
+  #tip .t-lobe{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4px}
+  #tip .t-sal{color:var(--ink-dim);font-size:10px;margin-top:5px}
+  .hint{position:fixed;bottom:24px;right:30px;z-index:5;font-size:10px;letter-spacing:.16em;color:var(--ink-dim);text-transform:uppercase;text-align:right;line-height:1.9}
+  .hint span{color:var(--ink)}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<div class="masthead">
+  <h1>AstroSynapses</h1>
+  <div class="sub">corpus &middot; 8,288 nodes &middot; 49,078 synapses &middot; prototype on sample data</div>
+</div>
+
+<div class="legend" id="legend">
+  <div class="lh">Regions</div>
+</div>
+
+<div id="tip"></div>
+
+<div class="hud" id="hud">
+  <div>mode &nbsp;<b id="m-mode">ambient orbit</b></div>
+  <div>focus &nbsp;<b id="m-focus">whole corpus</b></div>
+  <div>node &nbsp;&nbsp;<b id="m-node" class="accentv">&mdash;</b></div>
+</div>
+
+<div class="hint">
+  drag <span>orbit</span> &nbsp;·&nbsp; scroll <span>zoom</span><br>
+  hover <span>trace node</span> &nbsp;·&nbsp; click region <span>isolate</span>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ===========================================================
+   AstroSynapses — Synaptic Brain prototype
+   Look-and-feel only. SYNTHETIC data shaped like the real corpus:
+   real 8 cluster names + proportions, ~700 sample nodes (real is 8,288),
+   lobe-structured layout (NOT random UMAP), salience->glow.
+   Not wired to nodes.json — that's CC's disk.
+   =========================================================== */
+
+// ---- the real eight regions (names + rough proportions from the S66 inventory) ----
+const REGIONS = [
+  { key:'apparatus', name:'Apparatus / Memory',  color:0x3FA7FF, frac:0.50, pos:[  0,  10,  0] },
+  { key:'pyris',     name:'Pyris / Ops',         color:0x5FE3C0, frac:0.10, pos:[ 95,  20, 35] },
+  { key:'cypher',    name:'Cypher / Voice',      color:0xB98CFF, frac:0.085,pos:[-90,  30, 28] },
+  { key:'ccf',       name:'CCF / Recruiting',    color:0xFFC857, frac:0.07, pos:[ 70, -38,-72] },
+  { key:'maker',     name:'Maker / 3D-print',    color:0xFF8A5F, frac:0.07, pos:[-78, -30,-66] },
+  { key:'lrn',       name:'RecruitMail / LRN',   color:0x6E8BB0, frac:0.045,pos:[ 12, -64, 86] },
+  { key:'sched',     name:'Scheduling / Body',   color:0x4FD6E6, frac:0.045,pos:[-44,  64, 80] },
+  { key:'glotwp',    name:'GloTwp / Portal',     color:0xC77DFF, frac:0.025,pos:[ 60,  58,-30] },
+];
+const N = 700;                 // sample count (real: 8,288)
+const ACCENT = 0xFF6B3D;
+
+// ---- scene ----
+const cv = document.getElementById('cv');
+const renderer = new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:false});
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x05060A, 0.0019);
+const camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 1, 4000);
+
+// ---- camera orbit state (hand-rolled; r128 has no OrbitControls) ----
+let camR = 360, camTh = 0.6, camPh = 1.15, camTarget = new THREE.Vector3(0,0,0);
+let autoOrbit = true;
+function placeCam(){
+  const x = camR*Math.sin(camPh)*Math.cos(camTh);
+  const z = camR*Math.sin(camPh)*Math.sin(camTh);
+  const y = camR*Math.cos(camPh);
+  camera.position.set(x+camTarget.x, y+camTarget.y, z+camTarget.z);
+  camera.lookAt(camTarget);
+}
+
+// ---- build nodes, lobe-clustered ----
+function gaussian(){ let u=0,v=0; while(!u)u=Math.random(); while(!v)v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+const nodes = [];
+let acc = 0;
+REGIONS.forEach((r,ri)=>{
+  const cnt = Math.round(N*r.frac);
+  const spread = 17 + r.frac*36;            // bigger regions = larger lobes
+  for(let i=0;i<cnt;i++){
+    // salience 1..3 ; loud nodes pulled slightly toward lobe core
+    const sal = Math.random()<0.18 ? 3 : (Math.random()<0.45 ? 2 : 1);
+    const pull = sal===3?0.62:sal===2?0.82:1.0;
+    nodes.push({
+      region:ri,
+      x:r.pos[0]+gaussian()*spread*pull,
+      y:r.pos[1]+gaussian()*spread*pull*0.8,
+      z:r.pos[2]+gaussian()*spread*pull,
+      sal, color:r.color,
+      id: r.key+'·'+String(acc+i).padStart(4,'0')
+    });
+  }
+  acc += cnt;
+});
+
+// ---- edges: dense within lobe (k-NN-ish), rare arcing filaments between ----
+const intra = [], inter = [];
+for(let i=0;i<nodes.length;i++){
+  // connect to a few nearest same-region nodes
+  const same = [];
+  for(let j=0;j<nodes.length;j++){
+    if(i===j||nodes[j].region!==nodes[i].region) continue;
+    const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, dz=nodes[i].z-nodes[j].z;
+    same.push([dx*dx+dy*dy+dz*dz, j]);
+  }
+  same.sort((a,b)=>a[0]-b[0]);
+  for(let k=0;k<Math.min(3,same.length);k++) if(same[k][1]>i) intra.push([i,same[k][1]]);
+}
+// inter-lobe filaments: sparse, only between "adjacent" lobes, only loud-ish nodes
+const loud = nodes.map((n,idx)=>({n,idx})).filter(o=>o.n.sal>=2);
+for(let f=0; f<46; f++){
+  const a = loud[(Math.random()*loud.length)|0], b = loud[(Math.random()*loud.length)|0];
+  if(a.n.region!==b.n.region) inter.push([a.idx,b.idx]);
+}
+
+// ---- node points (per-region, so we can toggle) ----
+const sprite = (()=>{ const c=document.createElement('canvas'); c.width=c.height=64; const g=c.getContext('2d');
+  const gr=g.createRadialGradient(32,32,0,32,32,32); gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(.25,'rgba(255,255,255,.85)');
+  gr.addColorStop(.55,'rgba(255,255,255,.30)'); gr.addColorStop(1,'rgba(255,255,255,0)');
+  g.fillStyle=gr; g.fillRect(0,0,64,64); const t=new THREE.CanvasTexture(c); return t; })();
+
+const pointObjs = [];   // one Points per region
+REGIONS.forEach((r,ri)=>{
+  const idxs = nodes.map((n,i)=>n.region===ri?i:-1).filter(i=>i>=0);
+  const pos=new Float32Array(idxs.length*3), siz=new Float32Array(idxs.length);
+  idxs.forEach((ni,k)=>{ const n=nodes[ni]; pos[k*3]=n.x; pos[k*3+1]=n.y; pos[k*3+2]=n.z; siz[k]= n.sal===3?7.2:n.sal===2?4.6:2.8; });
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  geo.setAttribute('asize',new THREE.BufferAttribute(siz,1));
+  const mat=new THREE.ShaderMaterial({
+    uniforms:{ uColor:{value:new THREE.Color(r.color)}, uMap:{value:sprite}, uDim:{value:1.0} },
+    vertexShader:`attribute float asize; varying float vs; void main(){ vs=asize;
+      vec4 mv=modelViewMatrix*vec4(position,1.0); gl_PointSize=asize*(300.0/-mv.z); gl_Position=projectionMatrix*mv; }`,
+    fragmentShader:`uniform vec3 uColor; uniform sampler2D uMap; uniform float uDim; varying float vs;
+      void main(){ vec4 t=texture2D(uMap,gl_PointCoord); float glow=vs>6.0?1.5:vs>4.0?1.1:0.8;
+      gl_FragColor=vec4(uColor*glow, t.a*uDim); }`,
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+  });
+  const pts=new THREE.Points(geo,mat); pts.userData={region:ri, idxs}; scene.add(pts); pointObjs.push(pts);
+});
+
+// ---- edge lines ----
+function lineSet(pairs, color, opacity){
+  const g=new THREE.BufferGeometry(); const p=new Float32Array(pairs.length*6);
+  pairs.forEach((e,i)=>{ const a=nodes[e[0]],b=nodes[e[1]];
+    p[i*6]=a.x;p[i*6+1]=a.y;p[i*6+2]=a.z; p[i*6+3]=b.x;p[i*6+4]=b.y;p[i*6+5]=b.z; });
+  g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  return new THREE.LineSegments(g, new THREE.LineBasicMaterial({color,transparent:true,opacity,blending:THREE.AdditiveBlending,depthWrite:false}));
+}
+const intraLines = lineSet(intra, 0x2A4A6E, 0.22); scene.add(intraLines);
+const interLines = lineSet(inter, 0x9DB4D0, 0.30); scene.add(interLines);
+
+// ---- highlight line (hover trace / selection) ----
+let hlLine=null;
+function clearHL(){ if(hlLine){scene.remove(hlLine); hlLine.geometry.dispose(); hlLine=null;} }
+function traceNode(globalIdx){
+  clearHL();
+  const segs=[];
+  intra.concat(inter).forEach(e=>{ if(e[0]===globalIdx||e[1]===globalIdx) segs.push(e); });
+  if(!segs.length) return;
+  const p=new Float32Array(segs.length*6);
+  segs.forEach((e,i)=>{ const a=nodes[e[0]],b=nodes[e[1]];
+    p[i*6]=a.x;p[i*6+1]=a.y;p[i*6+2]=a.z; p[i*6+3]=b.x;p[i*6+4]=b.y;p[i*6+5]=b.z; });
+  const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  hlLine=new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:ACCENT,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false}));
+  scene.add(hlLine);
+}
+
+// ---- legend ----
+const legend=document.getElementById('legend');
+const regionOn = REGIONS.map(()=>true);
+REGIONS.forEach((r,ri)=>{
+  const cnt = nodes.filter(n=>n.region===ri).length;
+  const row=document.createElement('div'); row.className='row'; row.dataset.ri=ri;
+  row.innerHTML=`<span class="dot" style="color:#${r.color.toString(16).padStart(6,'0')}"></span>${r.name}<span class="ct">${(r.frac*100).toFixed(0)}%</span>`;
+  row.onclick=()=>{ regionOn[ri]=!regionOn[ri]; row.classList.toggle('off',!regionOn[ri]);
+    pointObjs[ri].visible=regionOn[ri]; updateFocusLabel(); };
+  legend.appendChild(row);
+});
+
+// ---- picking ----
+const ray=new THREE.Raycaster(); ray.params.Points.threshold=4.2;
+const mouse=new THREE.Vector2(); const tip=document.getElementById('tip');
+const mNode=document.getElementById('m-node'), mMode=document.getElementById('m-mode'), mFocus=document.getElementById('m-focus');
+function updateFocusLabel(){ const on=regionOn.filter(Boolean).length;
+  mFocus.textContent = on===REGIONS.length?'whole corpus':on===1?REGIONS[regionOn.indexOf(true)].name:on+' regions'; }
+
+let hovering=false;
+function onMove(e){
+  mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1;
+  if(dragging){ tip.style.opacity=0; return; }
+  ray.setFromCamera(mouse,camera);
+  let best=null,bestD=1e9;
+  pointObjs.forEach(po=>{ if(!po.visible)return; const hit=ray.intersectObject(po);
+    if(hit.length && hit[0].distanceToRay<bestD){ bestD=hit[0].distanceToRay; best={po,index:hit[0].index}; } });
+  if(best){
+    const gi=best.po.userData.idxs[best.index]; const n=nodes[gi]; const r=REGIONS[n.region];
+    tip.style.opacity=1; tip.style.left=e.clientX+'px'; tip.style.top=e.clientY+'px';
+    const salTxt = n.sal===3?'loud · decision/reversal':n.sal===2?'medium':'ambient';
+    tip.innerHTML=`<div class="t-lobe" style="color:#${r.color.toString(16).padStart(6,'0')}">${r.name}</div>`+
+      `node ${n.id}<div class="t-sal">salience: ${salTxt}</div>`;
+    mNode.textContent=n.id; traceNode(gi); autoOrbit=false; mMode.textContent='tracing';
+    hovering=true;
+  } else if(hovering){ tip.style.opacity=0; clearHL(); mNode.textContent='—'; hovering=false; mMode.textContent= dragging?'orbit':'ambient orbit'; }
+}
+
+// ---- click a region row already toggles; click empty space resets isolate ----
+cv.addEventListener('dblclick',()=>{ regionOn.fill(true); pointObjs.forEach(p=>p.visible=true);
+  [...legend.querySelectorAll('.row')].forEach(r=>r.classList.remove('off')); updateFocusLabel(); });
+
+// ---- drag orbit + scroll zoom ----
+let dragging=false, px=0, py=0;
+cv.addEventListener('mousedown',e=>{ dragging=true; px=e.clientX; py=e.clientY; autoOrbit=false; mMode.textContent='orbit'; });
+addEventListener('mouseup',()=>{ dragging=false; if(!hovering) mMode.textContent='ambient orbit'; });
+addEventListener('mousemove',e=>{ if(dragging){ camTh-=(e.clientX-px)*0.005; camPh=Math.max(0.18,Math.min(2.96,camPh-(e.clientY-py)*0.005)); px=e.clientX; py=e.clientY; } onMove(e); });
+cv.addEventListener('wheel',e=>{ e.preventDefault(); camR=Math.max(90,Math.min(900,camR+e.deltaY*0.4)); },{passive:false});
+// touch
+cv.addEventListener('touchstart',e=>{ if(e.touches.length===1){dragging=true;px=e.touches[0].clientX;py=e.touches[0].clientY;autoOrbit=false;} },{passive:true});
+cv.addEventListener('touchmove',e=>{ if(dragging&&e.touches.length===1){ camTh-=(e.touches[0].clientX-px)*0.005; camPh=Math.max(0.18,Math.min(2.96,camPh-(e.touches[0].clientY-py)*0.005)); px=e.touches[0].clientX; py=e.touches[0].clientY; } },{passive:true});
+addEventListener('touchend',()=>dragging=false);
+
+updateFocusLabel();
+
+// ---- ambient drift + render ----
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let t=0;
+function loop(){
+  requestAnimationFrame(loop);
+  t+=0.0016;
+  if(autoOrbit && !reduce) camTh+=0.0011;
+  // gentle breathing on inter-lobe filaments
+  interLines.material.opacity = 0.20 + 0.13*Math.sin(t*1.7);
+  placeCam();
+  renderer.render(scene,camera);
+}
+placeCam(); loop();
+
+addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
+</script>
+</body>
+</html>
