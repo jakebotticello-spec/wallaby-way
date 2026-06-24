@@ -1,5 +1,5 @@
-# pollux_feet_S72.py -- Pollux FEET single-probe tool module
-# S72 apparatus session
+# pollux_feet_swarm_v1.2.py -- Pollux FEET probe tool module
+# Origin: S72 apparatus session; renamed + graduated to scripts/ S76; header corrected + write-root externalized (--out-root, fail-loud), versioned to v1.2 S77
 # Canon: Pollux.md / Pollux_Movement_Two_Build_v2 / The_Probe_Swarm
 #
 # $0 / on-sub / ANTHROPIC_API_KEY UNLOADED -- architecture, not posture.
@@ -14,7 +14,7 @@
 #   log_step  --run-id <id> '<json>'
 #   finalize  --run-id <id> --stop-reason "..." --stop-type subject-drift|cant-hold-whole|subject-complete|no-neighbors|hop-ceiling-fallback
 #
-# Writes ONLY to runs/pollux_feet_test_S72/<run-id>/
+# Writes per-run output to <out-root>/<run-id>/. --out-root is REQUIRED on every subcommand and MUST already exist (fail-loud HALT if absent or not on disk). The script creates NO directories. Per-run filenames retain the _S72 suffix BY DESIGN (cited as frozen receipts in ANCHOR + Probe_Swarm §3.2 — do not rename).
 # Never touches active/ or canon/
 
 import argparse, json, math, os, re, sys, types as _types
@@ -31,7 +31,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='repla
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # -- PATHS ---------------------------------------------------------------------
-SCRIPT_DIR  = Path(__file__).resolve().parent   # runs/pollux_feet_test_S72/
+SCRIPT_DIR  = Path(__file__).resolve().parent   # script's own dir; tracked copy lives in scripts/
 WW          = SCRIPT_DIR.parent.parent          # wallaby-way/
 
 B2_DIR      = WW / 'runs' / 'b2_plumbing_S53'
@@ -41,9 +41,21 @@ CIDS_PATH   = B2_DIR / 'chunk_ids.jsonl'
 EDGES_PATH  = WW / 'runs' / 'corpus_map_S5x' / 'edges.json'
 CSV_PATH    = WW / 'runs' / 'foray_discovery_S71' / 'node_size_distribution.csv'
 SECRETS_ENV = WW / 'secrets' / 'floor_db.env'
-OUT_DIR     = SCRIPT_DIR
+# OUT_DIR is resolved per-invocation from --out-root (see resolve_out_dir).
+# No module-level default, no SCRIPT_DIR fallback, no mkdir — the script
+# never guesses or creates its write location (fail-loud, §5.4 posture).
 
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+def resolve_out_dir(args):
+    """Resolve + validate the write-root. REQUIRED, must pre-exist. No creation."""
+    root = getattr(args, 'out_root', None)
+    if not root:
+        sys.exit("HALT: --out-root is required (e.g. runs/pollux_feet_tests/S77). "
+                 "The script will not guess where to write.")
+    p = Path(root).resolve()
+    if not p.is_dir():
+        sys.exit(f"HALT: --out-root does not exist on disk: {p}\n"
+                 "Create the session dir by hand before running (the script creates no dirs).")
+    return p
 
 def get_run_paths(run_id):
     """All per-run file paths scoped to OUT_DIR/<run-id>/."""
@@ -1015,27 +1027,39 @@ init_p.add_argument('--query',      required=True, help='Question held as stance
 init_p.add_argument('--run-id',     default=None,  help='Run ID / output subdir (default: timestamp)')
 init_p.add_argument('--entry-rank', type=int, default=1,
                     help='b2 rank to use as entry node (1-indexed, default 1 = rank-1)')
+init_p.add_argument('--out-root', required=True,
+    help='Write-root for this run; must already exist (e.g. runs/pollux_feet_tests/S77). Script creates no dirs.')
 
 rn_p = sub.add_parser('read_node', help='Read floor text for a node; writes to node_reads.json')
 rn_p.add_argument('--run-id', required=True, help='Run ID (from init)')
+rn_p.add_argument('--out-root', required=True,
+    help='Write-root for this run; must already exist (e.g. runs/pollux_feet_tests/S77). Script creates no dirs.')
 rn_p.add_argument('si', type=int, help='Node si index')
 
 nb_p = sub.add_parser('neighbors', help='Scored unvisited neighbors (query-blind, whale-fenced excluded)')
 nb_p.add_argument('--run-id', required=True, help='Run ID (from init)')
+nb_p.add_argument('--out-root', required=True,
+    help='Write-root for this run; must already exist (e.g. runs/pollux_feet_tests/S77). Script creates no dirs.')
 nb_p.add_argument('si', type=int, help='Current node si index')
 
 dep_p = sub.add_parser('deposit', help='Append node address to provenance; updates run_state')
 dep_p.add_argument('--run-id', required=True, help='Run ID (from init)')
+dep_p.add_argument('--out-root', required=True,
+    help='Write-root for this run; must already exist (e.g. runs/pollux_feet_tests/S77). Script creates no dirs.')
 dep_p.add_argument('si', type=int, help='Node si index (must have been read_node\'d first)')
 dep_p.add_argument('on_path', choices=['true', 'false'], help='Whether node is on the walk path')
 
 ls_p = sub.add_parser('log_step', help='Append step to walk_log; computes cosine_secondary')
 ls_p.add_argument('--run-id', required=True, help='Run ID (from init)')
+ls_p.add_argument('--out-root', required=True,
+    help='Write-root for this run; must already exist (e.g. runs/pollux_feet_tests/S77). Script creates no dirs.')
 ls_p.add_argument('step_json', help='JSON string: {step, from_si, chosen_si, salience_reason, '
                                     'dampening_state, node_chars, node_chars_shown}')
 
 fin_p = sub.add_parser('finalize', help='Expand 1-hop, Castor-drop, write all output files')
 fin_p.add_argument('--run-id',      required=True, help='Run ID (from init)')
+fin_p.add_argument('--out-root',    required=True,
+    help='Write-root for this run; must already exist (e.g. runs/pollux_feet_tests/S77). Script creates no dirs.')
 fin_p.add_argument('--stop-reason', required=True, help="Reader's own words for why they stopped")
 fin_p.add_argument('--stop-type',   required=True,
                    choices=['subject-drift', 'cant-hold-whole', 'subject-complete', 'no-neighbors', 'hop-ceiling-fallback'],
@@ -1045,6 +1069,8 @@ parsed = ap.parse_args()
 if not parsed.cmd:
     ap.print_help()
     sys.exit(1)
+
+OUT_DIR = resolve_out_dir(parsed)
 
 dispatch = {
     'init':       cmd_init,
